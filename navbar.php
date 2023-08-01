@@ -18,7 +18,7 @@ if (isset($_POST["login_submit"])) {
         // Verify the password
         if (password_verify($password, $hashedPassword)) {
             // Password is correct, user is authenticated
-            $_SESSION['user'] = $email;
+            $_SESSION['username'] = $email;
             echo '<script>showToaster("login ohk found" , "green")</script>';
             $role = $row['role'];
             // echo $role;
@@ -148,7 +148,7 @@ $con->close();
             </ul>
 
             <?php
-            if (!isset($_SESSION['user'])) { ?>
+            if (!isset($_SESSION['username'])) { ?>
                 <button type="button" class="btn-lg" data-toggle="modal" data-target="#loginModal">Login</button>
             <?php } else { ?>
                 <a href="logout.php" class="btn-lg">Logout</a>

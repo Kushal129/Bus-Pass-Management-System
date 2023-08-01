@@ -56,7 +56,9 @@
   <!-- ============================ dodti bus ============================ -->
 
 <!-- <img class="ml-1 bus" src="img/travel.png" style="max-width: 150px;"> -->
-<img class="ml-1 bus" src="img/travel.png" style="max-width: 150px;">
+<marquee behavior="" direction="right" scrollamount="30" style="margin-bottom: -5px; padding:0;">
+  <img class="ml-1 bus" src="img/travel.png" style="max-width: 150px;">
+</marquee>
 
 
   <!-- ============================ footer ============================  -->

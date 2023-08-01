@@ -1,8 +1,27 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['user']))
+include_once 'connection.php';
+
+if (!isset($_SESSION['username'])) {
     header('location:index.php');
+} else {
+    $checkEmailQuery = "SELECT * FROM users WHERE email=?";
+    $stmt = $con->prepare($checkEmailQuery);
+    $stmt->bind_param("s", $_SESSION['username']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+
+    $role = $row['role'];
+    // echo $role;
+    // 1 - user and 0 - admin
+    if ($role) {
+
+        // echo "USER";
+        header("Location: index.php");
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -44,8 +63,12 @@ if (!isset($_SESSION['user']))
                     <p class="profile-text">Admin <span class="user-role" id="user-role">Administrator</span></p>
                     <img src="img/admin.ico" class="pro-img" id="user-avatar" alt="User Avatar">
                 </div>
-                <button id="logout-btn" onclick="logout()">Logout</button>
             </div>
+            <div class="d-flex w-100 justify-content-end">
+                <button class="" id="logout-btn" onclick="logout()">Logout</button>
+            </div>
+
+            
             <div class="clearfix"></div>
         </div>
         <div class="dashboard">
@@ -229,9 +252,9 @@ if (!isset($_SESSION['user']))
             // For example, show a confirmation dialog before logging out
             // var logoutConfirmed = confirm("Are you sure you want to log out?");
             // if (logoutConfirmed) {
-                // Redirect to the logout page or any other appropriate page after logout
-                // For this example, we will redirect to logout.html
-                window.location.href = 'logout.php';
+            // Redirect to the logout page or any other appropriate page after logout
+            // For this example, we will redirect to logout.html
+            window.location.href = 'logout.php';
             // }
         }
 
