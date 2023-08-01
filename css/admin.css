@@ -1,0 +1,231 @@
+/* Reset some default styles to ensure consistency */
+body, h1, h2, h3, h4, h5, h6, p, ul, li, form, button {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+/* Global styles */
+body {
+    background-color: #f5f5f5;
+}
+
+/* Navigation Styles */
+.sidenav {
+    height: 100%;
+    width: 300px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-color: #f9d81f;
+    padding-top: 20px;
+    color: #000000;
+}
+
+.sidenav a {
+    display: block;
+    padding: 15px;
+    color: #000000;
+    text-decoration: none;
+}
+
+.sidenav a:hover {
+    background-color: #ffe54f;
+}
+
+.sidenav .logo {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #888;
+}
+
+.navbar-toggler {
+    position: fixed;
+    top: 20px;
+    left: 320px;
+    font-size: 20px;
+    color: #333;
+    background-color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    z-index: 2;
+    display: none;
+}
+
+/* Main Content Styles */
+.main-content {
+    margin-left: 300px;
+    padding: 20px;
+}
+
+
+.head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f5f5f5;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.head .col-div-6 {
+    display: flex;
+    align-items: center;
+}
+
+.head .col-div-6 .profile {
+    display: flex;
+    align-items: center;
+}
+
+.head .col-div-6 .profile img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.head .col-div-6 .profile .profile-text {
+    font-weight: bold;
+    padding-right: 1rem;
+}
+
+.head #logout-btn {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Responsive logout button */
+@media only screen and (max-width: 768px) {
+    .head #logout-btn {
+        margin-left: 10px; /* Adjust the margin for smaller screens */
+    }
+}
+
+/* Dashboard Styles */
+.dashboard {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.col-div-3 {
+    flex: 0 0 25%;
+    max-width: 25%;
+    padding: 15px;
+}
+
+.box {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+}
+
+.box p {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.box span {
+    font-size: 16px;
+    color: #777;
+}
+
+.box-icon {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+/* Passenger, Passes, Category, Search, Report Styles */
+.passenger, .passes, .category, .search, .report {
+    margin-top: 30px;
+}
+
+h2 {
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.passenger-list, .pass-list, .category-list {
+    list-style: none;
+    padding: 0;
+}
+
+.passenger-list li, .pass-list li, .category-list li {
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+}
+
+.add-passenger, .add-pass, .add-category, .search-form, .report-table {
+    margin-top: 20px;
+}
+
+.add-passenger h3, .add-pass h3, .add-category h3, .search h2, .report h2 {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.add-passenger label, .add-pass label, .add-category label, .search label, .report thead th {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.add-passenger input[type="text"], .add-pass input[type="text"], .add-category input[type="text"], .search input[type="text"] {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.add-passenger button, .add-pass button, .add-category button, .search button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.report-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.report-table table th, .report-table table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+.report-table table th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 757px) {
+    .sidenav {
+        width: 100%;
+    }
+
+    .navbar-toggler {
+        display: block;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+}

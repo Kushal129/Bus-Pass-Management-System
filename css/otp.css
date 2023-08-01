@@ -1,0 +1,151 @@
+body {
+    margin: auto;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow: auto;
+    animation: gradient 15s ease infinite;
+    background-size: 400% 400%;
+    background-attachment: fixed;
+  }
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 0%;
+    }
+
+    50% {
+      background-position: 100% 100%;
+    }
+
+    100% {
+      background-position: 0% 0%;
+    }
+  }
+
+  .wave {
+    background: rgb(189, 243, 157);
+    border-radius: 900% 800% 0 0;
+    position: fixed;
+    width: 200%;
+    height: 20em;
+    animation: wave 15s -1s linear infinite;
+    transform: translate3d(0, 0, 0);
+    opacity: 0.6;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+  }
+
+  .wave:nth-of-type(2) {
+    bottom: -1.25em;
+    animation: wave 18s linear reverse infinite;
+    opacity: 0.7;
+  }
+
+  .wave:nth-of-type(3) {
+    bottom: -2.5em;
+    animation: wave 20s -1s reverse infinite;
+    opacity: 0.9;
+  }
+
+  @keyframes wave {
+    2% {
+      transform: translateX(1);
+    }
+
+    25% {
+      transform: translateX(-25%);
+    }
+
+    50% {
+      transform: translateX(-50%);
+    }
+
+    75% {
+      transform: translateX(-25%);
+    }
+
+    100% {
+      transform: translateX(1);
+    }
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Rubik', sans-serif;
+  }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  form input {
+    height: 45px;
+    width: 42px;
+  }
+
+  :where(.container, form, .input-field) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  form .input-field {
+    flex-direction: row;
+    column-gap: 8px;
+  }
+
+  .container h1 {
+    font-size: 2.5rem;
+    color: black;
+    font-weight: 500;
+  }
+
+  .input-field input {
+    height: 45px;
+    width: 42px;
+    border-radius: 4px;
+    outline: none;
+    font-size: 1.125rem;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+
+  .input-field input::-webkit-inner-spin-button,
+  .input-field input::-webkit-outer-spin-button {
+    display: none;
+  }
+
+  form button {
+    align-items: center;
+    justify-content: center;
+    width: 15rem;
+    max-width: 150px;
+    background: rgb(68, 194, 68);
+    color: rgb(255, 255, 255);
+    font-size: 1rem;
+    margin-top: 15px;
+    border: none;
+    cursor: pointer;
+    padding: 12px 0;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+  }
+
+  form button:hover {
+    background-color: rgb(32, 131, 32);
+  }
+
+  .container {
+    background-color: rgba(127, 255, 138, 0.382);
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    padding: 8rem 2rem;
+  }

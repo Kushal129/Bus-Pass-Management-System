@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+
+
+/* ======================================================================================================= */
+/* ----------------------------------------  Sing in | Sing up ------------------------------------------- */
+/* ======================================================================================================= */
+
+/* --------------------------------------------------------------------------------------------------------------------------  */
+/* Custom styles for the modal */
+.modal-content {
+    border-radius: 20px;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
+}
+
+.modal-header {
+    background-color: #ffcc00;
+    color: #0b0b0b;
+    border-radius: 20px 20px 0 0;
+}
+
+.modal-body {
+    align-items: center;
+    padding: 20px;
+    color: #10213e;
+}
+
+.modal-footer {
+    background-color: #fcde5a;
+    border-top: none;
+    border-radius: 0 0 20px 20px;
+}
+
+.modal-footer .btn {
+    border-radius: 20px;
+}
+
+/* Optional: Style for input fields inside the modal */
+.modal-body input {
+    background: #fffdf5;
+    border: none;
+    padding: 12px 15px;
+    border-radius: 8px;
+    width: 100%;
+    font-family: inherit;
+    color: #1e1702;
+    font-size: inherit;
+}
+
+/* Optional: Style for the "Forgot Password" link */
+.modal-body a {
+    text-decoration: none;
+    color: #020814;
+}
+
+.modal-body a:hover {
+    color: #050337;
+}
+
+/* Additional styles for the Registration form */
+#registrationForm .form-group {
+    margin-bottom: 15px;
+}
+
+#signupLink,
+#signinLink {
+    color: #10213e;
+    cursor: pointer;
+}
+
+#signupLink:hover,
+#signinLink:hover {
+    color: #050337;
+}
+
+#signupLink:active,
+#signinLink:active {
+    color: #050337;
+}
+
+/* Show and hide the Registration form */
+#registrationForm.show,
+#loginForm.hide {
+    display: block;
+}
+
+#registrationForm.hide,
+#loginForm.show {
+    display: none;
+}
+
+/* Custom styles for buttons */
+.btn-lr {
+    background-color: #181817;
+    color: #fefeff;
+    border: none;
+    border-radius: 0px 8px 0px 8px;
+    padding: 12px 22px;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+}
+
+.btn-lr:hover {
+    background-color: #232324;
+    color: #ffffff;
+}
+
+/* Custom styles for the "Create an account" link */
+#signupLink {
+    font-size: 14px;
+}
+
+/* Optional: Add animation for modal open/close */
+.modal {
+    animation: fadeInOut 0.5s ease;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ------------------------------------------------------------------------------------------------- */
+.btn-lg {
+    font-size: 14px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 0px 8px 0px 8px;
+    background-color: black;
+    color: #fff;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-lg:hover {
+    background-color: #17150b;
+    color: #fff;
+}
+
+.forgot-password {
+    margin-left: 22rem;
+    font-size: 12px;
+}
