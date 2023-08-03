@@ -22,15 +22,14 @@ if (isset($_POST["login_submit"])) {
             echo '<script>showToaster("login ohk found" , "green")</script>';
             $role = $row['role'];
             // echo $role;
-// 1 - user and 0 - admin
-            if($role){
+            // 1 - user and 0 - admin
+            if ($role) {
 
                 // echo "USER";
                 header("Location: user.php");
-            }else{
+            } else {
                 // echo "ADMIN";
                 header("Location: admin.php");
-
             }
             // exit();
         } else {
@@ -109,8 +108,8 @@ $con->close();
     <link rel="stylesheet" href="css/modalpoppup.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <title>Home</title>
-        
     <script>
         function showLoginModal() {
             $("#loginModal").modal('show');
@@ -167,21 +166,20 @@ $con->close();
                             </button>
                         </div>
                         <div class="modal-body">
-
+                            <!-- Login Form -->
                             <form id="loginForm" method="post">
                                 <div class="form-group">
                                     <input type="email" class="form-control" id="login_email" placeholder="Enter Email" name="login_email">
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group password-container">
                                     <input type="password" class="form-control" id="login_password" placeholder="Enter Password" name="login_password">
+                                    <i class="show-password-icon fa-solid fa-eye" onclick="togglePasswordVisibility('login_password', this)"></i>
                                 </div>
                                 <button type="submit" class="btn-lr btn-block" name="login_submit">Sign In</button>
                             </form>
-
                             <!-- Registration Form -->
 
                             <form id="registrationForm" style="display:none;" method="post">
-
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="fullName" placeholder="Full Name" name="full_name">
                                 </div>
@@ -191,16 +189,18 @@ $con->close();
                                 <div class="form-group">
                                     <input type="email" class="form-control" id="regEmail" placeholder="Email" name="email">
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group password-container">
                                     <input type="password" class="form-control" id="regPassword" placeholder="Password" name="password">
+                                    <i class="show-password-icon fa-solid fa-eye" onclick="togglePassword('regPassword', this)"></i>
                                 </div>
                                 <button type="submit" class="btn-lr btn-block" value="registr" name="submit">Sign Up</button>
                             </form>
-
                             <!-- Toggle between Login and Registration forms -->
                             <p class="text-center mt-3 mb-0">
                                 <a href="#" id="signupLink">Create an account</a>
+                                <a href="ForgotPass.php" id="signupLink">ForgotPassword?</a>
                                 <a href="#" id="signinLink" style="display:none;">Already have an account? Sign In</a>
+                                
                             </p>
                         </div>
                     </div>
@@ -230,6 +230,22 @@ $con->close();
             document.getElementById('signupLink').style.display = 'block';
             this.style.display = 'none';
         });
+
+        // show password in L&R
+        function togglePasswordVisibility(fieldId, icon) {
+            var passwordField = document.getElementById(fieldId);
+            var iconElement = icon.querySelector(".show-password-icon");
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+            } else {
+                passwordField.type = "password";
+            }
+
+            setTimeout(function() {
+                passwordField.type = "password";
+            }, 5000); // Hide the password after 5 seconds
+        }
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>

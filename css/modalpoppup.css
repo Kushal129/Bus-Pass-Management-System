@@ -42,13 +42,13 @@
     border-radius: 20px;
 }
 
-/* Optional: Style for input fields inside the modal */
+
 .modal-body input {
     background: #fffdf5;
     border: none;
     padding: 12px 15px;
     border-radius: 8px;
-    width: 100%;
+    width: 80%;
     font-family: inherit;
     color: #1e1702;
     font-size: inherit;
@@ -68,7 +68,11 @@
 #registrationForm .form-group {
     margin-bottom: 15px;
 }
-
+#signupLink {
+    font-size: 12px;
+    PADDING: 3px;
+    float: right;
+}
 #signupLink,
 #signinLink {
     color: #10213e;
@@ -157,4 +161,18 @@
 .forgot-password {
     margin-left: 22rem;
     font-size: 12px;
+}
+
+/* =========================== Password view css =============================== */
+
+.password-container {
+    position: relative;
+}
+
+.show-password-icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
 }

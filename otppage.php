@@ -1,3 +1,26 @@
+<?php
+session_start();
+
+if (isset($_POST["verify_otp"])) {
+    $enteredOtp = $_POST["otp"];
+    $storedOtp = $_SESSION["otp"];
+
+    if ($enteredOtp == $storedOtp) {
+        // OTP is valid, update user's password
+        $newPassword = $_POST["new_password"];
+        // Perform database update here (update user's password based on email or user ID)
+
+        // Clear the OTP session
+        unset($_SESSION["otp"]);
+
+        echo "Password reset successful!";
+    } else {
+        echo "Invalid OTP. Please try again.";
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,7 +41,7 @@
 
     <h1>Otp Verification </h1><br>
 
-    <form action="#" method="POST">
+    <form action="cratenewpass.php" method="POST">
 
       <div class="input-field">
         <input type="number" />
