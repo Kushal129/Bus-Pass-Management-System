@@ -16,9 +16,9 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-sm-4 col-md-3 item">
-                        <h3>Customer support</h3>
+                        <h3>Contact Us</h3>
                         <ul>
-                            <li><a href="#">Support Mail</a></li>
+                            <li><a href="contact.php">Support</a></li>
                            
                         </ul>
                     </div>

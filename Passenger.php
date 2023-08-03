@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 
@@ -23,7 +24,6 @@ if (!isset($_SESSION['username'])) {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,7 +36,9 @@ if (!isset($_SESSION['username'])) {
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="css/admin.css">
+<style>
 
+</style>
     <title>Admin Page</title>
 </head>
 
@@ -57,60 +59,64 @@ if (!isset($_SESSION['username'])) {
     </button>
 
     <div class="main-content">
-        <div class="head">
+    <div class="head">
             <div class="col-div-6">
                 <div class="profile">
-                    <p class="profile-text">Admin</p>
+                <p class="profile-text">Admin</p>
                     <img src="img/admin.ico" class="pro-img" id="user-avatar" alt="User Avatar">
                 </div>
             </div>
             <div class="d-flex w-100 justify-content-end">
                 <button class="" id="logout-btn" onclick="logout()">Logout</button>
             </div>
-
-            
             <div class="clearfix"></div>
         </div>
-        <div class="dashboard">
-            <div class="col-div-3">
-                <div class="box">
-                    <p> 60<br /><span>Total Pass</span></p>
-                    <i class="fa fa-users box-icon"></i>
-                </div>
+        <!-- Passenger Management Section -->
+        <section class="passenger">
+            <h2>Passenger Management</h2>
+            <div class="passenger-list">
+                <ul>
+                    <li>Passenger 1</li>
+                    <li>Passenger 2</li>
+                    <li>Passenger 3</li>
+                    <!-- Add more passengers as needed -->
+                </ul>
             </div>
-            <div class="col-div-3">
-                <div class="box">
-                    <p> 60<br /><span>Total Category</span></p>
-                    <i class="fa fa-users box-icon"></i>
-                </div>
+            <div class="add-passenger">
+                <h3>Add New Passenger</h3>
+                <form>
+                    <label for="passenger-name">Passenger Name:</label>
+                    <input type="text" id="passenger-name" name="passenger-name">
+                    <button type="submit">Add</button>
+                </form>
             </div>
-            <div class="col-div-3">
-                <div class="box">
-                    <p> 60<br /><span>Pass Created Today</span></p>
-                    <i class="fa fa-users box-icon"></i>
-                </div>
-            </div>
-            <div class="col-div-3">
-                <div class="box">
-                    <p> 60<br /><span>Pass Created in 7 Days</span></p>
-                    <i class="fa fa-users box-icon"></i>
-                </div>
-            </div>
-        </div>
+        </section>
 
-
-    <!-- JavaScript to handle the toggle behavior -->
-    <script>
+        <script>
         function toggleNav() {
             var sidenav = document.getElementById("mySidenav");
+            var navbarToggler = document.querySelector(".navbar-toggler");
             var mainContent = document.querySelector(".main-content");
-            
-            if (sidenav.style.width === "300px") {
-                sidenav.style.width = "0";
-                mainContent.style.marginLeft = "0";
+            if (window.innerWidth <= 757 && window.innerHeight <= 675) {
+                if (sidenav.style.width === "100%") {
+                    sidenav.style.width = "0";
+                    navbarToggler.classList.add("active");
+                    mainContent.style.marginLeft = "0";
+                } else {
+                    sidenav.style.width = "100%";
+                    navbarToggler.classList.remove("active");
+                    mainContent.style.marginLeft = "100%";
+                }
             } else {
-                sidenav.style.width = "300px";
-                mainContent.style.marginLeft = "300px";
+                if (sidenav.style.width === "300px") {
+                    sidenav.style.width = "0";
+                    navbarToggler.classList.add("active");
+                    mainContent.style.marginLeft = "0";
+                } else {
+                    sidenav.style.width = "300px";
+                    navbarToggler.classList.remove("active");
+                    mainContent.style.marginLeft = "300px";
+                }
             }
         }
 

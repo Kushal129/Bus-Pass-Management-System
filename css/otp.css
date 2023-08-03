@@ -76,13 +76,6 @@ body {
     font-family: 'Rubik', sans-serif;
   }
 
-  body {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
   form input {
     height: 45px;
     width: 42px;
@@ -100,11 +93,6 @@ body {
     column-gap: 8px;
   }
 
-  .container h1 {
-    font-size: 2.5rem;
-    color: black;
-    font-weight: 500;
-  }
 
   .input-field input {
     height: 45px;
@@ -119,33 +107,4 @@ body {
   .input-field input::-webkit-inner-spin-button,
   .input-field input::-webkit-outer-spin-button {
     display: none;
-  }
-
-  form button {
-    align-items: center;
-    justify-content: center;
-    width: 15rem;
-    max-width: 150px;
-    background: rgb(68, 194, 68);
-    color: rgb(255, 255, 255);
-    font-size: 1rem;
-    margin-top: 15px;
-    border: none;
-    cursor: pointer;
-    padding: 12px 0;
-    border-radius: 6px;
-    transition: all 0.2s ease;
-  }
-
-  form button:hover {
-    background-color: rgb(32, 131, 32);
-  }
-
-  .container {
-    background-color: rgba(127, 255, 138, 0.382);
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    max-width: 400px;
-    padding: 8rem 2rem;
   }

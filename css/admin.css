@@ -215,17 +215,20 @@ h2 {
     font-weight: bold;
 }
 
-/* Mobile Responsive Styles */
 @media (max-width: 757px) {
     .sidenav {
-        width: 100%;
-    }
-
-    .navbar-toggler {
-        display: block;
+        width: 0; /* Change this to 0 to hide the navigation */
     }
 
     .main-content {
         margin-left: 0;
+    }
+
+    .navbar-toggler {
+        display: block;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 2;
     }
 }
