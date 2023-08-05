@@ -21,18 +21,17 @@ $email = $_POST["email"];
   // Send the OTP to the user's email
   $to = $_POST["email"];
   $subject = "Your Lgin Code";
-  $message = "Your OTP code is: $otp";
+  $message = "<b>Your OTP <u>code</u> is: $otp</b>";
   // mail("", $subject, $message);
 
 
 
-  $mail->setFrom('from@gfg.com', 'Name');           // Set sender of the mail
+  $mail->setFrom('buspassmsofficial@gmail.com', 'buspassmsofficial');           // Set sender of the mail
   $mail->addAddress($to);           // Add a recipient
   // $mail->addAddress('receiver2@gfg.com', 'Name');   // Name is optional
-
   $mail->isHTML(true);
   $mail->Subject = "$subject";
-  $mail->Body    = "OTP  <b> $otp</b>!";
+  $mail->Body    = "$message"; 
   $mail->AltBody = 'Body in plain text for non-HTML mail clients';
 
   $mail->send();

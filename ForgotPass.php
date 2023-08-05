@@ -71,8 +71,6 @@ if (isset($_POST["verify_otp"])) {
 
 <body>
 
-    <div class="Forgot-form">
-
         <div class="Forgot-form">
             <!-- <form id="otpRequestForm"> -->
             <div id="otpRequestForm">
@@ -119,8 +117,7 @@ if (isset($_POST["verify_otp"])) {
                         email: email
                     },
                     success: function(res) {
-
-                        if(res == 0){
+                        if(res === 0){
                             console.log("invaild user");
                             showToaster("invaild user" , "red");
                         }else{

@@ -9,15 +9,15 @@ require 'vendor/autoload.php';
 $mail = new PHPMailer();
 try {
     $mail->isSMTP();
-    $mail->Host = 'sandbox.smtp.mailtrap.io';
-    $mail->SMTPAuth = true;
-    $mail->Port = 2525;
-    $mail->Username = 'db31672e24c341';
-    $mail->Password = '550f9030710df7';
-
+    $mail->SMTPDebug = 0;
     $mail->SMTPSecure = 'tls';
-    $mail->Port       = 587;
+    $mail->SMTPAuth = true;
+    $mail->Port = 587;
+    $mail->Host = 'smtp.gmail.com';
+    $mail->Username = 'buspassmsofficial@gmail.com'; // enter your mail address
+    $mail->Password = 'zielyplrptbvsmnw';   // enter your email password
+    // $mail->Port       = 587;
 } catch (Exception $e) {
     $e->getMessage();
 }
-?>
+?> 

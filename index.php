@@ -21,13 +21,13 @@
 
   <title>Home</title>
   <style>
-    /* Ensure the image maintains its aspect ratio */
+
     .img {
       overflow: hidden;
       position: relative;
       width: 100%;
       padding-top: 75%;
-      /* 75% will maintain a 4:3 aspect ratio (height / width) */
+    
     }
 
     .img img {
@@ -37,7 +37,6 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      /* Ensures the image covers the container */
     }
   </style>
 </head>
