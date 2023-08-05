@@ -1,258 +1,211 @@
-<?php
-include('connection.php');
-session_start();
-error_reporting(0);
-
-
- if(isset($_POST['submit']))
-  {
-
-
- $name=$_POST['name'];
-    $email=$_POST['email'];
-    $message=$_POST['message'];
-
-$sql="insert into tblcontact(Name,Email,Message)values(:name,:email,:message)";
-$query=$dbh->prepare($sql);
-$query->bindParam(':name',$name,PDO::PARAM_STR);
-$query->bindParam(':email',$email,PDO::PARAM_STR);
-$query->bindParam(':message',$message,PDO::PARAM_STR);
- $query->execute();
-
-   $LastInsertId=$dbh->lastInsertId();
-   if ($LastInsertId>0) {
-   echo "<script>alert('Your message was sent successfully!.');</script>";
-echo "<script>window.location.href ='contact.php'</script>";
-  }
-  else
-    {
-         echo '<script>alert("Something Went Wrong. Please try again")</script>';
-    }
-
-  
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<title>Bus Pass Management System || Contact Us Page</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Contact Us </title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" 
+	integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" 
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-<!-- Custom Theme files -->
-<link href="css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
-<link href="css/style.css" type="text/css" rel="stylesheet" media="all">  
-<link href="css/font-awesome.css" rel="stylesheet">
-<!-- web-fonts -->   
-<link href="//fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700" rel="stylesheet">
-<link href="//fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
-<!-- //web-fonts -->
-<style>
-    /*-- //features --*/
-/*-- footer --*/
-.footer {
-    background: #232323;
-    padding: 4em 0;
-}
-.footer h3 {
-    font-size: 2.2em;
-    color: #ff5722;
-    margin-bottom: 0.8em;
-    font-weight: 100;
-    letter-spacing: 1px;
-}
-.footer-wthreegrid:nth-child(2) {
-    padding-left: 4em;
-} 
-.footer-wthreegrid ul li  i.fa {
-    margin-right: 0.6em;
-} 
-.footer-wthreegrid li {
-    display: block;
-    margin-top: 1em; 
-}
-.footer-wthreegrid li a {
-    font-size: 1em;
-    color: #fff;
-    display: inline-block;
-	text-decoration: none;
-	font-weight: 300;
-	outline: none;
-}
-.footer-wthreegrid li a:hover {
-    margin-left: 1em;
-    color: #02bbd2;
-} 
-.footer-wthreegrid.footer-tags li {
-    display: inline-block;
-}
-.footer-wthreegrid.footer-tags li a {
-    padding: .5em 1.3em;
-    margin-right: 12px;
-    border: 1px solid;
-}
-.footer-wthreegrid.footer-tags li a:hover {
-    margin-left: 0;
-    background-color: transparent;
-    color: #02bbd2; 
-}
-.footer-wthreegrid.footer-tags {
-    padding-left: 0;
-} 
-.footer-wthreegrid p {
-    color: #fff; 
-    font-weight: 300;
-} 
-.copy-right {
-    padding: 1.5em 0;
-    background: #1b1b1b;
-}
-.copy-right p {
-    text-align: center;
-    color: #fff;
-    letter-spacing: 1px;
-}
-.copy-right p a{ 
-    color: #02bbd2;
-	text-decoration:none;
-}
-.copy-right p a:hover{ 
-    color: #fff; 
-}
-.social-w3licon {
-    margin-top: 1em;
-}
-.social-w3licon a {
-    font-size: 1em;
-    color: #02bbd2;
-    margin: 0 0.3em;
-    display: inline-block;
-    -webkit-transition: .5s all;
-    -moz-transition: .5s all;
-    transition: .5s all;
-    width: 30px;
-    height: 30px;
-    line-height: 2.1em;
-    border: 1px solid;
-    text-align: center;
-}
-.social-w3licon a:hover {
-	-webkit-transform: rotateY(180deg);
-	-moz-transform: rotateY(180deg);
-	-o-transform: rotateY(180deg);
-	-ms-transform: rotateY(180deg);
-    transform: rotateY(180deg);
-	border-style: dashed;
-}
-</style>
-</head>
-<body>  
-	<!-- banner -->
-	<div class="agileits-banner">
-		<div class="bnr-agileinfo"> 
-			<!-- navigation -->
-			<?php include_once('includes/header.php');?>
-			<!-- //navigation -->
-			<!-- banner-text -->
-			<div class="banner-text agileinfo about-bnrtext"> 
-				<div class="container">
-					<h2><a href="index.php">Home</a> / Contact</h2> 
-				</div>
-			</div>
-			<!-- //banner-text -->   
-		</div>
-	</div>
-	<!-- //banner --> 
-	<!-- contact -->
-	<div class="contact agileits">
-		<div class="container">  
-			<div class="agileits-title">
-				<h3>Contact Us</h3>
-			</div>  
-			<div class="contact-agileinfo">
-				<div class="col-md-7 contact-form wthree">
-					<form action="#" method="post">
-						<input type="text" name="name" placeholder="Name" required="">
-						
-						<input class="email" type="email" name="email" placeholder="Email" required="">
-						<textarea placeholder="Message" name="message" required=""></textarea>
-						<input type="submit" name="submit" value="SUBMIT">
-					</form>
-				</div>
-				<div class="col-md-4 contact-right wthree">
-					<div class="contact-text w3-agileits">
-						<h4>GET IN TOUCH :</h4>
-						<?php
-$sql="SELECT * from tblpage where PageType='contactus'";
-$query = $dbh -> prepare($sql);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-
-$cnt=1;
-if($query->rowCount() > 0)
+	<style>
+  	@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400&display=swap');
+	*{
+		margin: 0;
+		padding: 0;
+		box-sizing:border-box ;
+		font-family: 'Poppins',sans-serif;
+	}
+	.contact{
+		position: relative;
+		min-height: 100vh;
+		padding: 50px 100px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		background: url(img/con-bg.jpg);
+		background-size: cover;
+	}
+	.contact .content
+	{
+		max-width: 800px;
+		text-align: center;
+	}
+	.contact .content h2{
+		font-size: 36px;
+		font-weight: 500;
+		color:#fff ;
+	}
+	.contact .content p{
+		font-weight: 300;
+		color: #fff;
+	}
+	.container{
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-top: 30px;
+	}
+	.container .contactInfo{
+		width: 50%;
+		display: flex;
+		flex-direction: column;
+	}
+	.container .contactInfo .box
+	{
+		 position: relative;
+		 padding: 20px 0;
+		 display: flex;
+	}
+	.container .contactInfo .box .icon{
+		min-width: 60px;
+		height: 60px;
+		background: #fdfc6b;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-radius: 50%;
+		font-size: 22px;
+	}
+	.container .contactInfo .box .text{
+		display: flex;
+		margin-left: 20px;
+		font-size: 16px;
+		color: #fff;
+		flex-direction: column;
+		font-weight: 300;
+	}
+	.container .contactInfo .box .text h3{
+		font-weight:500 ;
+		color: #fff;
+	}
+	.contactForm{
+		width: 40%;
+		padding: 40px;
+		background: #fff;
+	}
+	.contactForm h2{
+		font-size: 30px;
+		color: #333;
+		font-weight: 500;
+	}
+	.contactForm .inputBox
+	{
+		position: relative;
+		width: 100%;
+		margin-top: 10px;
+	}
+	.contactForm .inputBox input,
+	.contactForm .inputBox textarea{
+		width: 100%;
+		padding: 5px 0;
+		font-size: 16px;
+		margin: 10px 0;
+		border: none;
+		border-bottom: 2px solid #333;
+		outline: none;
+		resize: none;
+	}
+	.contactForm .inputBox span{
+		position: absolute;
+		left: 0;
+		padding: 5px 0;
+		font-size: 16px;
+		margin: 10px 0;
+		pointer-events: none;
+		transition: 0.5s;
+		color: #666;
+	}
+	.contactForm .inputBox input:focus ~ span,
+	.contactForm .inputBox input:valid ~ span,
+	.contactForm .inputBox textarea:focus ~ span,
+	.contactForm .inputBox textarea:valid ~ span
+	{
+		color: #fdfc6b;
+		font-size: 12px;
+		transform: translateY(-20px);
+	}
+	.contactForm .inputBox input[type="submit"]
+	{
+		background: #fdfc6b;
+		color: black;
+		border: none;
+		cursor: pointer;
+		padding: 10px;
+		font-size: 18px;
+	}
+@media (max-width: 991px)
 {
-foreach($results as $row)
-{               ?>
-						<p><i class="fa fa-map-marker"></i> <?php  echo htmlentities($row->PageDescription);?> </p>
-						<p><i class="fa fa-phone"></i> Mobile Number : <?php  echo htmlentities($row->MobileNumber);?></p>
-						
-						<p><i class="fa fa-envelope-o"></i> Email : <?php  echo htmlentities($row->Email);?></p> <?php $cnt=$cnt+1;}} ?>
-					</div> 
-				</div> 
-				<div class="clearfix"> </div>	
+	.contact{
+		padding: 50px;
+	}
+	.container{
+		flex-direction: column;
+	}
+	.container .contactInfo{
+		margin-bottom: 40px;
+	}
+	.container .contactInfo ,.contactForm{
+		width: 100%;
+	}
+
+}
+
+
+	</style>
+</head>
+
+<body>
+	<section class="contact">
+		<div class="content">
+			<h2 h2>Contact Us</h2>
+			<p>"Have something to share or a query about our revolutionary
+				Bus Pass Management System? Drop us a message, and our experts will promptly
+				provide the report you require. Experience the future of Bus Pass Management System today!"
+			</p>
+		</div>
+		<div class="container">
+			<div class="contactInfo">
+				<div class="box">
+					<div class="icon"><i class="fa-solid fa-envelope"></i></div>
+					<div class="text">
+						<h3>Email</h3>
+						<p>buspassmsofficial@gmail.com</p>
+					</div>
+				</div>
+				<div class="box">
+					<div class="icon"><i class="fa-solid fa-phone"></i></div>
+					<div class="text">
+						<h3>Phone</h3>
+						<p>123-456-789</p>
+					</div>
+				</div>
+			</div>
+			<div class="contactForm">
+				<form>
+					<h2>Send Message</h2>
+					<div class="inputBox">
+						<input type="text" name="" required="required">
+						<span>Full Name</span>
+					</div>
+					<div class="inputBox">
+						<input type="text" name="" required="required">
+						<span>Email</span>
+					</div>
+					<div class="inputBox">
+						<textarea required="required" ></textarea>
+						<span>Type Your Message...</span>
+					</div>
+					<div class="inputBox">
+						<input type="submit" value="Send">
+					</div>
+				</form>
 			</div>
 		</div>
-	</div>
-	<!-- //contact -->  
-	 
-	
-<?php include_once('includes/footer.php');?>   
- 
-	<!-- js --> 
-	<script src="js/jquery-2.2.3.min.js"></script> 
-	<script src="js/SmoothScroll.min.js"></script>
-	<script src="js/jarallax.js"></script> 
-	<script type="text/javascript">
-		/* init Jarallax */
-		$('.jarallax').jarallax({
-			speed: 0.5,
-			imgWidth: 1366,
-			imgHeight: 768
-		})
-	</script>  
-	<!-- //js -->  
-	<!-- start-smooth-scrolling --> 
-	<script type="text/javascript" src="js/move-top.js"></script>
-	<script type="text/javascript" src="js/easing.js"></script>	
-	<script type="text/javascript">
-			jQuery(document).ready(function($) {
-				$(".scroll").click(function(event){		
-					event.preventDefault();
-			
-			$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
-				});
-			});
-	</script>
-	<!-- //end-smooth-scrolling -->	 
-	<!-- smooth-scrolling-of-move-up -->
-	<script type="text/javascript">
-		$(document).ready(function() {
-			/*
-			var defaults = {
-				containerID: 'toTop', // fading element id
-				containerHoverID: 'toTopHover', // fading element hover id
-				scrollSpeed: 1200,
-				easingType: 'linear' 
-			};
-			*/
-			
-			$().UItoTop({ easingType: 'easeOutQuart' });
-			
-		});
-	</script>
-	<!-- //smooth-scrolling-of-move-up -->  
-	<!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/bootstrap.js"></script>
+	</section>
 </body>
+
 </html>

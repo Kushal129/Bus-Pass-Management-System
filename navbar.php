@@ -201,9 +201,8 @@ $con->close();
                                 <div class="form-group password-container">
                                     <input type="password" class="form-control" id="login_password"
                                         placeholder="Enter Password" name="login_password">
-                                    <i class="show-password-icon fa-solid fa-eye"
-                                        onclick="togglePasswordVisibility('login_password', this)"></i>
-                                    <button class="btn  btn-small btn-primary" onclick="sendOTP()">Send OTP</button>
+                                    <i class="show-password-icon fa-solid fa-eye" onclick="togglePasswordVisibility('login_password', this)"></i>
+                                    <!-- <button class="btn  btn-small btn-primary" onclick="sendOTP()">Send OTP</button> -->
                                 </div>
                                 <!-- <div class="form-group otp-container" id="otp_field">
                                     <input type="text" class="form-control" id="login_otp"

@@ -26,7 +26,6 @@ $email = $_POST["email"];
 
 
 
-  $mail->setFrom('buspassmsofficial@gmail.com', 'buspassmsofficial');           // Set sender of the mail
   $mail->addAddress($to);           // Add a recipient
   // $mail->addAddress('receiver2@gfg.com', 'Name');   // Name is optional
   $mail->isHTML(true);
