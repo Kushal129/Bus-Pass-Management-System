@@ -52,7 +52,8 @@ if (isset($_POST["login_submit"])) {
     }
 }
 
-if (isset($_POST["submit"])) {
+if (isset($_POST["submit"])) 
+{
     $full_name = $_POST["full_name"];
     $phone_number = $_POST["phone_number"];
     $email = $_POST["email"];
@@ -99,7 +100,7 @@ if (isset($_POST["submit"])) {
 
             if ($stmt->execute()) {
             // echo "<div class='alert alert-success'>Registration successful. You can now log in.</div>";
-            echo '<script>showToaster("Registration successful. You can now log in " , "red")</script>';
+            echo '<script>showToaster("Registration successful. You can now log in " , "Green")</script>';
             echo '<script>showRegistrationModal()</script>';
 
 
@@ -245,8 +246,6 @@ $con->close();
                     </div>
                 </div>
             </div>
-
-
 
     </nav>
 

@@ -36,7 +36,7 @@ if (isset($_POST["verify_otp"])) {
         // delete the otp  from table
 
         $qry = "DELETE FROM otps WHERE email = '$email'";
-    mysqli_query($con, $qry);
+        mysqli_query($con, $qry);
 
         // redirection
         header("Location:index.php");
@@ -71,34 +71,37 @@ if (isset($_POST["verify_otp"])) {
 
 <body>
 
-        <div class="Forgot-form">
-            <!-- <form id="otpRequestForm"> -->
-            <div id="otpRequestForm">
+    <div class="Forgot-form">
+        <!-- <form id="otpRequestForm"> -->
+        <div id="otpRequestForm">
 
-                <h1>Forgot Password</h1>
+            <h1>Forgot Password</h1>
 
-                <div class="content">
-                    <div class="input-field">
-                        <input type="email" placeholder="Enter Email" name="email" id="mail_send_otp" autocomplete="no">
-                    </div>
+            <div class="content">
+                <div class="input-field">
+                    <input type="email" placeholder="Enter Email" name="email" id="mail_send_otp" autocomplete="no">
                 </div>
-                <button onclick="sendOTP()">Send OTP</button>
-                <!-- </form> -->
+            </div>
+            <button onclick="sendOTP()">Send OTP</button>
+            <div class="content">
+                <a href="index.php" style="text-decoration: none; color: black;">Home</a>
             </div>
 
-            <form id="verifyOtpForm" style="display:none;" method="post">
-                <div class="content">
-                    <div class="input-field">
-                        <input type="text" placeholder="Enter OTP" name="otp" required>
-                    </div>
-                    <div class="input-field">
-                        <input type="password" placeholder="Enter New Password" name="new_password" required>
-                    </div>
-                </div>
-                <button type="submit" name="verify_otp">Verify OTP and Set New Password</button>
-            </form>
         </div>
-        <!-- <script>
+
+        <form id="verifyOtpForm" style="display:none;" method="post">
+            <div class="content">
+                <div class="input-field">
+                    <input type="text" placeholder="Enter OTP" name="otp" required>
+                </div>
+                <div class="input-field">
+                    <input type="password" placeholder="Enter New Password" name="new_password" required>
+                </div>
+            </div>
+            <button type="submit" name="verify_otp">Verify OTP and Set New Password</button>
+        </form>
+    </div>
+    <!-- <script>
             // Show OTP form on successful OTP request
             document.getElementById('otpRequestForm').addEventListener('submit', function() {
                 document.getElementById('otpRequestForm').style.display = 'none';
@@ -106,29 +109,29 @@ if (isset($_POST["verify_otp"])) {
             });
         </script> -->
 
-        <script>
-            function sendOTP() {
-                console.log('SendOTP');
-                email = $('#mail_send_otp').val();
-                $.ajax({
-                    method: 'POST',
-                    url: 'sendotp.php',
-                    data: {
-                        email: email
-                    },
-                    success: function(res) {
-                        if(res === 0){
-                            console.log("invaild user");
-                            showToaster("invaild user" , "red");
-                        }else{
-                            document.getElementById('otpRequestForm').style.display = 'none';
-                            document.getElementById('verifyOtpForm').style.display = 'block';
-                        }
-
+    <script>
+        function sendOTP() {
+            console.log('SendOTP');
+            email = $('#mail_send_otp').val();
+            $.ajax({
+                method: 'POST',
+                url: 'sendotp.php',
+                data: {
+                    email: email
+                },
+                success: function(res) {
+                    if (res === 0) {
+                        console.log("invaild user");
+                        showToaster("invaild user", "red");
+                    } else {
+                        document.getElementById('otpRequestForm').style.display = 'none';
+                        document.getElementById('verifyOtpForm').style.display = 'block';
                     }
-                });
-            }
-        </script>
+
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>

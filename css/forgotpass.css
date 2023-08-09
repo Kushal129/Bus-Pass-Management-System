@@ -6,11 +6,11 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f5f5f5;
+    background-color: rgb(255, 252, 231);
   }
   
   .Forgot-form {
-    background-color: #fff;
+    background-color: #f8edc8;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 30px;
     max-width: 400px;
@@ -54,11 +54,17 @@ body {
   button:hover {
     background-color: #efdb00;
   }
-  
+
+
   /* Optional: Adjust the box size and position */
   @media (max-width: 600px) {
     .Forgot-form {
       max-width: 90%;
     }
   }
+  
+
+
+
+  /* ----------------------- Wave ------------------------- */
   
