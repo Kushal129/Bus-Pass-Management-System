@@ -31,7 +31,8 @@ if (isset($_POST["verify_otp"])) {
         $stmt->execute();
         // Clear the OTP session
         unset($_SESSION['temp_mail']);
-        echo "Password reset successful!";
+        echo '<script>showToaster("Password reset successful!" , "green")</script>';
+        header("Location:index.php");
 
         // delete the otp  from table
 
@@ -42,7 +43,9 @@ if (isset($_POST["verify_otp"])) {
         header("Location:index.php");
     } else {
         unset($_SESSION['temp_mail']);
-        echo "Invalid OTP. Please try again.";
+        // echo "Invalid OTP. Please try again.";
+        echo '<script>showToaster("Invalid OTP. Please try again." , "red")</script>';
+
     }
 }
 ?>
@@ -76,7 +79,7 @@ if (isset($_POST["verify_otp"])) {
         <div id="otpRequestForm">
 
             <h1>Forgot Password</h1>
-
+            <hr>
             <div class="content">
                 <div class="input-field">
                     <input type="email" placeholder="Enter Email" name="email" id="mail_send_otp" autocomplete="no">
@@ -101,16 +104,9 @@ if (isset($_POST["verify_otp"])) {
             <button type="submit" name="verify_otp">Verify OTP and Set New Password</button>
         </form>
     </div>
-    <!-- <script>
-            // Show OTP form on successful OTP request
-            document.getElementById('otpRequestForm').addEventListener('submit', function() {
-                document.getElementById('otpRequestForm').style.display = 'none';
-                document.getElementById('verifyOtpForm').style.display = 'block';
-            });
-        </script> -->
-
     <script>
         function sendOTP() {
+            //console.log ma dekhai
             console.log('SendOTP');
             email = $('#mail_send_otp').val();
             $.ajax({
@@ -121,13 +117,12 @@ if (isset($_POST["verify_otp"])) {
                 },
                 success: function(res) {
                     if (res === 0) {
-                        console.log("invaild user");
+                        // console.log("invaild user");
                         showToaster("invaild user", "red");
                     } else {
                         document.getElementById('otpRequestForm').style.display = 'none';
                         document.getElementById('verifyOtpForm').style.display = 'block';
                     }
-
                 }
             });
         }

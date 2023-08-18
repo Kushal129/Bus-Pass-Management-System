@@ -124,7 +124,7 @@
 	.contactForm .inputBox textarea:focus ~ span,
 	.contactForm .inputBox textarea:valid ~ span
 	{
-		color: #fdfc6b;
+		color: black;
 		font-size: 12px;
 		transform: translateY(-20px);
 	}
