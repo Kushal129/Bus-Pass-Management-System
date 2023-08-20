@@ -1,5 +1,4 @@
 <?php
-
 use PHPMailer\PHPMailer\SMTP;
 
 session_start();
@@ -11,45 +10,49 @@ if (isset($_POST["verify_otp"])) {
     $enteredOtp = $_POST["otp"];
     $mail = $_SESSION['temp_mail'];
 
-    //  get the new otp from database
-    $qry = "SELECT otp FROM otps where email = '$mail' limit 1";
+    // Get the new OTP from the database
+    $qry = "SELECT otp FROM otps where email = '$mail' limit 3";
     $storedOtp = mysqli_fetch_assoc(mysqli_query($con, $qry))['otp'];
-    // verify otp with user otp
 
+    // Verify OTP with user OTP
     if ($enteredOtp == $storedOtp) {
-        // OTP is valid, update user's password
+        // OTP is valid, proceed to update user's password
         $newPassword = $_POST["new_password"];
-        // Perform database update here (update user's password based on email or user ID)
+        $confirmNewPassword = $_POST["confirm_new_password"];
 
+        if ($newPassword !== $confirmNewPassword) {
+            echo '<script>showToaster("Passwords do not match." , "red")</script>';
+            header("#verifyOtpForm");
+            exit();
+        }
+
+        // Hash the new password for security
+        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+
+        // Update user's password in the database
         $qry = "UPDATE users SET password = ? WHERE email = ?";
         $stmt = $con->prepare($qry);
-        $stmt->bind_param("ss", $password, $email);
-
-        $email = $_SESSION['temp_mail'];
-        $password = password_hash($newPassword, PASSWORD_DEFAULT);
-
+        $stmt->bind_param("ss", $hashedPassword, $mail);
         $stmt->execute();
+
         // Clear the OTP session
         unset($_SESSION['temp_mail']);
-        echo '<script>showToaster("Password reset successful!" , "green")</script>';
-        header("Location:index.php");
 
-        // delete the otp  from table
-
-        $qry = "DELETE FROM otps WHERE email = '$email'";
+        // Delete the OTP from the table
+        $qry = "DELETE FROM otps WHERE email = '$mail'";
         mysqli_query($con, $qry);
 
-        // redirection
-        header("Location:index.php");
+        // Display success message and redirect
+        echo '<script>showToaster("Password reset successful!" , "green")</script>';
+        header("Location: index.php");
+        exit();
     } else {
         unset($_SESSION['temp_mail']);
-        // echo "Invalid OTP. Please try again.";
         echo '<script>showToaster("Invalid OTP. Please try again." , "red")</script>';
-
+        
     }
 }
 ?>
-
 
 
 
@@ -99,6 +102,9 @@ if (isset($_POST["verify_otp"])) {
                 </div>
                 <div class="input-field">
                     <input type="password" placeholder="Enter New Password" name="new_password" required>
+                </div>
+                <div class="input-field">
+                    <input type="password" placeholder="Confirm New Password" name="confirm_new_password" required>
                 </div>
             </div>
             <button type="submit" name="verify_otp">Verify OTP and Set New Password</button>

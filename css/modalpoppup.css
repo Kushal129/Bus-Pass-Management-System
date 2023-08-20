@@ -70,22 +70,20 @@
 }
 #signupLink {
     font-size: 12px;
-    PADDING: 3px;
+    padding: 3px;
     float: right;
+    font-size: 20px;
 }
-#signupLink,
-#signinLink {
+#signupLink{
     color: #10213e;
     cursor: pointer;
 }
 
-#signupLink:hover,
-#signinLink:hover {
+#signupLink:hover {
     color: #050337;
 }
 
-#signupLink:active,
-#signinLink:active {
+#signupLink:active {
     color: #050337;
 }
 

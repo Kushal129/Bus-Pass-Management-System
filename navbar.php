@@ -48,19 +48,18 @@ if (isset($_POST["login_submit"])) {
         // header("Location: navbar.php");
         echo '<script>showToaster("Email not found " "red")</script>';
         echo '<script>showLoginModal()</script>';
-
     }
 }
-
 if (isset($_POST["submit"])) 
 {
     $full_name = $_POST["full_name"];
     $phone_number = $_POST["phone_number"];
     $email = $_POST["email"];
     $password = $_POST["password"];
+    $confirm_password = $_POST["confirm_password"]; // New line
     $error = array();
 
-    if (empty($full_name) || empty($phone_number) || empty($email) || empty($password)) {
+    if (empty($full_name) || empty($phone_number) || empty($email) || empty($password) || empty($confirm_password)) {
         array_push($error, "All fields are required.");
     }
 
@@ -69,14 +68,21 @@ if (isset($_POST["submit"]))
     }
 
     if (strlen($password) < 8) {
+        // echo '<script>showToaster("Please enter a password with at least 8 characters. " , "red")</script>';
         array_push($error, "Please enter a password with at least 8 characters.");
+    }
+
+    if ($password !== $confirm_password) {
+        // echo '<script>showToaster("Passwords do not match. " , "red")</script>';
+        array_push($error, "Passwords do not match.");
     }
 
     if (count($error) > 0) {
         foreach ($error as $errorMsg) {
+            
             echo "<div class='alert alert-danger'>$errorMsg</div>";
         }
-    } else {
+    }  else {
         // Check if the email already exists in the database
         $checkEmailQuery = "SELECT id FROM users WHERE email=?";
         $stmt = $con->prepare($checkEmailQuery);
@@ -88,8 +94,6 @@ if (isset($_POST["submit"]))
             // echo "<div class='alert alert-danger'>Email already exists. Please use a different email.</div>";
             echo '<script>showToaster("Email already exists. Please use a different email. " , "red")</script>';
             echo '<script>showRegistrationModal()</script>';
-
-
         } else {
             // Hash the password for security
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
@@ -99,16 +103,13 @@ if (isset($_POST["submit"]))
             $stmt->bind_param("ssss", $full_name, $phone_number, $email, $hashedPassword);
 
             if ($stmt->execute()) {
-            // echo "<div class='alert alert-success'>Registration successful. You can now log in.</div>";
-            echo '<script>showToaster("Registration successful. You can now log in " , "Green")</script>';
-            echo '<script>showRegistrationModal()</script>';
-
-
+                // echo "<div class='alert alert-success'>Registration successful. You can now log in.</div>";
+                echo '<script>showToaster("Registration successful. You can now log in " , "Green")</script>';
+                echo '<script>showRegistrationModal()</script>';
             } else {
                 // echo "<div class='alert alert-danger'>Error while registering. Please try again later.</div>";
-            echo '<script>showToaster("Error while registering. Please try again " , "red")</script>';
-            echo '<script>showRegistrationModal()</script>';
-
+                echo '<script>showToaster("Error while registering. Please try again " , "red")</script>';
+                echo '<script>showRegistrationModal()</script>';
             }
         }
     }
@@ -124,30 +125,26 @@ $con->close();
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/modalpoppup.css">
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <title>Home</title>
     <script>
-    function showLoginModal() {
-        $("#loginModal").modal('show');
-    }
+        function showLoginModal() {
+            $("#loginModal").modal('show');
+        }
 
-    function showRegistrationModal() {
-        $("#registrationForm").modal('show');
-    }
+        function showRegistrationModal() {
+            $("#registrationForm").modal('show');
+        }
     </script>
 </head>
 
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-warning ">
-        <a class="navbar-brand" href="#"><img src="img/buslogo.png" width="30" height="30"
-                class="d-inline-block align-top" alt></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="#"><img src="img/buslogo.png" width="30" height="30" class="d-inline-block align-top" alt></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -157,8 +154,7 @@ $con->close();
                     <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true">
                         Dropdown
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -168,19 +164,16 @@ $con->close();
                         <a class="dropdown-item" href="#">Something else here</a>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                </li>
+
             </ul>
 
             <?php
             if (!isset($_SESSION['username'])) { ?>
-            <button type="button" class="btn-lg" data-toggle="modal" data-target="#loginModal">Login</button>
+                <button type="button" class="btn-lg" data-toggle="modal" data-target="#loginModal">Login</button>
             <?php } else { ?>
-            <a href="logout.php" class="btn-lg">Logout</a>
+                <a href="logout.php" class="btn-lg">Logout</a>
             <?php } ?>
 
-            <!-- Bootstrap Modal -->
 
             <!-- Login and Registration Modal -->
             <div class="modal fade" id="loginModal" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
@@ -196,41 +189,33 @@ $con->close();
                             <!-- Login Form -->
                             <form id="loginForm" method="post">
                                 <div class="form-group">
-                                    <input type="email" class="form-control" id="login_email" placeholder="Enter Email"
-                                        name="login_email">
+                                    <input type="email" class="form-control" id="login_email" placeholder="Enter Email" name="login_email">
                                 </div>
                                 <div class="form-group password-container">
-                                    <input type="password" class="form-control" id="login_password"
-                                        placeholder="Enter Password" name="login_password">
+                                    <input type="password" class="form-control" id="login_password" placeholder="Enter Password" name="login_password">
                                     <i class="show-password-icon fa-solid fa-eye" onclick="togglePasswordVisibility('login_password', this)"></i>
-                                    <!-- <button class="btn  btn-small btn-primary" onclick="sendOTP()">Send OTP</button> -->
+                                    
                                 </div>
-                                <!-- <div class="form-group otp-container" id="otp_field">
-                                    <input type="text" class="form-control" id="login_otp"
-                                        placeholder="Enter OTP" name="otp">
-                                </div> -->
                                 <button type="submit" class="btn-lr btn-block" name="login_submit">Sign In</button>
                             </form>
                             <!-- Registration Form -->
 
                             <form id="registrationForm" style="display:none;" method="post">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="fullName" placeholder="Full Name"
-                                        name="full_name">
+                                    <input type="text" class="form-control" id="fullName" placeholder="Full Name" name="full_name">
                                 </div>
                                 <div class="form-group">
-                                    <input type="tel" class="form-control" id="phoneNumber" placeholder="Phone Number"
-                                        name="phone_number">
+                                    <input type="tel" class="form-control" id="phoneNumber" placeholder="Phone Number" name="phone_number">
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control" id="regEmail" placeholder="Email"
-                                        name="email">
+                                    <input type="email" class="form-control" id="regEmail" placeholder="Email" name="email">
                                 </div>
                                 <div class="form-group password-container">
-                                    <input type="password" class="form-control" id="regPassword" placeholder="Password"
-                                        name="password">
-                                    <i class="show-password-icon fa-solid fa-eye"
-                                        onclick="togglePassword('regPassword', this)"></i>
+                                    <input type="password" class="form-control" id="regPassword" placeholder="Password" name="password">
+                                    <!-- <i class="show-password-icon fa-solid fa-eye" onclick="togglePassword('regPassword', this)"></i> -->
+                                </div>
+                                <div class="form-group password-container">
+                                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" name="confirm_password">
                                 </div>
                                 <button type="submit" class="btn-lr btn-block" value="registr" name="submit">Sign
                                     Up</button>
@@ -254,38 +239,38 @@ $con->close();
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script>
-    // Toggle between Login and Registration forms
-    document.getElementById('signupLink').addEventListener('click', function() {
-        document.getElementById('loginForm').style.display = 'none';
-        document.getElementById('registrationForm').style.display = 'block';
-        document.getElementById('signinLink').style.display = 'block';
-        document.getElementById('loginModalLabel').innerText = 'Registration';
-        this.style.display = 'none';
-    });
+        // Toggle between Login and Registration forms
+        document.getElementById('signupLink').addEventListener('click', function() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registrationForm').style.display = 'block';
+            document.getElementById('signinLink').style.display = 'block';
+            document.getElementById('loginModalLabel').innerText = 'Registration';
+            this.style.display = 'none';
+        });
 
-    document.getElementById('signinLink').addEventListener('click', function() {
-        document.getElementById('loginForm').style.display = 'block';
-        document.getElementById('registrationForm').style.display = 'none';
-        document.getElementById('signupLink').style.display = 'block';
-        document.getElementById('loginModalLabel').innerText = 'Login';
-        this.style.display = 'none';
-    });
+        document.getElementById('signinLink').addEventListener('click', function() {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('registrationForm').style.display = 'none';
+            document.getElementById('signupLink').style.display = 'block';
+            document.getElementById('loginModalLabel').innerText = 'Login';
+            this.style.display = 'none';
+        });
 
-    // show password in L&R
-    function togglePasswordVisibility(fieldId, icon) {
-        var passwordField = document.getElementById(fieldId);
-        var iconElement = icon.querySelector(".show-password-icon");
+        // show password 
+        function togglePasswordVisibility(fieldId, icon) {
+            var passwordField = document.getElementById(fieldId);
+            var iconElement = icon.querySelector(".show-password-icon");
 
-        if (passwordField.type === "password") {
-            passwordField.type = "text";
-        } else {
-            passwordField.type = "password";
+            if (passwordField.type === "password" ) {
+                passwordField.type = "text";
+            } else {
+                passwordField.type = "password";
+            }
+
+            setTimeout(function() {
+                passwordField.type = "password";
+            }, 2000); 
         }
-
-        setTimeout(function() {
-            passwordField.type = "password";
-        }, 5000); // Hide the password after 5 seconds
-    }
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
