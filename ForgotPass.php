@@ -1,4 +1,5 @@
 <?php
+
 use PHPMailer\PHPMailer\SMTP;
 
 session_start();
@@ -44,12 +45,11 @@ if (isset($_POST["verify_otp"])) {
 
         // Display success message and redirect
         echo '<script>showToaster("Password reset successful!" , "green")</script>';
-        header("Location: index.php");
+        header("Location: index.php?popup=login&msg=true");
         exit();
     } else {
         unset($_SESSION['temp_mail']);
         echo '<script>showToaster("Invalid OTP. Please try again." , "red")</script>';
-        
     }
 }
 ?>
@@ -89,10 +89,10 @@ if (isset($_POST["verify_otp"])) {
                 </div>
             </div>
             <button onclick="sendOTP()">Send OTP</button>
-            <div class="content">
+            <button>
                 <a href="index.php" style="text-decoration: none; color: black;">Home</a>
-            </div>
-
+            </button>
+            
         </div>
 
         <form id="verifyOtpForm" style="display:none;" method="post">
@@ -105,11 +105,16 @@ if (isset($_POST["verify_otp"])) {
                 </div>
                 <div class="input-field">
                     <input type="password" placeholder="Confirm New Password" name="confirm_new_password" required>
+                    <i class="show-password-icon fa-solid fa-eye" onclick="togglePasswordVisibility('login_password', this)"></i>
                 </div>
             </div>
             <button type="submit" name="verify_otp">Verify OTP and Set New Password</button>
         </form>
-    </div>
+        <div class="bus">
+                <marquee behavior="" direction="right" scrollamount="20" style="margin-bottom: -5px; padding:0;">
+                    <img class="ml-1 bus" src="img/travel.png" style="max-width: 150px;">
+                </marquee>
+            </div>
     <script>
         function sendOTP() {
             //console.log ma dekhai
@@ -131,6 +136,22 @@ if (isset($_POST["verify_otp"])) {
                     }
                 }
             });
+        }
+
+        // show password 
+        function togglePasswordVisibility(fieldId, icon) {
+            var passwordField = document.getElementById(fieldId);
+            var iconElement = icon.querySelector(".show-password-icon");
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+            } else {
+                passwordField.type = "password";
+            }
+
+            setTimeout(function() {
+                passwordField.type = "password";
+            }, 2000);
         }
     </script>
 </body>

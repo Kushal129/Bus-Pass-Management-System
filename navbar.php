@@ -2,6 +2,7 @@
 // Login Form Submit
 
 include 'mail_config.php';
+include_once 'connection.php';
 
 if (isset($_POST["login_submit"])) {
     $email = $_POST["login_email"];
@@ -21,7 +22,6 @@ if (isset($_POST["login_submit"])) {
         // Verify the password
         if (password_verify($password, $hashedPassword)) {
             // Password is correct, user is authenticated
-
 
             $_SESSION['username'] = $email;
             echo '<script>showToaster("Welcome  ,$username" , "green")</script>';
@@ -150,26 +150,11 @@ $con->close();
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true">
-                        Dropdown
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Pass</a>
-                        <a class="dropdown-item" href="#">Payment</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>
-
             </ul>
 
             <?php
             if (!isset($_SESSION['username'])) { ?>
-                <button type="button" class="btn-lg" data-toggle="modal" data-target="#loginModal">Login</button>
+                <button type="button" class="btn-lg" data-toggle="modal" data-target="#loginModal" id="login_btn">Login</button>
             <?php } else { ?>
                 <a href="logout.php" class="btn-lg">Logout</a>
             <?php } ?>
@@ -216,6 +201,7 @@ $con->close();
                                 </div>
                                 <div class="form-group password-container">
                                     <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" name="confirm_password">
+                                    <i class="show-password-icon fa-solid fa-eye" onclick="togglePasswordVisibility('login_password', this)"></i>
                                 </div>
                                 <button type="submit" class="btn-lr btn-block" value="registr" name="submit">Sign
                                     Up</button>
@@ -266,7 +252,6 @@ $con->close();
             } else {
                 passwordField.type = "password";
             }
-
             setTimeout(function() {
                 passwordField.type = "password";
             }, 2000); 
