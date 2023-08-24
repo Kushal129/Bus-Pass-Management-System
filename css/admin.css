@@ -1,234 +1,264 @@
-/* Reset some default styles to ensure consistency */
-body, h1, h2, h3, h4, h5, h6, p, ul, li, form, button {
+/* Google Font Link */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-}
-
-/* Global styles */
-body {
-    background-color: #f5f5f5;
-}
-
-/* Navigation Styles */
-.sidenav {
-    height: 100%;
-    width: 300px;
+.sidebar {
     position: fixed;
-    top: 0;
     left: 0;
-    z-index: 1;
-    background-color: #f9d81f;
-    padding-top: 20px;
-    color: #000000;
+    top: 0;
+    height: 100%;
+    width: 78px;
+    background: #000000;
+    padding: 6px 14px;
+    z-index: 99;
+    transition: all 0.5s ease;
 }
 
-.sidenav a {
-    display: block;
-    padding: 15px;
-    color: #000000;
-    text-decoration: none;
+.sidebar.open {
+    width: 250px;
 }
 
-.sidenav a:hover {
-    background-color: #ffe54f;
+.sidebar .logo-details {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    position: relative;
 }
 
-.sidenav .logo {
+.sidebar .logo-details .icon {
+    opacity: 0;
+    transition: all 0.5s ease;
+}
+
+.sidebar .logo-details .logo_name {
+    color: #fff;
+    font-size: 40px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-left: 20px;
+    opacity: 0;
+    transition: all 0.5s ease;
+}
+.sidebar .logo-details .logo_name:hover{
+    color: rgb(255, 255, 77);
+    font-size: 44px;
+}
+
+.sidebar.open .logo-details .icon,
+.sidebar.open .logo-details .logo_name {
+    opacity: 1;
+}
+
+.sidebar .logo-details #btn {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    font-size: 22px;
+    transition: all 0.4s ease;
+    font-size: 23px;
     text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #888;
+    cursor: pointer;
+    transition: all 0.5s ease;
 }
 
-.navbar-toggler {
-    position: fixed;
-    top: 20px;
-    left: 320px;
-    font-size: 20px;
-    color: #333;
-    background-color: #fff;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    z-index: 2;
+.sidebar.open .logo-details #btn {
+    text-align: right;
+}
+
+.sidebar i {
+    color: #ffee06;
+    height: 60px;
+    min-width: 50px;
+    font-size: 28px;
+    text-align: center;
+    line-height: 60px;
+}
+
+.sidebar .nav-list {
+    margin-top: 20px;
+    height: 100%;
+}
+
+.sidebar li {
+    position: relative;
+    margin: 8px 0;
+    list-style: none;
+}
+
+.sidebar li .tooltip {
+    position: absolute;
+    top: -20px;
+    left: calc(100% + 15px);
+    z-index: 3;
+    background: #fdf7c4;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: 400;
+    opacity: 0;
+    white-space: nowrap;
+    pointer-events: none;
+    transition: 0s;
+}
+
+.sidebar li:hover .tooltip {
+    opacity: 1;
+    pointer-events: auto;
+    transition: all 0.4s ease;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.sidebar.open li .tooltip {
     display: none;
 }
 
-/* Main Content Styles */
-.main-content {
-    margin-left: 300px;
-    padding: 20px;
+.sidebar li a {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    background: #00000074;
+}
+
+.sidebar li a:hover {
+    background: #ffff00;
+    color: #000000;
+}
+
+.sidebar li a .links_name {
+    color: #ebff09;
+    font-size: 15px;
+    font-weight: 400;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.4s;
+}
+
+.sidebar.open li a .links_name {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.sidebar li a:hover .links_name,
+.sidebar li a:hover i {
+    transition: all 0.5s ease;
+    color: #1d1010;
+}
+
+.sidebar li i {
+    height: 50px;
+    line-height: 50px;
+    font-size: 18px;
+    border-radius: 12px;
 }
 
 
+.home-section {
+    position: relative;
+    background: #ffffff;
+    min-height: 100vh;
+    top: 0;
+    left: 78px;
+    width: calc(100% - 78px);
+    transition: all 0.5s ease;
+    z-index: 2;
+}
+
+.sidebar.open~.home-section {
+    left: 240px;
+    width: calc(100% - 250px);
+}
+
+
+
+@media (max-width: 420px) {
+    .sidebar li .tooltip {
+        display: none;
+    }
+}
+
 .head {
+    background-color: #000000;
+    padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
-    background-color: #f5f5f5;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    top: 0;
+    left: 40px;
+    color: white;
+
 }
 
-.head .col-div-6 {
+.profile {
     display: flex;
     align-items: center;
+    gap: 10px;
 }
 
-.head .col-div-6 .profile {
-    display: flex;
-    align-items: center;
-}
-
-.head .col-div-6 .profile img {
-    width: 30px;
-    height: 30px;
+.pro-img {
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    margin-right: 10px;
 }
 
-.head .col-div-6 .profile .profile-text {
+.profile-text {
+    font-size: 18px;
     font-weight: bold;
-    padding-right: 1rem;
+    color: #ffffff;
+    margin: 0;
 }
 
-.head #logout-btn {
-    background-color: #dc3545;
-    color: #fff;
+.logout-btn {
+    background-color: #f44336;
     border: none;
-    padding: 8px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-/* Responsive logout button */
-@media only screen and (max-width: 768px) {
-    .head #logout-btn {
-        margin-left: 10px; /* Adjust the margin for smaller screens */
-    }
-}
-
-/* Dashboard Styles */
-.dashboard {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.col-div-3 {
-    flex: 0 0 25%;
-    max-width: 25%;
-    padding: 15px;
-}
-
-.box {
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 15px;
+    color: white;
+    padding: 8px 16px;
     text-align: center;
-}
-
-.box p {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.box span {
-    font-size: 16px;
-    color: #777;
-}
-
-.box-icon {
-    font-size: 36px;
-    margin-bottom: 10px;
-}
-
-/* Passenger, Passes, Category, Search, Report Styles */
-.passenger, .passes, .category, .search, .report {
-    margin-top: 30px;
-}
-
-h2 {
-    margin-bottom: 20px;
-    font-weight: bold;
-}
-
-.passenger-list, .pass-list, .category-list {
-    list-style: none;
-    padding: 0;
-}
-
-.passenger-list li, .pass-list li, .category-list li {
-    padding: 10px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 10px;
-}
-
-.add-passenger, .add-pass, .add-category, .search-form, .report-table {
-    margin-top: 20px;
-}
-
-.add-passenger h3, .add-pass h3, .add-category h3, .search h2, .report h2 {
-    margin-bottom: 10px;
-    font-weight: bold;
-}
-
-.add-passenger label, .add-pass label, .add-category label, .search label, .report thead th {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.add-passenger input[type="text"], .add-pass input[type="text"], .add-category input[type="text"], .search input[type="text"] {
-    width: 100%;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.add-passenger button, .add-pass button, .add-category button, .search button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 8px 15px;
+    font-size: 14px;
     border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.report-table table {
-    width: 100%;
-    border-collapse: collapse;
+.logout-btn:hover {
+    background-color: #d32f2f;
 }
 
-.report-table table th, .report-table table td {
-    padding: 10px;
-    border: 1px solid #ccc;
+/* Card styles */
+.card {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.report-table table th {
-    background-color: #f5f5f5;
-    font-weight: bold;
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-@media (max-width: 757px) {
-    .sidenav {
-        width: 0; /* Change this to 0 to hide the navigation */
-    }
+.card-body {
+    padding: 20px;
+}
 
-    .main-content {
-        margin-left: 0;
-    }
+.card-title {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+}
 
-    .navbar-toggler {
-        display: block;
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        z-index: 2;
-    }
+.card-text {
+    font-size: 1rem;
+    color: #555;
 }

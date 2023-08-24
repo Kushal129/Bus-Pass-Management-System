@@ -3,7 +3,7 @@
 -- Host: localhost	Database: buspassms
 -- ------------------------------------------------------
 -- Server version 	10.4.28-MariaDB
--- Date: Sun, 20 Aug 2023 07:37:03 +0200
+-- Date: Thu, 24 Aug 2023 13:12:30 +0200
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -139,7 +139,7 @@ CREATE TABLE `otps` (
   `email` varchar(250) NOT NULL,
   `otp` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=142 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -149,12 +149,12 @@ CREATE TABLE `otps` (
 LOCK TABLES `otps` WRITE;
 /*!40000 ALTER TABLE `otps` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `otps` VALUES (88,'henvikk81@gmail.com',961551),(94,'21bmiit129@gmail.com',559138);
+INSERT INTO `otps` VALUES (88,'henvikk81@gmail.com',961551),(111,'21bmiit134@gmail.com',447023),(136,'kushalhpipaliya01@gmail.com',896517);
 /*!40000 ALTER TABLE `otps` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `otps` with 2 row(s)
+-- Dumped table `otps` with 3 row(s)
 --
 
 --
@@ -199,7 +199,7 @@ CREATE TABLE `users` (
   `role` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1- user 0- admin',
   PRIMARY KEY (`email`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -209,7 +209,7 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `users` VALUES (1,'Admin',1234567891,'21bmiit129@gmail.com','$2y$10$CrcMI2/kZWhicWoCvUQFlO2sJlHvNcLDc.8CZQawj56QEocmnu0cS',0),(2,'Henvi kaklotar',9913402465,'henvikk81@gmail.com','$2y$10$qAwmK9eCG82P2n/JMeX5CORWXWtUzzE7taTYJEZuJfoo8HDHf0d3W',1);
+INSERT INTO `users` VALUES (1,'Admin',1234567891,'21bmiit129@gmail.com','$2y$10$GLNk1dMnUHSI4yUW7x5ekuaStwvZ/aIMJ.hSz7WhN92qajipMrnlS',0),(6,'Kushal Pipaliya',9574476496,'kushalhpipaliya01@gmail.com','$2y$10$piuc2oIEWUOSQYc5IjGh0e0epbc3obySfBj/B9SEQf.flxWGKsLiu',1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
@@ -254,4 +254,4 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on: Sun, 20 Aug 2023 07:37:03 +0200
+-- Dump completed on: Thu, 24 Aug 2023 13:12:31 +0200

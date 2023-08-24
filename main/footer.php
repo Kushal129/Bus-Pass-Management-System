@@ -18,7 +18,7 @@
                     <div class="col-sm-4 col-md-3 item">
                         <h3>Contact Us</h3>
                         <ul>
-                            <li><a href="contact.php">Support</a></li>
+                            <li><a href="main/contact.php">Support</a></li>
                            
                         </ul>
                     </div>

@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-include_once 'connection.php';
+include_once '../connection.php';
 
 if (!isset($_SESSION['username'])) {
-    header('location:index.php');
+    header('location:../index.php');
 } else {
     $checkEmailQuery = "SELECT * FROM users WHERE email=?";
     $stmt = $con->prepare($checkEmailQuery);
@@ -19,136 +19,144 @@ if (!isset($_SESSION['username'])) {
     if ($role) {
 
         // echo "USER";
-        header("Location: index.php");
+        header("Location: ../index.php");
     }
 }
 ?>
-
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="en" dir="ltr">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/ico" href="img/buslogo.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/admin.css">
-
-    <title>Admin Page</title>
+    <meta charset="UTF-8">
+    <title> Admin Page </title>
+    <link rel="stylesheet" href="../css/admin.css">
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
-    <div id="mySidenav" class="sidenav">
-        <!-- side nav -->
-        <p class="logo"><span>Bus Pass</span></p>
-        <a href="/admin-all/admin.php" class="icon-a"><i class="fa fa-dashboard icons"></i>&nbsp;&nbsp;Dashboard</a>
-        <a href="/admin-all/Passenger.php" class="icon-a"><i class="fa fa-users icons"></i>&nbsp;&nbsp;Passenger</a>
-        <a href="/admin-all/Passes.php" class="icon-a"><i class="fa fa-list icons"></i>&nbsp;&nbsp;Passes</a>
-        <a href="/admin-all/Category.php" class="icon-a"><i class="fa fa-bar-chart-o fa-fw icons"></i>&nbsp;&nbsp;Category</a>
-        <a href="/admin-all/Search.php" class="icon-a"><i class="fa fa-search icons"></i>&nbsp;&nbsp;Search</a>
-        <a href="/admin-all/Report.php" class="icon-a"><i class="fa fa-folder icons"></i>&nbsp;&nbsp;Report of Pass</a>
+    <div class="sidebar">
+        <div class="logo-details">
+            <div class="logo_name">B P M S</div>
+            <i class='bx bx-menu' id="btn"></i>
+        </div>
+        <ul class="nav-list">
+            <li>
+                <a href="../admin-all/admin.php">
+                    <i class='bx bx-grid-alt'></i>
+                    <span class="links_name">Dashboard</span>
+                </a>
+                <span class="tooltip">Dashboard</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-user'></i>
+                    <span class="links_name">Passenger</span>
+                </a>
+                <span class="tooltip">Passenger</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-chat'></i>
+                    <span class="links_name">Passes</span>
+                </a>
+                <span class="tooltip">Passes</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-pie-chart-alt-2'></i>
+                    <span class="links_name">Category</span>
+                </a>
+                <span class="tooltip">Category</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-search'></i>
+                    <span class="links_name">Search</span>
+                </a>
+                <span class="tooltip">Search</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-columns'></i>
+                    <span class="links_name">Report of Pass</span>
+                </a>
+                <span class="tooltip">Report of Pass</span>
+            </li>
+        </ul>
     </div>
 
-    <button class="navbar-toggler" type="button" onclick="toggleNav()">
-        <span class="navbar-toggler-icon">&#9776;</span>
-    </button>
+    <div class="head">
+        <div class="profile">
+            <img src="img/admin.ico" class="pro-img" id="user-avatar" alt="User Avatar">
+            <p class="profile-text">Admin</p>
+        </div>
+        <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>
+    </div>
 
-    <div class="main-content">
-        <div class="head">
-            <div class="col-div-6">
-                <div class="profile">
-                    <p class="profile-text">Admin</p>
-                    <img src="img/admin.ico" class="pro-img" id="user-avatar" alt="User Avatar">
+    <section class="home-section">
+        <div class="container">
+
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Pass</h5>
+                        <p>50</p>
+                        <i class='bx bx-user'></i>
+                    </div>
                 </div>
-            </div>
-            <div class="d-flex w-100 justify-content-end">
-                <button class="" id="logout-btn" onclick="logout()">Logout</button>
-            </div>
 
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Pass Created Today</h5>
+                        <p>60</p>
+                        <i class='bx bx-user'></i>
+                    </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Pass Created in 7 Days</h5>
+                        <p>400</p>
+                        <i class='bx bx-user'></i>
+                    </div>
+                </div>
             
-            <div class="clearfix"></div>
         </div>
-        <div class="dashboard">
-            <div class="col-div-3">
-                <div class="box">
-                    <p> 60<br /><span>Total Pass</span></p>
-                    <i class="fa fa-users box-icon"></i>
-                </div>
-            </div>
-            <div class="col-div-3">
-                <div class="box">
-                    <p> 60<br /><span>Total Category</span></p>
-                    <i class="fa fa-users box-icon"></i>
-                </div>
-            </div>
-            <div class="col-div-3">
-                <div class="box">
-                    <p> 60<br /><span>Pass Created Today</span></p>
-                    <i class="fa fa-users box-icon"></i>
-                </div>
-            </div>
-            <div class="col-div-3">
-                <div class="box">
-                    <p> 60<br /><span>Pass Created in 7 Days</span></p>
-                    <i class="fa fa-users box-icon"></i>
-                </div>
-            </div>
-        </div>
-
-
-    <!-- JavaScript to handle the toggle behavior -->
+    </section>
     <script>
-        function toggleNav() {
-            var sidenav = document.getElementById("mySidenav");
-            var mainContent = document.querySelector(".main-content");
-            
-            if (sidenav.style.width === "300px") {
-                sidenav.style.width = "0";
-                mainContent.style.marginLeft = "0";
-            } else {
-                sidenav.style.width = "300px";
-                mainContent.style.marginLeft = "300px";
-            }
-        }
+        let sidebar = document.querySelector(".sidebar");
+        let closeBtn = document.querySelector("#btn");
+        let searchBtn = document.querySelector(".bx-search");
 
-        // Close the side navigation when clicking outside the dashboard area
-        document.addEventListener("click", function(event) {
-            var sidenav = document.getElementById("mySidenav");
-            var mainContent = document.querySelector(".main-content");
-            if (window.innerWidth <= 757 && window.innerHeight <= 675) {
-                if (!sidenav.contains(event.target) && !mainContent.contains(event.target)) {
-                    sidenav.style.width = "0";
-                }
-            }
+        closeBtn.addEventListener("click", () => {
+            sidebar.classList.toggle("open");
+            menuBtnChange(); //calling the function(optional)
         });
 
-        // Handle toggle behavior on page load and window resize
-        window.addEventListener("load", toggleNav);
-        window.addEventListener("resize", toggleNav);
+        searchBtn.addEventListener("click", () => { // Sidebar open when you click on the search iocn
+            sidebar.classList.toggle("open");
+            menuBtnChange(); //calling the function(optional)
+        });
+
+        // following are the code to change sidebar button(optional)
+        function menuBtnChange() {
+            if (sidebar.classList.contains("open")) {
+                closeBtn.classList.replace("bx-menu", "bx-menu-alt-right"); //replacing the iocns class
+            } else {
+                closeBtn.classList.replace("bx-menu-alt-right", "bx-menu"); //replacing the iocns class
+            }
+        }
     </script>
     <script>
         // Function to handle logout
         function logout() {
-            // You can add any additional logic here before redirecting to the logout page
-            // For example, show a confirmation dialog before logging out
-            // var logoutConfirmed = confirm("Are you sure you want to log out?");
-            // if (logoutConfirmed) {
-            // Redirect to the logout page or any other appropriate page after logout
-            // For this example, we will redirect to logout.html
-            window.location.href = 'logout.php';
-            // }
+            
+            window.location.href = '../logout.php';
         }
 
-        // Event listener for the logout button
         document.getElementById('logout-btn').addEventListener('click', logout);
     </script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 </body>
 
 </html>

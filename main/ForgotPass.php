@@ -3,9 +3,8 @@
 use PHPMailer\PHPMailer\SMTP;
 
 session_start();
-
-include 'connection.php';
-include_once 'toaster.php';
+include_once "../connection.php";
+include_once "../toaster.php";
 
 if (isset($_POST["verify_otp"])) {
     $enteredOtp = $_POST["otp"];
@@ -45,7 +44,7 @@ if (isset($_POST["verify_otp"])) {
 
         // Display success message and redirect
         echo '<script>showToaster("Password reset successful!" , "green")</script>';
-        header("Location:index.php?popup=login&msg=true");
+        header("Location:../index.php?popup=login&msg=true");
         exit();
     } else {
         unset($_SESSION['temp_mail']);
@@ -64,7 +63,7 @@ if (isset($_POST["verify_otp"])) {
     <title>Forgot Password</title>
 
     <link rel="icon" type="image/ico" href="img/buslogo.png">
-    <link rel="stylesheet" href="css/forgotpass.css">
+    <link rel="stylesheet" href="../css/forgotpass.css">
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Rubik:400,700'>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 
@@ -86,11 +85,11 @@ if (isset($_POST["verify_otp"])) {
                     <input type="email" placeholder="Enter Email" name="email" id="mail_send_otp" autocomplete="no">
                 </div>
             </div>
-            <button class="btn-fr"  onclick="sendOTP()">Send OTP</button>
+            <button class="btn-fr" onclick="sendOTP()">Send OTP</button>
             <button class="btn-fr">
-                <a href="index.php" class="custom-link">Home</a>
+                <a href="../index.php" class="custom-link">Home</a>
             </button>
-                      
+
         </div>
 
         <form id="verifyOtpForm" style="display:none;" method="post">
@@ -109,7 +108,7 @@ if (isset($_POST["verify_otp"])) {
 
             <button class="btn-fr" type="submit" name="verify_otp">Verify OTP and Set New Password</button>
         </form>
-    
+
 
         <script>
             function sendOTP() {
@@ -123,7 +122,7 @@ if (isset($_POST["verify_otp"])) {
 
                 $.ajax({
                     method: 'POST',
-                    url: 'sendotp.php',
+                    url: '../sendotp.php',
                     data: {
                         email: email
                     },
@@ -131,7 +130,7 @@ if (isset($_POST["verify_otp"])) {
                         console.log(res.trim());
                         if (res == 10) {
                             // console.log("invaild user");
-                            showToaster("invaild user", "red");
+                            showToaster("Invaild user", "red");
                             console.log("Invaild user");
                         } else {
                             document.getElementById('otpRequestForm').style.display = 'none';
@@ -157,5 +156,6 @@ if (isset($_POST["verify_otp"])) {
                 }, 2000);
             }
         </script>
+</body>
 
 </html>

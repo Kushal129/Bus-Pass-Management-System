@@ -25,7 +25,7 @@
 		justify-content: center;
 		align-items: center;
 		flex-direction: column;
-		background: url(img/con-bg.jpg);
+		background: url(../img/con-bg.jpg);
 		background-size: cover;
 	}
 	.contact .content
