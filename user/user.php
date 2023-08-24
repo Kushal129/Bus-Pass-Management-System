@@ -4,6 +4,7 @@ session_start();
 include_once 'connection.php';
 
 if (!isset($_SESSION['username'])) {
+    // echo "usename not found";
     header('location:index.php');
 } else {
     $checkEmailQuery = "SELECT * FROM users WHERE email=?";
@@ -16,10 +17,8 @@ if (!isset($_SESSION['username'])) {
     $role = $row['role'];
     // echo $role;
     // 1 - user and 0 - admin
-    if ($role) {
-
-        // echo "USER";
-        header("Location: index.php");
+    if (!$role) {
+        header("Location: admin.php");
     }
 }
 ?>
@@ -44,14 +43,11 @@ if (!isset($_SESSION['username'])) {
     <div id="mySidenav" class="sidenav">
         <!-- side nav -->
         <p class="logo"><span>Bus Pass</span></p>
-        <a href="admin.php" class="icon-a"><i class="fa fa-dashboard icons"></i>&nbsp;&nbsp;Dashboard</a>
-        <a href="Passenger.php" class="icon-a"><i class="fa fa-users icons"></i>&nbsp;&nbsp;Passenger</a>
-        <a href="Passes.php" class="icon-a"><i class="fa fa-list icons"></i>&nbsp;&nbsp;Passes</a>
-        <a href="Category.php" class="icon-a"><i class="fa fa-bar-chart-o fa-fw icons"></i>&nbsp;&nbsp;Category</a>
-        <a href="Search.php" class="icon-a"><i class="fa fa-search icons"></i>&nbsp;&nbsp;Search</a>
-        <a href="Report.php" class="icon-a"><i class="fa fa-folder icons"></i>&nbsp;&nbsp;Report of Pass</a>
+        <a href="admin.php" class="icon-a"><i class="fa fa-dashboard icons"></i>&nbsp;&nbsp;Genrate Pass </a>
+        <a href="Passenger.php" class="icon-a"><i class="fa fa-users icons"></i>&nbsp;&nbsp;Manage Pass </a>
+        <a href="Passes.php" class="icon-a"><i class="fa fa-list icons"></i>&nbsp;&nbsp;Manage Profile </a>
+        <a href="Category.php" class="icon-a"><i class="fa fa-bar-chart-o fa-fw icons"></i>&nbsp;&nbsp;Reports </a>
     </div>
-
     <button class="navbar-toggler" type="button" onclick="toggleNav()">
         <span class="navbar-toggler-icon">&#9776;</span>
     </button>
@@ -60,46 +56,45 @@ if (!isset($_SESSION['username'])) {
         <div class="head">
             <div class="col-div-6">
                 <div class="profile">
-                <p class="profile-text">Admin</p>
-                    <img src="img/admin.ico" class="pro-img" id="user-avatar" alt="User Avatar">
+                    <p class="profile-text">   AAAya User nu name   </p>
+                    <img src=" USER NI IMAGE " class="pro-img" id="user-avatar" alt="User Avatar">
                 </div>
             </div>
             <div class="d-flex w-100 justify-content-end">
                 <button class="" id="logout-btn" onclick="logout()">Logout</button>
             </div>
+
+            
             <div class="clearfix"></div>
         </div>
-        <!-- Report Section -->
-        User no data batave pass jetla na hoi ee 
-        and downlod repots pdf 
-    </div>
+        <div class="dashboard">
+            <div class="col-div-3">
+                <div class="box">
+                    <p> 60<br /><span>New Pass</span></p>
+                    <i class="fa fa-users box-icon"></i>
+                </div>
+            </div>
+            <div class="col-div-3">
+                <div class="box">
+                    <p> 60<br /><span>Re-New Pass</span></p>
+                    <i class="fa fa-users box-icon"></i>
+                </div>
+            </div>
+        </div>
+
 
     <!-- JavaScript to handle the toggle behavior -->
     <script>
         function toggleNav() {
             var sidenav = document.getElementById("mySidenav");
-            var navbarToggler = document.querySelector(".navbar-toggler");
             var mainContent = document.querySelector(".main-content");
-            if (window.innerWidth <= 757 && window.innerHeight <= 675) {
-                if (sidenav.style.width === "100%") {
-                    sidenav.style.width = "0";
-                    navbarToggler.classList.add("active");
-                    mainContent.style.marginLeft = "0";
-                } else {
-                    sidenav.style.width = "100%";
-                    navbarToggler.classList.remove("active");
-                    mainContent.style.marginLeft = "100%";
-                }
+            
+            if (sidenav.style.width === "300px") {
+                sidenav.style.width = "0";
+                mainContent.style.marginLeft = "0";
             } else {
-                if (sidenav.style.width === "300px") {
-                    sidenav.style.width = "0";
-                    navbarToggler.classList.add("active");
-                    mainContent.style.marginLeft = "0";
-                } else {
-                    sidenav.style.width = "300px";
-                    navbarToggler.classList.remove("active");
-                    mainContent.style.marginLeft = "300px";
-                }
+                sidenav.style.width = "300px";
+                mainContent.style.marginLeft = "300px";
             }
         }
 
@@ -122,7 +117,7 @@ if (!isset($_SESSION['username'])) {
         // Function to handle logout
         function logout() {
             // You can add any additional logic here before redirecting to the logout page
-            // For example, show a confirmation dialog before logging out
+
             // var logoutConfirmed = confirm("Are you sure you want to log out?");
             // if (logoutConfirmed) {
             // Redirect to the logout page or any other appropriate page after logout

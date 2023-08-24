@@ -43,12 +43,12 @@ if (!isset($_SESSION['username'])) {
     <div id="mySidenav" class="sidenav">
         <!-- side nav -->
         <p class="logo"><span>Bus Pass</span></p>
-        <a href="admin.php" class="icon-a"><i class="fa fa-dashboard icons"></i>&nbsp;&nbsp;Dashboard</a>
-        <a href="Passenger.php" class="icon-a"><i class="fa fa-users icons"></i>&nbsp;&nbsp;Passenger</a>
-        <a href="Passes.php" class="icon-a"><i class="fa fa-list icons"></i>&nbsp;&nbsp;Passes</a>
-        <a href="Category.php" class="icon-a"><i class="fa fa-bar-chart-o fa-fw icons"></i>&nbsp;&nbsp;Category</a>
-        <a href="Search.php" class="icon-a"><i class="fa fa-search icons"></i>&nbsp;&nbsp;Search</a>
-        <a href="Report.php" class="icon-a"><i class="fa fa-folder icons"></i>&nbsp;&nbsp;Report of Pass</a>
+        <a href="/admin-all/admin.php" class="icon-a"><i class="fa fa-dashboard icons"></i>&nbsp;&nbsp;Dashboard</a>
+        <a href="/admin-all/Passenger.php" class="icon-a"><i class="fa fa-users icons"></i>&nbsp;&nbsp;Passenger</a>
+        <a href="/admin-all/Passes.php" class="icon-a"><i class="fa fa-list icons"></i>&nbsp;&nbsp;Passes</a>
+        <a href="/admin-all/Category.php" class="icon-a"><i class="fa fa-bar-chart-o fa-fw icons"></i>&nbsp;&nbsp;Category</a>
+        <a href="/admin-all/Search.php" class="icon-a"><i class="fa fa-search icons"></i>&nbsp;&nbsp;Search</a>
+        <a href="/admin-all/Report.php" class="icon-a"><i class="fa fa-folder icons"></i>&nbsp;&nbsp;Report of Pass</a>
     </div>
 
     <button class="navbar-toggler" type="button" onclick="toggleNav()">

@@ -22,7 +22,7 @@
                            
                         </ul>
                     </div>
-                    <div class="col-sm-4 col-md-3 item">
+                    <div class="col-sm-3 col-md-6 item"">
                         <h3>About</h3>
                         <ul>
                             <li><p>The bus pass management system is an online platform that enables to apply for, renew, 
@@ -42,10 +42,10 @@
                             
                         </ul>
                     </div> -->
-                    <div class="col-lg-3 item social">
-                    <a href="#"><i class="icon ion-social-facebook"></i></a>
-                    <a href="#"><i class="icon ion-social-instagram"></i></a>
-                    <a href="#"><i class="icon ion-social-linkedin"></i></a>
+                    <div class="col-lg-1 ml-5 item social">
+                    <a href="https://www.linkedin.com/in/kushal-pipaliya"><i class="icon ion-social-linkedin"></i></a>
+                    <!-- <a href="#"><i class="icon ion-social-facebook"></i></a>
+                    <a href="#"><i class="icon ion-social-instagram"></i></a> -->
                     <!-- <a href="#"><i class="icon ion-social-googleplus"></i></a> -->
                     <p class="copyright">buspassbykh © 2023</p>
                     </div>

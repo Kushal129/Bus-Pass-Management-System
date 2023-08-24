@@ -17,11 +17,8 @@
     </style>
 </head>
 <body>
-
-
     <!-- Toaster Alert Container -->
     <div class="toaster-alert" id="toaster"></div>
-
 </body>
 </html>
 <script>
@@ -37,5 +34,4 @@ function showToaster(mes , bcolor) {
         toaster.style.display = "none";
     }, 4000); 
 }
-
 </script>

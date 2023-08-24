@@ -5,6 +5,7 @@
     margin: 0;
     font-family: 'Poppins', sans-serif;
     box-sizing: border-box;
+    background-image: url(/img/bus-img/2.jpg);
 }
 
 
@@ -12,6 +13,13 @@
 /* ======================================================================================================= */
 /* ----------------------------------------  Sing in | Sing up ------------------------------------------- */
 /* ======================================================================================================= */
+
+body {
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
 
 /* --------------------------------------------------------------------------------------------------------------------------  */
 /* Custom styles for the modal */
@@ -68,13 +76,15 @@
 #registrationForm .form-group {
     margin-bottom: 15px;
 }
+
 #signupLink {
     font-size: 12px;
     padding: 3px;
     float: right;
     font-size: 20px;
 }
-#signupLink{
+
+#signupLink {
     color: #10213e;
     cursor: pointer;
 }
@@ -84,6 +94,27 @@
 }
 
 #signupLink:active {
+    color: #050337;
+}
+
+
+.signinLink {
+    font-size: 12px;
+    padding: 3px;
+    float: right;
+    font-size: 20px;
+}
+
+.signinLink {
+    color: #10213e;
+    cursor: pointer;
+}
+
+.signinLink:hover {
+    color: #050337;
+}
+
+.signinLink:active {
     color: #050337;
 }
 
@@ -115,11 +146,14 @@
 
 .btn-lr:hover {
     background-color: #232324;
-    color: #ffffff;
+    color: #ffd900;
 }
 
 /* Custom styles for the "Create an account" link */
 #signupLink {
+    font-size: 14px;
+}
+.signinLink {
     font-size: 14px;
 }
 

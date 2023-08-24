@@ -43,14 +43,17 @@
   <body>
     <!-- ============================== Navbar =============================== -->
     <?php
-    include_once 'navbar.php';
+    include "main/navbar.php";
     ?>
     <!-- ============================== Main =============================== -->
+
     <div class="container mt-5">
       <div class="img">
-        <img src="img/bus-bg.jpg" alt="Responsive Bus Image">
+        <img src="img/bus-img/bg.jpg" alt="Responsive Bus bg Image">
       </div>
     </div>
+
+
     <!-- ============================ dodti bus ============================ -->
 
     <marquee behavior="" direction="right" scrollamount="30" style="margin-bottom: -5px; padding:0;">
@@ -61,7 +64,7 @@
     <!-- ============================ footer ============================  -->
     <footer>
       <?php
-      include_once 'footer.php';
+      include_once 'main/footer.php';
       ?>
     </footer>
     <!-- Optional JavaScript -->
@@ -85,13 +88,11 @@
 
 if (isset($_GET['msg'])){
   echo '<script>showToaster("Password reset successful!" , "green")</script>';
-  echo "<script>console.log(000000)</script>";
 }
 
 if (isset($_GET['popup'])) {
   if ($_GET['popup'] == 'login'){
   echo "<script>document.getElementById('login_btn').click()</script>";
-  echo "<script>console.log(1234)</script>";
 
   }
 }

@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 
@@ -23,7 +24,6 @@ if (!isset($_SESSION['username'])) {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,7 +36,9 @@ if (!isset($_SESSION['username'])) {
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="css/admin.css">
+<style>
 
+</style>
     <title>Admin Page</title>
 </head>
 
@@ -44,12 +46,12 @@ if (!isset($_SESSION['username'])) {
     <div id="mySidenav" class="sidenav">
         <!-- side nav -->
         <p class="logo"><span>Bus Pass</span></p>
-        <a href="admin.php" class="icon-a"><i class="fa fa-dashboard icons"></i>&nbsp;&nbsp;Dashboard</a>
-        <a href="Passenger.php" class="icon-a"><i class="fa fa-users icons"></i>&nbsp;&nbsp;Passenger</a>
-        <a href="Passes.php" class="icon-a"><i class="fa fa-list icons"></i>&nbsp;&nbsp;Passes</a>
-        <a href="Category.php" class="icon-a"><i class="fa fa-bar-chart-o fa-fw icons"></i>&nbsp;&nbsp;Category</a>
-        <a href="Search.php" class="icon-a"><i class="fa fa-search icons"></i>&nbsp;&nbsp;Search</a>
-        <a href="Report.php" class="icon-a"><i class="fa fa-folder icons"></i>&nbsp;&nbsp;Report of Pass</a>
+        <a href="/admin-all/admin.php" class="icon-a"><i class="fa fa-dashboard icons"></i>&nbsp;&nbsp;Dashboard</a>
+        <a href="/admin-all/Passenger.php" class="icon-a"><i class="fa fa-users icons"></i>&nbsp;&nbsp;Passenger</a>
+        <a href="/admin-all/Passes.php" class="icon-a"><i class="fa fa-list icons"></i>&nbsp;&nbsp;Passes</a>
+        <a href="/admin-all/Category.php" class="icon-a"><i class="fa fa-bar-chart-o fa-fw icons"></i>&nbsp;&nbsp;Category</a>
+        <a href="/admin-all/Search.php" class="icon-a"><i class="fa fa-search icons"></i>&nbsp;&nbsp;Search</a>
+        <a href="/admin-all/Report.php" class="icon-a"><i class="fa fa-folder icons"></i>&nbsp;&nbsp;Report of Pass</a>
     </div>
 
     <button class="navbar-toggler" type="button" onclick="toggleNav()">
@@ -69,31 +71,28 @@ if (!isset($_SESSION['username'])) {
             </div>
             <div class="clearfix"></div>
         </div>
-        <!-- Passes Management Section -->
-        <section class="passes">
-            <h2>Passes Management</h2>
-            <div class="pass-list">
+        <!-- Passenger Management Section -->
+        <section class="passenger">
+            <h2>Passenger Management</h2>
+            <div class="passenger-list">
                 <ul>
-                    <li>Pass 1</li>
-                    <li>Pass 2</li>
-                    <li>Pass 3</li>
-                    <!-- Add more passes as needed -->
+                    <li>Passenger 1</li>
+                    <li>Passenger 2</li>
+                    <li>Passenger 3</li>
+                    <!-- Add more passengers as needed -->
                 </ul>
             </div>
-            <div class="add-pass">
-                <h3>Add New Pass</h3>
+            <div class="add-passenger">
+                <h3>Add New Passenger</h3>
                 <form>
-                    <label for="pass-name">Pass Name:</label>
-                    <input type="text" id="pass-name" name="pass-name">
+                    <label for="passenger-name">Passenger Name:</label>
+                    <input type="text" id="passenger-name" name="passenger-name">
                     <button type="submit">Add</button>
                 </form>
             </div>
         </section>
 
-        
-
-    <!-- JavaScript to handle the toggle behavior -->
-    <script>
+        <script>
         function toggleNav() {
             var sidenav = document.getElementById("mySidenav");
             var navbarToggler = document.querySelector(".navbar-toggler");

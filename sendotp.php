@@ -11,7 +11,7 @@ $email = $_POST["email"];
     $num = mysqli_num_rows(mysqli_query($con , $qry));
 
     if ($num != 1) {
-      echo "0";
+      echo "10";
       exit();
   }
   

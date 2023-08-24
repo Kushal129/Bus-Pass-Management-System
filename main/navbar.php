@@ -1,8 +1,11 @@
 <?php
 // Login Form Submit
 
-include 'mail_config.php';
-include_once 'connection.php';
+include "mail_config.php";
+include "connection.php";
+
+session_abort();
+session_start();
 
 if (isset($_POST["login_submit"])) {
     $email = $_POST["login_email"];
@@ -30,10 +33,10 @@ if (isset($_POST["login_submit"])) {
             // 1 - user and 0 - admin
             if ($role) {
                 // echo "USER";
-                header("Location: user.php");
+                header("Location:user/user.php");
             } else {
                 // echo "ADMIN";
-                header("Location: admin.php");
+                header("Location:admin-all/admin.php");
             }
             // exit();
         } else {
@@ -141,8 +144,9 @@ $con->close();
 </head>
 
 <body>
+
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-warning ">
+    <nav class="navbar navbar-expand-lg "style="background-color: #ffd900;">
         <a class="navbar-brand" href="#"><img src="img/buslogo.png" width="30" height="30" class="d-inline-block align-top" alt></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -178,7 +182,7 @@ $con->close();
                                 </div>
                                 <div class="form-group password-container">
                                     <input type="password" class="form-control" id="login_password" placeholder="Enter Password" name="login_password">
-                                    <i class="show-password-icon fa-solid fa-eye" onclick="togglePasswordVisibility('login_password', this)"></i>
+                                    <i class="show-password-icon fa-solid fa-eye" onclick="togglePasswordVisibility('#login_password', this)"></i>
                                     
                                 </div>
                                 <button type="submit" class="btn-lr btn-block" name="login_submit">Sign In</button>
@@ -196,12 +200,12 @@ $con->close();
                                     <input type="email" class="form-control" id="regEmail" placeholder="Email" name="email">
                                 </div>
                                 <div class="form-group password-container">
-                                    <input type="password" class="form-control" id="regPassword" placeholder="Password" name="password">
+                                    <input type="password" class="form-control login_password" id="regPassword" placeholder="Password" name="password">
                                     <!-- <i class="show-password-icon fa-solid fa-eye" onclick="togglePassword('regPassword', this)"></i> -->
                                 </div>
                                 <div class="form-group password-container">
-                                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" name="confirm_password">
-                                    <i class="show-password-icon fa-solid fa-eye" onclick="togglePasswordVisibility('login_password', this)"></i>
+                                    <input type="password" class="form-control login_password" id="confirmPassword" placeholder="Confirm Password" name="confirm_password">
+                                    <i class="show-password-icon fa-solid fa-eye" onclick="togglePasswordVisibility('.login_password', this)"></i>
                                 </div>
                                 <button type="submit" class="btn-lr btn-block" value="registr" name="submit">Sign
                                     Up</button>
@@ -209,15 +213,13 @@ $con->close();
                             <!-- Toggle between Login and Registration forms -->
                             <p class="text-center mt-3 mb-0">
                                 <a href="#" id="signupLink">Create an account</a>
-                                <a href="ForgotPass.php" id="signupLink">ForgotPassword?</a>
-                                <a href="#" id="signinLink" style="display:none;">Already have an account? Sign In</a>
-
+                                <a href="main/ForgotPass.php" id="signupLink">ForgotPassword?</a>
+                                <a href="#" id="signinLink" class="signinLink" style="display:none;">Already have an account? Sign In</a>
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
-
     </nav>
 
     <!-- Main content -->
@@ -244,17 +246,19 @@ $con->close();
 
         // show password 
         function togglePasswordVisibility(fieldId, icon) {
-            var passwordField = document.getElementById(fieldId);
-            var iconElement = icon.querySelector(".show-password-icon");
-
-            if (passwordField.type === "password" ) {
-                passwordField.type = "text";
-            } else {
-                passwordField.type = "password";
-            }
-            setTimeout(function() {
-                passwordField.type = "password";
-            }, 2000); 
+            var passwordFields = document.querySelectorAll(fieldId);
+            console.log(passwordFields);
+            var iconElement = icon.querySelector(".show-password-icon"); 
+            passwordFields.forEach(passwordField => {
+                if (passwordField.type === "password" ) {
+                    passwordField.type = "text";
+                } else {
+                    passwordField.type = "password";
+                }
+                setTimeout(function() {
+                    passwordField.type = "password";
+                }, 2000); 
+            });
         }
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
