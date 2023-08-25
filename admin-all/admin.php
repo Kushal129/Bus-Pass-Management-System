@@ -5,6 +5,7 @@ include_once '../connection.php';
 
 if (!isset($_SESSION['username'])) {
     header('location:../index.php');
+    // echo "time nathi";
 } else {
     $checkEmailQuery = "SELECT * FROM users WHERE email=?";
     $stmt = $con->prepare($checkEmailQuery);
@@ -17,9 +18,8 @@ if (!isset($_SESSION['username'])) {
     // echo $role;
     // 1 - user and 0 - admin
     if ($role) {
-
         // echo "USER";
-        header("Location: ../index.php");
+        header("Location:../user/user.php");
     }
 }
 ?>
@@ -51,36 +51,36 @@ if (!isset($_SESSION['username'])) {
                 <span class="tooltip">Dashboard</span>
             </li>
             <li>
-                <a href="#">
+                <a href="../admin-all/Passenger.php">
                     <i class='bx bx-user'></i>
                     <span class="links_name">Passenger</span>
                 </a>
                 <span class="tooltip">Passenger</span>
             </li>
             <li>
-                <a href="#">
+                <a href="../admin-all/Passes.php">
                     <i class='bx bx-chat'></i>
                     <span class="links_name">Passes</span>
                 </a>
                 <span class="tooltip">Passes</span>
             </li>
             <li>
-                <a href="#">
+                <a href="../admin-all/Category.php">
                     <i class='bx bx-pie-chart-alt-2'></i>
                     <span class="links_name">Category</span>
                 </a>
                 <span class="tooltip">Category</span>
             </li>
             <li>
-                <a href="#">
+                <a href="../admin-all/Search.php">
                     <i class='bx bx-search'></i>
                     <span class="links_name">Search</span>
                 </a>
                 <span class="tooltip">Search</span>
             </li>
             <li>
-                <a href="#">
-                    <i class='bx bx-columns'></i>
+                <a href="../admin-all/Report.php">
+                <i class='bx bx-bar-chart-square'></i>
                     <span class="links_name">Report of Pass</span>
                 </a>
                 <span class="tooltip">Report of Pass</span>
@@ -88,22 +88,21 @@ if (!isset($_SESSION['username'])) {
         </ul>
     </div>
 
+    <section class="home-section">
     <div class="head">
         <div class="profile">
-            <img src="img/admin.ico" class="pro-img" id="user-avatar" alt="User Avatar">
-            <p class="profile-text">Admin</p>
+            <img src="../img/admin.ico" class="pro-img" id="user-avatar" alt="User Avatar">
+            <div class="profile-text"><?php echo $row['full_name']; ?></div>
         </div>
         <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>
     </div>
-
-    <section class="home-section">
         <div class="container">
 
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title">Total Pass</h5>
                         <p>50</p>
-                        <i class='bx bx-user'></i>
+                        <i class='bx bx-message-square-edit'></i>
                     </div>
                 </div>
 
@@ -111,17 +110,16 @@ if (!isset($_SESSION['username'])) {
                     <div class="card-body">
                         <h5 class="card-title">Pass Created Today</h5>
                         <p>60</p>
-                        <i class='bx bx-user'></i>
+                        <i class='bx bx-message-square-edit'></i>
                     </div>
                 </div>
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title">Pass Created in 7 Days</h5>
                         <p>400</p>
-                        <i class='bx bx-user'></i>
+                        <i class='bx bx-message-square-edit'></i>
                     </div>
                 </div>
-            
         </div>
     </section>
     <script>
@@ -131,15 +129,16 @@ if (!isset($_SESSION['username'])) {
 
         closeBtn.addEventListener("click", () => {
             sidebar.classList.toggle("open");
-            menuBtnChange(); //calling the function(optional)
+            menuBtnChange(); 
         });
 
-        searchBtn.addEventListener("click", () => { // Sidebar open when you click on the search iocn
+        searchBtn.addEventListener("click", () => {
+             // Sidebar open when you click on the search iocn
             sidebar.classList.toggle("open");
-            menuBtnChange(); //calling the function(optional)
+            menuBtnChange();
         });
 
-        // following are the code to change sidebar button(optional)
+        // following are the code to change sidebar button
         function menuBtnChange() {
             if (sidebar.classList.contains("open")) {
                 closeBtn.classList.replace("bx-menu", "bx-menu-alt-right"); //replacing the iocns class

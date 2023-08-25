@@ -1,9 +1,9 @@
 body {
   margin: 0;
   font-family: 'Rubik', sans-serif;
-  background: linear-gradient(-45deg, #ffdf2a, #f6ec81);
+  background: linear-gradient(-45deg, #ffdf2a, #f1e882 );
   background-size: 400% 400%;
-  animation: gradient 15s infinite;
+  animation: gradient 5s infinite;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -1,7 +1,7 @@
 <?php
 $host = "localhost";
 $username = "root";
-$password = ""; // Use your actual database password here
+$password = ""; // 
 $database = "buspassms";
 
 $con = mysqli_connect($host, $username, $password, $database);

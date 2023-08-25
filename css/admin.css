@@ -178,7 +178,7 @@
 }
 
 .sidebar.open~.home-section {
-    left: 240px;
+    left: 250px;
     width: calc(100% - 250px);
 }
 

@@ -28,7 +28,7 @@ if (!isset($_SESSION['username'])) {
 
 <head>
     <meta charset="UTF-8">
-    <title>Bus Pass | User </title>
+    <title>Bus Pass | Profile </title>
     <link rel="stylesheet" href="../css/user.css">
     <link rel="icon" type="image/ico" href="../img/buslogo.png">
     <!-- Boxicons CDN Link -->
@@ -83,18 +83,13 @@ if (!isset($_SESSION['username'])) {
             <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>
         </div>
         <div class="container">
-            <div class="card" style="width: 10rem;">
+            <div class="card" style="width: 15rem;">
                 <div class="card-body">
-                    <h5 class="card-title">Generate New Pass</h5>
-                    <i class='bx bx-user'></i>
+                    <h5 class="card-title">User Can manage Profile..</h5>
+                    <p>Name , Phonenumber , gender , image , address , date of birth , ETC</p>
                 </div>
             </div>
-            <div class="card" style="width: 10rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Re-New Pass</h5>
-                    <i class='bx bx-user'></i>
-                </div>
-            </div>
+            
         </div>
     </section>
     <script>

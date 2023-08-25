@@ -91,25 +91,46 @@ if (isset($_POST["verify_otp"])) {
             </button>
 
         </div>
-
+        <!-- //toggle -->
         <form id="verifyOtpForm" style="display:none;" method="post">
+            <h1>OTP Verification </h1>
+            <hr>
             <div class="content">
                 <div class="input-field">
                     <input type="text" placeholder="Enter OTP" name="otp" required>
                 </div>
                 <div class="input-field">
-                    <input type="password" placeholder="Enter New Password" name="new_password" required>
+                    <input type="password" placeholder="Enter New Password" name="new_password" id="new_password" required>
                 </div>
                 <div class="input-field">
-                    <input type="password" placeholder="Confirm New Password" name="confirm_new_password" required>
-                    <i class="show-password-icon fa-solid fa-eye w-100" onclick="togglePasswordVisibility('login_password', this)"></i>
+                    <input type="password" placeholder="Confirm New Password" name="confirm_new_password" id="confirm_new_password" required>
                 </div>
+
             </div>
 
             <button class="btn-fr" type="submit" name="verify_otp">Verify OTP and Set New Password</button>
         </form>
 
 
+        <script>
+            document.getElementById('verifyOtpForm').addEventListener('submit', function(event) {
+                var newPassword = document.getElementById('new_password').value;
+                var confirmPassword = document.getElementById('confirm_new_password').value;
+
+                if (!validatePassword(newPassword)) {
+                    event.preventDefault();
+                    showToaster("Password must be at least 8 characters and include a special character.", "red");
+                } else if (newPassword !== confirmPassword) {
+                    event.preventDefault();
+                    showToaster("Passwords do not match.", "red");
+                }
+            });
+
+            function validatePassword(password) {
+                var regex = /^(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\\/\-])\S{8,}$/;
+                return regex.test(password);
+            }
+        </script>
         <script>
             function sendOTP() {
                 //console.log ma dekhai
@@ -129,8 +150,7 @@ if (isset($_POST["verify_otp"])) {
                     success: function(res) {
                         console.log(res.trim());
                         if (res == 10) {
-                            // console.log("invaild user");
-                            showToaster("Invaild user", "red");
+                            showToaster("Invaild User", "red");
                             console.log("Invaild user");
                         } else {
                             document.getElementById('otpRequestForm').style.display = 'none';
@@ -139,23 +159,8 @@ if (isset($_POST["verify_otp"])) {
                     }
                 });
             }
-
-            // show password 
-            function togglePasswordVisibility(fieldId, icon) {
-                var passwordField = document.getElementById(fieldId);
-                var iconElement = icon.querySelector(".show-password-icon");
-
-                if (passwordField.type === "password") {
-                    passwordField.type = "text";
-                } else {
-                    passwordField.type = "password";
-                }
-
-                setTimeout(function() {
-                    passwordField.type = "password";
-                }, 2000);
-            }
         </script>
+        
 </body>
 
 </html>

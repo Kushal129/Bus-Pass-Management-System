@@ -7,10 +7,14 @@ include "connection.php";
 session_abort();
 session_start();
 
-if (isset($_POST["login_submit"])) {
+if (isset($_POST["login_submit"])) 
+{
     $email = $_POST["login_email"];
     $password = $_POST["login_password"];
-
+    if (empty($password)) {
+        echo '<script>showToaster("Please enter your password.", "red")</script>';
+        echo '<script>showLoginModal()</script>';
+    } else {
     // Check if the email exists in the database
     $checkEmailQuery = "SELECT * FROM users WHERE email=?";
     $stmt = $con->prepare($checkEmailQuery);
@@ -27,7 +31,7 @@ if (isset($_POST["login_submit"])) {
             // Password is correct, user is authenticated
 
             $_SESSION['username'] = $email;
-            echo '<script>showToaster("Welcome  ,$username" , "green")</script>';
+            // echo '<script>showToaster("Welcome  ,$username" , "green")</script>';
             $role = $row['role'];
             // echo $role;
             // 1 - user and 0 - admin
@@ -38,7 +42,6 @@ if (isset($_POST["login_submit"])) {
                 // echo "ADMIN";
                 header("Location:admin-all/admin.php");
             }
-            // exit();
         } else {
             echo '<script>showToaster("Password Incorrect " , "red")</script>';
             echo '<script>showLoginModal()</script>';
@@ -49,43 +52,30 @@ if (isset($_POST["login_submit"])) {
     } else {
         // $_SESSION['alert'] = "Email not found. Please enter a valid email address.";
         // header("Location: navbar.php");
-        echo '<script>showToaster("Email not found " "red")</script>';
+        echo '<script>showToaster("Email not found. Please enter a valid email address. " "red")</script>';
         echo '<script>showLoginModal()</script>';
     }
 }
-if (isset($_POST["submit"])) 
-{
+}
+
+if (isset($_POST["submit"])) {
     $full_name = $_POST["full_name"];
     $phone_number = $_POST["phone_number"];
     $email = $_POST["email"];
     $password = $_POST["password"];
-    $confirm_password = $_POST["confirm_password"]; // New line
-    $error = array();
+    $confirm_password = $_POST["confirm_password"];
 
     if (empty($full_name) || empty($phone_number) || empty($email) || empty($password) || empty($confirm_password)) {
-        array_push($error, "All fields are required.");
-    }
-
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        array_push($error, "Please enter a valid email address.");
-    }
-
-    if (strlen($password) < 8) {
-        // echo '<script>showToaster("Please enter a password with at least 8 characters. " , "red")</script>';
-        array_push($error, "Please enter a password with at least 8 characters.");
-    }
-
-    if ($password !== $confirm_password) {
-        // echo '<script>showToaster("Passwords do not match. " , "red")</script>';
-        array_push($error, "Passwords do not match.");
-    }
-
-    if (count($error) > 0) {
-        foreach ($error as $errorMsg) {
-            
-            echo "<div class='alert alert-danger'>$errorMsg</div>";
-        }
-    }  else {
+        echo '<script>showToaster("All fields are required.", "red")</script>';
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo '<script>showToaster("Please enter a valid email address.", "red")</script>';
+    } elseif (strlen($password) < 8) {
+        echo '<script>showToaster("Please enter a password with at least 8 characters.", "red")</script>';
+    } elseif (!preg_match('/[0-9]/', $password) || !preg_match('/[!@#$%^&*()_+{}\[\]:;<>,.?~\\\-]/', $password)) {
+        echo '<script>showToaster("Password must contain at least one number and one special character.", "red")</script>';
+    } elseif ($password !== $confirm_password) {
+        echo '<script>showToaster("Passwords do not match.", "red")</script>';
+    } else {
         // Check if the email already exists in the database
         $checkEmailQuery = "SELECT id FROM users WHERE email=?";
         $stmt = $con->prepare($checkEmailQuery);
@@ -94,29 +84,27 @@ if (isset($_POST["submit"]))
         $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
-            // echo "<div class='alert alert-danger'>Email already exists. Please use a different email.</div>";
-            echo '<script>showToaster("Email already exists. Please use a different email. " , "red")</script>';
+            echo '<script>showToaster("Email already exists. Please use a different email.", "red")</script>';
             echo '<script>showRegistrationModal()</script>';
         } else {
-            // Hash the password for security
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            // Insert data into the "users" table
+
             $insertQuery = "INSERT INTO users (full_name, phone_number, email, password) VALUES (?, ?, ?, ?)";
             $stmt = $con->prepare($insertQuery);
             $stmt->bind_param("ssss", $full_name, $phone_number, $email, $hashedPassword);
 
             if ($stmt->execute()) {
-                // echo "<div class='alert alert-success'>Registration successful. You can now log in.</div>";
-                echo '<script>showToaster("Registration successful. You can now log in " , "Green")</script>';
+                echo '<script>showToaster("Registration successful. You can now log in.", "green")</script>';
                 echo '<script>showRegistrationModal()</script>';
             } else {
-                // echo "<div class='alert alert-danger'>Error while registering. Please try again later.</div>";
-                echo '<script>showToaster("Error while registering. Please try again " , "red")</script>';
+                echo '<script>showToaster("Error while registering. Please try again.", "red")</script>';
                 echo '<script>showRegistrationModal()</script>';
             }
         }
     }
 }
+
+
 
 $con->close();
 ?>
@@ -146,7 +134,7 @@ $con->close();
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg "style="background-color: #ffd900;">
+    <nav class="navbar navbar-expand-lg " style="background-color: #ffd900;">
         <a class="navbar-brand" href="#"><img src="img/buslogo.png" width="30" height="30" class="d-inline-block align-top" alt></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -156,6 +144,7 @@ $con->close();
             <ul class="navbar-nav mr-auto">
             </ul>
 
+            <!-- //login button logout button -->
             <?php
             if (!isset($_SESSION['username'])) { ?>
                 <button type="button" class="btn-lg" data-toggle="modal" data-target="#loginModal" id="login_btn">Login</button>
@@ -178,12 +167,12 @@ $con->close();
                             <!-- Login Form -->
                             <form id="loginForm" method="post">
                                 <div class="form-group">
-                                    <input type="email" class="form-control" id="login_email" placeholder="Enter Email" name="login_email">
+                                    <input type="email" class="form-control" id="login_email" placeholder="Enter Email" name="login_email" required>
                                 </div>
                                 <div class="form-group password-container">
-                                    <input type="password" class="form-control" id="login_password" placeholder="Enter Password" name="login_password">
+                                    <input type="password" class="form-control" id="login_password" placeholder="Enter Password" name="login_password" required>
                                     <i class="show-password-icon fa-solid fa-eye" onclick="togglePasswordVisibility('#login_password', this)"></i>
-                                    
+
                                 </div>
                                 <button type="submit" class="btn-lr btn-block" name="login_submit">Sign In</button>
                             </form>
@@ -191,20 +180,19 @@ $con->close();
 
                             <form id="registrationForm" style="display:none;" method="post">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="fullName" placeholder="Full Name" name="full_name">
+                                    <input type="text" class="form-control" id="fullName" placeholder=" Firstname Lastname" name="full_name">
                                 </div>
                                 <div class="form-group">
-                                    <input type="tel" class="form-control" id="phoneNumber" placeholder="Phone Number" name="phone_number">
+                                    <input type="tel" class="form-control" id="phoneNumber" placeholder=" Phone Number" name="phone_number" min="0">
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control" id="regEmail" placeholder="Email" name="email">
+                                    <input type="email" class="form-control" id="regEmail" placeholder=" Email" name="email">
                                 </div>
                                 <div class="form-group password-container">
-                                    <input type="password" class="form-control login_password" id="regPassword" placeholder="Password" name="password">
-                                    <!-- <i class="show-password-icon fa-solid fa-eye" onclick="togglePassword('regPassword', this)"></i> -->
+                                    <input type="password" class="form-control login_password" id="regPassword" placeholder=" Password" name="password">
                                 </div>
                                 <div class="form-group password-container">
-                                    <input type="password" class="form-control login_password" id="confirmPassword" placeholder="Confirm Password" name="confirm_password">
+                                    <input type="password" class="form-control login_password" id="confirmPassword" placeholder=" Confirm Password" name="confirm_password">
                                     <i class="show-password-icon fa-solid fa-eye" onclick="togglePasswordVisibility('.login_password', this)"></i>
                                 </div>
                                 <button type="submit" class="btn-lr btn-block" value="registr" name="submit">Sign
@@ -222,10 +210,25 @@ $con->close();
             </div>
     </nav>
 
-    <!-- Main content -->
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+    <!-- validations  -->
+
+    <script>
+        // get the pho
+        var phoneNumberInput = document.getElementById('phoneNumber');
+        // Add an input event listener
+        phoneNumberInput.addEventListener('input', function(event) {
+            // lese the current input value
+            var inputValue = event.target.value;
+            // kadhse non-numeric characters 
+            var numericValue = inputValue.replace(/\D/g, '');
+            // Update the 
+            event.target.value = numericValue;
+        });
+    </script>
+
+
     <script>
         // Toggle between Login and Registration forms
         document.getElementById('signupLink').addEventListener('click', function() {
@@ -248,16 +251,16 @@ $con->close();
         function togglePasswordVisibility(fieldId, icon) {
             var passwordFields = document.querySelectorAll(fieldId);
             console.log(passwordFields);
-            var iconElement = icon.querySelector(".show-password-icon"); 
+            var iconElement = icon.querySelector(".show-password-icon");
             passwordFields.forEach(passwordField => {
-                if (passwordField.type === "password" ) {
+                if (passwordField.type === "password") {
                     passwordField.type = "text";
                 } else {
                     passwordField.type = "password";
                 }
                 setTimeout(function() {
                     passwordField.type = "password";
-                }, 2000); 
+                }, 2000);
             });
         }
     </script>
