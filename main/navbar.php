@@ -61,22 +61,27 @@ if (isset($_POST["submit"])) {
 
     if (!preg_match('/^[A-Za-z]+\s[A-Za-z]+$/', $full_name)) {
         $validationErrors[] = "Please enter a valid Full Name. Firstname _ Lastname ";
+        echo '<script>window.location.href = "#registrationForm";</script>';
     }
     if (strlen($password) < 8) {
         $validationErrors[] = "Please enter a password with at least 8 characters.";
+        echo '<script>window.location.href = "#registrationForm";</script>';
     }
 
     if (!preg_match('/[0-9]/', $password) || !preg_match('/[!@#$%^&*()_+{}\[\]:;<>,.?~\\\-]/', $password)) {
         $validationErrors[] = "Password must contain at least one number and one special character.";
+        echo '<script>window.location.href = "#registrationForm";</script>';
     }
 
     if (!preg_match('/^[6-9]\d{9}$/', $phone_number)) {
         $validationErrors[] = "Invalid Indian Phone Number. Enter a 10-digit number starting with 6, 7, 8, 9.";
+        echo '<script>window.location.href = "#registrationForm";</script>';
     }
 
     // Check if passwords match
     if ($password !== $confirm_password) {
         $validationErrors[] = "Passwords do not match.";
+        echo '<script>window.location.href = "#registrationForm";</script>';
     }
 
     if (!empty($validationErrors)) {
@@ -93,7 +98,8 @@ if (isset($_POST["submit"])) {
 
         if ($result->num_rows > 0) {
             echo '<script>showToaster("Email already exists. Please use a different email.", "red")</script>';
-            echo '<script>showRegistrationModal()</script>';
+            // echo '<script>showRegistrationModal()</script>';
+            echo '<script>window.location.href = "#registrationForm";</script>';
         } else {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
@@ -103,10 +109,12 @@ if (isset($_POST["submit"])) {
 
             if ($stmt->execute()) {
                 echo '<script>showToaster("Registration successful. You can now log in.", "green")</script>';
+                echo '<script>window.location.href = "#loginModal";</script>';
+
                 echo '<script>showLoginModal()</script>';
             } else {
                 echo '<script>showToaster("Error while registering. Please try again.", "red")</script>';
-                echo '<script>showRegistrationModal()</script>';
+                echo '<script>window.location.href = "#registrationForm";</script>';
             }
         }
     }
@@ -127,7 +135,17 @@ $con->close();
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <title>Home</title>
+</head>
+
+<body>
     <script>
         function showLoginModal() {
             $("#loginModal").modal('show');
@@ -137,9 +155,6 @@ $con->close();
             $("#registrationForm").modal('show');
         }
     </script>
-</head>
-
-<body>
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg " style="background-color: #ffd900;">
@@ -269,21 +284,24 @@ $con->close();
             });
         }
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 
     <script>
-        $("#loginForm").validate({
+        $('#loginForm').validate({
             rules: {
-                "email": 'required',
+                "email": {
+                    'required':true,
+                    'email':true,
+                },
             },
             messages: {
-
+                'email':{
+                    'required':'Email address is required',
+                    'email':'Email don\'t have valid Format ',
+                }
             }
         })
     </script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 
