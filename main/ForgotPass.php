@@ -8,15 +8,17 @@ include_once "../toaster.php";
 
 if (isset($_POST["verify_otp"])) {
     $enteredOtp = $_POST["otp"];
+
     $mail = $_SESSION['temp_mail'];
 
     // Get the new OTP from the database
     $qry = "SELECT otp FROM otps where email = '$mail' limit 1";
+
     $storedOtp = mysqli_fetch_assoc(mysqli_query($con, $qry))['otp'];
 
     // Verify OTP with user OTP
     if ($enteredOtp == $storedOtp) {
-        // OTP is valid, proceed to update user's password
+
         $newPassword = $_POST["new_password"];
         $confirmNewPassword = $_POST["confirm_new_password"];
 
@@ -26,23 +28,18 @@ if (isset($_POST["verify_otp"])) {
             exit();
         }
 
-        // Hash the new password for security
         $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
 
-        // Update user's password in the database
         $qry = "UPDATE users SET password = ? WHERE email = ?";
         $stmt = $con->prepare($qry);
         $stmt->bind_param("ss", $hashedPassword, $mail);
         $stmt->execute();
 
-        // Clear the OTP session
         unset($_SESSION['temp_mail']);
 
-        // Delete the OTP from the table
         $qry = "DELETE FROM otps WHERE email = '$mail'";
         mysqli_query($con, $qry);
 
-        // Display success message and redirect
         echo '<script>showToaster("Password reset successful!" , "green")</script>';
         header("Location:../index.php?popup=login&msg=true");
         exit();
@@ -76,7 +73,6 @@ if (isset($_POST["verify_otp"])) {
 <body>
 
     <div class="Forgot-form">
-        <!-- <form id="otpRequestForm"> -->
         <div id="otpRequestForm">
             <h1>Forgot Password</h1>
             <hr>
@@ -133,7 +129,6 @@ if (isset($_POST["verify_otp"])) {
         </script>
         <script>
             function sendOTP() {
-                //console.log ma dekhai
                 console.log('SendOTP');
                 email = $('#mail_send_otp').val();
 
@@ -151,7 +146,6 @@ if (isset($_POST["verify_otp"])) {
                         console.log(res.trim());
                         if (res == 10) {
                             showToaster("Invaild User", "red");
-                            console.log("Invaild user");
                         } else {
                             document.getElementById('otpRequestForm').style.display = 'none';
                             document.getElementById('verifyOtpForm').style.display = 'block';

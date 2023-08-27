@@ -3,78 +3,86 @@
 
 include "mail_config.php";
 include "connection.php";
+include "toaster.php";
 
 session_abort();
 session_start();
 
-if (isset($_POST["login_submit"])) 
-{
+if (isset($_POST["login_submit"])) {
     $email = $_POST["login_email"];
     $password = $_POST["login_password"];
     if (empty($password)) {
         echo '<script>showToaster("Please enter your password.", "red")</script>';
         echo '<script>showLoginModal()</script>';
     } else {
-    // Check if the email exists in the database
-    $checkEmailQuery = "SELECT * FROM users WHERE email=?";
-    $stmt = $con->prepare($checkEmailQuery);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
+        // Check if the email exists in the database
+        $checkEmailQuery = "SELECT * FROM users WHERE email=?";
+        $stmt = $con->prepare($checkEmailQuery);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $hashedPassword = $row["password"];
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $hashedPassword = $row["password"];
 
-        // Verify the password
-        if (password_verify($password, $hashedPassword)) {
-            // Password is correct, user is authenticated
+            // Verify the password
+            if (password_verify($password, $hashedPassword)) {
 
-            $_SESSION['username'] = $email;
-            // echo '<script>showToaster("Welcome  ,$username" , "green")</script>';
-            $role = $row['role'];
-            // echo $role;
-            // 1 - user and 0 - admin
-            if ($role) {
-                // echo "USER";
-                header("Location:user/user.php");
+                $_SESSION['username'] = $email;
+                $role = $row['role'];
+                // 1 - user and 0 - admin
+                if ($role) {
+                    // echo "USER";
+                    header("Location:user/user.php");
+                } else {
+                    // echo "ADMIN";
+                    header("Location:admin-all/admin.php");
+                }
             } else {
-                // echo "ADMIN";
-                header("Location:admin-all/admin.php");
+                echo '<script>showToaster("Password Incorrect " , "red")</script>';
+                echo '<script>showLoginModal()</script>';
             }
         } else {
-            echo '<script>showToaster("Password Incorrect " , "red")</script>';
+            // $_SESSION['alert'] = "Email not found. Please enter a valid email address.";
+            // header("Location: navbar.php");
+            echo '<script>showToaster("Email not found. Please enter a valid email address. " , "red")</script>';
             echo '<script>showLoginModal()</script>';
-
-            // header("location:index.php");
-            // exit();
         }
-    } else {
-        // $_SESSION['alert'] = "Email not found. Please enter a valid email address.";
-        // header("Location: navbar.php");
-        echo '<script>showToaster("Email not found. Please enter a valid email address. " "red")</script>';
-        echo '<script>showLoginModal()</script>';
     }
 }
-}
-
 if (isset($_POST["submit"])) {
     $full_name = $_POST["full_name"];
     $phone_number = $_POST["phone_number"];
     $email = $_POST["email"];
     $password = $_POST["password"];
     $confirm_password = $_POST["confirm_password"];
+    $validationErrors = array();
 
-    if (empty($full_name) || empty($phone_number) || empty($email) || empty($password) || empty($confirm_password)) {
-        echo '<script>showToaster("All fields are required.", "red")</script>';
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo '<script>showToaster("Please enter a valid email address.", "red")</script>';
-    } elseif (strlen($password) < 8) {
-        echo '<script>showToaster("Please enter a password with at least 8 characters.", "red")</script>';
-    } elseif (!preg_match('/[0-9]/', $password) || !preg_match('/[!@#$%^&*()_+{}\[\]:;<>,.?~\\\-]/', $password)) {
-        echo '<script>showToaster("Password must contain at least one number and one special character.", "red")</script>';
-    } elseif ($password !== $confirm_password) {
-        echo '<script>showToaster("Passwords do not match.", "red")</script>';
+    if (!preg_match('/^[A-Za-z]+\s[A-Za-z]+$/', $full_name)) {
+        $validationErrors[] = "Please enter a valid Full Name. Firstname _ Lastname ";
+    }
+    if (strlen($password) < 8) {
+        $validationErrors[] = "Please enter a password with at least 8 characters.";
+    }
+
+    if (!preg_match('/[0-9]/', $password) || !preg_match('/[!@#$%^&*()_+{}\[\]:;<>,.?~\\\-]/', $password)) {
+        $validationErrors[] = "Password must contain at least one number and one special character.";
+    }
+
+    if (!preg_match('/^[6-9]\d{9}$/', $phone_number)) {
+        $validationErrors[] = "Invalid Indian Phone Number. Enter a 10-digit number starting with 6, 7, 8, 9.";
+    }
+
+    // Check if passwords match
+    if ($password !== $confirm_password) {
+        $validationErrors[] = "Passwords do not match.";
+    }
+
+    if (!empty($validationErrors)) {
+        foreach ($validationErrors as $error) {
+            echo '<script>showToaster("' . $error . '", "red")</script>';
+        }
     } else {
         // Check if the email already exists in the database
         $checkEmailQuery = "SELECT id FROM users WHERE email=?";
@@ -95,7 +103,7 @@ if (isset($_POST["submit"])) {
 
             if ($stmt->execute()) {
                 echo '<script>showToaster("Registration successful. You can now log in.", "green")</script>';
-                echo '<script>showRegistrationModal()</script>';
+                echo '<script>showLoginModal()</script>';
             } else {
                 echo '<script>showToaster("Error while registering. Please try again.", "red")</script>';
                 echo '<script>showRegistrationModal()</script>';
@@ -103,7 +111,6 @@ if (isset($_POST["submit"])) {
         }
     }
 }
-
 
 
 $con->close();
@@ -119,6 +126,7 @@ $con->close();
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <title>Home</title>
     <script>
         function showLoginModal() {
@@ -180,19 +188,19 @@ $con->close();
 
                             <form id="registrationForm" style="display:none;" method="post">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="fullName" placeholder=" Firstname Lastname" name="full_name">
+                                    <input type="text" class="form-control" id="fullName" placeholder=" Firstname Lastname" name="full_name" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="tel" class="form-control" id="phoneNumber" placeholder=" Phone Number" name="phone_number" min="0">
+                                    <input type="tel" class="form-control" id="phoneNumber" placeholder=" Phone Number" name="phone_number" maxlength="10" required>
                                 </div>
                                 <div class="form-group">
                                     <input type="email" class="form-control" id="regEmail" placeholder=" Email" name="email">
                                 </div>
                                 <div class="form-group password-container">
-                                    <input type="password" class="form-control login_password" id="regPassword" placeholder=" Password" name="password">
+                                    <input type="password" class="form-control login_password" id="regPassword" placeholder=" Password" name="password" required>
                                 </div>
                                 <div class="form-group password-container">
-                                    <input type="password" class="form-control login_password" id="confirmPassword" placeholder=" Confirm Password" name="confirm_password">
+                                    <input type="password" class="form-control login_password" id="confirmPassword" placeholder=" Confirm Password" name="confirm_password" required>
                                     <i class="show-password-icon fa-solid fa-eye" onclick="togglePasswordVisibility('.login_password', this)"></i>
                                 </div>
                                 <button type="submit" class="btn-lr btn-block" value="registr" name="submit">Sign
@@ -215,16 +223,13 @@ $con->close();
     <!-- validations  -->
 
     <script>
-        // get the pho
         var phoneNumberInput = document.getElementById('phoneNumber');
-        // Add an input event listener
         phoneNumberInput.addEventListener('input', function(event) {
-            // lese the current input value
             var inputValue = event.target.value;
-            // kadhse non-numeric characters 
-            var numericValue = inputValue.replace(/\D/g, '');
-            // Update the 
-            event.target.value = numericValue;
+            var numericValue = inputValue.replace(/\D/g, ''); // Remove non-numeric characters
+            var maxLength = parseInt(event.target.getAttribute('maxlength'));
+            var truncatedValue = numericValue.slice(0, maxLength); // Limit to 10 digits
+            event.target.value = truncatedValue;
         });
     </script>
 
@@ -263,6 +268,18 @@ $con->close();
                 }, 2000);
             });
         }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        $("#loginForm").validate({
+            rules: {
+                "email": 'required',
+            },
+            messages: {
+
+            }
+        })
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>

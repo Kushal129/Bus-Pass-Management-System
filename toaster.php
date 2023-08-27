@@ -22,9 +22,8 @@
 </body>
 </html>
 <script>
-    // JavaScript code to show the toaster alert
 function showToaster(mes , bcolor) {
-    var message = mes; // Your message here
+    var message = mes; 
     var toaster = document.getElementById("toaster");
     toaster.innerText = message;
     toaster.style.display = "block";
