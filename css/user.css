@@ -1,13 +1,14 @@
-/* Google Font Link */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-
+/* Reset CSS */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
 }
 
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+/* Sidebar */
 .sidebar {
     position: fixed;
     left: 0;
@@ -167,7 +168,7 @@
     color: #f4db00;
 }
 
-
+/* Main Section */
 .home-section {
     position: relative;
     background: #f7f5ea;
@@ -184,15 +185,7 @@
     width: calc(100% - 250px);
 }
 
-
-
-@media (max-width: 420px) {
-    .sidebar li .tooltip {
-        display: none;
-    }
-}
-
-
+/* Header */
 .head {
     background-color: #f4db00;
     padding: 20px;
@@ -202,7 +195,6 @@
     top: 0;
     left: 40px;
     color: white;
-
 }
 
 .profile {
@@ -240,7 +232,7 @@
     background-color: #f44336;
 }
 
-
+/* Content Container */
 .container {
     display: flex;
     justify-content: center;
@@ -248,10 +240,8 @@
     margin-top: 2rem;
 }
 
-
-/* Card styles */
+/* Card Styles */
 .card {
-    background-color: #faf1a6;
     display: flex;
     margin-right: 5rem;
     border: none;
@@ -259,13 +249,17 @@
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1.25rem;
+    background-color: beige;
+}
+
 .card:hover {
     transform: translateY(-10px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.card-body {
-    padding: 20px;
 }
 
 .card-title {
@@ -276,4 +270,126 @@
 .card-text {
     font-size: 1rem;
     color: #555;
+}
+
+/* Pass Page */
+.Pass-Page {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    background-color: #c0ff6c;
+    border-radius: 23px;
+    padding: 7px;
+    width: 50%;
+    margin-left: 22rem;
+    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.5s;
+}
+
+.Pass-Page select {
+
+    margin-left: 1rem;
+    border: none;
+    word-wrap: normal;
+
+}
+
+/* cards */
+
+.cards {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    margin: 4rem;
+    margin-right: 10rem;
+    margin-left: 10rem;
+    padding: 1rem;
+    background: #f5eb84;
+    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.5s;
+}
+
+/* Form Container Styles */
+
+.container {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    margin: 4rem auto;
+    padding: 1rem;
+    background: #f5eb84;
+}
+
+/* Form Heading Styles */
+.down-container .form h1 {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 25px;
+    margin-bottom: 2rem;
+    color: #000000;
+    text-align: center;
+}
+
+/* Form Group Styles */
+.form-group {
+    margin-bottom: 20px;
+    width: 65rem;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.5s;
+}
+
+/* Label Styles */
+.down-container label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: #000000;
+}
+
+/* Input Styles */
+.down-container input[type="text"],
+.down-container input[type="date"],
+.down-container select,
+.down-container textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Radio Button Styles */
+.down-container input[type="radio"] {
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+/* File Input Styles */
+.down-container input[type="file"] {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+}
+
+/* Button Styles */
+.down-container button.btn-payment {
+    background-color: #292929;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    margin-left: auto;
+    padding: 8px;
+    display: block;
+}
+
+/* Button Hover Effect */
+.down-container button.btn-payment:hover {
+    background-color: #000000;
+    color: white;
 }
