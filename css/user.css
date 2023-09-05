@@ -174,14 +174,14 @@
     background: #f7f5ea;
     min-height: 100vh;
     top: 0;
-    left: 79px;
-    width: calc(100% - 78px);
+    left: 78px;
+    width: calc(100% - 79px);
     transition: all 0.5s ease;
     z-index: 2;
 }
 
 .sidebar.open~.home-section {
-    left: 251px;
+    left: 250px;
     width: calc(100% - 250px);
 }
 
@@ -272,30 +272,7 @@
     color: #555;
 }
 
-/* Pass Page */
-.Pass-Page {
-    justify-content: center;
-    display: flex;
-    align-items: center;
-    background-color: #c0ff6c;
-    border-radius: 23px;
-    padding: 7px;
-    width: 50%;
-    margin-left: 22rem;
-    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.5s;
-}
-
-.Pass-Page select {
-
-    margin-left: 1rem;
-    border: none;
-    word-wrap: normal;
-
-}
-
 /* cards */
-
 .cards {
     display: flex;
     justify-content: center;
@@ -310,16 +287,40 @@
     transition: transform 0.3s, box-shadow 0.5s;
 }
 
-/* Form Container Styles */
 
-.container {
-    display: flex;
+.Pass-Page {
     justify-content: center;
-    width: 90%;
-    margin: 4rem auto;
-    padding: 1rem;
-    background: #f5eb84;
+    display: flex;
+    align-items: center;
+    background-color: #f5eb84;
+    border-radius: 23px;
+    padding: 7px;
+    width: 50%;
+    margin-left: 22rem;
+    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.5s;
 }
+
+.Pass-Page select {
+    width: 30%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fffde4;
+    font-size: 16px;
+    outline: none;
+    margin-left: 3rem;
+}
+
+.Pass-Page span {
+    font-size: 2rem;
+    color: rgb(0, 0, 0);
+}
+
+.Pass-Page select:focus {
+    border-color: #000000;
+}
+
 
 /* Form Heading Styles */
 .down-container .form h1 {
@@ -333,8 +334,10 @@
 
 /* Form Group Styles */
 .form-group {
+    display: flow;
+    align-items: center;
     margin-bottom: 20px;
-    width: 65rem;
+    margin: 5rem;
     padding: 2rem;
     background-color: #ffffff;
     border-radius: 8px;
@@ -388,8 +391,23 @@
     display: block;
 }
 
-/* Button Hover Effect */
+
 .down-container button.btn-payment:hover {
     background-color: #000000;
     color: white;
+}
+
+
+/* Style disabled input fields with a darker appearance */
+input:disabled {
+    background-color: #333; /* Dark background color */
+    color: #fff; /* Light text color */
+    cursor: not-allowed; /* Change the cursor style */
+}
+
+/* Style disabled select elements with a darker appearance */
+select:disabled {
+    background-color: #333; /* Dark background color for select elements */
+    color: #fff; /* Light text color for select elements */
+    cursor: not-allowed; /* Change the cursor style for select elements */
 }

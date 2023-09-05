@@ -21,6 +21,32 @@ if (!isset($_SESSION['username'])) {
         header("Location:../index.php");
     }
 }
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Retrieve form data
+    $fullname = $_POST['fullname'];
+    $mobileNo = $_POST['mobileNo'];
+    $gender = $_POST['gender'];
+    $address = $_POST['address'];
+    $newPassword = $_POST['newPassword'];
+    $confirmPassword = $_POST['confirmPassword'];
+
+    // Update the user's profile picture
+    if ($_FILES['profilePic']['name']) {
+        $targetDir = 'uploads/';
+        $targetFile = $targetDir . basename($_FILES['profilePic']['name']);
+        move_uploaded_file($_FILES['profilePic']['tmp_name'], $targetFile);
+
+        // Update the user's profile picture path in the database
+        // $updatePicQuery = "UPDATE users SET profile_picture = '$targetFile' WHERE email = ?";
+        $stmt = $con->prepare($updatePicQuery);
+        $stmt->bind_param("s", $_SESSION['username']);
+        $stmt->execute();
+    }
+
+    // Redirect to the profile page after updating
+    header('location:manageprofile.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -83,13 +109,86 @@ if (!isset($_SESSION['username'])) {
             <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>
         </div>
         <div class="container">
-            <div class="card" style="width: 15rem;">
-                <div class="card-body">
-                    <h5 class="card-title">User Can manage Profile..</h5>
-                    <p>Name , Phonenumber , gender , image , address , date of birth , ETC</p>
-                </div>
-            </div>
-            
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+
+    
+    .container {
+        max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="password"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="file"] {
+    margin-top: 10px;
+}
+
+input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+</style>
+
+</head>
+<body>
+<div class="container">
+
+        <h1>Manage Profile</h1>
+        <form action="update_profile.php" method="POST" enctype="multipart/form-data">
+            <label for="fullname">Full Name:</label>
+            <input type="text" id="fullname" name="fullname" value="<?php echo $user['full_name']; ?>">
+
+            <label for="mobileNo">Phone Number:</label>
+            <input type="text" id="mobileNo" name="mobileNo" value="<?php echo $user['phone_number']; ?>">
+
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender">
+                <option value="M" <?php if ($user['gender'] == 'M') echo 'selected'; ?>>Male</option>
+                <option value="F" <?php if ($user['gender'] == 'F') echo 'selected'; ?>>Female</option>
+                <option value="T" <?php if ($user['gender'] == 'T') echo 'selected'; ?>>Transgender</option>
+            </select>
+
+            <label for="address">Address:</label>
+            <textarea id="address" name="address"><?php echo $user['address']; ?></textarea>
+
+            <label for="newPassword">New Password:</label>
+            <input type="password" id="newPassword" name="newPassword">
+
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword">
+
+            <label for="profilePic">Profile Picture:</label>
+            <input type="file" id="profilePic" name="profilePic">
+
+            <input type="submit" value="Update Profile">
+        </form>
+    </div>
+</body>
+</html>
+
         </div>
     </section>
     <script>
