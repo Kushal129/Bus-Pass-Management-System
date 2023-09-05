@@ -3,7 +3,7 @@
 -- Host: localhost	Database: buspassms
 -- ------------------------------------------------------
 -- Server version 	10.4.28-MariaDB
--- Date: Fri, 25 Aug 2023 21:27:03 +0200
+-- Date: Tue, 05 Sep 2023 10:24:24 +0200
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -83,7 +83,7 @@ CREATE TABLE `cast` (
   `cast_id` int(11) NOT NULL AUTO_INCREMENT,
   `cast_name` varchar(150) NOT NULL,
   PRIMARY KEY (`cast_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,11 +93,12 @@ CREATE TABLE `cast` (
 LOCK TABLES `cast` WRITE;
 /*!40000 ALTER TABLE `cast` DISABLE KEYS */;
 SET autocommit=0;
+INSERT INTO `cast` VALUES (1,'General'),(2,'SCBC'),(3,'ST'),(4,'SC');
 /*!40000 ALTER TABLE `cast` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `cast` with 0 row(s)
+-- Dumped table `cast` with 4 row(s)
 --
 
 --
@@ -129,6 +130,35 @@ COMMIT;
 --
 
 --
+-- Table structure for table `handicap`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `handicap` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` char(150) NOT NULL,
+  `disease` varchar(200) NOT NULL,
+  `doc` varchar(80) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `handicap`
+--
+
+LOCK TABLES `handicap` WRITE;
+/*!40000 ALTER TABLE `handicap` DISABLE KEYS */;
+SET autocommit=0;
+/*!40000 ALTER TABLE `handicap` ENABLE KEYS */;
+UNLOCK TABLES;
+COMMIT;
+
+-- Dumped table `handicap` with 0 row(s)
+--
+
+--
 -- Table structure for table `otps`
 --
 
@@ -139,7 +169,7 @@ CREATE TABLE `otps` (
   `email` varchar(250) NOT NULL,
   `otp` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=156 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=164 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -149,12 +179,191 @@ CREATE TABLE `otps` (
 LOCK TABLES `otps` WRITE;
 /*!40000 ALTER TABLE `otps` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `otps` VALUES (88,'henvikk81@gmail.com',961551),(111,'21bmiit134@gmail.com',447023),(136,'kushalhpipaliya01@gmail.com',896517),(155,'21bmiit129@gmail.com',323172);
+INSERT INTO `otps` VALUES (158,'kushalhpipaliya01@gmail.com',582672),(163,'22@112.121',694241);
 /*!40000 ALTER TABLE `otps` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `otps` with 4 row(s)
+-- Dumped table `otps` with 2 row(s)
+--
+
+--
+-- Table structure for table `pass`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pass` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `passenger_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `bus_type` int(11) NOT NULL,
+  `start_term_id` int(11) NOT NULL,
+  `ends_term_id` int(11) NOT NULL,
+  `payment_id` int(11) NOT NULL,
+  `image_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pass`
+--
+
+LOCK TABLES `pass` WRITE;
+/*!40000 ALTER TABLE `pass` DISABLE KEYS */;
+SET autocommit=0;
+/*!40000 ALTER TABLE `pass` ENABLE KEYS */;
+UNLOCK TABLES;
+COMMIT;
+
+-- Dumped table `pass` with 0 row(s)
+--
+
+--
+-- Table structure for table `passenger`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `passenger` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `emp_type` varchar(100) NOT NULL,
+  `com_name` varchar(200) NOT NULL,
+  `com_address` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `passenger`
+--
+
+LOCK TABLES `passenger` WRITE;
+/*!40000 ALTER TABLE `passenger` DISABLE KEYS */;
+SET autocommit=0;
+/*!40000 ALTER TABLE `passenger` ENABLE KEYS */;
+UNLOCK TABLES;
+COMMIT;
+
+-- Dumped table `passenger` with 0 row(s)
+--
+
+--
+-- Table structure for table `passenger_info`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `passenger_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `full_name` char(200) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `gender` char(30) NOT NULL,
+  `phonenumber` bigint(10) NOT NULL,
+  `role` varchar(50) NOT NULL,
+  `r_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `cus_id` int(11) NOT NULL,
+  `validate_through` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `passenger_info`
+--
+
+LOCK TABLES `passenger_info` WRITE;
+/*!40000 ALTER TABLE `passenger_info` DISABLE KEYS */;
+SET autocommit=0;
+/*!40000 ALTER TABLE `passenger_info` ENABLE KEYS */;
+UNLOCK TABLES;
+COMMIT;
+
+-- Dumped table `passenger_info` with 0 row(s)
+--
+
+--
+-- Table structure for table `pass_method`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pass_method` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` char(50) NOT NULL,
+  `duration` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pass_method`
+--
+
+LOCK TABLES `pass_method` WRITE;
+/*!40000 ALTER TABLE `pass_method` DISABLE KEYS */;
+SET autocommit=0;
+/*!40000 ALTER TABLE `pass_method` ENABLE KEYS */;
+UNLOCK TABLES;
+COMMIT;
+
+-- Dumped table `pass_method` with 0 row(s)
+--
+
+--
+-- Table structure for table `payment_method`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `payment_method` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `payment_method`
+--
+
+LOCK TABLES `payment_method` WRITE;
+/*!40000 ALTER TABLE `payment_method` DISABLE KEYS */;
+SET autocommit=0;
+/*!40000 ALTER TABLE `payment_method` ENABLE KEYS */;
+UNLOCK TABLES;
+COMMIT;
+
+-- Dumped table `payment_method` with 0 row(s)
+--
+
+--
+-- Table structure for table `price`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `price` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `price` float NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `price`
+--
+
+LOCK TABLES `price` WRITE;
+/*!40000 ALTER TABLE `price` DISABLE KEYS */;
+SET autocommit=0;
+/*!40000 ALTER TABLE `price` ENABLE KEYS */;
+UNLOCK TABLES;
+COMMIT;
+
+-- Dumped table `price` with 0 row(s)
 --
 
 --
@@ -185,6 +394,51 @@ COMMIT;
 --
 
 --
+-- Table structure for table `student`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `student` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `validate` date NOT NULL,
+  `full_name` char(150) NOT NULL,
+  `phone_number` bigint(10) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `dob` date NOT NULL,
+  `age` int(11) NOT NULL,
+  `gender` char(11) NOT NULL,
+  `pass_type` char(20) NOT NULL,
+  `adhar_number` bigint(12) NOT NULL,
+  `education` char(30) NOT NULL,
+  `user_img` varchar(80) NOT NULL,
+  `Institute_name` varchar(150) NOT NULL,
+  `Institute_address` varchar(150) NOT NULL,
+  `from_date` date NOT NULL,
+  `to_date` date NOT NULL,
+  `from_place` char(50) NOT NULL,
+  `to_place` char(50) NOT NULL,
+  `bus_type` char(30) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `student`
+--
+
+LOCK TABLES `student` WRITE;
+/*!40000 ALTER TABLE `student` DISABLE KEYS */;
+SET autocommit=0;
+/*!40000 ALTER TABLE `student` ENABLE KEYS */;
+UNLOCK TABLES;
+COMMIT;
+
+-- Dumped table `student` with 0 row(s)
+--
+
+--
 -- Table structure for table `users`
 --
 
@@ -199,7 +453,7 @@ CREATE TABLE `users` (
   `role` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1- user 0- admin',
   PRIMARY KEY (`email`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -209,12 +463,39 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `users` VALUES (1,'Admin',1234567891,'21bmiit129@gmail.com','$2y$10$5n71XK3nOT9WXXxVPbrJxefB3FrzI.VMS.U2jXXNebJhSDuOT8XDe',0),(11,'Kushal Pipaliya',9574476496,'kushalhpipaliya01@gmail.com','$2y$10$5lYoLFB7m2RWsZO/7u//SuhVKE5umCivVJycZardhUetxZf7dXegS',1);
+INSERT INTO `users` VALUES (1,'Admin',1234567891,'21bmiit129@gmail.com','$2y$10$omAf0m3yrxH/cFklDaeIj.fnVTQxAxV6cNjv3a0DM5MTRzawacrou',0),(18,'Kushal Pipaliya',9574476496,'kushalhpipaliya01@gmail.com','$2y$10$ES5jujBIAbB9Kqz4EGybmO.EMbdjIFllTq65xe7I38zc5LcOk.tD.',1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
 -- Dumped table `users` with 2 row(s)
+--
+
+--
+-- Table structure for table `user_image`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_image` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `image` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_image`
+--
+
+LOCK TABLES `user_image` WRITE;
+/*!40000 ALTER TABLE `user_image` DISABLE KEYS */;
+SET autocommit=0;
+/*!40000 ALTER TABLE `user_image` ENABLE KEYS */;
+UNLOCK TABLES;
+COMMIT;
+
+-- Dumped table `user_image` with 0 row(s)
 --
 
 --
@@ -225,7 +506,7 @@ COMMIT;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_type` (
   `type_id` int(11) NOT NULL AUTO_INCREMENT,
-  `type_name` varchar(150) NOT NULL,
+  `type_name` char(150) NOT NULL,
   PRIMARY KEY (`type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -254,4 +535,4 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on: Fri, 25 Aug 2023 21:27:03 +0200
+-- Dump completed on: Tue, 05 Sep 2023 10:24:24 +0200
