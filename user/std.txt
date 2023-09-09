@@ -1,0 +1,152 @@
+
+            <!-- Student form -->
+            <div class="form" id="StudentForm" style="display: none;">
+
+                <h1>Student Pass Details</h1>
+                <form action="#" method="POST">
+                    <!-- Application No -->
+                    <div class="form-group">
+                        <label for="id">Application No:</label>
+                        <input type="text" disabled id="id" name="id" style="cursor: not-allowed;background-color:#efefef;color: #000000;" placeholder="NEW PASS">
+                        <br><br>
+                    </div>
+
+                    <!-- Entry Date, Pass Type, Validate Through -->
+                    <div class="form-group">
+                        <label for="entryDate">Entry Date:</label>
+                        <input type="date" name="Entrydate" value="<?php echo date('Y-m-d') ?>" disabled style="cursor: not-allowed;background-color:#efefef;color: #000000;">
+                        <br><br>
+                        <label for="passType">Pass Type:</label>
+                        <select name="passType" id="passType">
+                            <option value="--" selected="selected">--</option>
+                            <option value="30">Monthly</option>
+                            <option value="90">Quarterly</option>
+                        </select>
+                        <br><br>
+                        <label for="validate_through">Validate Through:</label>
+                        <input type="date" id="validate_through" value="<?php echo date('Y-m-d', strtotime('+6 months')) ?>" name="validate_through" disabled style="cursor: not-allowed;background-color:#efefef;color: #000000;">
+
+                        <br><br>
+                    </div>
+
+                    <!-- Personal Details -->
+                    <h1>Personal Details</h1>
+
+                    <div class="form-group">
+                        <label for="fullname">Full Name:</label>
+                        <input type="text" id="fullname" name="fullname">
+
+                        <br><br>
+
+                        <label for="mobileNo">Phone Number:</label>
+                        <input type="text" name="mobileNo" maxlength="13" value="">
+
+                        <br><br>
+
+                        <label for="address">Address:</label>
+                        <textarea name="address" id="address" cols="20" rows="3"></textarea>
+
+
+
+                        <br><br>
+                        <label for="dateofBirth">Date of Birth:</label>
+                        <input type="date" name="dateofBirth" id="dateofBirth">
+
+
+                        <br><br>
+                        <label for="age">Age:</label>
+                        <input type="text" id="age" name="age" maxlength="6" value="">
+
+
+                        <br><br>
+                        <label>Gender:</label>
+                        <input type="radio" name="gender" value="M" checked="checked">
+                        <span class="bodytext">Male</span>
+                        <input type="radio" name="gender" value="F">
+                        <span class="bodytext">Female</span>
+                        <input type="radio" name="gender" value="T">
+                        <span class="bodytext">Transgender</span>
+
+                        <br><br>
+
+                        <label for="category1">Category:</label>
+                        <select name="category1">
+                            <option value="--" selected="selected">--</option>
+                            <option value="1">General</option>
+                            <option value="2">SCBC</option>
+                            <option value="3">ST</option>
+                            <option value="4">SC</option>
+                        </select>
+
+                        <br><br>
+
+                        <label for="adhar_number">Adhar Number:</label>
+                        <input type="text" id="adhar_number" name="adhar_number">
+
+
+                        <br><br>
+                        <label for="education">Education:</label>
+                        <select name="education">
+                            <option value="">Please Select Highest Qualification</option>
+                            <option value="10">Illiterate</option>
+                        </select>
+
+                        <br><br>
+
+                        <label for="photoDoc">Photo Upload:</label>
+                        <input type="file" name="photoDoc" id="filename1">
+                        <p>[Self-attached Passport size Photo Copy. Size less than 1 MB.]</p>
+
+
+                        <br><br>
+                    </div>
+
+
+                    <!-- Institute Details -->
+                    <h1>Institute Details</h1>
+
+                    <div class="form-group">
+                        <label for="institute_name">Institute Name:</label>
+                        <input type="text" id="institute_name" name="institute_name">
+
+
+                        <br><br>
+                        <label for="institute_address">Institute Address:</label>
+                        <textarea name="institute_address" id="institute_address" cols="20" rows="3"></textarea>
+                        <br><br>
+
+                        <label for="fromDate">From Date:</label>
+                        <input type="date" value="<?php echo date('Y-m-d') ?>" name="fromDate" id="fromDate">
+
+
+                        <br><br>
+                        <label for="toDate">To Date:</label>
+                        <input type="date" name="toDate" id="toDate" disabled style="cursor: not-allowed;background-color:#efefef;color: #000000;">
+
+
+                        <br><br>
+                        <label for="fromPlace">From Place:</label>
+                        <input type="text" id="fromPlace" name="fromPlace" style="width: 260px;" placeholder="Select karse surat" autocomplete="off">
+
+
+                        <br><br>
+                        <label for="toPlace">To Place:</label>
+                        <input type="text" id="toPlace" name="toPlace" style="width: 260px;" placeholder="Bardoli sudhi" autocomplete="off">
+
+
+                        <br><br>
+                        <label for="classOfService">Class Of Service:</label>
+                        <select name="classOfService">
+                            <option value="--" selected="selected">--</option>
+                            <option value="1">LOCAL</option>
+                            <option value="2">EXPRESS</option>
+                            <option value="3">GURJARNAGRI</option>
+                        </select>
+
+                        <br><br>
+                        <!-- Payment Page -->
+
+                        <button class="btn-payment" id="paymentButton" type="button">Click to Pay</button>
+                    </div>
+                </form>
+            </div>

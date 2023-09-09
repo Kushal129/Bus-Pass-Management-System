@@ -287,7 +287,6 @@
     transition: transform 0.3s, box-shadow 0.5s;
 }
 
-
 .Pass-Page {
     justify-content: center;
     display: flex;
@@ -320,7 +319,6 @@
 .Pass-Page select:focus {
     border-color: #000000;
 }
-
 
 /* Form Heading Styles */
 .down-container .form h1 {
@@ -391,23 +389,7 @@
     display: block;
 }
 
-
 .down-container button.btn-payment:hover {
     background-color: #000000;
     color: white;
-}
-
-
-/* Style disabled input fields with a darker appearance */
-input:disabled {
-    background-color: #333; /* Dark background color */
-    color: #fff; /* Light text color */
-    cursor: not-allowed; /* Change the cursor style */
-}
-
-/* Style disabled select elements with a darker appearance */
-select:disabled {
-    background-color: #333; /* Dark background color for select elements */
-    color: #fff; /* Light text color for select elements */
-    cursor: not-allowed; /* Change the cursor style for select elements */
 }
