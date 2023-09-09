@@ -470,29 +470,483 @@ if (!isset($_SESSION['username'])) {
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="label">Disability Area</label>
+                        <h2>Disability Area</h2>
+                        <br>
                         <div class="textBoxOut" title="Disability Area">
                             <div class="multicustomSelectBox multipletype disabilitys_type_withCheckbox">
                                 <table>
-                                    <tr>
-                                        <td>
-                                            <label><input type="checkbox" value="19" name="disability_area[]">Abdomen</label>
-                                        </td>
-                                        <td>
-                                            <label><input type="checkbox" value="71" name="disability_area[]">All Four Limbs</label>
-                                        </td>
-                                        <!-- Add more checkboxes here -->
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label><input type="checkbox" value="78" name="disability_area[]">Anemia</label>
-                                        </td>
-                                        <td>
-                                            <label><input type="checkbox" value="24" name="disability_area[]">Apraxia Of Speech</label>
-                                        </td>
-                                        <!-- Add more checkboxes here -->
-                                    </tr>
-                                    <!-- Add more rows as needed -->
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="19" name="disability_area[]">Abdomen</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="71" name="disability_area[]">All Four Limbs</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="78" name="disability_area[]">Anemia</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="24" name="disability_area[]">Apraxia Of Speech</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="30" name="disability_area[]">Bilateral Vocal Cord Paralysis</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="74" name="disability_area[]">Bladder</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="32" name="disability_area[]">Body Height</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="38" name="disability_area[]">Bone Disease</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="25" name="disability_area[]">Both Ears</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="26" name="disability_area[]">Both Eye</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="73" name="disability_area[]">Both Hand</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="28" name="disability_area[]">Both Leg</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="34" name="disability_area[]">Both Lower Limb</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="35" name="disability_area[]">Both Upper Limb</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="66" name="disability_area[]">Both Upper Limb And Both Lower Limb</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="6" name="disability_area[]">Brain</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="12" name="disability_area[]">Chest</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="80" name="disability_area[]">Developmental Disorder</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="41" name="disability_area[]">Dysarthria</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="2" name="disability_area[]">Ears</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="17" name="disability_area[]">Elbow</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="59" name="disability_area[]">Elbow Spine</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="42" name="disability_area[]">Epilepsy</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="40" name="disability_area[]">Face</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="27" name="disability_area[]">Fingers</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="22" name="disability_area[]">Foot</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="60" name="disability_area[]">Foot Knee</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="43" name="disability_area[]">Glossectomy</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="16" name="disability_area[]">Hand Fingers</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="44" name="disability_area[]">Head</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="21" name="disability_area[]">Heel</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="18" name="disability_area[]">Hip</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="20" name="disability_area[]">Knee</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="58" name="disability_area[]">Knee Left Leg</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="61" name="disability_area[]">Knee Right Leg</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="70" name="disability_area[]">Laryngectomy</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="4" name="disability_area[]">Left Arm</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="54" name="disability_area[]">Left Arm Left Leg</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="52" name="disability_area[]">Left Arm Right Arm</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="55" name="disability_area[]">Left Arm Right Leg</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="65" name="disability_area[]">Left Ear</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="1" name="disability_area[]">Left Eye</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="56" name="disability_area[]">Left Eye Right Eye</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="62" name="disability_area[]">Left Hand</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="3" name="disability_area[]">Left Leg</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="50" name="disability_area[]">Left Leg Right Leg</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="49" name="disability_area[]">Left Lower Limb</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="57" name="disability_area[]">Left Upper Limb</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="77" name="disability_area[]">Locomotor/oh</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="69" name="disability_area[]">Longitiudinal Deficiencies</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="67" name="disability_area[]">Maxillofacial Anomalies</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="75" name="disability_area[]">Mental Illness</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="68" name="disability_area[]">Mental Illness (hearing)</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="46" name="disability_area[]">Mental Illness (iq)</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="36" name="disability_area[]">Mental Illness (learning)</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="37" name="disability_area[]">Mental Illness (vision)</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="76" name="disability_area[]">Mental Retardation</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="29" name="disability_area[]">Mind Mental</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="31" name="disability_area[]">Moderate Mind</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="9" name="disability_area[]">Mouth</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="15" name="disability_area[]">Neck</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="8" name="disability_area[]">Nose</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="33" name="disability_area[]">Profound Mental</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="79" name="disability_area[]">Psychological Problems</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="13" name="disability_area[]">Right Arm</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="53" name="disability_area[]">Right Arm Left Leg</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="51" name="disability_area[]">Right Arm Right Leg</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="64" name="disability_area[]">Right Ear</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="7" name="disability_area[]">Right Eye</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="63" name="disability_area[]">Right Hand</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="5" name="disability_area[]">Right Leg</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="45" name="disability_area[]">Right Lower Limb</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="39" name="disability_area[]">Right Upper Limb</label>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="11" name="disability_area[]">Shoulder</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="23" name="disability_area[]">Spine</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="14" name="disability_area[]">Stomach (pet)</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="10" name="disability_area[]">Throat</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="48" name="disability_area[]">Transverse Deficiencies</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="72" name="disability_area[]">Trunk</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label><input type="checkbox" value="47" name="disability_area[]">Whole Body</label>
+                                            </td>
+                                        </tr>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
