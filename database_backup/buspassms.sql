@@ -3,7 +3,7 @@
 -- Host: localhost	Database: buspassms
 -- ------------------------------------------------------
 -- Server version 	10.4.28-MariaDB
--- Date: Tue, 05 Sep 2023 10:24:24 +0200
+-- Date: Sat, 09 Sep 2023 16:12:25 +0200
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -130,6 +130,62 @@ COMMIT;
 --
 
 --
+-- Table structure for table `document`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `document` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `document_type_id` int(11) NOT NULL,
+  `document_number` int(11) NOT NULL,
+  `document_file_path` varchar(80) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `document`
+--
+
+LOCK TABLES `document` WRITE;
+/*!40000 ALTER TABLE `document` DISABLE KEYS */;
+SET autocommit=0;
+/*!40000 ALTER TABLE `document` ENABLE KEYS */;
+UNLOCK TABLES;
+COMMIT;
+
+-- Dumped table `document` with 0 row(s)
+--
+
+--
+-- Table structure for table `document_type`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `document_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(80) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `document_type`
+--
+
+LOCK TABLES `document_type` WRITE;
+/*!40000 ALTER TABLE `document_type` DISABLE KEYS */;
+SET autocommit=0;
+/*!40000 ALTER TABLE `document_type` ENABLE KEYS */;
+UNLOCK TABLES;
+COMMIT;
+
+-- Dumped table `document_type` with 0 row(s)
+--
+
+--
 -- Table structure for table `handicap`
 --
 
@@ -137,9 +193,8 @@ COMMIT;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `handicap` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` char(150) NOT NULL,
   `disease` varchar(200) NOT NULL,
-  `doc` varchar(80) NOT NULL,
+  `hand_doc_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -259,13 +314,15 @@ CREATE TABLE `passenger_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `full_name` char(200) NOT NULL,
   `address` varchar(255) NOT NULL,
-  `gender` char(30) NOT NULL,
-  `phonenumber` bigint(10) NOT NULL,
-  `role` varchar(50) NOT NULL,
-  `r_id` int(11) NOT NULL,
+  `document_id` int(11) NOT NULL,
+  `gender` char(20) NOT NULL,
+  `role` int(11) NOT NULL COMMENT 'Role which define the actual role (passenger , student , handicapt)',
+  `r_id` int(11) NOT NULL COMMENT 'Role_id which defines the users id ex (student id , handicap_id)',
   `user_id` int(11) NOT NULL,
-  `cus_id` int(11) NOT NULL,
+  `cust_id` int(11) NOT NULL,
   `validate_through` date NOT NULL,
+  `dob` date NOT NULL,
+  `user_img_path` varchar(80) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -401,25 +458,9 @@ COMMIT;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `student` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `date` date NOT NULL,
-  `validate` date NOT NULL,
-  `full_name` char(150) NOT NULL,
-  `phone_number` bigint(10) NOT NULL,
-  `address` varchar(255) NOT NULL,
-  `dob` date NOT NULL,
-  `age` int(11) NOT NULL,
-  `gender` char(11) NOT NULL,
-  `pass_type` char(20) NOT NULL,
-  `adhar_number` bigint(12) NOT NULL,
   `education` char(30) NOT NULL,
-  `user_img` varchar(80) NOT NULL,
   `Institute_name` varchar(150) NOT NULL,
   `Institute_address` varchar(150) NOT NULL,
-  `from_date` date NOT NULL,
-  `to_date` date NOT NULL,
-  `from_place` char(50) NOT NULL,
-  `to_place` char(50) NOT NULL,
-  `bus_type` char(30) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -535,4 +576,4 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on: Tue, 05 Sep 2023 10:24:24 +0200
+-- Dump completed on: Sat, 09 Sep 2023 16:12:25 +0200
