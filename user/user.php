@@ -298,6 +298,12 @@ if (!isset($_SESSION['username'])) {
                         </select>
 
                         <br><br>
+                        <hr>
+                        <h1 class="formHeadTxt">Terms & Conditions</h1>
+                        <p class="hline"></p>
+                        <input type="checkbox" value="true" name="chkTermConditions" id="chkPassport">&nbsp;I agree to BPMS's <a title="Click here to view 'Terms & Conditions'." href="https://drive.google.com/open?id=14NXGE1Bh0ZGgXbLDO8InELpldvz7fPg6" target="_blank">Terms & Conditions</a>
+                        <!-- <label for="chkPassport"></label> -->
+                        <br><br>
                         <!-- Payment Page -->
                         <button class="btn-payment" id="paymentButton" type="button">Click to Pay</button>
                     </div>
@@ -337,29 +343,21 @@ if (!isset($_SESSION['username'])) {
 
                         <label for="handicap_phone_number">Phone Number:</label>
                         <input type="text" id="handicap_phone_number" name="handicap_phone_number" pattern="[0-9]{10}" required>
-                    </div>
 
-                    <!-- Category -->
-                    <div class="form-group">
-                        <label for="handicap_category">Category:</label>
-                        <select name="handicap_category" id="handicap_category" required>
-                            <option value="Divorcee & Widower">Divorcee & Widower</option>
+                        <!-- Marital status -->
+                        <label for="handicap_category">Select your Marital status:</label>
+                        <select name="handicap_category" id="handicap_category" required onchange="toggleSpouseNameField()">
+                            <option value="">--</option>
+                            <option value="Married">Married</option>
+                            <option value="Unmarried">Unmarried</option>
                         </select>
-                        <br><br>
-                        <!-- Spouse Name  -->
-                        <div id="spouse_name_field">
+                        <br>
+                        <div id="spouse_name_field" style="display: none;">
                             <label for="handicap_spouse_name">Spouse Name:</label>
                             <input type="text" id="handicap_spouse_name" name="handicap_spouse_name">
                         </div>
-                        <br><br>
-                        <!-- Relation with PwD  -->
-                        <div id="relation_with_pwd_field">
-                            <label for="handicap_relation_with_pwd">Relation with PwD:</label>
-                            <input type="text" id="handicap_relation_with_pwd" name="handicap_relation_with_pwd">
-                        </div>
-                    </div>
-                    <!-- Address -->
-                    <div class="form-group">
+                        <br>
+
                         <label for="handicap_address">Address:</label>
                         <textarea id="handicap_address" name="handicap_address" rows="4"></textarea>
                     </div>
@@ -369,7 +367,7 @@ if (!isset($_SESSION['username'])) {
                         <label for="handicap_photo">Photo Upload:</label>
                         <input type="file" id="handicap_photo" name="handicap_photo" accept=".jpg, .jpeg, .png">
                         <p>[Self-attached Passport size Photo Copy. Max size: 200KB.]</p>
-                        <span id="photo-upload-error" style="color: red;"></span>
+                        <span id="photo-upload-error" style="color: red;"></span> <br> <br>
 
                         <!-- Signature/Thumb/Other Print -->
                         <label for="handicap_signature">Signature/Thumb/Other Print:</label>
@@ -448,26 +446,72 @@ if (!isset($_SESSION['username'])) {
 
                     <!-- Disability Details -->
                     <h1>Disability Details</h1>
+
                     <div class="form-group">
-                        <label class="label" for="have_disability_cert">Do you have a disability certificate?</label>
-                        <div class="textBoxOut">
-                            <div class="formFieldBg">
-                                <div class="regiFieldChk">
-                                    <input type="radio" id="have_disability_cert_yes" name="have_disability_cert" value="1"> Yes
-                                </div>
-                                <div class="regiFieldChk">
-                                    <input type="radio" id="have_disability_cert_no" name="have_disability_cert" value="0" checked="checked"> No
-                                </div>
+                        <label for="have_disability_cert">Do you have a disability certificate?</label>
+                        <div class="formFieldBg">
+                            <div class="regiFieldChk">
+                                <input type="radio" id="have_disability_cert_yes" name="have_disability_cert" value="1"> Yes
+                            </div>
+                            <div class="regiFieldChk">
+                                <input type="radio" id="have_disability_cert_no" name="have_disability_cert" value="0" checked="checked"> No
+                            </div>
+                        </div>
+
+                        <div class="disabilitycert" style="display: none;">
+                            <label class="label" for="disability_cert_doc">
+                                Disability Certificate<span class="required"> *</span>
+                            </label>
+                            <div class="textBoxOut">
+                                <input type="file" id="disability_cert_doc" name="disability_cert_doc" accept=".jpg, .jpeg, .png, .pdf" required>
+                                <div class="note">(Only jpeg, jpg, png, and pdf with size 20 KB to 500 KB allowed)</div>
+                                <span id="error_disability_cert_doc" style="color: red;"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="label">Disability Area</label>
+                        <div class="textBoxOut" title="Disability Area">
+                            <div class="multicustomSelectBox multipletype disabilitys_type_withCheckbox">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <label><input type="checkbox" value="19" name="disability_area[]">Abdomen</label>
+                                        </td>
+                                        <td>
+                                            <label><input type="checkbox" value="71" name="disability_area[]">All Four Limbs</label>
+                                        </td>
+                                        <!-- Add more checkboxes here -->
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label><input type="checkbox" value="78" name="disability_area[]">Anemia</label>
+                                        </td>
+                                        <td>
+                                            <label><input type="checkbox" value="24" name="disability_area[]">Apraxia Of Speech</label>
+                                        </td>
+                                        <!-- Add more checkboxes here -->
+                                    </tr>
+                                    <!-- Add more rows as needed -->
+                                </table>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="label" for="disability_cert_doc">Disability Certificate<span class="required"> *</span></label>
-                        <input type="file" id="disability_cert_doc" name="disability_cert_doc" accept="image/*">
-                    </div>
-
-                    <div class="form-group">
+                        <label for="disability_due_to">Disability Due To:</label>
+                        <div class="customSelectBox">
+                            <select id="disability_due_to" name="disability_due_to">
+                                <option value="">Please Select Disability Due To</option>
+                                <option value="Accident">Accident</option>
+                                <option value="Congenital">Congenital</option>
+                                <option value="Diseases">Diseases</option>
+                                <option value="Hereditary">Hereditary</option>
+                                <option value="Infection">Infection</option>
+                                <option value="Medicine">Medicine</option>
+                            </select>
+                        </div>
+                        <br><br>
                         <label class="label" for="disability_type">Disability Type<span class="required"> *</span></label>
                         <select id="disability_type" name="disability_type" required>
                             <option value="Physical Disability">Physical Disability</option>
@@ -477,19 +521,14 @@ if (!isset($_SESSION['username'])) {
                             <option value="Other">Other</option>
                         </select>
                     </div>
-
-                    <div class="form-group">
-                        <label class="label" for="disability_percentage">Percentage of Disability<span class="required"> *</span></label>
-                        <input type="number" id="disability_percentage" name="disability_percentage" min="1" max="100" required>
-                    </div>
-
                     <div class="form-group">
                         <label class="label" for="disability_description">Brief Description of Disability<span class="required"> *</span></label>
                         <textarea id="disability_description" name="disability_description" rows="4" required></textarea>
+                        <br><br>
+                        <!-- Payment Page -->
+                        <button class="btn-payment" id="paymentButton" type="button">Click to Pay</button>
                     </div>
 
-                    <!-- Payment Page -->
-                    <button class="btn-payment" id="paymentButton" type="button">Click to Pay</button>
                 </form>
             </div>
         </div>
@@ -517,7 +556,44 @@ if (!isset($_SESSION['username'])) {
         addFileInputValidation('handicap_signature', 'signature-upload-error', 200);
         addFileInputValidation('handicap_address_proof_upload', 'address-proof-upload-error', 200);
     </script>
+    <script>
+        function toggleSpouseNameField() {
+            var categorySelect = document.getElementById("handicap_category");
+            var spouseNameField = document.getElementById("spouse_name_field");
 
+            if (categorySelect.value === "Married") {
+                spouseNameField.style.display = "block";
+            } else {
+                spouseNameField.style.display = "none";
+            }
+        }
+    </script>
+    <script>
+        $('input[name="have_disability_cert"]').on('change', function() {
+            var disabilityCertField = $('.disabilitycert');
+            if ($(this).val() === "1") {
+                disabilityCertField.show();
+            } else {
+                disabilityCertField.hide();
+            }
+        });
+
+
+        $('#disability_cert_doc').on('change', function() {
+            var maxFileSize = 500 * 1024;
+            var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.pdf)$/i;
+            var errorMessage = '';
+
+            if (!allowedExtensions.exec(this.value)) {
+                errorMessage = 'Please upload a valid JPG, JPEG, PNG, or PDF file.';
+                this.value = '';
+            } else if (this.files[0] && this.files[0].size > maxFileSize) {
+                errorMessage = 'File size exceeds the 500KB limit.';
+                this.value = '';
+            }
+            $('#error_disability_cert_doc').text(errorMessage);
+        });
+    </script>
     <script>
         $(document).ready(function() {
             $('.form').hide();

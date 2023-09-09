@@ -393,3 +393,78 @@
     background-color: #000000;
     color: white;
 }
+
+/* 
+.disability-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.disability-list li {
+    width: 20%; 
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    padding: 5px;
+} */
+
+
+/* Apply styles to the table */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ccc;
+}
+
+/* Apply styles to table rows */
+table tr {
+    border: 1px solid #ccc;
+}
+
+/* Apply styles to table cells (td) */
+table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+/* Style for even rows (optional) */
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Style for hover effect (optional) */
+table tr:hover {
+    background-color: #e0e0e0;
+}
+
+/* Style for checkboxes (optional) */
+table input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+
+/* Style the checkbox */
+input[type="checkbox"] {
+    margin-right: 5px; /* Add some space between the checkbox and the label */
+}
+
+/* Style the label text */
+label {
+    font-weight: bold; /* Make the text bold */
+    color: #333; /* Change the text color */
+}
+
+/* Style the link within the label */
+label a {
+    text-decoration: none; /* Remove underlines from the link */
+    color: #0073e6; /* Change link color */
+}
+
+/* Style the link when hovered over */
+label a:hover {
+    text-decoration: underline; /* Underline the link on hover */
+}
