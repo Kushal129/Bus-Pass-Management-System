@@ -3,7 +3,7 @@
 -- Host: localhost	Database: buspassms
 -- ------------------------------------------------------
 -- Server version 	10.4.28-MariaDB
--- Date: Sat, 09 Sep 2023 16:12:25 +0200
+-- Date: Tue, 12 Sep 2023 17:25:04 +0200
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -56,7 +56,7 @@ CREATE TABLE `bus_type` (
   `bus_id` int(11) NOT NULL AUTO_INCREMENT,
   `bus_name` varchar(120) NOT NULL,
   PRIMARY KEY (`bus_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,11 +66,12 @@ CREATE TABLE `bus_type` (
 LOCK TABLES `bus_type` WRITE;
 /*!40000 ALTER TABLE `bus_type` DISABLE KEYS */;
 SET autocommit=0;
+INSERT INTO `bus_type` VALUES (1,'LOCAL'),(2,'EXPRESS'),(3,'GURJARNAGRI');
 /*!40000 ALTER TABLE `bus_type` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `bus_type` with 0 row(s)
+-- Dumped table `bus_type` with 3 row(s)
 --
 
 --
@@ -110,9 +111,8 @@ COMMIT;
 CREATE TABLE `city` (
   `city_id` int(11) NOT NULL AUTO_INCREMENT,
   `city_name` varchar(200) NOT NULL,
-  `state_id` int(11) NOT NULL,
   PRIMARY KEY (`city_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=141 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,11 +122,40 @@ CREATE TABLE `city` (
 LOCK TABLES `city` WRITE;
 /*!40000 ALTER TABLE `city` DISABLE KEYS */;
 SET autocommit=0;
+INSERT INTO `city` VALUES (1,'Ahmedabad'),(2,'Vadodara'),(3,'Surat'),(4,'Rajkot'),(5,'Gandhinagar'),(6,'Bhavnagar'),(7,'Jamnagar'),(8,'Junagadh'),(9,'Anand'),(10,'Bharuch'),(11,'Nadiad'),(12,'Mehsana'),(13,'Gandhidham'),(14,'Porbandar'),(15,'Navsari'),(16,'Veraval'),(17,'Ankleshwar'),(18,'Morbi'),(19,'Surendranagar'),(20,'Godhra'),(21,'Palanpur'),(22,'Valsad'),(23,'Bhuj'),(24,'Bardoli'),(25,'Vapi'),(26,'Amreli'),(27,'Himatnagar'),(28,'Dahod'),(29,'Botad'),(30,'Keshod'),(31,'Visnagar'),(32,'Mangrol'),(33,'Wadhwan'),(34,'Modasa'),(35,'Jetpur'),(36,'Dhoraji'),(37,'Kalol'),(38,'Dholka'),(39,'Dhandhuka'),(40,'Kadi'),(41,'Thangadh'),(42,'Unjha'),(43,'Siddhpur'),(44,'Mansa'),(45,'Limbdi'),(46,'Borsad'),(47,'Halvad'),(48,'Rajula'),(49,'Mahuva'),(50,'Kutch'),(51,'Palitana'),(52,'Kapadvanj'),(53,'Lunawada'),(54,'Viramgam'),(55,'Visavadar'),(56,'Wankaner'),(57,'Padra'),(58,'Dabhoi');
 /*!40000 ALTER TABLE `city` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `city` with 0 row(s)
+-- Dumped table `city` with 58 row(s)
+--
+
+--
+-- Table structure for table `disability_type`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `disability_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(80) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `disability_type`
+--
+
+LOCK TABLES `disability_type` WRITE;
+/*!40000 ALTER TABLE `disability_type` DISABLE KEYS */;
+SET autocommit=0;
+INSERT INTO `disability_type` VALUES (1,'Physical Disability'),(2,'Intellectual Disability'),(3,'Visual Disability'),(4,'Hearing Disability'),(5,'Other');
+/*!40000 ALTER TABLE `disability_type` ENABLE KEYS */;
+UNLOCK TABLES;
+COMMIT;
+
+-- Dumped table `disability_type` with 5 row(s)
 --
 
 --
@@ -195,6 +224,8 @@ CREATE TABLE `handicap` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `disease` varchar(200) NOT NULL,
   `hand_doc_id` int(11) NOT NULL,
+  `disability_area` varchar(80) NOT NULL,
+  `disability_type_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -576,4 +607,4 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on: Sat, 09 Sep 2023 16:12:25 +0200
+-- Dump completed on: Tue, 12 Sep 2023 17:25:04 +0200
