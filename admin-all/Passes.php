@@ -80,7 +80,7 @@ if (!isset($_SESSION['username'])) {
             </li>
             <li>
                 <a href="../admin-all/Report.php">
-                <i class='bx bx-bar-chart-square'></i>
+                    <i class='bx bx-bar-chart-square'></i>
 
                     <span class="links_name">Report of Pass</span>
                 </a>
@@ -90,73 +90,50 @@ if (!isset($_SESSION['username'])) {
     </div>
 
     <section class="home-section">
-    <div class="head">
-        <div class="profile">
-            <img src="../img/admin.ico" class="pro-img" id="user-avatar" alt="User Avatar">
-            <p class="profile-text">Admin</p>
+        <div class="head">
+            <div class="profile">
+                <img src="../img/admin.ico" class="pro-img" id="user-avatar" alt="User Avatar">
+                <p class="profile-text">Admin</p>
+            </div>
+            <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>
         </div>
-        <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>
-    </div>
-        
-
-
-    <section class="passes">
-            <h2>Passes Management</h2>
-            <div class="pass-list">
-                <ul>
-                    <li>Pass 1</li>
-                    <li>Pass 2</li>
-                    <li>Pass 3</li>
-                    <!-- Add more passes as needed -->
-                </ul>
-            </div>
-            <div class="add-pass">
-                <h3>Add New Pass</h3>
-                <form>
-                    <label for="pass-name">Pass Name:</label>
-                    <input type="text" id="pass-name" name="pass-name">
-                    <button type="submit">Add</button>
-                </form>
-            </div>
-        </section>
 
 
 
+    
+        <script>
+            let sidebar = document.querySelector(".sidebar");
+            let closeBtn = document.querySelector("#btn");
+            let searchBtn = document.querySelector(".bx-search");
 
-    </section>
-    <script>
-        let sidebar = document.querySelector(".sidebar");
-        let closeBtn = document.querySelector("#btn");
-        let searchBtn = document.querySelector(".bx-search");
+            closeBtn.addEventListener("click", () => {
+                sidebar.classList.toggle("open");
+                menuBtnChange(); //calling the function(optional)
+            });
 
-        closeBtn.addEventListener("click", () => {
-            sidebar.classList.toggle("open");
-            menuBtnChange(); //calling the function(optional)
-        });
+            searchBtn.addEventListener("click", () => { // Sidebar open when you click on the search iocn
+                sidebar.classList.toggle("open");
+                menuBtnChange(); //calling the function(optional)
+            });
 
-        searchBtn.addEventListener("click", () => { // Sidebar open when you click on the search iocn
-            sidebar.classList.toggle("open");
-            menuBtnChange(); //calling the function(optional)
-        });
-
-        // following are the code to change sidebar button(optional)
-        function menuBtnChange() {
-            if (sidebar.classList.contains("open")) {
-                closeBtn.classList.replace("bx-menu", "bx-menu-alt-right"); //replacing the iocns class
-            } else {
-                closeBtn.classList.replace("bx-menu-alt-right", "bx-menu"); //replacing the iocns class
+            // following are the code to change sidebar button(optional)
+            function menuBtnChange() {
+                if (sidebar.classList.contains("open")) {
+                    closeBtn.classList.replace("bx-menu", "bx-menu-alt-right"); //replacing the iocns class
+                } else {
+                    closeBtn.classList.replace("bx-menu-alt-right", "bx-menu"); //replacing the iocns class
+                }
             }
-        }
-    </script>
-    <script>
-        // Function to handle logout
-        function logout() {
-            
-            window.location.href = '../logout.php';
-        }
+        </script>
+        <script>
+            // Function to handle logout
+            function logout() {
 
-        document.getElementById('logout-btn').addEventListener('click', logout);
-    </script>
+                window.location.href = '../logout.php';
+            }
+
+            document.getElementById('logout-btn').addEventListener('click', logout);
+        </script>
 </body>
 
 </html>

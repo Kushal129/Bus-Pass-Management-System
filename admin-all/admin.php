@@ -80,7 +80,7 @@ if (!isset($_SESSION['username'])) {
             </li>
             <li>
                 <a href="../admin-all/Report.php">
-                <i class='bx bx-bar-chart-square'></i>
+                    <i class='bx bx-bar-chart-square'></i>
                     <span class="links_name">Report of Pass</span>
                 </a>
                 <span class="tooltip">Report of Pass</span>
@@ -89,37 +89,59 @@ if (!isset($_SESSION['username'])) {
     </div>
 
     <section class="home-section">
-    <div class="head">
-        <div class="profile">
-            <img src="../img/admin.ico" class="pro-img" id="user-avatar" alt="User Avatar">
-            <div class="profile-text"><?php echo $row['full_name']; ?></div>
+        <div class="head">
+            <div class="profile">
+                <img src="../img/admin.ico" class="pro-img" id="user-avatar" alt="User Avatar">
+                <div class="profile-text"><?php echo $row['full_name']; ?></div>
+            </div>
+            <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>
         </div>
-        <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>
-    </div>
         <div class="container">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Total Pass</h5>
+                    <p>100</p>
+                    <i class='bx bx-message-square-edit'></i>
+                </div>
+            </div>
 
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">Total Pass</h5>
-                        <p>50</p>
-                        <i class='bx bx-message-square-edit'></i>
-                    </div>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Pass Created Today</h5>
+                    <p>20</p>
+                    <i class='bx bx-message-square-edit'></i>
                 </div>
-
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">Pass Created Today</h5>
-                        <p>60</p>
-                        <i class='bx bx-message-square-edit'></i>
-                    </div>
+            </div>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Pass Created in 7 Days</h5>
+                    <p>80</p>
+                    <i class='bx bx-message-square-edit'></i>
                 </div>
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">Pass Created in 7 Days</h5>
-                        <p>400</p>
-                        <i class='bx bx-message-square-edit'></i>
-                    </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="card" id="totalPassCard">
+                <div class="card-body">
+                    <h5 class="card-title">Total Student Pass</h5>
+                    <p>50</p>
+                    <i class='bx bx-message-square-edit'></i>
                 </div>
+            </div>
+            <div class="card" id="passengerPassCard">
+                <div class="card-body">
+                    <h5 class="card-title">Total Passenger Pass</h5>
+                    <p>40</p>
+                    <i class='bx bx-message-square-edit'></i>
+                </div>
+            </div>
+            <div class="card" id="handicapPassCard">
+                <div class="card-body">
+                    <h5 class="card-title">Total Handicap Pass</h5>
+                    <p>10</p>
+                    <i class='bx bx-message-square-edit'></i>
+                </div>
+            </div>
         </div>
     </section>
     <script>
@@ -129,11 +151,11 @@ if (!isset($_SESSION['username'])) {
 
         closeBtn.addEventListener("click", () => {
             sidebar.classList.toggle("open");
-            menuBtnChange(); 
+            menuBtnChange();
         });
 
         searchBtn.addEventListener("click", () => {
-             // Sidebar open when you click on the search iocn
+            // Sidebar open when you click on the search iocn
             sidebar.classList.toggle("open");
             menuBtnChange();
         });
@@ -150,7 +172,7 @@ if (!isset($_SESSION['username'])) {
     <script>
         // Function to handle logout
         function logout() {
-            
+
             window.location.href = '../logout.php';
         }
 

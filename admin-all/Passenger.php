@@ -101,27 +101,8 @@ if (!isset($_SESSION['username'])) {
 
 
     <section class="passenger">
-            <h2>Passenger Management</h2>
-            <div class="passenger-list">
-                <ul>
-                    <li>Passenger 1</li>
-                    <li>Passenger 2</li>
-                    <li>Passenger 3</li>
-                    <!-- Add more passengers as needed -->
-                </ul>
-            </div>
-            <div class="add-passenger">
-                <h3>Add New Passenger</h3>
-                <form>
-                    <label for="passenger-name">Passenger Name:</label>
-                    <input type="text" id="passenger-name" name="passenger-name">
-                    <button type="submit">Add</button>
-                </form>
-            </div>
-        </section>
-
-
-
+            <h2>Passenger</h2>
+            
 
     </section>
     <script>
