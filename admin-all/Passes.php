@@ -1,28 +1,4 @@
-<?php
-session_start();
 
-include_once '../connection.php';
-
-if (!isset($_SESSION['username'])) {
-    header('location:../index.php');
-} else {
-    $checkEmailQuery = "SELECT * FROM users WHERE email=?";
-    $stmt = $con->prepare($checkEmailQuery);
-    $stmt->bind_param("s", $_SESSION['username']);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-
-    $role = $row['role'];
-    // echo $role;
-    // 1 - user and 0 - admin
-
-    if ($role) {
-        // echo "USER";
-        header("Location:../user/user.php");
-    }
-}
-?>
 <!DOCTYPE html>
 
 <html lang="en" dir="ltr">
@@ -51,26 +27,13 @@ if (!isset($_SESSION['username'])) {
                 <span class="tooltip">Dashboard</span>
             </li>
             <li>
-                <a href="../admin-all/Passenger.php">
-                    <i class='bx bx-user'></i>
-                    <span class="links_name">Passenger</span>
-                </a>
-                <span class="tooltip">Passenger</span>
-            </li>
-            <li>
                 <a href="../admin-all/Passes.php">
                     <i class='bx bx-chat'></i>
                     <span class="links_name">Passes</span>
                 </a>
                 <span class="tooltip">Passes</span>
             </li>
-            <li>
-                <a href="../admin-all/Category.php">
-                    <i class='bx bx-pie-chart-alt-2'></i>
-                    <span class="links_name">Category</span>
-                </a>
-                <span class="tooltip">Category</span>
-            </li>
+           
             <li>
                 <a href="../admin-all/Search.php">
                     <i class='bx bx-search'></i>
@@ -97,10 +60,13 @@ if (!isset($_SESSION['username'])) {
             </div>
             <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>
         </div>
+        <p>Manage pass </p>
+        <p>Bus :- view buses and add buses</p>
+        <p>Rute :- View rute and ad  Rute </p>
+        <p>cast :- add view</p>
 
 
 
-    
         <script>
             let sidebar = document.querySelector(".sidebar");
             let closeBtn = document.querySelector("#btn");
@@ -108,25 +74,25 @@ if (!isset($_SESSION['username'])) {
 
             closeBtn.addEventListener("click", () => {
                 sidebar.classList.toggle("open");
-                menuBtnChange(); //calling the function(optional)
+                menuBtnChange();
             });
 
-            searchBtn.addEventListener("click", () => { // Sidebar open when you click on the search iocn
+            searchBtn.addEventListener("click", () => { 
                 sidebar.classList.toggle("open");
-                menuBtnChange(); //calling the function(optional)
+                menuBtnChange();
             });
 
-            // following are the code to change sidebar button(optional)
+
             function menuBtnChange() {
                 if (sidebar.classList.contains("open")) {
-                    closeBtn.classList.replace("bx-menu", "bx-menu-alt-right"); //replacing the iocns class
+                    closeBtn.classList.replace("bx-menu", "bx-menu-alt-right"); 
                 } else {
-                    closeBtn.classList.replace("bx-menu-alt-right", "bx-menu"); //replacing the iocns class
+                    closeBtn.classList.replace("bx-menu-alt-right", "bx-menu"); 
                 }
             }
         </script>
         <script>
-            // Function to handle logout
+            
             function logout() {
 
                 window.location.href = '../logout.php';

@@ -1,3 +1,27 @@
+<?php 
+
+include '../connection.php';
+include '../toaster.php';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $note = $_POST['note'];
+
+	
+    $qry = "INSERT INTO report (name, email, note) VALUES (?, ?, ?)";
+    $stmt = $con->prepare($qry);
+    $stmt->bind_param("sss", $name, $email, $note);
+	if ($stmt->execute()) {
+		
+		echo '<script>showToaster("Report inserted successfully", "green")</script>';
+	} else {
+		echo '<script>showToaster("Report inserting failed", "red")</script>';
+	}
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -185,18 +209,18 @@
 				</div>
 			</div>
 			<div class="contactForm">
-				<form>
+				<form action="../main/contact.php" method="POST" >
 					<h2>Send Message</h2>
 					<div class="inputBox">
-						<input type="text" name="" required="required">
+						<input type="text" name="name" id="name" required="required">
 						<span>Full Name</span>
 					</div>
 					<div class="inputBox">
-						<input type="text" name="" required="required">
+						<input type="text" name="email" id="email" required="required">
 						<span>Email</span>
 					</div>
 					<div class="inputBox">
-						<textarea required="required" ></textarea>
+						<textarea required="required" name="note" id="note" ></textarea>
 						<span>Type Your Message...</span>
 					</div>
 					<div class="inputBox">
@@ -207,5 +231,4 @@
 		</div>
 	</section>
 </body>
-
 </html>

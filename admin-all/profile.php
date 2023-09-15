@@ -50,26 +50,13 @@ if (!isset($_SESSION['username'])) {
                 </a>
                 <span class="tooltip">Dashboard</span>
             </li>
-            <li>
-                <a href="../admin-all/Passenger.php">
-                    <i class='bx bx-user'></i>
-                    <span class="links_name">Passenger</span>
-                </a>
-                <span class="tooltip">Passenger</span>
-            </li>
+           
             <li>
                 <a href="../admin-all/Passes.php">
                     <i class='bx bx-chat'></i>
                     <span class="links_name">Passes</span>
                 </a>
                 <span class="tooltip">Passes</span>
-            </li>
-            <li>
-                <a href="../admin-all/Category.php">
-                    <i class='bx bx-pie-chart-alt-2'></i>
-                    <span class="links_name">Category</span>
-                </a>
-                <span class="tooltip">Category</span>
             </li>
             <li>
                 <a href="../admin-all/Search.php">
@@ -100,9 +87,8 @@ if (!isset($_SESSION['username'])) {
         
 
 
-    <section class="passenger">
-            <h2>Passenger</h2>
-            
+    <section class="Profile Update">
+            <h2>Profile Update</h2>
 
     </section>
     <script>
@@ -112,25 +98,25 @@ if (!isset($_SESSION['username'])) {
 
         closeBtn.addEventListener("click", () => {
             sidebar.classList.toggle("open");
-            menuBtnChange(); //calling the function(optional)
+            menuBtnChange(); 
         });
 
-        searchBtn.addEventListener("click", () => { // Sidebar open when you click on the search iocn
+        searchBtn.addEventListener("click", () => { 
             sidebar.classList.toggle("open");
-            menuBtnChange(); //calling the function(optional)
+            menuBtnChange(); 
         });
 
-        // following are the code to change sidebar button(optional)
+       
         function menuBtnChange() {
             if (sidebar.classList.contains("open")) {
-                closeBtn.classList.replace("bx-menu", "bx-menu-alt-right"); //replacing the iocns class
+                closeBtn.classList.replace("bx-menu", "bx-menu-alt-right"); 
             } else {
-                closeBtn.classList.replace("bx-menu-alt-right", "bx-menu"); //replacing the iocns class
+                closeBtn.classList.replace("bx-menu-alt-right", "bx-menu"); 
             }
         }
     </script>
     <script>
-        // Function to handle logout
+       
         function logout() {
             
             window.location.href = '../logout.php';

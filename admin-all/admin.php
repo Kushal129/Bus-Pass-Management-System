@@ -5,7 +5,6 @@ include_once '../connection.php';
 
 if (!isset($_SESSION['username'])) {
     header('location:../index.php');
-    // echo "time nathi";
 } else {
     $checkEmailQuery = "SELECT * FROM users WHERE email=?";
     $stmt = $con->prepare($checkEmailQuery);
@@ -16,9 +15,7 @@ if (!isset($_SESSION['username'])) {
 
     $role = $row['role'];
     // echo $role;
-    // 1 - user and 0 - admin
     if ($role) {
-        // echo "USER";
         header("Location:../user/user.php");
     }
 }
@@ -51,25 +48,11 @@ if (!isset($_SESSION['username'])) {
                 <span class="tooltip">Dashboard</span>
             </li>
             <li>
-                <a href="../admin-all/Passenger.php">
-                    <i class='bx bx-user'></i>
-                    <span class="links_name">Passenger</span>
-                </a>
-                <span class="tooltip">Passenger</span>
-            </li>
-            <li>
                 <a href="../admin-all/Passes.php">
                     <i class='bx bx-chat'></i>
                     <span class="links_name">Passes</span>
                 </a>
                 <span class="tooltip">Passes</span>
-            </li>
-            <li>
-                <a href="../admin-all/Category.php">
-                    <i class='bx bx-pie-chart-alt-2'></i>
-                    <span class="links_name">Category</span>
-                </a>
-                <span class="tooltip">Category</span>
             </li>
             <li>
                 <a href="../admin-all/Search.php">

@@ -44,8 +44,6 @@ if (isset($_POST["login_submit"])) {
                 echo '<script>showLoginModal()</script>';
             }
         } else {
-            // $_SESSION['alert'] = "Email not found. Please enter a valid email address.";
-            // header("Location: navbar.php");
             echo '<script>showToaster("Email not found. Please enter a valid email address. " , "red")</script>';
             echo '<script>showLoginModal()</script>';
         }

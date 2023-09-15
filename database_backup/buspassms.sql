@@ -3,7 +3,7 @@
 -- Host: localhost	Database: buspassms
 -- ------------------------------------------------------
 -- Server version 	10.4.28-MariaDB
--- Date: Tue, 12 Sep 2023 17:25:04 +0200
+-- Date: Fri, 15 Sep 2023 13:57:24 +0200
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -455,6 +455,36 @@ COMMIT;
 --
 
 --
+-- Table structure for table `report`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `report` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` char(40) NOT NULL,
+  `email` varchar(80) NOT NULL,
+  `note` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `report`
+--
+
+LOCK TABLES `report` WRITE;
+/*!40000 ALTER TABLE `report` DISABLE KEYS */;
+SET autocommit=0;
+INSERT INTO `report` VALUES (1,'Kushal','21bmiit129@gmail.com','I have no any kind of Proble '),(2,'dev','21vmiit039@gmail.com','i love php'),(3,'nancy','abc@gmail.com','asdfsdafaf'),(4,'jonti','jontiobe@gmail.com','asdfsfsdsdfdafsaf'),(5,'asdfsdaf','dsfsda@gmail.com','asdasfdsdfafdsafsadf'),(6,'yyeusbjdjds','ndndn@gmail.com','asdfasfasfcccciiiiii'),(7,'asdf','21ooo@gmail.com','asduhbneidbdjdjddasdfasdfsf'),(8,'pilu be','pili@gmail.com','i have no time');
+/*!40000 ALTER TABLE `report` ENABLE KEYS */;
+UNLOCK TABLES;
+COMMIT;
+
+-- Dumped table `report` with 8 row(s)
+--
+
+--
 -- Table structure for table `state`
 --
 
@@ -607,4 +637,4 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on: Tue, 12 Sep 2023 17:25:04 +0200
+-- Dump completed on: Fri, 15 Sep 2023 13:57:24 +0200

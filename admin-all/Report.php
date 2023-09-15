@@ -1,39 +1,94 @@
 <?php
-session_start();
+include '../connection.php';
 
-include_once '../connection.php';
+$query = "SELECT * FROM report";
+$result = $con->query($query);
 
-if (!isset($_SESSION['username'])) {
-    header('location:../index.php');
-} else {
-    $checkEmailQuery = "SELECT * FROM users WHERE email=?";
-    $stmt = $con->prepare($checkEmailQuery);
-    $stmt->bind_param("s", $_SESSION['username']);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
+$data = array();
 
-    $role = $row['role'];
-    // echo $role;
-    // 1 - user and 0 - admin
-
-    if ($role) {
-        // echo "USER";
-        header("Location:../user/user.php");
-    }
+while ($row = $result->fetch_assoc()) {
+    $data[] = $row;
 }
-?>
-<!DOCTYPE html>
 
-<html lang="en" dir="ltr">
+?>
+
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title> Admin Page </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Report Details </title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../css/admin.css">
-    <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+    <style>
+        /* DataTable Styling */
+        #reportTable_wrapper {
+            margin: 15px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        #reportTable thead th {
+            background-color:#efffb6;
+            color: #000;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 14px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .dataTables_wrapper .dataTables_filter input {
+            display: inline-block;
+            border: 1px solid #000;
+            margin-bottom: 1rem;
+            padding: 5px;
+            background-color: transparent;
+            margin-left: 10px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .dataTables_filter::before {
+            font-family: FontAwesome;
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            color: #f7dc6f;
+        }
+
+        .dataTables_filter input::placeholder {
+            color: red;
+        }
+
+        .dataTables_length label {
+            color: #000;
+            font-weight: bold;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+
+        .dataTables_length select {
+            background-color: #000;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .dataTables_length select option {
+            background-color: #000;
+            color: #f7dc6f;
+            font-size: 14px;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -51,25 +106,11 @@ if (!isset($_SESSION['username'])) {
                 <span class="tooltip">Dashboard</span>
             </li>
             <li>
-                <a href="../admin-all/Passenger.php">
-                    <i class='bx bx-user'></i>
-                    <span class="links_name">Passenger</span>
-                </a>
-                <span class="tooltip">Passenger</span>
-            </li>
-            <li>
                 <a href="../admin-all/Passes.php">
                     <i class='bx bx-chat'></i>
                     <span class="links_name">Passes</span>
                 </a>
                 <span class="tooltip">Passes</span>
-            </li>
-            <li>
-                <a href="../admin-all/Category.php">
-                    <i class='bx bx-pie-chart-alt-2'></i>
-                    <span class="links_name">Category</span>
-                </a>
-                <span class="tooltip">Category</span>
             </li>
             <li>
                 <a href="../admin-all/Search.php">
@@ -80,7 +121,7 @@ if (!isset($_SESSION['username'])) {
             </li>
             <li>
                 <a href="../admin-all/Report.php">
-                <i class='bx bx-bar-chart-square'></i>
+                    <i class='bx bx-bar-chart-square'></i>
 
                     <span class="links_name">Report of Pass</span>
                 </a>
@@ -88,20 +129,48 @@ if (!isset($_SESSION['username'])) {
             </li>
         </ul>
     </div>
-
     <section class="home-section">
-    <div class="head">
-        <div class="profile">
-            <img src="../img/admin.ico" class="pro-img" id="user-avatar" alt="User Avatar">
-            <p class="profile-text">Admin</p>
+        <div class="head">
+            <div class="profile">
+                <img src="../img/admin.ico" class="pro-img" id="user-avatar" alt="User Avatar">
+                <p class="profile-text">Admin</p>
+            </div>
+            <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>
         </div>
-        <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>
-    </div>
-        
-    User no data batave pass jetla na hoi ee 
-        and downlod repots pdf
 
+        <!-- <p>report page je nakhe value aaya fatch kavi ne batavu and </p>
+        <p>admin Search and show reports DATE rige pdf download and send it </p> -->
+
+        <table id="reportTable" class="display">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Note</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                include '../connection.php';
+                $query = "SELECT * FROM report";
+                $result = $con->query($query);
+
+                while ($row = $result->fetch_assoc()) {
+                    echo '<tr>';
+                    echo '<td>' . $row['name'] . '</td>';
+                    echo '<td>' . $row['email'] . '</td>';
+                    echo '<td>' . $row['note'] . '</td>';
+                    echo '</tr>';
+                }
+                ?>
+            </tbody>
+        </table>
     </section>
+    <script>
+        $(document).ready(function() {
+            $('#reportTable').DataTable();
+        });
+    </script>
     <script>
         let sidebar = document.querySelector(".sidebar");
         let closeBtn = document.querySelector("#btn");
@@ -109,32 +178,51 @@ if (!isset($_SESSION['username'])) {
 
         closeBtn.addEventListener("click", () => {
             sidebar.classList.toggle("open");
-            menuBtnChange(); //calling the function(optional)
+            menuBtnChange();
         });
 
-        searchBtn.addEventListener("click", () => { // Sidebar open when you click on the search iocn
+        searchBtn.addEventListener("click", () => {
             sidebar.classList.toggle("open");
-            menuBtnChange(); //calling the function(optional)
+            menuBtnChange();
         });
 
-        // following are the code to change sidebar button(optional)
+
         function menuBtnChange() {
             if (sidebar.classList.contains("open")) {
-                closeBtn.classList.replace("bx-menu", "bx-menu-alt-right"); //replacing the iocns class
+                closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
             } else {
-                closeBtn.classList.replace("bx-menu-alt-right", "bx-menu"); //replacing the iocns class
+                closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");
             }
         }
     </script>
     <script>
-        // Function to handle logout
         function logout() {
-            
+
             window.location.href = '../logout.php';
         }
 
         document.getElementById('logout-btn').addEventListener('click', logout);
     </script>
+    <!-- <script>
+        $(document).ready(function() {
+            $('#reportTable').DataTable({
+                "ajax": {
+                    "url": "Report.php",
+                    "dataSrc": ""
+                },
+                "columns": [{
+                        "data": "name"
+                    },
+                    {
+                        "data": "email"
+                    },
+                    {
+                        "data": "note"
+                    }
+                ]
+            });
+        });
+    </script> -->
 </body>
 
 </html>
