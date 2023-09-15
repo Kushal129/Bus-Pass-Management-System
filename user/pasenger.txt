@@ -1,3 +1,0 @@
-<div class="form" id="PassengerForm">
-                <h1>Passenger Pass Details</h1>
-                <!-- Handicap Pass Form -->
