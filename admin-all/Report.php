@@ -1,16 +1,34 @@
 <?php
+
 include '../connection.php';
 
 $query = "SELECT * FROM report";
 $result = $con->query($query);
 
-$data = array();
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-while ($row = $result->fetch_assoc()) {
-    $data[] = $row;
+    if (isset($_POST['id'])) {
+        $id = $con->real_escape_string($_POST['id']);
+
+        $deleteQuery = "DELETE FROM report WHERE id = '$id'";
+        $result = $con->query($deleteQuery);
+
+        if ($result) {
+            header('Location: Report.php');
+            exit();
+        } else {
+            echo "Error: " . $con->error;
+        }
+    } else {
+        echo "Invalid request. 'id' parameter is missing.";
+    }
 }
 
+if (!$result) {
+    die("Database query failed: " . $con->error);
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +45,6 @@ while ($row = $result->fetch_assoc()) {
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
     <style>
-        /* DataTable Styling */
         #reportTable_wrapper {
             margin: 15px;
             padding: 20px;
@@ -35,8 +52,8 @@ while ($row = $result->fetch_assoc()) {
         }
 
         #reportTable thead th {
-            background-color:#efffb6;
-            color: #000;
+            background-color: #000;
+            color: #feff3c;
             padding: 10px;
             font-weight: bold;
             font-size: 14px;
@@ -75,17 +92,20 @@ while ($row = $result->fetch_assoc()) {
             margin-right: 10px;
         }
 
-        .dataTables_length select {
-            background-color: #000;
-            border: none;
-            border-radius: 5px;
-            font-size: 14px;
+        .dataTables_wrapper .dataTables_length select {
+            border: 1px solid black;
+            border-radius: 6px;
+            padding: 5px;
+            padding-left: 2rem;
         }
-
-        .dataTables_length select option {
-            background-color: #000;
-            color: #f7dc6f;
-            font-size: 14px;
+        .delete-button {
+            border: none;
+            background-color: red;
+            color: #000;
+            font-size: 10px;
+            margin-left: 2.5rem;
+            padding: 6px;
+            border-radius: 5px;
         }
     </style>
 
@@ -147,19 +167,22 @@ while ($row = $result->fetch_assoc()) {
                     <th>Name</th>
                     <th>Email</th>
                     <th>Note</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                include '../connection.php';
-                $query = "SELECT * FROM report";
-                $result = $con->query($query);
-
                 while ($row = $result->fetch_assoc()) {
                     echo '<tr>';
                     echo '<td>' . $row['name'] . '</td>';
                     echo '<td>' . $row['email'] . '</td>';
                     echo '<td>' . $row['note'] . '</td>';
+                    echo '<td>
+                        <form action="../admin-all/Report.php" method="POST">
+                            <input type="hidden" name="id" value="' . $row['id'] . '">
+                            <button type="submit" class="delete-button">Delete</button>
+                        </form>
+                      </td>';
                     echo '</tr>';
                 }
                 ?>
@@ -186,7 +209,6 @@ while ($row = $result->fetch_assoc()) {
             menuBtnChange();
         });
 
-
         function menuBtnChange() {
             if (sidebar.classList.contains("open")) {
                 closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
@@ -197,32 +219,12 @@ while ($row = $result->fetch_assoc()) {
     </script>
     <script>
         function logout() {
-
             window.location.href = '../logout.php';
         }
 
         document.getElementById('logout-btn').addEventListener('click', logout);
     </script>
-    <!-- <script>
-        $(document).ready(function() {
-            $('#reportTable').DataTable({
-                "ajax": {
-                    "url": "Report.php",
-                    "dataSrc": ""
-                },
-                "columns": [{
-                        "data": "name"
-                    },
-                    {
-                        "data": "email"
-                    },
-                    {
-                        "data": "note"
-                    }
-                ]
-            });
-        });
-    </script> -->
+    >
 </body>
 
 </html>
