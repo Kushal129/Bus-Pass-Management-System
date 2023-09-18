@@ -183,6 +183,7 @@
         </div>
         <div class="form-group">
             <h2> Payment </h2>
+            <input type="text" placeholder="Pay Amount.." disabled >
             <input class="btn-submit" type="button" value="Submit and Proceed to Payment" id="paymentButton" onclick="redirectToPayment()">
         </div>
     </form>

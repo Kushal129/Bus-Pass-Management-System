@@ -28,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Contact Us </title>
+
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 	<style>
@@ -120,8 +121,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		}
 
 		.contactForm h2 {
+			justify-content: center;
 			font-size: 30px;
 			color: #333;
+			display: flex;
 			font-weight: 500;
 		}
 
@@ -187,6 +190,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			font-size: 17px;
 		}
 
+		.error {
+			color: red;
+			font-size: 14px;
+			display: block;
+			margin-top: 5px;
+			transform: translateY(-20px);
+		}
+
+
 		@media (max-width: 991px) {
 			.contact {
 				padding: 50px;
@@ -237,19 +249,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			</div>
 			<div class="contactForm">
 				<form action="../main/contact.php" method="POST">
-					<h2>Send Message</h2>
+					<h2>Give Feedback</h2>
+					<hr>
 					<div class="inputBox">
-						<input type="text" name="name" id="name" required="required">
+						<input type="text" name="name" id="name" required="required" oninput="validateName(this)">
 						<span>Full Name</span>
-					</div>
+						<span class="error" id="name-error"></span>
+					</div><br>
 					<div class="inputBox">
-						<input type="text" name="email" id="email" required="required">
+						<input type="text" name="email" id="email" required="required" oninput="validateEmail(this)">
 						<span>Email</span>
-					</div>
+						<span class="error" id="email-error"></span>
+					</div><br>
 					<div class="inputBox">
-						<textarea required="required" name="note" id="note"></textarea>
+						<textarea required="required" name="note" id="note" oninput="validateNote(this)"></textarea>
 						<span>Type Your Message...</span>
+						<span class="error" id="note-error"></span>
 					</div>
+					<br>
 					<div class="inputBox">
 						<input type="submit" value="Send">
 					</div>
@@ -259,5 +276,56 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		</div>
 	</section>
 </body>
+<script>
+	function validateName(input) {
+		const nameError = input.nextElementSibling.nextElementSibling;
+		const namePattern = /^[a-zA-Z\s]*$/;
+
+		if (input.value.trim() === "") {
+			nameError.textContent = "Name is required.";
+		} else if (!namePattern.test(input.value)) {
+			nameError.textContent = "Name should only contain letters and spaces.";
+		} else {
+			nameError.textContent = "";
+		}
+	}
+
+	function validateEmail(input) {
+		const emailError = input.nextElementSibling.nextElementSibling;
+		const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+		if (!emailPattern.test(input.value)) {
+			emailError.textContent = "Invalid email address.";
+		} else {
+			emailError.textContent = "";
+		}
+	}
+
+	function validateNote(input) {
+		const noteError = input.nextElementSibling.nextElementSibling;
+		if (input.value.trim() === "") {
+			noteError.textContent = "Message is required.";
+		} else {
+			noteError.textContent = "";
+		}
+	}
+
+	function validateForm() {
+		const nameInput = document.getElementById("name");
+		const emailInput = document.getElementById("email");
+		const noteInput = document.getElementById("note");
+		const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+
+		validateName();
+		validateEmail();
+		validateNote();
+
+		if (nameInput.value.trim() === "" || !emailPattern.test(emailInput.value) || noteInput.value.trim() === "") {
+			return false;
+		}
+
+		return true;
+	}
+</script>
 
 </html>
