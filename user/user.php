@@ -37,11 +37,6 @@ if (!isset($_SESSION['username'])) {
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- <script>
-        //  window.history.forward();
-        window.onbeforeunload = false;
-    </script> -->
-
 </head>
 
 <body>
@@ -220,7 +215,7 @@ if (!isset($_SESSION['username'])) {
                 "Ahmedabad",
                 "Vadodara",
                 "Surat",
-                
+
             ];
 
             $(".fromPlace, .toPlace").autocomplete({
@@ -280,7 +275,7 @@ if (!isset($_SESSION['username'])) {
         });
     </script>
 
-   
+
     <script>
         $('input[name="have_disability_cert"]').on('change', function() {
             var disabilityCertField = $('.disabilitycert');

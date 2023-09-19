@@ -15,9 +15,10 @@
 <body>
 
     <form action="../main/payment.php" method="POST">
-        <h1>Student Pass Details</h1>
         <!-- Application No -->
         <div class="form-group">
+            <h1>Student Pass Details</h1>
+            <hr>
             <label for="id">Application No:</label>
             <input type="text" disabled id="id" name="id" style="cursor: not-allowed;background-color:#efefef;color: #000000;" placeholder="NEW PASS">
             <br><br>
@@ -28,13 +29,6 @@
             <label for="entryDate">Entry Date:</label>
             <input type="date" name="Entrydate" value="<?php echo date('Y-m-d') ?>" disabled style="cursor: not-allowed;background-color:#efefef;color: #000000;">
             <br><br>
-            <label for="passType">Pass Type:</label>
-            <select name="passType" id="passType">
-                <option value="--" selected="selected">--</option>
-                <option value="30">Monthly</option>
-                <option value="90">Quarterly</option>
-            </select>
-            <br><br>
             <label for="validate_through">Validate Through:</label>
             <input type="date" id="validate_through" value="<?php echo date('Y-m-d', strtotime('+6 months')) ?>" name="validate_through" disabled style="cursor: not-allowed;background-color:#efefef;color: #000000;">
             <br><br>
@@ -43,6 +37,8 @@
         <!-- Personal Details -->
         <div class="form-group">
             <h1>Personal Details</h1>
+            <hr>
+
             <label for="fullname">Full Name:</label>
             <input type="text" id="fullname" name="fullname">
             <br><br>
@@ -81,9 +77,20 @@
                 <option value="4">SC</option>
             </select>
             <br><br>
+
+            <label for="institute_name">Institute Name:</label>
+            <input type="text" id="institute_name" name="institute_name">
+            <br><br>
+
+            <label for="institute_address">Institute Address:</label>
+            <textarea name="institute_address" id="institute_address" cols="20" rows="3"></textarea>
+            <br><br>
+
+
         </div>
         <div class="form-group">
-
+            <h1>Prof Details</h1>
+            <hr>
             <label for="img_std">Photo Upload:</label>
             <input type="file" name="img_std" id="img_std" accept=".jpg, .jpeg, .png">
             <p>[Self-attached Passport size Photo Copy. Max size: 200KB]</p>
@@ -145,15 +152,15 @@
 
         </div>
         <div class="form-group">
-            <h1>Institute Details</h1>
-            <label for="institute_name">Institute Name:</label>
-            <input type="text" id="institute_name" name="institute_name">
+            <h1>Location Details</h1>
+            <hr>
+            <label for="passType">Pass Type:</label>
+            <select name="passType" id="passType">
+                <option value="30" selected>Monthly</option>
+                <option value="90">Quarterly</option>
+            </select>
             <br><br>
-
-            <label for="institute_address">Institute Address:</label>
-            <textarea name="institute_address" id="institute_address" cols="20" rows="3"></textarea>
-            <br><br>
-
+            
             <label for="fromDate">From Date:</label>
             <input type="date" value="<?php echo date('Y-m-d') ?>" name="fromDate" id="fromDate">
             <br><br>
@@ -172,18 +179,19 @@
             <br><br>
 
             <label for="classOfService">Class Of Service:</label>
-            <select name="classOfService">
-                <option value="" selected="selected">--</option>
-                <option value="1">LOCAL</option>
-                <option value="2">EXPRESS</option>
-                <option value="3">GURJARNAGRI</option>
+            <select name="classOfService" id="classOfService">
+                <option value="1" selected>LOCAL</option>
+                <option value="1.3">EXPRESS</option>
+                <option value="1.5">GURJARNAGRI</option>
             </select>
             <br><br>
             <hr>
         </div>
         <div class="form-group">
             <h2> Payment </h2>
-            <input type="text" placeholder="Pay Amount.." disabled >
+            <hr>
+            <input type="text" placeholder="Pay Amount.." id="pay-value" disabled>
+            <br><br>
             <input class="btn-submit" type="button" value="Submit and Proceed to Payment" id="paymentButton" onclick="redirectToPayment()">
         </div>
     </form>
@@ -322,6 +330,8 @@
             "Wankaner",
             "Padra",
             "Dabhoi",
+            "Buhari",
+            "Bardoli",
         ];
 
         $(".fromPlace, .toPlace").autocomplete({
@@ -330,7 +340,69 @@
         });
     });
 
+    $(".fromPlace, .toPlace").change(function() {
+        var from = $('.fromPlace').val();
+        var to = $('.toPlace').val();
 
+        if (from != '' && to != '') {
+            $.ajax({
+                type: 'post',
+                url: 'get_geo_loc.php',
+                dataType: 'json',
+                data: {
+                    from: from,
+                    to: to,
+                },
+                success: function(res) {
+                    console.log(calculateDistance(res[0].lati, res[0].long, res[1].lati, res[1].long));
+                    distance = Math.ceil(calculateDistance(res[0].lati, res[0].long, res[1].lati, res[1].long));
+                    rs = distance * 13;
+                    var multipy = $('#classOfService').val();
+                    $("#pay-value").val(Math.ceil(rs * multipy));
+                }
+            })
+        }
+
+    })
+
+    $('#classOfService').change(function() {
+        // rs = distance * 13;
+        // var multipy = $('#classOfService').val();
+        // $("#pay-value").val(Math.ceil(rs * multipy));
+
+        function calculatePassAmount() {
+            var passType = $('#passType').val();
+            var multipy = $('#classOfService').val();
+            var rs = 0;
+
+            if (passType === "30") {
+                rs = distance * 13 * multipy;
+            } else if (passType === "90") {
+                rs = distance * 13 * multipy * 3;
+            }
+
+            $("#pay-value").val(Math.ceil(rs));
+        }
+        $("#paymentButton").click(function() {
+            calculatePassAmount();
+        });
+
+    })
+
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+        const R = 6371;
+        const dLat = (lat2 - lat1) * (Math.PI / 180);
+        const dLon = (lon2 - lon1) * (Math.PI / 180);
+        const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * (Math.PI / 180)) *
+            Math.cos(lat2 * (Math.PI / 180)) *
+            Math.sin(dLon / 2) *
+            Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = R * c;
+        return distance;
+    }
     // ------------------------------------------------------------------
 
 

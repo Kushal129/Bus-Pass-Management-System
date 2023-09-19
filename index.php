@@ -2,6 +2,10 @@
   session_start();
   include 'connection.php';
   include 'toaster.php';
+
+  if (isset($_SESSION['username'])) {
+    header('location: user/user.php');
+  }
   ?>
 
   <!DOCTYPE html>

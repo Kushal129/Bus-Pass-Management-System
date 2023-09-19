@@ -3,7 +3,7 @@
 -- Host: localhost	Database: buspassms
 -- ------------------------------------------------------
 -- Server version 	10.4.28-MariaDB
--- Date: Fri, 15 Sep 2023 13:57:24 +0200
+-- Date: Tue, 19 Sep 2023 04:42:24 +0200
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -27,9 +27,10 @@ CREATE TABLE `bus_terminals` (
   `ter_id` int(11) NOT NULL AUTO_INCREMENT,
   `ter_name` varchar(150) NOT NULL,
   `city_id` int(11) NOT NULL,
-  `geo_location` varchar(150) NOT NULL,
+  `lati` text NOT NULL COMMENT 'Latitude',
+  `long` text NOT NULL COMMENT 'Longitude',
   PRIMARY KEY (`ter_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,11 +40,12 @@ CREATE TABLE `bus_terminals` (
 LOCK TABLES `bus_terminals` WRITE;
 /*!40000 ALTER TABLE `bus_terminals` DISABLE KEYS */;
 SET autocommit=0;
+INSERT INTO `bus_terminals` VALUES (1,'Surat',1,'21.1702','72.8311'),(2,'Bardoli',1,'21.1230','73.1169'),(3,'Ahmedabad',1,'23.0225','72.5714'),(4,'Vadodara',1,' 22.3072','73.1812'),(5,'Rajkot',1,'22.3039','70.8022'),(6,'Gandhinagar',1,'23.2156','72.6369'),(7,'Bhavnagar',1,'21.7645','72.1519'),(8,'Jamnagar',1,'22.4707','70.0577'),(9,'Junagadh',1,'21.5222','70.4579'),(10,'Anand',1,'22.5524','72.9550'),(11,'Bharuch',1,'21.7051','72.9959'),(12,'Nadiad',1,'22.6975','72.8616'),(13,'Mehsana',1,'23.5865','72.3693'),(14,'Gandhidham',1,'23.0787','70.1328'),(15,'Porbandar',1,'21.6415','69.6293'),(16,'Navsari',1,'20.9467','72.9306'),(17,'Veraval',1,'20.9142','70.3679'),(18,'Ankleshwar',1,'21.6279','72.9932'),(19,'Morbi',1,'22.8170','70.8342'),(20,'Surendranagar',1,'22.7253','71.6370'),(22,'Godhra',1,'22.8311','73.6147'),(23,'Palanpur',1,'24.1848','72.8328'),(24,'Valsad',1,'20.5994','72.9342'),(25,'Bhuj',1,'23.2533','69.6693'),(26,'Vapi',1,'20.3718','72.9045'),(27,'Amreli',1,'21.6032','71.2221'),(28,'Himatnagar',1,'23.5990','72.9623'),(29,'Dahod',1,'22.8362','74.2579'),(30,'Botad',1,'22.1713','71.6662'),(31,'Keshod',1,'21.3069','70.2462'),(32,'Visnagar',1,'23.7059','72.5499'),(33,'Mangrol',1,'21.1143','70.1167'),(34,'Wadhwan',1,'22.7454','71.7273'),(35,'Modasa',1,'23.4664','73.2986'),(36,'Jetpur',1,'21.7539','70.6234'),(37,'Dhoraji',1,'21.7383','70.4520'),(38,'Kalol',1,'23.2547','72.4994'),(39,'Dholka',1,'22.7297','72.6561'),(40,'Dhandhuka',1,'22.3744','71.9826'),(41,'Kadi',1,'23.2972','72.3306'),(42,'Thangadh',1,'22.5641','71.1870'),(43,'Unjha',1,'23.8014','72.3900'),(44,'Siddhpur',1,'23.9176','72.3831'),(45,'Mansa',1,'23.2361','72.6624'),(46,'Limbdi',1,'22.5732','71.8064'),(47,'Borsad',1,'22.4162','73.1092'),(48,'Halvad',1,'23.0181','71.1770'),(49,'Rajula',1,'21.0345','71.4557'),(50,'Mahuva',1,'21.1070','71.7705'),(51,'Kutch',1,'23.6333','69.8333'),(52,'Palitana',1,'21.5173','71.8235'),(53,'Kapadvanj',1,'23.0217','73.1229'),(54,'Lunawada',1,'23.1264','73.6111'),(55,'Viramgam',1,'23.1240','73.1336'),(56,'Visavadar',1,'21.3645','70.1471'),(57,'Wankaner',1,'22.6110','70.9375'),(58,'Padra',1,'22.2978','73.1785'),(59,'Dabhoi',1,'22.1761','73.4227'),(60,'Bhujodi',1,'23.2825','69.7189'),(61,'Porbandar',1,'21.6439','69.6080'),(62,'Gandhidham',1,'23.0863','70.1311'),(63,'Dwarka',1,'22.2394','68.9678'),(64,'Palitana',1,'21.5202','71.8310'),(65,'Morbi',1,'22.8122','70.8393'),(66,'Bhuj',1,'23.2625','69.6648'),(67,'Anjar',1,'23.1100','70.1170'),(68,'Buhari',1,'20.967659','73.3069363');
 /*!40000 ALTER TABLE `bus_terminals` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `bus_terminals` with 0 row(s)
+-- Dumped table `bus_terminals` with 67 row(s)
 --
 
 --
@@ -55,6 +57,7 @@ COMMIT;
 CREATE TABLE `bus_type` (
   `bus_id` int(11) NOT NULL AUTO_INCREMENT,
   `bus_name` varchar(120) NOT NULL,
+  `price_multiply` float NOT NULL,
   PRIMARY KEY (`bus_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -66,7 +69,7 @@ CREATE TABLE `bus_type` (
 LOCK TABLES `bus_type` WRITE;
 /*!40000 ALTER TABLE `bus_type` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `bus_type` VALUES (1,'LOCAL'),(2,'EXPRESS'),(3,'GURJARNAGRI');
+INSERT INTO `bus_type` VALUES (1,'LOCAL',1),(2,'EXPRESS',1.3),(3,'GURJARNAGRI',1.5);
 /*!40000 ALTER TABLE `bus_type` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
@@ -434,10 +437,10 @@ COMMIT;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `price` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'price per km\r\n',
   `price` float NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -447,11 +450,12 @@ CREATE TABLE `price` (
 LOCK TABLES `price` WRITE;
 /*!40000 ALTER TABLE `price` DISABLE KEYS */;
 SET autocommit=0;
+INSERT INTO `price` VALUES (1,13);
 /*!40000 ALTER TABLE `price` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `price` with 0 row(s)
+-- Dumped table `price` with 1 row(s)
 --
 
 --
@@ -466,7 +470,7 @@ CREATE TABLE `report` (
   `email` varchar(80) NOT NULL,
   `note` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -476,12 +480,11 @@ CREATE TABLE `report` (
 LOCK TABLES `report` WRITE;
 /*!40000 ALTER TABLE `report` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `report` VALUES (1,'Kushal','21bmiit129@gmail.com','I have no any kind of Proble '),(2,'dev','21vmiit039@gmail.com','i love php'),(3,'nancy','abc@gmail.com','asdfsdafaf'),(4,'jonti','jontiobe@gmail.com','asdfsfsdsdfdafsaf'),(5,'asdfsdaf','dsfsda@gmail.com','asdasfdsdfafdsafsadf'),(6,'yyeusbjdjds','ndndn@gmail.com','asdfasfasfcccciiiiii'),(7,'asdf','21ooo@gmail.com','asduhbneidbdjdjddasdfasdfsf'),(8,'pilu be','pili@gmail.com','i have no time');
 /*!40000 ALTER TABLE `report` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `report` with 8 row(s)
+-- Dumped table `report` with 0 row(s)
 --
 
 --
@@ -637,4 +640,4 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on: Fri, 15 Sep 2023 13:57:24 +0200
+-- Dump completed on: Tue, 19 Sep 2023 04:42:24 +0200
