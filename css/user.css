@@ -418,17 +418,17 @@
 }
 
 
-input.btn-submit {
-    display: block; 
-    width: 100%;   
-    padding: 10px; 
+.btn-pmt {
+    display: block;
+    width: 100%;
+    padding: 10px;
     background-color: #000000;
-    color: #fff;    
-    border: none;   
-    cursor: pointer; 
-    font-size: 16px; 
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
 }
 
-input.btn-submit:hover {
-    background-color: #272727; 
+.btn-pmt:hover {
+    background-color: #272727;
 }

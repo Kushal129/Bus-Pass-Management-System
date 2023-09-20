@@ -7,15 +7,15 @@
     <link rel="stylesheet" href="../css/user.css">
     <link rel="icon" type="image/ico" href="../img/buslogo.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
 
     <form action="../main/payment.php" method="POST">
-        <!-- Application No -->
         <div class="form-group">
             <h1>Student Pass Details</h1>
             <hr>
@@ -24,7 +24,6 @@
             <br><br>
         </div>
 
-        <!-- Entry Date, Pass Type, Validate Through -->
         <div class="form-group">
             <label for="entryDate">Entry Date:</label>
             <input type="date" name="Entrydate" value="<?php echo date('Y-m-d') ?>" disabled style="cursor: not-allowed;background-color:#efefef;color: #000000;">
@@ -34,25 +33,24 @@
             <br><br>
         </div>
 
-        <!-- Personal Details -->
         <div class="form-group">
             <h1>Personal Details</h1>
             <hr>
 
             <label for="fullname">Full Name:</label>
-            <input type="text" id="fullname" name="fullname">
+            <input type="text" id="fullname" name="fullname" required>
             <br><br>
 
             <label for="mobileNo">Phone Number:</label>
-            <input type="text" name="mobileNo" maxlength="13" value="">
+            <input type="text" name="mobileNo" maxlength="13" value="" required>
             <br><br>
 
             <label for="address">Address:</label>
-            <textarea name="address" id="address" cols="20" rows="3"></textarea>
+            <textarea name="address" id="address" cols="20" rows="3" required></textarea>
             <br><br>
 
             <label for="dateofBirth">Date of Birth:</label>
-            <input type="date" name="dateofBirth" id="dateofBirth">
+            <input type="date" name="dateofBirth" id="dateofBirth" required>
             <br><br>
 
             <label for="age">Age:</label>
@@ -60,7 +58,7 @@
             <br><br>
 
             <label>Gender:</label>
-            <input type="radio" name="gender" value="M" checked="checked">
+            <input type="radio" name="gender" value="M" checked="checked" required>
             <span class="bodytext">Male</span>
             <input type="radio" name="gender" value="F">
             <span class="bodh2ytext">Female</span>
@@ -70,7 +68,7 @@
 
             <label for="category1">Category:</label>
             <select name="category1">
-                <option value="--" selected="selected">--</option>
+                <option value="--" selected="selected" required>--</option>
                 <option value="1">General</option>
                 <option value="2">SCBC</option>
                 <option value="3">ST</option>
@@ -79,26 +77,26 @@
             <br><br>
 
             <label for="institute_name">Institute Name:</label>
-            <input type="text" id="institute_name" name="institute_name">
+            <input type="text" id="institute_name" name="institute_name" required>
             <br><br>
 
             <label for="institute_address">Institute Address:</label>
-            <textarea name="institute_address" id="institute_address" cols="20" rows="3"></textarea>
+            <textarea name="institute_address" id="institute_address" cols="20" rows="3" required></textarea>
             <br><br>
 
 
         </div>
         <div class="form-group">
-            <h1>Prof Details</h1>
+            <h1>Proof Details</h1>
             <hr>
             <label for="img_std">Photo Upload:</label>
-            <input type="file" name="img_std" id="img_std" accept=".jpg, .jpeg, .png">
-            <p>[Self-attached Passport size Photo Copy. Max size: 200KB]</p>
+            <input type="file" name="img_std" id="img_std" accept=".jpg,.jpeg,.JPEG,.JPG,.png" required>
+            <p>[Self-attached Passport size Photo Copy. Max size: 300KB]</p>
             <span id="photo-upload-error-student" style="color: red;"></span>
 
-
+            <br>
             <label for="education">Education:</label>
-            <select name="education">
+            <select name="education" required>
                 <option value="">Please Select Highest Qualification</option>
                 <option value="1">Primary</option>
                 <option value="2">Middle/Higher Primary</option>
@@ -112,9 +110,9 @@
                 <option value="10">Illiterate</option>
             </select>
             <br><br>
-
+            <br>
             <label for="address_proof">Nature of Document for Address Proof:</label>
-            <select id="address_proof" name="address_proof" class="hasCustomSelect valid">
+            <select id="address_proof" name="address_proof" class="hasCustomSelect valid" required>
                 <option value="">Please Select Nature of Document</option>
                 <option value="1">Aadhaar card</option>
                 <option value="2">Address card with photo issued by Deptt. Of Posts, Govt. of India</option>
@@ -144,23 +142,22 @@
                 <option value="24">Water Bill (not older than last three months)</option>
             </select>
             <br><br>
-
             <label for="student_address_proof_upload">Upload Proof of Correspondence Address:</label>
-            <input type="file" id="student_address_proof_upload" name="student_address_proof_upload" accept=".jpg, .jpeg, .png">
+            <input type="file" id="student_address_proof_upload" name="student_address_proof_upload" accept=".jpg,.jpeg,.JPEG,.JPG,.png" required>
             <p>[Self-attached Passport size Photo Copy. Max size: 200KB]</p>
-            <span id="address-proof-error-student" style="color: red;"></span>
-
+            <span id=" address-proof-error-student" style="color: red;"></span>
+            <br><br>
         </div>
         <div class="form-group">
             <h1>Location Details</h1>
             <hr>
             <label for="passType">Pass Type:</label>
-            <select name="passType" id="passType">
+            <select name="passType" id="passType" required>
                 <option value="30" selected>Monthly</option>
                 <option value="90">Quarterly</option>
             </select>
             <br><br>
-            
+
             <label for="fromDate">From Date:</label>
             <input type="date" value="<?php echo date('Y-m-d') ?>" name="fromDate" id="fromDate">
             <br><br>
@@ -171,15 +168,15 @@
 
             <div class="student-form">
                 <label for="fromPlaceStudent">From Place:</label>
-                <input type="text" id="fromPlaceStudent" class="fromPlace">
+                <input type="text" id="fromPlaceStudent" class="fromPlace" required>
                 <br><br>
                 <label for="toPlaceStudent">To Place:</label>
-                <input type="text" id="toPlaceStudent" class="toPlace">
+                <input type="text" id="toPlaceStudent" class="toPlace" required>
             </div>
             <br><br>
 
             <label for="classOfService">Class Of Service:</label>
-            <select name="classOfService" id="classOfService">
+            <select name="classOfService" id="classOfService" required>
                 <option value="1" selected>LOCAL</option>
                 <option value="1.3">EXPRESS</option>
                 <option value="1.5">GURJARNAGRI</option>
@@ -190,38 +187,31 @@
         <div class="form-group">
             <h2> Payment </h2>
             <hr>
-            <input type="text" placeholder="Pay Amount.." id="pay-value" disabled>
+            <input type="text" placeholder="Pay Amount.." id="pay-value" disabled style="cursor: not-allowed;background-color:#efefef;color: #000000;">
             <br><br>
-            <input class="btn-submit" type="button" value="Submit and Proceed to Payment" id="paymentButton" onclick="redirectToPayment()">
+            <button class="btn-pmt" id="paymentButton">Submit and Proceed to Payment</button>
+
         </div>
     </form>
 </body>
 <script>
     $(document).ready(function() {
-        $('.form').hide();
-
         function showForm(selectedCategory) {
+            $('.form').hide();
             $('#' + selectedCategory + 'Form').show();
         }
 
         $('#new_pass').click(function() {
             $('.pass-page-container').show();
-
             var selectedCategory = $('#category option:first').val();
             console.log("Selected Category:", selectedCategory);
-
             showForm(selectedCategory);
         });
 
         $('#category').change(function() {
             var selectedCategory = $(this).val();
-            console.log("Selected Category:", selectedCategory);
-            $('.form').hide();
-
             showForm(selectedCategory);
-            console.log("Displaying Form:", $('#' + selectedCategory + 'Form'));
         });
-
 
         var defaultCategory = $('#category').val();
         showForm(defaultCategory);
@@ -230,45 +220,28 @@
 
 
 <script>
-    $(document).ready(function() {
-        $('.form').hide();
+    let sidebar = document.querySelector(".sidebar");
+    let closeBtn = document.querySelector("#btn");
 
-        $('#category').change(function() {
-            var selectedCategory = $(this).val();
-            console.log("Selected Category:", selectedCategory);
-
-            $('.form').hide();
-
-            $('#' + selectedCategory + 'Form').show();
-            console.log("Displaying Form:", $('#' + selectedCategory + 'Form'));
-        });
-
-        // Toggle sidebar
-        let sidebar = document.querySelector(".sidebar");
-        let closeBtn = document.querySelector("#btn");
-
-        closeBtn.addEventListener("click", () => {
-            sidebar.classList.toggle("open");
-            menuBtnChange();
-        });
-
-        function menuBtnChange() {
-            if (sidebar.classList.contains("open")) {
-                closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
-            } else {
-                closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");
-            }
-        }
-
-        function logout() {
-            window.location.href = '../logout.php';
-        }
-
-        document.getElementById('logout-btn').addEventListener('click', logout);
-
+    closeBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("open");
+        menuBtnChange();
     });
 
-    // ---------------------------------------------------------------
+    function menuBtnChange() {
+        if (sidebar.classList.contains("open")) {
+            closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+        } else {
+            closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+        }
+    }
+
+    function logout() {
+        window.location.href = '../logout.php';
+    }
+
+    document.getElementById('logout-btn').addEventListener('click', logout);
+
 
     $(function() {
         var placesInGujarat = [
@@ -358,7 +331,7 @@
                     distance = Math.ceil(calculateDistance(res[0].lati, res[0].long, res[1].lati, res[1].long));
                     rs = distance * 13;
                     var multipy = $('#classOfService').val();
-                    $("#pay-value").val(Math.ceil(rs * multipy));
+                    $("#pay-value").val(Math.ceil(rs * multipy) + " Rs/-");
                 }
             })
         }
@@ -366,10 +339,6 @@
     })
 
     $('#classOfService').change(function() {
-        // rs = distance * 13;
-        // var multipy = $('#classOfService').val();
-        // $("#pay-value").val(Math.ceil(rs * multipy));
-
         function calculatePassAmount() {
             var passType = $('#passType').val();
             var multipy = $('#classOfService').val();
@@ -403,7 +372,6 @@
         const distance = R * c;
         return distance;
     }
-    // ------------------------------------------------------------------
 
 
     $(document).on('change', "#dateofBirth", function() {
@@ -432,10 +400,9 @@
         var toDateObj = new Date(fromDateObj);
 
         if (passType === "30") {
-            // Add 30 days for Monthly
             toDateObj.setDate(toDateObj.getDate() + 30);
         } else if (passType === "90") {
-            // Add 90 days for Quarterly
+
             toDateObj.setDate(toDateObj.getDate() + 90);
         }
 
@@ -461,43 +428,41 @@
     $(document).ready(function() {
         function addFileInputValidation(inputId, errorId, maxSizeKB, allowedExtensions) {
             $(inputId).on('change', function() {
-                const fileInput = $(this);
-                const errorElement = $(errorId);
-                const file = fileInput[0].files[0];
+                const fileInput = this;
+                const errorElement = $(errorId)[0];
+                const file = fileInput.files[0];
 
                 if (!file) {
-                    errorElement.text('No file selected');
+                    errorElement.textContent = 'No file selected';
                     return;
                 }
 
                 const fileSizeKB = file.size / 1024;
+
                 if (fileSizeKB > maxSizeKB) {
-                    errorElement.text('File size exceeds the maximum allowed (' + maxSizeKB + 'KB)');
-                    fileInput.val('');
+                    errorElement.textContent = 'File size exceeds the maximum allowed (' + maxSizeKB + 'KB)';
+                    fileInput.value = '';
                     return;
                 }
 
-                const fileExtension = file.name.split('.').pop().toLowerCase();
-                if (!allowedExtensions.includes(fileExtension)) {
-                    errorElement.text('Invalid file type. Allowed: ' + allowedExtensions.join(', '));
-                    fileInput.val('');
+                const filename = file.name;
+                const extension = filename.substr(filename.lastIndexOf("."));
+                const allowedExtensionsRegx = new RegExp(allowedExtensions.join('|'), 'i');
+                const isAllowed = allowedExtensionsRegx.test(extension);
+
+                if (!isAllowed) {
+                    errorElement.textContent = 'Invalid file type. Allowed: ' + allowedExtensions.join(', ');
+                    fileInput.value = '';
                     return;
                 }
 
-                errorElement.text('');
+                errorElement.textContent = '';
             });
         }
-
-        addFileInputValidation('#img_std', '#photo-upload-error-student', 500, ['jpg', 'jpeg', 'png']);
-        addFileInputValidation('#student_address_proof_upload', '#address-proof-error-student', 500, ['jpg', 'jpeg', 'png']);
+        addFileInputValidation('#img_std', '#photo-upload-error-student', 300, [".jpg", ".jpeg", ".png", ".gif"]);
+        addFileInputValidation('#student_address_proof_upload', '#address-proof-error-student', 200, [".jpg", ".jpeg", ".png", ".gif"]);
     });
 </script>
 
-
-<script>
-    function redirectToPayment() {
-        window.location.href = "../main/payment.php";
-    }
-</script>
 
 </html>
