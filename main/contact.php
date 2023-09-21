@@ -1,9 +1,13 @@
 <?php
-
+session_start();
 include '../connection.php';
 include '../toaster.php';
+if($_SESSION['MESSAGECHECK'] == 1){
+	echo '<script>showToaster(" Thank you for reporting! We will contact you soon.", "green")</script>';
+	$_SESSION['MESSAGECHECK'] = 0;
+}
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
 
 	$name = $_POST['name'];
 	$email = $_POST['email'];
@@ -14,8 +18,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$stmt = $con->prepare($qry);
 	$stmt->bind_param("sss", $name, $email, $note);
 	if ($stmt->execute()) {
-		echo '<script>showToaster(" Thank you for reporting! We will contact you soon.", "green")</script>';
+		$_SESSION['MESSAGECHECK'] = 1;
+		//echo '<script>showToaster(" Thank you for reporting! We will contact you soon.", "green")</script>';
+		header("Location: contact.php");
+        exit();
 	} else {
+		$_SESSION['MESSAGECHECK'] = 0;
 		echo '<script>showToaster("Report submission failed. Please try again later.", "red")</script>';
 	}
 }
@@ -268,7 +276,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					</div>
 					<br>
 					<div class="inputBox">
-						<input type="submit" value="Send">
+						<input type="submit" name="submit" value="Send">
 					</div>
 				</form>
 				<a href="../user/user.php" class="home-link">Home</a>

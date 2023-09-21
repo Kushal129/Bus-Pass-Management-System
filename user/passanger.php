@@ -399,7 +399,7 @@
     </script>
     <script>
         $(document).ready(function() {
-            function addFileInputValidation(inputId, errorId, maxSizeKB) {
+            function addFileInputValidation_pas(inputId, errorId, maxSizeKB) {
                 $(inputId).on('change', function() {
                     const file = this.files[0];
                     const errorElement = $(errorId);
@@ -426,16 +426,9 @@
                 });
             }
 
-            addFileInputValidation('#img_std', '#photo-upload-error-student', 200);
-            addFileInputValidation('#student_address_proof_upload', '#address-proof-error-student', 200);
+            addFileInputValidation_pas('#img_passenger', '#photo-upload-error-passenger', 200);
+            addFileInputValidation_pas('#passenger_address_proof_upload', '#address-proof-error-passenger', 200);
 
-            addFileInputValidation('#img_passenger', '#photo-upload-error-passenger', 200);
-            addFileInputValidation('#passenger_address_proof_upload', '#address-proof-error-passenger', 200);
-
-            addFileInputValidation('#handicap_photo', '#photo-upload-error-handicap', 200);
-            addFileInputValidation('#handicap_address_proof_upload', '#address-proof-upload-error-handicap', 200);
-
-            addFileInputValidation('#disability_cert_doc_handicap', '#error_disability_cert_doc_handicap', 500);
 
         });
     </script>

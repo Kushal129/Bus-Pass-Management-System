@@ -163,8 +163,8 @@
 
             var qrcode = new QRCode(document.getElementById("qr-code"), {
                 text: userDetailsJSON,
-                width: 128,
-                height: 128
+                width: 200,
+                height: 200
             });
         });
     </script>

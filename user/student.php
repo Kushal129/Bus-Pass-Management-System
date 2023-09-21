@@ -145,7 +145,7 @@
             <label for="student_address_proof_upload">Upload Proof of Correspondence Address:</label>
             <input type="file" id="student_address_proof_upload" name="student_address_proof_upload" accept=".jpg,.jpeg,.JPEG,.JPG,.png" required>
             <p>[Self-attached Passport size Photo Copy. Max size: 200KB]</p>
-            <span id=" address-proof-error-student" style="color: red;"></span>
+            <span id="address-proof-error-student" style="color: red;"></span>
             <br><br>
         </div>
         <div class="form-group">
@@ -424,45 +424,41 @@
     });
 </script>
 
+
+
 <script>
-    $(document).ready(function() {
-        function addFileInputValidation(inputId, errorId, maxSizeKB, allowedExtensions) {
-            $(inputId).on('change', function() {
-                const fileInput = this;
-                const errorElement = $(errorId)[0];
-                const file = fileInput.files[0];
+        $(document).ready(function() {
+            function addFileInputValidation_std(inputId, errorId, maxSizeKB) {
+                $(inputId).on('change', function() {
+                    const file = this.files[0];
+                    const errorElement = $(errorId);
 
-                if (!file) {
-                    errorElement.textContent = 'No file selected';
-                    return;
-                }
+                    if (!file) {
+                        errorElement.text('No file selected');
+                        return;
+                    }
 
-                const fileSizeKB = file.size / 1024;
+                    const allowedExtensions = /\.(jpg|jpeg|png)$/i;
+                    if (!allowedExtensions.test(file.name)) {
+                        errorElement.text('Invalid file type. Allowed: JPG, JPEG, PNG');
+                        this.value = '';
+                        return;
+                    }
 
-                if (fileSizeKB > maxSizeKB) {
-                    errorElement.textContent = 'File size exceeds the maximum allowed (' + maxSizeKB + 'KB)';
-                    fileInput.value = '';
-                    return;
-                }
+                    const maxFileSize = maxSizeKB * 1024;
+                    if (file.size > maxFileSize) {
+                        errorElement.text('File size exceeds the maximum allowed (' + maxSizeKB + 'KB)');
+                        this.value = '';
+                        return;
+                    }
+                    errorElement.text('');
+                });
+            }
 
-                const filename = file.name;
-                const extension = filename.substr(filename.lastIndexOf("."));
-                const allowedExtensionsRegx = new RegExp(allowedExtensions.join('|'), 'i');
-                const isAllowed = allowedExtensionsRegx.test(extension);
-
-                if (!isAllowed) {
-                    errorElement.textContent = 'Invalid file type. Allowed: ' + allowedExtensions.join(', ');
-                    fileInput.value = '';
-                    return;
-                }
-
-                errorElement.textContent = '';
-            });
-        }
-        addFileInputValidation('#img_std', '#photo-upload-error-student', 300, [".jpg", ".jpeg", ".png", ".gif"]);
-        addFileInputValidation('#student_address_proof_upload', '#address-proof-error-student', 200, [".jpg", ".jpeg", ".png", ".gif"]);
-    });
-</script>
-
+            addFileInputValidation_std('#img_std', '#photo-upload-error-student', 300, [".jpg", ".jpeg", ".png"]);
+            addFileInputValidation_std('#student_address_proof_upload', '#address-proof-error-student', 200, [".jpg", ".jpeg", ".png"]);
+      
+        });
+    </script>
 
 </html>

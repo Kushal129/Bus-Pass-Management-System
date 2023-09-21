@@ -31,10 +31,10 @@ if (!isset($_SESSION['username'])) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
@@ -136,9 +136,6 @@ if (!isset($_SESSION['username'])) {
     </section>
 
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
     <script>
         $(document).ready(function() {
             $('.form').hide();
@@ -172,19 +169,6 @@ if (!isset($_SESSION['username'])) {
 
     <script>
         $(document).ready(function() {
-            $('.form').hide();
-
-            $('#categorySelect').change(function() {
-                var selectedCategory = $(this).val();
-                console.log("Selected Category:", selectedCategory);
-
-                $('.form').hide();
-
-                $('#' + selectedCategory + 'Form').show();
-                console.log("Displaying Form:", $('#' + selectedCategory + 'Form'));
-            });
-
-            // Toggle sidebar
             let sidebar = document.querySelector(".sidebar");
             let closeBtn = document.querySelector("#btn");
 
@@ -209,71 +193,6 @@ if (!isset($_SESSION['username'])) {
         });
     </script>
 
-    <script>
-        $(function() {
-            var placesInGujarat = [
-                "Ahmedabad",
-                "Vadodara",
-                "Surat",
-
-            ];
-
-            $(".fromPlace, .toPlace").autocomplete({
-                source: placesInGujarat,
-                minLength: 1,
-            });
-        });
-    </script>
-
-    <script>
-        $(document).on('change', "#dateofBirth", function() {
-            var date = $(document).find("#dateofBirth").val();
-            var dob = new Date(date);
-
-            var today = new Date();
-            var diff = today.getTime() - dob.getTime();
-            var age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
-
-            $(document).find("#age").val(age);
-            console.log(age);
-        });
-
-        updateToDate();
-
-        function updateToDate() {
-            var passType = $('#passType').val();
-            var fromDate = $("#fromDate").val();
-
-            if (passType === "--" || fromDate === "") {
-                return;
-            }
-
-            var fromDateObj = new Date(fromDate);
-            var toDateObj = new Date(fromDateObj);
-
-            if (passType === "30") {
-                toDateObj.setDate(toDateObj.getDate() + 30);
-            } else if (passType === "90") {
-                toDateObj.setDate(toDateObj.getDate() + 90);
-            }
-
-            var year = toDateObj.getFullYear();
-            var month = String(toDateObj.getMonth() + 1).padStart(2, '0');
-            var day = String(toDateObj.getDate()).padStart(2, '0');
-
-            var toDate = year + '-' + month + '-' + day;
-
-            $(document).find("#toDate").val(toDate);
-        }
-
-        $(document).on('change', "#fromDate", function() {
-            updateToDate();
-        });
-
-        $(document).on('change', "#passType", function() {
-            updateToDate();
-        });
-    </script>
 
 
     <script>
