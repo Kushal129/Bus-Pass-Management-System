@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Bus Pass | User </title>
+    <title>Bus Pass | User | Student Pass  </title>
     <link rel="stylesheet" href="../css/user.css">
     <link rel="icon" type="image/ico" href="../img/buslogo.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -53,8 +53,8 @@
             <input type="date" name="dateofBirth" id="dateofBirth" required>
             <br><br>
 
-            <label for="age">Age:</label>
-            <input type="text" id="age" name="age" maxlength="6" value="" disabled style="cursor: not-allowed;background-color:#efefef;color: #000000;">
+            <label for="age_std">Age:</label>
+            <input type="text" id="age_std" name="age_std"  value="" disabled style="cursor: not-allowed;background-color:#efefef;color: #000000;">
             <br><br>
 
             <label>Gender:</label>
@@ -67,15 +67,28 @@
             <br><br>
 
             <label for="category1">Category:</label>
-            <select name="category1">
-                <option value="--" selected="selected" required>--</option>
-                <option value="1">General</option>
+            <select name="category1" required>
+                <option value="1" selected >General</option>
                 <option value="2">SCBC</option>
                 <option value="3">ST</option>
                 <option value="4">SC</option>
             </select>
             <br><br>
-
+            <label for="education">Education:</label>
+            <select name="education" required>
+                <option value="">Please Select Highest Qualification</option>
+                <option value="1">Primary</option>
+                <option value="2">Middle/Higher Primary</option>
+                <option value="3">Senior Secondary</option>
+                <option value="4">Higher Secondary</option>
+                <option value="5">Diploma</option>
+                <option value="6">Graduate</option>
+                <option value="7">PG Diploma</option>
+                <option value="8">Post Graduate</option>
+                <option value="9">Doctorate</option>
+                <option value="10">Illiterate</option>
+            </select>
+            <br><br>
             <label for="institute_name">Institute Name:</label>
             <input type="text" id="institute_name" name="institute_name" required>
             <br><br>
@@ -95,21 +108,6 @@
             <span id="photo-upload-error-student" style="color: red;"></span>
 
             <br>
-            <label for="education">Education:</label>
-            <select name="education" required>
-                <option value="">Please Select Highest Qualification</option>
-                <option value="1">Primary</option>
-                <option value="2">Middle/Higher Primary</option>
-                <option value="3">Senior Secondary</option>
-                <option value="4">Higher Secondary</option>
-                <option value="5">Diploma</option>
-                <option value="6">Graduate</option>
-                <option value="7">PG Diploma</option>
-                <option value="8">Post Graduate</option>
-                <option value="9">Doctorate</option>
-                <option value="10">Illiterate</option>
-            </select>
-            <br><br>
             <br>
             <label for="address_proof">Nature of Document for Address Proof:</label>
             <select id="address_proof" name="address_proof" class="hasCustomSelect valid" required>
@@ -190,8 +188,7 @@
             <input type="text" placeholder="Pay Amount.." id="pay-value" disabled style="cursor: not-allowed;background-color:#efefef;color: #000000;">
             <br><br>
             <button class="btn-pmt" id="paymentButton">Submit and Proceed to Payment</button>
-
-        </div>
+        </div>lo
     </form>
 </body>
 <script>
@@ -304,7 +301,6 @@
             "Padra",
             "Dabhoi",
             "Buhari",
-            "Bardoli",
         ];
 
         $(".fromPlace, .toPlace").autocomplete({
@@ -314,6 +310,10 @@
     });
 
     $(".fromPlace, .toPlace").change(function() {
+        calculatePassAmount();
+    })
+
+    function calculatePassAmount () {
         var from = $('.fromPlace').val();
         var to = $('.toPlace').val();
 
@@ -331,31 +331,26 @@
                     distance = Math.ceil(calculateDistance(res[0].lati, res[0].long, res[1].lati, res[1].long));
                     rs = distance * 13;
                     var multipy = $('#classOfService').val();
-                    $("#pay-value").val(Math.ceil(rs * multipy) + " Rs/-");
+                    var passType = $('#passType').val();
+
+                    if (passType === "30") {
+                        rs = distance * 13 * multipy;
+                    } else if (passType === "90") {
+                        rs = distance * 13 * multipy * 3;
+                    }
+
+                    $("#pay-value").val(Math.ceil(rs) + " Rs/-");
                 }
             })
         }
 
-    })
+    }
 
     $('#classOfService').change(function() {
-        function calculatePassAmount() {
-            var passType = $('#passType').val();
-            var multipy = $('#classOfService').val();
-            var rs = 0;
-
-            if (passType === "30") {
-                rs = distance * 13 * multipy;
-            } else if (passType === "90") {
-                rs = distance * 13 * multipy * 3;
-            }
-
-            $("#pay-value").val(Math.ceil(rs));
-        }
-        $("#paymentButton").click(function() {
-            calculatePassAmount();
-        });
-
+        calculatePassAmount();
+    })
+    $('#passType').change(function() {
+        calculatePassAmount();
     })
 
     function calculateDistance(lat1, lon1, lat2, lon2) {
@@ -382,7 +377,7 @@
         var diff = today.getTime() - dob.getTime();
         var age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
 
-        $(document).find("#age").val(age);
+        $(document).find("#age_std").val(age);
         console.log(age);
     });
 
@@ -402,7 +397,6 @@
         if (passType === "30") {
             toDateObj.setDate(toDateObj.getDate() + 30);
         } else if (passType === "90") {
-
             toDateObj.setDate(toDateObj.getDate() + 90);
         }
 
@@ -427,38 +421,38 @@
 
 
 <script>
-        $(document).ready(function() {
-            function addFileInputValidation_std(inputId, errorId, maxSizeKB) {
-                $(inputId).on('change', function() {
-                    const file = this.files[0];
-                    const errorElement = $(errorId);
+    $(document).ready(function() {
+        function addFileInputValidation_std(inputId, errorId, maxSizeKB) {
+            $(inputId).on('change', function() {
+                const file = this.files[0];
+                const errorElement = $(errorId);
 
-                    if (!file) {
-                        errorElement.text('No file selected');
-                        return;
-                    }
+                if (!file) {
+                    errorElement.text('No file selected');
+                    return;
+                }
 
-                    const allowedExtensions = /\.(jpg|jpeg|png)$/i;
-                    if (!allowedExtensions.test(file.name)) {
-                        errorElement.text('Invalid file type. Allowed: JPG, JPEG, PNG');
-                        this.value = '';
-                        return;
-                    }
+                const allowedExtensions = /\.(jpg|jpeg|png)$/i;
+                if (!allowedExtensions.test(file.name)) {
+                    errorElement.text('Invalid file type. Allowed: JPG, JPEG, PNG');
+                    this.value = '';
+                    return;
+                }
 
-                    const maxFileSize = maxSizeKB * 1024;
-                    if (file.size > maxFileSize) {
-                        errorElement.text('File size exceeds the maximum allowed (' + maxSizeKB + 'KB)');
-                        this.value = '';
-                        return;
-                    }
-                    errorElement.text('');
-                });
-            }
+                const maxFileSize = maxSizeKB * 1024;
+                if (file.size > maxFileSize) {
+                    errorElement.text('File size exceeds the maximum allowed (' + maxSizeKB + 'KB)');
+                    this.value = '';
+                    return;
+                }
+                errorElement.text('');
+            });
+        }
 
-            addFileInputValidation_std('#img_std', '#photo-upload-error-student', 300, [".jpg", ".jpeg", ".png"]);
-            addFileInputValidation_std('#student_address_proof_upload', '#address-proof-error-student', 200, [".jpg", ".jpeg", ".png"]);
-      
-        });
-    </script>
+        addFileInputValidation_std('#img_std', '#photo-upload-error-student', 300, [".jpg", ".jpeg", ".png"]);
+        addFileInputValidation_std('#student_address_proof_upload', '#address-proof-error-student', 200, [".jpg", ".jpeg", ".png"]);
+
+    });
+</script>
 
 </html>
