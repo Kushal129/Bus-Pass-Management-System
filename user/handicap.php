@@ -684,23 +684,34 @@
     </form>
 </body>
 <script>
-    $(document).ready(function() {
-        $('.form').hide();
+     $(document).ready(function() {
+            $('.form').hide();
 
-        function showForm(selectedCategory) {
-            $('#' + selectedCategory + 'Form').show();
-        }
+            function showForm(selectedCategory) {
+                $('#' + selectedCategory + 'Form').show();
+            }
 
-        $('#new_pass').click(function() {
-            $('.pass-page-container').show();
+            $('#new_pass').click(function() {
+                $('.pass-page-container').show();
 
-            var selectedCategory = $('#category option:first').val();
-            console.log("Selected Category:", selectedCategory);
+                var selectedCategory = $('#categorySelect option:first').val();
+                console.log("Selected Category:", selectedCategory);
 
-            showForm(selectedCategory);
+                showForm(selectedCategory);
+            });
+
+            $('#categorySelect').change(function() {
+                var selectedCategory = $(this).val();
+                console.log("Selected Category:", selectedCategory);
+                $('.form').hide();
+
+                showForm(selectedCategory);
+                console.log("Displaying Form:", $('#' + selectedCategory + 'Form'));
+            });
+
+            var defaultCategory = $('#categorySelect').val();
+            showForm(defaultCategory);
         });
-
-    });
 </script>
 
 

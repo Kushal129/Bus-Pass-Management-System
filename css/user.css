@@ -168,24 +168,24 @@
     color: #f4db00;
 }
 
-/* Main Section */
+
 .home-section {
     position: relative;
     background: #f7f5ea;
     min-height: 100vh;
     top: 0;
-    left: 78px;
+    left: 79px;
     width: calc(100% - 79px);
     transition: all 0.5s ease;
     z-index: 2;
 }
 
 .sidebar.open~.home-section {
-    left: 250px;
-    width: calc(100% - 250px);
+    left: 251px;
+    width: calc(100% - 252px);
 }
 
-/* Header */
+
 .head {
     background-color: #f4db00;
     padding: 20px;
@@ -319,7 +319,7 @@
     border-color: #000000;
 }
 
-/* Form Heading Styles */
+
 .down-container .form h1 {
     font-size: 30px;
     font-weight: bold;
@@ -329,7 +329,6 @@
     text-align: center;
 }
 
-/* Form Group Styles */
 .form-group {
     display: flow;
     align-items: center;
@@ -342,7 +341,7 @@
     transition: transform 0.3s, box-shadow 0.5s;
 }
 
-/* Label Styles */
+
 .down-container label {
     font-weight: bold;
     display: block;
@@ -350,7 +349,7 @@
     color: #000000;
 }
 
-/* Input Styles */
+
 .down-container input[type="text"],
 .down-container input[type="date"],
 .down-container select,
@@ -362,20 +361,19 @@
     font-size: 16px;
 }
 
-/* Radio Button Styles */
+
 .down-container input[type="radio"] {
     margin-right: 5px;
     vertical-align: middle;
 }
 
-/* File Input Styles */
+
 .down-container input[type="file"] {
     border: none;
     background-color: transparent;
     padding: 0;
 }
 
-/* Button Styles */
 .down-container button.btn-payment {
     background-color: #292929;
     color: #ffffff;
