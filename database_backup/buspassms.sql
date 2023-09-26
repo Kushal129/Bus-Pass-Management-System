@@ -3,7 +3,7 @@
 -- Host: localhost	Database: buspassms
 -- ------------------------------------------------------
 -- Server version 	10.4.28-MariaDB
--- Date: Tue, 19 Sep 2023 04:42:24 +0200
+-- Date: Tue, 26 Sep 2023 06:24:26 +0200
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -59,7 +59,7 @@ CREATE TABLE `bus_type` (
   `bus_name` varchar(120) NOT NULL,
   `price_multiply` float NOT NULL,
   PRIMARY KEY (`bus_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -258,7 +258,7 @@ CREATE TABLE `otps` (
   `email` varchar(250) NOT NULL,
   `otp` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=164 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=165 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -268,12 +268,12 @@ CREATE TABLE `otps` (
 LOCK TABLES `otps` WRITE;
 /*!40000 ALTER TABLE `otps` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `otps` VALUES (158,'kushalhpipaliya01@gmail.com',582672),(163,'22@112.121',694241);
+INSERT INTO `otps` VALUES (158,'kushalhpipaliya01@gmail.com',582672),(163,'22@112.121',694241),(164,'21bmiit134@gmail.com',309937);
 /*!40000 ALTER TABLE `otps` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `otps` with 2 row(s)
+-- Dumped table `otps` with 3 row(s)
 --
 
 --
@@ -470,7 +470,7 @@ CREATE TABLE `report` (
   `email` varchar(80) NOT NULL,
   `note` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -480,11 +480,12 @@ CREATE TABLE `report` (
 LOCK TABLES `report` WRITE;
 /*!40000 ALTER TABLE `report` DISABLE KEYS */;
 SET autocommit=0;
+INSERT INTO `report` VALUES (52,'NaNCH','KJADKJ @GMAILC.COM','KJASDSKJBASKLJLBASFKJBASKLJKASDFAJKASD');
 /*!40000 ALTER TABLE `report` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `report` with 0 row(s)
+-- Dumped table `report` with 1 row(s)
 --
 
 --
@@ -558,7 +559,7 @@ CREATE TABLE `users` (
   `role` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1- user 0- admin',
   PRIMARY KEY (`email`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -568,12 +569,12 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `users` VALUES (1,'Admin',1234567891,'21bmiit129@gmail.com','$2y$10$omAf0m3yrxH/cFklDaeIj.fnVTQxAxV6cNjv3a0DM5MTRzawacrou',0),(18,'Kushal Pipaliya',9574476496,'kushalhpipaliya01@gmail.com','$2y$10$ES5jujBIAbB9Kqz4EGybmO.EMbdjIFllTq65xe7I38zc5LcOk.tD.',1);
+INSERT INTO `users` VALUES (1,'Admin',1234567891,'21bmiit129@gmail.com','$2y$10$omAf0m3yrxH/cFklDaeIj.fnVTQxAxV6cNjv3a0DM5MTRzawacrou',0),(19,'Nancy Monpara',7990589392,'21bmiit134@gmail.com','$2y$10$lvqiA0yhDX664OxVdFNGKOkPZ1BQM1fmPZ4/s9brFLYyMusPjwRFW',1),(18,'Kushal Pipaliya',9574476496,'kushalhpipaliya01@gmail.com','$2y$10$ES5jujBIAbB9Kqz4EGybmO.EMbdjIFllTq65xe7I38zc5LcOk.tD.',1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `users` with 2 row(s)
+-- Dumped table `users` with 3 row(s)
 --
 
 --
@@ -640,4 +641,4 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on: Tue, 19 Sep 2023 04:42:24 +0200
+-- Dump completed on: Tue, 26 Sep 2023 06:24:26 +0200

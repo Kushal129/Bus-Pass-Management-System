@@ -9,7 +9,7 @@ include_once '../connection.php';
 if (!isset($_SESSION['username'])) {
     header('location:../index.php');
 }
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
+if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['add_bus'])) {
     if (isset($_POST['bus_name'])) {
         $bus_name = $_POST['bus_name'];
     }
@@ -48,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['delete_bus'])) {
     $result = mysqli_query($con, $sql);
     if ($result) {
         $deleted = true;
+        echo "Deleted";
         exit;
     } else {
         echo "Not Done";
@@ -155,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['delete_bus'])) {
                         <label for="price_multiply">Price Multiply</label>
                         <input type="text" class="form-control" name="price_multiply" id="price_multiply">
                     </div>
-                    <button type="submit" class="btn btn-primary">Add Bus</button>
+                    <button type="submit" name="add_bus" class="btn btn-primary">Add Bus</button>
                 </form>
                 <table class="table" id="myTable">
                     <thead>
@@ -250,7 +251,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['delete_bus'])) {
                     row.find('.edit-button, .delete-button').prop('disabled', false);
                 });
 
-                $('.delete-button').click(function() {
+                $(document).on('click' , '.delete-button' , function() {
                     if (confirm("Are you sure you want to delete this record?")) {
                         const row = $(this).closest('tr');
                         const bus_id = row.find('th').text(); // Use 'th' instead of 'bus-id'

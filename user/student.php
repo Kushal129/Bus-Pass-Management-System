@@ -175,9 +175,19 @@
 
             <label for="classOfService">Class Of Service:</label>
             <select name="classOfService" id="classOfService" required>
-                <option value="1" selected>LOCAL</option>
+
+            <?php 
+                $bus_type_qry  =  "select * from bus_type ";
+                $bus_types = mysqli_query($con,$bus_type_qry);
+                foreach ($bus_types as $key => $bus_type) {
+            ?>
+                <option value="<?php echo $bus_type['price_multiply'] ?>"><?php echo $bus_type['bus_name'] ?></option>
+            <?php
+                }
+            ?>
+                <!-- <option value="1" selected>LOCAL</option>
                 <option value="1.3">EXPRESS</option>
-                <option value="1.5">GURJARNAGRI</option>
+                <option value="1.5">GURJARNAGRI</option> -->
             </select>
             <br><br>
             <hr>
@@ -188,7 +198,7 @@
             <input type="text" placeholder="Pay Amount.." id="pay-value" disabled style="cursor: not-allowed;background-color:#efefef;color: #000000;">
             <br><br>
             <button class="btn-pmt" id="paymentButton">Submit and Proceed to Payment</button>
-        </div>lo
+        </div>
     </form>
 </body>
 <script>
