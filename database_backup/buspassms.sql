@@ -3,7 +3,7 @@
 -- Host: localhost	Database: buspassms
 -- ------------------------------------------------------
 -- Server version 	10.4.28-MariaDB
--- Date: Tue, 26 Sep 2023 06:24:26 +0200
+-- Date: Thu, 28 Sep 2023 13:18:52 +0200
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -170,8 +170,7 @@ COMMIT;
 CREATE TABLE `document` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `document_type_id` int(11) NOT NULL,
-  `document_number` int(11) NOT NULL,
-  `document_file_path` varchar(80) NOT NULL,
+  `document_file_name` varchar(80) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -200,7 +199,7 @@ CREATE TABLE `document_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(80) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -210,11 +209,12 @@ CREATE TABLE `document_type` (
 LOCK TABLES `document_type` WRITE;
 /*!40000 ALTER TABLE `document_type` DISABLE KEYS */;
 SET autocommit=0;
+INSERT INTO `document_type` VALUES (1,'Aadhaar card'),(2,'Address card with photo issued by Deptt. Of Posts, Govt. of India'),(3,'Arms License'),(4,'Cast and Domicile Certificate with address and photo issued by State G'),(5,'Certificate of address having Photo issued by MP/MLA/Group-A Gazetted '),(6,'Certificate of address issued by Village Panchayat head or its equival'),(7,'Certificate of address with photo from Govt. recognized educational in'),(8,'CGHS/ECHS Card'),(9,'Credit Card Statement (not older than last three months)'),(10,'Current Passbook of Post Office/any Schedule Bank'),(11,'Driving License'),(12,'Electricity Bill (not older than last three months)'),(13,'Freedom Fighter Card with address'),(14,'Income Tax Assessment Order'),(15,'Kissan Passbook with address'),(16,'Pensioner\'s Card with address'),(17,'Passport'),(18,'Photo Identity Card having address (of Central Govt./PSU or State Govt'),(19,'Ration Card'),(20,'Registered Sale/Lease Agreement'),(21,'Sri Lankan Refugees Identity Card'),(22,'Telephone Bill of Fixed line (not older than last three months)'),(23,'Vehicle Registration Certificate'),(24,'Voter Id'),(25,'Water Bill (not older than last three months)'),(26,'Other (Domicile Certificate)');
 /*!40000 ALTER TABLE `document_type` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `document_type` with 0 row(s)
+-- Dumped table `document_type` with 26 row(s)
 --
 
 --
@@ -258,7 +258,7 @@ CREATE TABLE `otps` (
   `email` varchar(250) NOT NULL,
   `otp` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=165 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=168 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -268,12 +268,12 @@ CREATE TABLE `otps` (
 LOCK TABLES `otps` WRITE;
 /*!40000 ALTER TABLE `otps` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `otps` VALUES (158,'kushalhpipaliya01@gmail.com',582672),(163,'22@112.121',694241),(164,'21bmiit134@gmail.com',309937);
+INSERT INTO `otps` VALUES (158,'kushalhpipaliya01@gmail.com',582672),(163,'22@112.121',694241),(164,'21bmiit134@gmail.com',309937),(167,'21bmiit129@gmail.com',458397);
 /*!40000 ALTER TABLE `otps` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `otps` with 3 row(s)
+-- Dumped table `otps` with 4 row(s)
 --
 
 --
@@ -353,11 +353,14 @@ CREATE TABLE `passenger_info` (
   `role` int(11) NOT NULL COMMENT 'Role which define the actual role (passenger , student , handicapt)',
   `r_id` int(11) NOT NULL COMMENT 'Role_id which defines the users id ex (student id , handicap_id)',
   `user_id` int(11) NOT NULL,
-  `cust_id` int(11) NOT NULL,
   `validate_through` date NOT NULL,
   `dob` date NOT NULL,
   `user_img_path` varchar(80) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `user_id_foreign` (`user_id`),
+  KEY `document_id_foregin` (`document_id`),
+  CONSTRAINT `document_id_foregin` FOREIGN KEY (`document_id`) REFERENCES `document` (`id`),
+  CONSTRAINT `user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -641,4 +644,4 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on: Tue, 26 Sep 2023 06:24:26 +0200
+-- Dump completed on: Thu, 28 Sep 2023 13:18:52 +0200

@@ -226,7 +226,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['delete_bus'])) {
                             bus_id: bus_id,
                             bus_name: bus_name,
                             price_multiply: price_multiply,
-                            edit_bus: true // Add this to identify the edit operation
+                            edit_bus: true 
                         },
                         success: function(response) {
                             console.log(response);

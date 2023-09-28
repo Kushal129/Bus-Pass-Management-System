@@ -1,7 +1,4 @@
 <?php
-
-use PHPMailer\PHPMailer\SMTP;
-
 session_start();
 include_once "../connection.php";
 include_once "../toaster.php";
@@ -10,24 +7,22 @@ if (isset($_POST["verify_otp"])) {
     $enteredOtp = $_POST["otp"];
     $mail = $_SESSION['temp_mail'];
 
-    // Get the new OTP from the database
     $qry = "SELECT otp FROM otps WHERE email = '$mail' LIMIT 1";
     $storedOtp = mysqli_fetch_assoc(mysqli_query($con, $qry))['otp'];
-
 
     if ($enteredOtp == $storedOtp) {
         $newPassword = $_POST["new_password"];
         $confirmNewPassword = $_POST["confirm_new_password"];
 
         if ($newPassword !== $confirmNewPassword) {
-            echo '<script>showToaster("Passwords do not match.", "red")</script>';
-            echo '<script>window.location.href = "#verifyOtpForm";</script>';
+            echo '<script>alert("Passwords do not match.");</script>';
+            header("Location: ForgotPass.php");
             exit();
         }
 
         if (!validatePassword($newPassword)) {
-            echo '<script>showToaster("Password must be at least 8 characters and include a special character.", "red")</script>';
-            echo '<script>window.location.href = "#verifyOtpForm";</script>';
+            echo '<script>alert("Password must be at least 8 characters and include a special character.");</script>';
+            header("Location: ForgotPass.php");
             exit();
         }
 
@@ -42,13 +37,14 @@ if (isset($_POST["verify_otp"])) {
 
         $qry = "DELETE FROM otps WHERE email = '$mail'";
         mysqli_query($con, $qry);
-
-        echo '<script>showToaster("Password reset successful!", "green")</script>';
-        echo '<script>window.location.href = "../index.php?popup=login&msg=true";</script>';
+        echo '<script>alert("Password reset successful!");</script>';
+        header("Location: ../index.php?popup=login&msg=true");
         exit();
     } else {
         unset($_SESSION['temp_mail']);
-        echo '<script>showToaster("Invalid OTP. Please try again.", "red")</script>';
+        echo '<script>alert("Invalid OTP. Please try again.", "red");</script>';
+        header("Location: ForgotPass.php");
+        exit();
     }
 }
 
@@ -90,7 +86,6 @@ function validatePassword($password)
             </button>
 
         </div>
-        <!-- //toggle -->
         <form id="verifyOtpForm" style="display:none;" method="post">
             <h1>OTP Verification </h1>
             <hr>

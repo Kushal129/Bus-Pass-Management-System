@@ -85,15 +85,19 @@
             </select>
             <br><br>
 
-            <label for="category_p">Category:</label>
-            <select name="category_p">
-                <option value="--" selected="selected">--</option>
-                <option value="1">General</option>
-                <option value="2">SCBC</option>
-                <option value="3">ST</option>
-                <option value="4">SC</option>
+            <label for="cast_p">Category:</label>
+            <select name="cast_p" id="cast_p" required>
+                <?php
+                $cast_type_qry_p = "select * from cast";
+                $cast_type_p = mysqli_query($con, $cast_type_qry_p);
+                foreach ($cast_type_p as $key => $cast_p) {
+                ?>
+                    <option value="">Please Select Cast </option>
+                    <option value="<?php echo $cast_p['cast_id'] ?>"><?php echo $cast_p['cast_name'] ?></option>
+                <?php
+                }
+                ?>
             </select>
-
             <br><br>
         </div>
         <div class="form-group">
@@ -103,35 +107,18 @@
             <span id="photo-upload-error-passenger" style="color: red;"></span>
 
             <br><br>
-            <label for="address_proof">Nature of Document for Address Proof:</label>
+            <label for="address_proof">Select Document for Address Proof:</label>
             <select id="address_proof" name="address_proof" class="hasCustomSelect valid">
-                <option value="">Please Select Nature of Document</option>
-                <option value="1">Aadhaar card</option>
-                <option value="2">Address card with photo issued by Deptt. Of Posts, Govt. of India</option>
-                <option value="3">Arms License</option>
-                <option value="4">Cast and Domicile Certificate with address and photo issued by State G</option>
-                <option value="5">Certificate of address having Photo issued by MP/MLA/Group-A Gazetted </option>
-                <option value="6">Certificate of address issued by Village Panchayat head or its equival</option>
-                <option value="7">Certificate of address with photo from Govt. recognized educational in</option>
-                <option value="8">CGHS/ECHS Card</option>
-                <option value="9">Credit Card Statement (not older than last three months)</option>
-                <option value="10">Current Passbook of Post Office/any Schedule Bank</option>
-                <option value="11">Driving License</option>
-                <option value="12">Electricity Bill (not older than last three months)</option>
-                <option value="13">Freedom Fighter Card with address</option>
-                <option value="14">Income Tax Assessment Order</option>
-                <option value="15">Kissan Passbook with address</option>
-                <option value="16">Other (Domicile Certificate)</option>
-                <option value="17">Passport</option>
-                <option value="16">Pensioner's Card with address</option>
-                <option value="17">Photo Identity Card having address (of Central Govt./PSU or State Govt</option>
-                <option value="18">Ration Card</option>
-                <option value="19">Registered Sale/Lease Agreement</option>
-                <option value="20">Sri Lankan Refugees Identity Card</option>
-                <option value="21">Telephone Bill of Fixed line (not older than last three months)</option>
-                <option value="22">Vehicle Registration Certificate</option>
-                <option value="23">Voter Id</option>
-                <option value="24">Water Bill (not older than last three months)</option>
+                <?php
+                $address_proof_qry_p = "SELECT * FROM document_type";
+                $add_p = mysqli_query($con, $address_proof_qry_p);
+                foreach ($add_p as $key => $add_proof_p) {
+                ?>
+                    <option value="">Please Select Document</option>
+                    <option value="<?php echo $add_proof_p['id'] ?>"><?php echo $add_proof_p['name'] ?></option>
+                <?php
+                }
+                ?>
             </select>
             <br><br>
             <label for="passenger_address_proof_upload">Upload Proof of Correspondence Address:</label>
@@ -150,13 +137,6 @@
             <label for="institute_address">Company Address:</label>
             <textarea name="institute_address" id="institute_address" cols="20" rows="3"></textarea>
             <br><br>
-
-            <label for="Occupation">Occupation :</label>
-            <select name="occupation" class="form-control">
-                <option value="--" selected="selected">--</option>
-                <option value="1">Salaried</option>
-                <option value="2">Business</option>
-            </select>
         </div>
         <div class="form-group">
             <label for="passType_p">Pass Type:</label>
@@ -182,9 +162,15 @@
             <br><br>
             <label for="classOfService_p">Class Of Service:</label>
             <select name="classOfService_p" id="classOfService_p">
-                <option value="1" selected>LOCAL</option>
-                <option value="1.3">EXPRESS</option>
-                <option value="1.5">GURJARNAGRI</option>
+                <?php
+                $bus_type_qry_p = "select * from bus_type";
+                $bus_types_p = mysqli_query($con, $bus_type_qry_p);
+                foreach ($bus_types_p as $key => $bus_t_p) {
+                ?>
+                    <option value="<?php echo $bus_t_p['price_multiply'] ?>"><?php echo $bus_t_p['bus_name'] ?></option>
+                <?php
+                }
+                ?>
             </select>
             <br><br>
             <hr>
@@ -201,33 +187,33 @@
 </body>
 <script>
     $(document).ready(function() {
+        $('.form').hide();
+
+        function showForm(selectedCategory) {
+            $('#' + selectedCategory + 'Form').show();
+        }
+
+        $('#new_pass').click(function() {
+            $('.pass-page-container').show();
+
+            var selectedCategory = $('#categorySelect option:first').val();
+            console.log("Selected Category:", selectedCategory);
+
+            showForm(selectedCategory);
+        });
+
+        $('#categorySelect').change(function() {
+            var selectedCategory = $(this).val();
+            console.log("Selected Category:", selectedCategory);
             $('.form').hide();
 
-            function showForm(selectedCategory) {
-                $('#' + selectedCategory + 'Form').show();
-            }
-
-            $('#new_pass').click(function() {
-                $('.pass-page-container').show();
-
-                var selectedCategory = $('#categorySelect option:first').val();
-                console.log("Selected Category:", selectedCategory);
-
-                showForm(selectedCategory);
-            });
-
-            $('#categorySelect').change(function() {
-                var selectedCategory = $(this).val();
-                console.log("Selected Category:", selectedCategory);
-                $('.form').hide();
-
-                showForm(selectedCategory);
-                console.log("Displaying Form:", $('#' + selectedCategory + 'Form'));
-            });
-
-            var defaultCategory = $('#categorySelect').val();
-            showForm(defaultCategory);
+            showForm(selectedCategory);
+            console.log("Displaying Form:", $('#' + selectedCategory + 'Form'));
         });
+
+        var defaultCategory = $('#categorySelect').val();
+        showForm(defaultCategory);
+    });
 </script>
 
 

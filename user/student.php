@@ -3,19 +3,17 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Bus Pass | User | Student Pass  </title>
+    <title>Bus Pass | User | Student Pass </title>
     <link rel="stylesheet" href="../css/user.css">
     <link rel="icon" type="image/ico" href="../img/buslogo.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
 
-    <form action="../main/payment.php" method="POST">
+    <form action="../main/1.php" method="POST">
         <div class="form-group">
             <h1>Student Pass Details</h1>
             <hr>
@@ -25,11 +23,11 @@
         </div>
 
         <div class="form-group">
-            <label for="entryDate">Entry Date:</label>
-            <input type="date" name="Entrydate" value="<?php echo date('Y-m-d') ?>" disabled style="cursor: not-allowed;background-color:#efefef;color: #000000;">
+            <label for="Entry_date">Entry Date:</label>
+            <input type="date" name="Entry_date" value="<?php echo date('Y-m-d') ?>" readonly style="cursor: not-allowed;background-color:#efefef;color: #000000;">
             <br><br>
             <label for="validate_through">Validate Through:</label>
-            <input type="date" id="validate_through" value="<?php echo date('Y-m-d', strtotime('+6 months')) ?>" name="validate_through" disabled style="cursor: not-allowed;background-color:#efefef;color: #000000;">
+            <input type="date" id="validate_through" value="<?php echo date('Y-m-d', strtotime('+6 months')) ?>" name="validate_through" readonly style="cursor: not-allowed;background-color:#efefef;color: #000000;">
             <br><br>
         </div>
 
@@ -54,7 +52,7 @@
             <br><br>
 
             <label for="age_std">Age:</label>
-            <input type="text" id="age_std" name="age_std"  value="" disabled style="cursor: not-allowed;background-color:#efefef;color: #000000;">
+            <input type="text" id="age_std" name="age_std" value="" disabled style="cursor: not-allowed;background-color:#efefef;color: #000000;">
             <br><br>
 
             <label>Gender:</label>
@@ -66,12 +64,18 @@
             <span class="bodytext">Transgender</span>
             <br><br>
 
-            <label for="category1">Category:</label>
-            <select name="category1" required>
-                <option value="1" selected >General</option>
-                <option value="2">SCBC</option>
-                <option value="3">ST</option>
-                <option value="4">SC</option>
+            <label for="cast_std">Category: </label>
+            <select name="cast_std" id="cast_std" required>
+            <option value="">Please Select Cast </option>
+                <?php
+                $cast_type_qry_s = "select * from cast";
+                $cast_type_s = mysqli_query($con, $cast_type_qry_s);
+                foreach ($cast_type_s as $key => $cast_s) {
+                ?>
+                    <option value="<?php echo $cast_s['cast_id'] ?>"><?php echo $cast_s['cast_name'] ?></option>
+                <?php
+                }
+                ?>
             </select>
             <br><br>
             <label for="education">Education:</label>
@@ -109,35 +113,18 @@
 
             <br>
             <br>
-            <label for="address_proof">Nature of Document for Address Proof:</label>
+            <label for="address_proof">Select Document for Address Proof:</label>
             <select id="address_proof" name="address_proof" class="hasCustomSelect valid" required>
-                <option value="">Please Select Nature of Document</option>
-                <option value="1">Aadhaar card</option>
-                <option value="2">Address card with photo issued by Deptt. Of Posts, Govt. of India</option>
-                <option value="3">Arms License</option>
-                <option value="4">Cast and Domicile Certificate with address and photo issued by State G</option>
-                <option value="5">Certificate of address having Photo issued by MP/MLA/Group-A Gazetted </option>
-                <option value="6">Certificate of address issued by Village Panchayat head or its equival</option>
-                <option value="7">Certificate of address with photo from Govt. recognized educational in</option>
-                <option value="8">CGHS/ECHS Card</option>
-                <option value="9">Credit Card Statement (not older than last three months)</option>
-                <option value="10">Current Passbook of Post Office/any Schedule Bank</option>
-                <option value="11">Driving License</option>
-                <option value="12">Electricity Bill (not older than last three months)</option>
-                <option value="13">Freedom Fighter Card with address</option>
-                <option value="14">Income Tax Assessment Order</option>
-                <option value="15">Kissan Passbook with address</option>
-                <option value="16">Other (Domicile Certificate)</option>
-                <option value="17">Passport</option>
-                <option value="16">Pensioner's Card with address</option>
-                <option value="17">Photo Identity Card having address (of Central Govt./PSU or State Govt</option>
-                <option value="18">Ration Card</option>
-                <option value="19">Registered Sale/Lease Agreement</option>
-                <option value="20">Sri Lankan Refugees Identity Card</option>
-                <option value="21">Telephone Bill of Fixed line (not older than last three months)</option>
-                <option value="22">Vehicle Registration Certificate</option>
-                <option value="23">Voter Id</option>
-                <option value="24">Water Bill (not older than last three months)</option>
+                <option value="">Please Select Document</option>
+                <?php
+                $address_proof_qry_s = "SELECT * FROM document_type";
+                $add_s = mysqli_query($con, $address_proof_qry_s);
+                foreach ($add_s as $key => $add_proof_s) {
+                ?>
+                    <option value="<?php echo $add_proof_s['id'] ?>"><?php echo $add_proof_s['name'] ?></option>
+                <?php
+                }
+                ?>
             </select>
             <br><br>
             <label for="student_address_proof_upload">Upload Proof of Correspondence Address:</label>
@@ -161,7 +148,7 @@
             <br><br>
 
             <label for="toDate">To Date:</label>
-            <input type="date" name="toDate" id="toDate" disabled style="cursor: not-allowed;background-color:#efefef;color: #000000;">
+            <input type="date" name="toDate" id="toDate" style="cursor:not-allowed; background-color:#efefef; color:#000000;">
             <br><br>
 
             <div class="student-form">
@@ -176,18 +163,15 @@
             <label for="classOfService">Class Of Service:</label>
             <select name="classOfService" id="classOfService" required>
 
-            <?php 
-                $bus_type_qry  =  "select * from bus_type ";
-                $bus_types = mysqli_query($con,$bus_type_qry);
-                foreach ($bus_types as $key => $bus_type) {
-            ?>
-                <option value="<?php echo $bus_type['price_multiply'] ?>"><?php echo $bus_type['bus_name'] ?></option>
-            <?php
+                <?php
+                $bus_type_qry_s  =  "SELECT * FROM bus_type ";
+                $bus_types_s = mysqli_query($con, $bus_type_qry_s);
+                foreach ($bus_types_s as $key => $bus_t_s) {
+                ?>
+                    <option value="<?php echo $bus_t_s['price_multiply'] ?>"><?php echo $bus_t_s['bus_name'] ?></option>
+                <?php
                 }
-            ?>
-                <!-- <option value="1" selected>LOCAL</option>
-                <option value="1.3">EXPRESS</option>
-                <option value="1.5">GURJARNAGRI</option> -->
+                ?>
             </select>
             <br><br>
             <hr>
@@ -201,35 +185,37 @@
         </div>
     </form>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-     $(document).ready(function() {
+    $(document).ready(function() {
+        $('.form').hide();
+
+        function showForm(selectedCategory) {
+            $('#' + selectedCategory + 'Form').show();
+        }
+
+        $('#new_pass').click(function() {
+            $('.pass-page-container').show();
+
+            var selectedCategory = $('#categorySelect option:first').val();
+            console.log("Selected Category:", selectedCategory);
+
+            showForm(selectedCategory);
+        });
+
+        $('#categorySelect').change(function() {
+            var selectedCategory = $(this).val();
+            console.log("Selected Category:", selectedCategory);
             $('.form').hide();
 
-            function showForm(selectedCategory) {
-                $('#' + selectedCategory + 'Form').show();
-            }
-
-            $('#new_pass').click(function() {
-                $('.pass-page-container').show();
-
-                var selectedCategory = $('#categorySelect option:first').val();
-                console.log("Selected Category:", selectedCategory);
-
-                showForm(selectedCategory);
-            });
-
-            $('#categorySelect').change(function() {
-                var selectedCategory = $(this).val();
-                console.log("Selected Category:", selectedCategory);
-                $('.form').hide();
-
-                showForm(selectedCategory);
-                console.log("Displaying Form:", $('#' + selectedCategory + 'Form'));
-            });
-
-            var defaultCategory = $('#categorySelect').val();
-            showForm(defaultCategory);
+            showForm(selectedCategory);
+            console.log("Displaying Form:", $('#' + selectedCategory + 'Form'));
         });
+
+        var defaultCategory = $('#categorySelect').val();
+        showForm(defaultCategory);
+    });
 </script>
 
 
@@ -330,7 +316,7 @@
         calculatePassAmount();
     })
 
-    function calculatePassAmount () {
+    function calculatePassAmount() {
         var from = $('.fromPlace').val();
         var to = $('.toPlace').val();
 
@@ -434,8 +420,6 @@
         updateToDate();
     });
 </script>
-
-
 
 <script>
     $(document).ready(function() {

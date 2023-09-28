@@ -15,12 +15,10 @@ $email = $_POST["email"];
       exit();
   }
   
-  // Generate a random 6-digit OTP
   $otp = rand(100000, 999999);
   
-  // Send the OTP to the user's email
   $to = $_POST["email"];
-  $subject = "Your Login Code";
+  $subject = "Forgot Password Code";
   $message = "<b>Your OTP $otp</b>";
   
   $mail->addAddress($to);
@@ -101,12 +99,10 @@ $email = $_POST["email"];
   $mail->AltBody = 'Body in plain text for non-HTML mail clients';
   
   try {
-      // Send the email
       $mail->send();
   
       $user_mail = mysqli_real_escape_string($con, $to);
-  
-      // Store the OTP in the database
+
       $qry = "DELETE FROM otps WHERE email = '$user_mail'";
       mysqli_query($con, $qry);
   
@@ -116,6 +112,5 @@ $email = $_POST["email"];
       echo "Error: " . $e->getMessage();
   }
   
-  // Store the email in session for further processing
   $_SESSION['temp_mail'] = $to;
   ?>

@@ -29,7 +29,6 @@ if (!isset($_SESSION['username'])) {
     <link rel="stylesheet" href="../css/user.css">
     <link rel="icon" type="image/ico" href="../img/buslogo.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -87,7 +86,6 @@ if (!isset($_SESSION['username'])) {
             <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>
         </div>
         <div class="cards">
-            <!-- Generate New Pass Card -->
             <div class="card" id="new_pass">
                 <div class="card-body">
                     <h5 class="card-title">Generate New Pass</h5>
@@ -95,7 +93,6 @@ if (!isset($_SESSION['username'])) {
                 </div>
             </div>
 
-            <!-- Re-New Pass Card -->
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Re-New Pass</h5>
@@ -104,7 +101,6 @@ if (!isset($_SESSION['username'])) {
             </div>
         </div>
 
-        <!-- Pass Page -->
         <div class="pass-page-container" style="display: none;">
             <div class="Pass-Page">
                 <span>Select Pass Category</span>
@@ -112,7 +108,7 @@ if (!isset($_SESSION['username'])) {
                     <option value="">Select</option>
                     <option value="Student">Student</option>
                     <option value="Passenger">Passenger</option>
-                    <option value="Handicap">Handicap</option>
+                    <option value="Handicap" disabled>Handicap</option>
                 </select>
             </div>
         </div>
@@ -123,12 +119,10 @@ if (!isset($_SESSION['username'])) {
                 ?>
 
             </div>
-            <!-- Passenger Form -->
             <div class="form" id="PassengerForm" style="display: none;">
                 <?php include '../user/passanger.php'; ?>
             </div>
-
-            <!-- Handicap Form -->
+            
             <div class="form" id="HandicapForm" style="display: none;">
                 <?php include '../user/handicap.php'; ?>
             </div>
