@@ -13,7 +13,7 @@
 
 <body>
 
-    <form action="../main/1.php" method="POST">
+    <form action="../main/1.php" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <h1>Student Pass Details</h1>
             <hr>
@@ -66,7 +66,7 @@
 
             <label for="cast_std">Category: </label>
             <select name="cast_std" id="cast_std" required>
-            <option value="">Please Select Cast </option>
+                <option value="">Please Select Cast </option>
                 <?php
                 $cast_type_qry_s = "select * from cast";
                 $cast_type_s = mysqli_query($con, $cast_type_qry_s);
@@ -153,16 +153,39 @@
 
             <div class="student-form">
                 <label for="fromPlaceStudent">From Place:</label>
-                <input type="text" id="fromPlaceStudent" class="fromPlace" required>
+                <!-- <input type="text" id="fromPlaceStudent" class="fromPlace" required> -->
+                <select name="fromPlaceStudent" id="fromPlaceStudent" class="fromPlace" required>
+                    <option value=" ">Select From Location</option>
+                    <?php
+                    $from_qry_s  =  "SELECT * FROM bus_terminals";
+                    $from_types_s = mysqli_query($con, $from_qry_s);
+                    foreach ($from_types_s as $key => $from_t_s) {
+                    ?>
+                        <option value="<?php echo $from_t_s['ter_id'] ?>"><?php echo $from_t_s['ter_name'] ?></option>
+                    <?php
+                    }
+                    ?>
+                </select>
                 <br><br>
                 <label for="toPlaceStudent">To Place:</label>
-                <input type="text" id="toPlaceStudent" class="toPlace" required>
+                <!-- <input type="text" id="toPlaceStudent" class="toPlace" required> -->
+                <select name="toPlaceStudent" id="toPlaceStudent" class="toPlace" required>
+                    <option value=" ">Select To Location</option>
+                    <?php
+                    $from_qry_s  =  "SELECT * FROM bus_terminals";
+                    $from_types_s = mysqli_query($con, $from_qry_s);
+                    foreach ($from_types_s as $key => $from_t_s) {
+                    ?>
+                        <option value="<?php echo $from_t_s['ter_id'] ?>"><?php echo $from_t_s['ter_name'] ?></option>
+                    <?php
+                    }
+                    ?>
+                </select>
             </div>
             <br><br>
 
             <label for="classOfService">Class Of Service:</label>
             <select name="classOfService" id="classOfService" required>
-
                 <?php
                 $bus_type_qry_s  =  "SELECT * FROM bus_type ";
                 $bus_types_s = mysqli_query($con, $bus_type_qry_s);
@@ -180,13 +203,58 @@
             <h2> Payment </h2>
             <hr>
             <input type="text" placeholder="Pay Amount.." id="pay-value" disabled style="cursor: not-allowed;background-color:#efefef;color: #000000;">
+            <input type="text" placeholder="Pay Amount.." id="payment_id_lbl" readonly name = "payment_id"  style="cursor: not-allowed;background-color:#efefef;color: #000000;">
+            <!-- <label for="payment_id" id="payment_id_lbl"></label> -->
             <br><br>
-            <button class="btn-pmt" id="paymentButton">Submit and Proceed to Payment</button>
+            <div class="btn-paynow" id="paynow" onclick="pay_now()">Pay Now</div>
+            <button class="btn-pmt" type="submit" id="paymentButton">Submit and Proceed to Payment</button>
         </div>
     </form>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    $('#paymentButton').hide();
+
+    function pay_now() {
+        amt = 100;
+        var options = {
+            "key": "rzp_test_qScTznNfxHjAQP",
+            "amount": amt * 100, //jetla pasisa hoi tena * 100 nakhvana 500 hoi to 50000 nakhva
+            "currency": "INR",
+            "name": "BUS PASS ", //your business name
+            "description": "Test Transaction",
+            "image": "../img/buslogo.png",
+
+            "handler": function(response) {
+                console.log(response);
+                console.log(response.razorpay_payment_id);
+                if (response.razorpay_payment_id) {
+
+                    $('#paynow').hide();
+                    $('#payment_id_lbl').val(response.razorpay_payment_id);
+                    $('#paymentButton').show();
+                }
+
+                //databasr ma nakhva mate
+
+                // jQuery.ajax({
+                //     type: 'post',
+                //     url: 'payment_process.php',
+                //     data: "payment_id" + response.razorpay_payment_id + "&amt= " + amt + "&name" + name,
+                //     success: function(result) {
+                //         window.location.href = "passformate.php";
+                //     }
+                // })
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+        // e.preventDefault();
+    }
+</script>
+
 <script>
     $(document).ready(function() {
         $('.form').hide();
@@ -320,7 +388,7 @@
         var from = $('.fromPlace').val();
         var to = $('.toPlace').val();
 
-        if (from != '' && to != '') {
+        if (from != '' && to != '' && from != to) {
             $.ajax({
                 type: 'post',
                 url: 'get_geo_loc.php',
@@ -330,6 +398,7 @@
                     to: to,
                 },
                 success: function(res) {
+                    rs = 0;
                     console.log(calculateDistance(res[0].lati, res[0].long, res[1].lati, res[1].long));
                     distance = Math.ceil(calculateDistance(res[0].lati, res[0].long, res[1].lati, res[1].long));
                     rs = distance * 13;
@@ -345,6 +414,8 @@
                     $("#pay-value").val(Math.ceil(rs) + " Rs/-");
                 }
             })
+        } else {
+            $("#pay-value").val(0 + " Rs/-");
         }
 
     }

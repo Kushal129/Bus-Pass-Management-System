@@ -3,7 +3,7 @@
 -- Host: localhost	Database: buspassms
 -- ------------------------------------------------------
 -- Server version 	10.4.28-MariaDB
--- Date: Thu, 28 Sep 2023 13:18:52 +0200
+-- Date: Sat, 30 Sep 2023 12:45:03 +0200
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -170,9 +170,9 @@ COMMIT;
 CREATE TABLE `document` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `document_type_id` int(11) NOT NULL,
-  `document_file_name` varchar(80) NOT NULL,
+  `document_file_name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -182,11 +182,12 @@ CREATE TABLE `document` (
 LOCK TABLES `document` WRITE;
 /*!40000 ALTER TABLE `document` DISABLE KEYS */;
 SET autocommit=0;
+INSERT INTO `document` VALUES (1,3,'2023092976Screenshot 2023-09-13 194148.png'),(2,3,'202309298502Screenshot 2023-09-13 194148.png'),(3,3,'202309298657Screenshot 2023-09-13 194148.png'),(4,3,'202309291770Screenshot 2023-09-13 194148.png'),(5,4,'202309294584Screenshot 2023-09-13 194148.png'),(6,3,'202309305978Screenshot 2023-09-13 194148.png'),(7,6,'202309303415Screenshot 2023-09-13 194148.png'),(8,1,'202309308166Screenshot 2023-09-13 194148.png'),(9,9,'202309306405Screenshot 2023-09-13 194148.png');
 /*!40000 ALTER TABLE `document` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `document` with 0 row(s)
+-- Dumped table `document` with 9 row(s)
 --
 
 --
@@ -355,13 +356,13 @@ CREATE TABLE `passenger_info` (
   `user_id` int(11) NOT NULL,
   `validate_through` date NOT NULL,
   `dob` date NOT NULL,
-  `user_img_path` varchar(80) NOT NULL,
+  `user_img_path` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id_foreign` (`user_id`),
   KEY `document_id_foregin` (`document_id`),
   CONSTRAINT `document_id_foregin` FOREIGN KEY (`document_id`) REFERENCES `document` (`id`),
   CONSTRAINT `user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -371,11 +372,12 @@ CREATE TABLE `passenger_info` (
 LOCK TABLES `passenger_info` WRITE;
 /*!40000 ALTER TABLE `passenger_info` DISABLE KEYS */;
 SET autocommit=0;
+INSERT INTO `passenger_info` VALUES (1,'Kushal Pipaliya','vvvv',5,'M',0,5,18,'2024-03-29','2004-08-12','202309293691fenil.jpg'),(2,'Kushal Pipaliya','xgfbv',6,'M',0,6,18,'2024-03-30','2004-08-12','202309301268fenil.jpg'),(3,'Kushal Pipaliya','sbv',7,'M',0,7,18,'2024-03-30','2004-08-12','202309308428fenil.jpg'),(4,'df','snfg',8,'M',0,8,18,'2024-03-30','2004-08-12','202309305907fenil.jpg'),(5,'Kushal Pipaliya','ccxcxc',9,'M',0,9,18,'2024-03-30','2004-08-12','202309301837fenil.jpg');
 /*!40000 ALTER TABLE `passenger_info` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `passenger_info` with 0 row(s)
+-- Dumped table `passenger_info` with 5 row(s)
 --
 
 --
@@ -526,11 +528,11 @@ COMMIT;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `student` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `education` char(30) NOT NULL,
+  `education` varchar(50) NOT NULL,
   `Institute_name` varchar(150) NOT NULL,
   `Institute_address` varchar(150) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -540,11 +542,12 @@ CREATE TABLE `student` (
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
 SET autocommit=0;
+INSERT INTO `student` VALUES (2,'3','asda','asd'),(3,'1','ffffgggggg','gggg'),(4,'','',''),(5,'1','ffffft','ttttt'),(6,'2','xhx','dfghgh'),(7,'1','sgfsdfh','sdfg'),(8,'3','dgbbgb','sfgbgfbsgfdb'),(9,'2','ffffff','gggggg');
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `student` with 0 row(s)
+-- Dumped table `student` with 8 row(s)
 --
 
 --
@@ -644,4 +647,4 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on: Thu, 28 Sep 2023 13:18:52 +0200
+-- Dump completed on: Sat, 30 Sep 2023 12:45:03 +0200

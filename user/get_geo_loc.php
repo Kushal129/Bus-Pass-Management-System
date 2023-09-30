@@ -4,7 +4,7 @@ require '../connection.php';
 $from = $_POST['from'];
 $to = $_POST['to'];
 
-$sql = "select * from bus_terminals where ter_name = '$from' or ter_name = '$to' ";
+$sql = "select * from bus_terminals where ter_id = '$from' or ter_id = '$to' ";
 $run = mysqli_query($con, $sql);
 
 $num = mysqli_num_rows($run);

@@ -28,8 +28,9 @@ if (isset($_POST["login_submit"])) {
 
             // Verify the password
             if (password_verify($password, $hashedPassword)) {
-
+                $user_id = $row['id'];
                 $_SESSION['username'] = $email;
+                $_SESSION['user_id'] = $user_id;
                 $role = $row['role'];
                 // 1 - user and 0 - admin
                 if ($role) {
@@ -158,7 +159,7 @@ $con->close();
     <nav class="navbar navbar-expand-lg " style="background-color: #ffd900;">
         <a class="navbar-brand" href="#"><img src="img/buslogo.png" width="30" height="30" class="d-inline-block align-top" alt="Logo" ></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon" style="color: black;">|||</span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
