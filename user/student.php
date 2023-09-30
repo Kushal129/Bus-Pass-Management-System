@@ -81,16 +81,16 @@
             <label for="education">Education:</label>
             <select name="education" required>
                 <option value="">Please Select Highest Qualification</option>
-                <option value="1">Primary</option>
-                <option value="2">Middle/Higher Primary</option>
-                <option value="3">Senior Secondary</option>
-                <option value="4">Higher Secondary</option>
-                <option value="5">Diploma</option>
-                <option value="6">Graduate</option>
-                <option value="7">PG Diploma</option>
-                <option value="8">Post Graduate</option>
-                <option value="9">Doctorate</option>
-                <option value="10">Illiterate</option>
+                <option value="Primary">Primary</option>
+                <option value="Middle/Higher Primary">Middle/Higher Primary</option>
+                <option value="Senior Secondary">Senior Secondary</option>
+                <option value="Higher Secondary">Higher Secondary</option>
+                <option value="Diploma">Diploma</option>
+                <option value="Graduate">Graduate</option>
+                <option value="PG Diploma">PG Diploma</option>
+                <option value="Post Graduate">Post Graduate</option>
+                <option value="Doctorate">Doctorate</option>
+                <option value="Illiterate">Illiterate</option>
             </select>
             <br><br>
             <label for="institute_name">Institute Name:</label>
@@ -101,7 +101,6 @@
             <textarea name="institute_address" id="institute_address" cols="20" rows="3" required></textarea>
             <br><br>
 
-
         </div>
         <div class="form-group">
             <h1>Proof Details</h1>
@@ -110,8 +109,6 @@
             <input type="file" name="img_std" id="img_std" accept=".jpg,.jpeg,.JPEG,.JPG,.png" required>
             <p>[Self-attached Passport size Photo Copy. Max size: 300KB]</p>
             <span id="photo-upload-error-student" style="color: red;"></span>
-
-            <br>
             <br>
             <label for="address_proof">Select Document for Address Proof:</label>
             <select id="address_proof" name="address_proof" class="hasCustomSelect valid" required>
@@ -168,7 +165,6 @@
                 </select>
                 <br><br>
                 <label for="toPlaceStudent">To Place:</label>
-                <!-- <input type="text" id="toPlaceStudent" class="toPlace" required> -->
                 <select name="toPlaceStudent" id="toPlaceStudent" class="toPlace" required>
                     <option value=" ">Select To Location</option>
                     <?php
@@ -203,57 +199,19 @@
             <h2> Payment </h2>
             <hr>
             <input type="text" placeholder="Pay Amount.." id="pay-value" disabled style="cursor: not-allowed;background-color:#efefef;color: #000000;">
-            <input type="text" placeholder="Pay Amount.." id="payment_id_lbl" readonly name = "payment_id"  style="cursor: not-allowed;background-color:#efefef;color: #000000;">
-            <!-- <label for="payment_id" id="payment_id_lbl"></label> -->
+            <br>
+            <input type="text" placeholder="Payment ID " id="payment_id_lbl" readonly name="payment_id" style="cursor: not-allowed;background-color:#efefef;color: #000000;">
+
             <br><br>
-            <div class="btn-paynow" id="paynow" onclick="pay_now()">Pay Now</div>
-            <button class="btn-pmt" type="submit" id="paymentButton">Submit and Proceed to Payment</button>
+            <div class="btn-paynow btn-pmt" id="paynow" onclick="pay_now()" >Pay Now</div>
+            <button class="btn-pmt" type="submit" id="paymentButton">Submit and Proceed </button>
         </div>
     </form>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script>
-    $('#paymentButton').hide();
 
-    function pay_now() {
-        amt = 100;
-        var options = {
-            "key": "rzp_test_qScTznNfxHjAQP",
-            "amount": amt * 100, //jetla pasisa hoi tena * 100 nakhvana 500 hoi to 50000 nakhva
-            "currency": "INR",
-            "name": "BUS PASS ", //your business name
-            "description": "Test Transaction",
-            "image": "../img/buslogo.png",
-
-            "handler": function(response) {
-                console.log(response);
-                console.log(response.razorpay_payment_id);
-                if (response.razorpay_payment_id) {
-
-                    $('#paynow').hide();
-                    $('#payment_id_lbl').val(response.razorpay_payment_id);
-                    $('#paymentButton').show();
-                }
-
-                //databasr ma nakhva mate
-
-                // jQuery.ajax({
-                //     type: 'post',
-                //     url: 'payment_process.php',
-                //     data: "payment_id" + response.razorpay_payment_id + "&amt= " + amt + "&name" + name,
-                //     success: function(result) {
-                //         window.location.href = "passformate.php";
-                //     }
-                // })
-            }
-        };
-        var rzp1 = new Razorpay(options);
-        rzp1.open();
-        // e.preventDefault();
-    }
-</script>
 
 <script>
     $(document).ready(function() {
@@ -461,7 +419,7 @@
         var passType = $('#passType').val();
         var fromDate = $("#fromDate").val();
 
-        if (passType === "--" || fromDate === "") {
+        if (passType === "--" || fromDate === " ") {
             return;
         }
 
@@ -491,7 +449,38 @@
         updateToDate();
     });
 </script>
+<script>
+    $('#paymentButton').hide();
+    $('#payment_id_lbl').hide();
 
+    function pay_now() {
+
+        var amtWithSuffix = $('#pay-value').val();
+        var amt = parseInt(amtWithSuffix.match(/\d+/)[0], 10);
+        console.log(amt);
+
+        var options = {
+            "key": "rzp_test_qScTznNfxHjAQP",
+            "amount": amt * 100,
+            "currency": "INR",
+            "name": "BUS PASS ",
+            "description": "Your Pass Payment ",
+            "image": "../img/buslogo.png",
+
+            "handler": function(response) {
+                console.log(response.razorpay_payment_id);
+                if (response.razorpay_payment_id) {
+
+                    $('#paynow').hide();
+                    $('#payment_id_lbl').val(response.razorpay_payment_id);
+                    $('#paymentButton').show();
+                }
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+    }
+</script>
 <script>
     $(document).ready(function() {
         function addFileInputValidation_std(inputId, errorId, maxSizeKB) {

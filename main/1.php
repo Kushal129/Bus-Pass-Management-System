@@ -4,9 +4,6 @@ include_once '../connection.php';
 
 print_r($_POST);
 
-print(" ");
-print(" ");
-
 
 $education = $_POST['education'];
 $Institute_name = $_POST['institute_name'];
@@ -17,8 +14,6 @@ $studentInsertedId = mysqli_insert_id($con);  // give a id for student
 
 
 
-
-// file upload
 
 $uploadsDirectory = "../uploads/documents/";
 
@@ -72,7 +67,7 @@ $user_img_path = $filename;
 $qry = "INSERT INTO passenger_info( full_name, address, document_id, gender, role, r_id, user_id, validate_through, dob, user_img_path) 
 VALUES ('$full_name', '$address', $document_id, '$gender', $role, $r_id, $user_id, '$validate_through', '$dob', '$user_img_path')";
 mysqli_query($con,$qry);
-$pasangerInsertedId = mysqli_insert_id($con);  // give a id for pasanger 
+$pasangerInsertedId = mysqli_insert_id($con);  
 
 
 $passenger_id = $pasangerInsertedId;
@@ -82,5 +77,6 @@ $ends_term_id = $_POST['toPlaceStudent'];
 $payment_id = $_POST['payment_id'];
 $image_id = 1;
 
-$qry = "INSERT INTO pass (passenger_id, user_id, 'bus_type', start_term_id, ends_term_id, payment_id, image_id) VALUES ( $passenger_id, $user_id, '$bus_type', $start_term_id, $ends_term_id, $payment_id, $image_id) ";
+$qry = "INSERT INTO pass (passenger_id, user_id, bus_type, start_term_id, ends_term_id, payment_id, image_id) VALUES 
+( $passenger_id, $user_id, $bus_type, $start_term_id, $ends_term_id, $payment_id, $image_id) ";
 mysqli_query($con,$qry);

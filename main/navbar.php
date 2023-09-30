@@ -157,10 +157,13 @@ $con->close();
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg " style="background-color: #ffd900;">
-        <a class="navbar-brand" href="#"><img src="img/buslogo.png" width="30" height="30" class="d-inline-block align-top" alt="Logo" ></a>
+        <a class="navbar-brand" href="#"><img src="img/buslogo.png" width="30" height="30" class="d-inline-block align-top" alt="Logo"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon" style="color: black;">|||</span>
+            <span class="navbar-toggler-icon" style="color: black;">
+                <img src="../img/admin.ico" alt="Login" width="30" height="30">
+            </span>
         </button>
+
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
@@ -220,7 +223,6 @@ $con->close();
                                 <button type="submit" class="btn-lr btn-block" value="registr" name="submit">Sign
                                     Up</button>
                             </form>
-                            <!-- Toggle between Login and Registration forms -->
                             <p class="text-center mt-3 mb-0">
                                 <a href="#" id="signupLink">Create an account</a>
                                 <a href="main/ForgotPass.php" id="signupLink">ForgotPassword?</a>
@@ -231,10 +233,6 @@ $con->close();
                 </div>
             </div>
     </nav>
-
-
-
-    <!-- validations  -->
 
     <script>
         var phoneNumberInput = document.getElementById('phoneNumber');
@@ -289,14 +287,14 @@ $con->close();
         $('#loginForm').validate({
             rules: {
                 "email": {
-                    'required':true,
-                    'email':true,
+                    'required': true,
+                    'email': true,
                 },
             },
             messages: {
-                'email':{
-                    'required':'Email address is required',
-                    'email':'Email don\'t have valid Format ',
+                'email': {
+                    'required': 'Email address is required',
+                    'email': 'Email don\'t have valid Format ',
                 }
             }
         })
