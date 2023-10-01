@@ -429,18 +429,7 @@
     position: relative; 
     overflow: hidden; 
 }
-
-.btn-pmt::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background-color: green; 
-    transition: left 0.3s ease; 
-}
-
-.btn-pmt:hover::before {
-    left: 0; 
-}
+ .btn-pmt:hover{
+    background-color: #212121;
+    font-size: 18px;
+ }

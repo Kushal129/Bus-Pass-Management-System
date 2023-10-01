@@ -40,7 +40,7 @@
             <br><br>
 
             <label for="mobileNo">Phone Number:</label>
-            <input type="text" name="mobileNo" maxlength="13" value="" required>
+            <input type="text" name="mobileNo" id="mobileNo" maxlength="13" value="" required>
             <br><br>
 
             <label for="address">Address:</label>
@@ -79,7 +79,7 @@
             </select>
             <br><br>
             <label for="education">Education:</label>
-            <select name="education" required>
+            <select name="education" id="education" required>
                 <option value="">Please Select Highest Qualification</option>
                 <option value="Primary">Primary</option>
                 <option value="Middle/Higher Primary">Middle/Higher Primary</option>
@@ -150,7 +150,6 @@
 
             <div class="student-form">
                 <label for="fromPlaceStudent">From Place:</label>
-                <!-- <input type="text" id="fromPlaceStudent" class="fromPlace" required> -->
                 <select name="fromPlaceStudent" id="fromPlaceStudent" class="fromPlace" required>
                     <option value=" ">Select From Location</option>
                     <?php
@@ -203,7 +202,7 @@
             <input type="text" placeholder="Payment ID " id="payment_id_lbl" readonly name="payment_id" style="cursor: not-allowed;background-color:#efefef;color: #000000;">
 
             <br><br>
-            <div class="btn-paynow btn-pmt" id="paynow" onclick="pay_now()" >Pay Now</div>
+            <div class="btn-paynow btn-pmt" id="paynow" onclick="pay_now()">Pay Now</div>
             <button class="btn-pmt" type="submit" id="paymentButton">Submit and Proceed </button>
         </div>
     </form>
@@ -453,32 +452,71 @@
     $('#paymentButton').hide();
     $('#payment_id_lbl').hide();
 
+
+    function validateForm() {
+                let isValid = true;
+
+                function showError(fieldId, errorMessage) {
+                    $(fieldId + '-error').text(errorMessage);
+                    isValid = false;
+                }
+
+                function clearError(fieldId) {
+                    $(fieldId + '-error').text('');
+                }
+
+                const fullnameValue = $('#fullname').val();
+                if (fullnameValue === '' || !/^[a-zA-Z ]+$/.test(fullnameValue)) {
+                    showError('#fullname', 'Please enter a valid Full Name with only letters and spaces.');
+                } else {
+                    clearError('#fullname');
+                }
+
+                const mobileNoValue = $('#mobileNo').val();
+                if (mobileNoValue === '' || !/^\d{10}$/.test(mobileNoValue)) {
+                    showError('#mobileNo', 'Please enter a valid 10-digit Phone Number.');
+                } else {
+                    clearError('#mobileNo');
+                }
+
+                // Add validation for other fields here
+
+                if (!isValid) {
+                    alert('Please fill in all required fields and correct any errors.');
+                }
+
+                return isValid;
+            }
+
+
     function pay_now() {
 
-        var amtWithSuffix = $('#pay-value').val();
-        var amt = parseInt(amtWithSuffix.match(/\d+/)[0], 10);
-        console.log(amt);
+        if (validateForm()) {
+            var amtWithSuffix = $('#pay-value').val();
+            var amt = parseInt(amtWithSuffix.match(/\d+/)[0], 10);
+            console.log(amt);
 
-        var options = {
-            "key": "rzp_test_qScTznNfxHjAQP",
-            "amount": amt * 100,
-            "currency": "INR",
-            "name": "BUS PASS ",
-            "description": "Your Pass Payment ",
-            "image": "../img/buslogo.png",
+            var options = {
+                "key": "rzp_test_qScTznNfxHjAQP",
+                "amount": amt * 100,
+                "currency": "INR",
+                "name": "BUS PASS ",
+                "description": "Your Pass Payment ",
+                "image": "../img/buslogo.png",
 
-            "handler": function(response) {
-                console.log(response.razorpay_payment_id);
-                if (response.razorpay_payment_id) {
+                "handler": function(response) {
+                    console.log(response.razorpay_payment_id);
+                    if (response.razorpay_payment_id) {
 
-                    $('#paynow').hide();
-                    $('#payment_id_lbl').val(response.razorpay_payment_id);
-                    $('#paymentButton').show();
+                        $('#paynow').hide();
+                        $('#payment_id_lbl').val(response.razorpay_payment_id);
+                        $('#paymentButton').show();
+                    }
                 }
-            }
-        };
-        var rzp1 = new Razorpay(options);
-        rzp1.open();
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
+        }
     }
 </script>
 <script>
