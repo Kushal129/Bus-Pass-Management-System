@@ -9,10 +9,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 
 <body>
-
     <form action="../main/1.php" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <h1>Student Pass Details</h1>
@@ -37,22 +37,27 @@
 
             <label for="fullname">Full Name:</label>
             <input type="text" id="fullname" name="fullname" required>
+            <span id="fullname-error" class="error-message" style="color:red"></span>
             <br><br>
 
             <label for="mobileNo">Phone Number:</label>
             <input type="text" name="mobileNo" id="mobileNo" maxlength="13" value="" required>
+            <span id="mobileNo-error" class="error-message" style="color:red"></span>
             <br><br>
 
             <label for="address">Address:</label>
             <textarea name="address" id="address" cols="20" rows="3" required></textarea>
+            <span id="address-error" class="error-message" style="color:red"></span>
             <br><br>
 
             <label for="dateofBirth">Date of Birth:</label>
             <input type="date" name="dateofBirth" id="dateofBirth" required>
+            <span id="dateofBirth-error" class="error-message" style="color:red"></span>
             <br><br>
 
             <label for="age_std">Age:</label>
             <input type="text" id="age_std" name="age_std" value="" disabled style="cursor: not-allowed;background-color:#efefef;color: #000000;">
+            <span id="age_std-error" class="error-message" style="color:red"></span>
             <br><br>
 
             <label>Gender:</label>
@@ -62,6 +67,7 @@
             <span class="bodh2ytext">Female</span>
             <input type="radio" name="gender" value="T">
             <span class="bodytext">Transgender</span>
+            <span id="gender-error" class="error-message" style="color:red"></span>
             <br><br>
 
             <label for="cast_std">Category: </label>
@@ -77,10 +83,12 @@
                 }
                 ?>
             </select>
+            <span id="cast_std-error" class="error-message" style="color:red"></span>
             <br><br>
+
             <label for="education">Education:</label>
             <select name="education" id="education" required>
-                <option value="">Please Select Highest Qualification</option>
+                <option value="--">Please Select Highest Qualification</option>
                 <option value="Primary">Primary</option>
                 <option value="Middle/Higher Primary">Middle/Higher Primary</option>
                 <option value="Senior Secondary">Senior Secondary</option>
@@ -92,27 +100,32 @@
                 <option value="Doctorate">Doctorate</option>
                 <option value="Illiterate">Illiterate</option>
             </select>
+            <span id="education-error" class="error-message" style="color:red"></span>
             <br><br>
+
             <label for="institute_name">Institute Name:</label>
             <input type="text" id="institute_name" name="institute_name" required>
+            <span id="institute_name-error" class="error-message" style="color:red"></span>
             <br><br>
 
             <label for="institute_address">Institute Address:</label>
             <textarea name="institute_address" id="institute_address" cols="20" rows="3" required></textarea>
+            <span id="institute_address-error" class="error-message" style="color:red"></span>
             <br><br>
-
         </div>
+
         <div class="form-group">
             <h1>Proof Details</h1>
             <hr>
             <label for="img_std">Photo Upload:</label>
-            <input type="file" name="img_std" id="img_std" accept=".jpg,.jpeg,.JPEG,.JPG,.png" required>
+            <input type="file" name="img_std" id="img_std" accept=".pdf, .jpg, .jpeg, .png" required>
             <p>[Self-attached Passport size Photo Copy. Max size: 300KB]</p>
-            <span id="photo-upload-error-student" style="color: red;"></span>
-            <br>
+            <span id="photo-upload-error-student" class="error-message" style="color: red;">PHOTOOOO</span>
+            <br><br>
+
             <label for="address_proof">Select Document for Address Proof:</label>
-            <select id="address_proof" name="address_proof" class="hasCustomSelect valid" required>
-                <option value="">Please Select Document</option>
+            <select id="address_proof" name="address_proof" class="error-message" required>
+                <option value="--">Please Select Document</option>
                 <?php
                 $address_proof_qry_s = "SELECT * FROM document_type";
                 $add_s = mysqli_query($con, $address_proof_qry_s);
@@ -123,13 +136,17 @@
                 }
                 ?>
             </select>
+            <br>
+            <span id="address_proof-error" class="error-message" style="color: red;">SELECTTTTTTTTTTTTTTT</span>
             <br><br>
-            <label for="student_address_proof_upload">Upload Proof of Correspondence Address:</label>
-            <input type="file" id="student_address_proof_upload" name="student_address_proof_upload" accept=".jpg,.jpeg,.JPEG,.JPG,.png" required>
-            <p>[Self-attached Passport size Photo Copy. Max size: 200KB]</p>
-            <span id="address-proof-error-student" style="color: red;"></span>
-            <br><br>
+
+            <label for="student_address_proof_upload">Upload Proof For Address:</label>
+            <input type="file" id="student_address_proof_upload" name="student_address_proof_upload" accept=".pdf, .jpg, .jpeg, .png" required>
+            <p>[Self-attached size Max size: 200KB]</p>
+            <br>
+            <span id="address-proof-student-error" class="error-message" style="color: red;">APLOADDDDDDDDDDDD</span>
         </div>
+
         <div class="form-group">
             <h1>Location Details</h1>
             <hr>
@@ -162,7 +179,9 @@
                     }
                     ?>
                 </select>
+                <span id="fromPlaceStudent-error" class="error-message" style="color: red;"></span>
                 <br><br>
+
                 <label for="toPlaceStudent">To Place:</label>
                 <select name="toPlaceStudent" id="toPlaceStudent" class="toPlace" required>
                     <option value=" ">Select To Location</option>
@@ -176,6 +195,7 @@
                     }
                     ?>
                 </select>
+                <span id="toPlaceStudent-error" class="error-message" style="color: red;"></span>
             </div>
             <br><br>
 
@@ -191,6 +211,7 @@
                 }
                 ?>
             </select>
+            <span id="classOfService-error" class="error-message" style="color: red;"></span>
             <br><br>
             <hr>
         </div>
@@ -207,9 +228,13 @@
         </div>
     </form>
 </body>
+
+
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 
 
 <script>
@@ -242,7 +267,6 @@
         showForm(defaultCategory);
     });
 </script>
-
 
 <script>
     let sidebar = document.querySelector(".sidebar");
@@ -399,7 +423,6 @@
         return distance;
     }
 
-
     $(document).on('change', "#dateofBirth", function() {
         var date = $(document).find("#dateofBirth").val();
         var dob = new Date(date);
@@ -449,108 +472,155 @@
     });
 </script>
 <script>
-    $('#paymentButton').hide();
-    $('#payment_id_lbl').hide();
+    $(document).ready(function() {
+        $('#paymentButton').hide();
+        $('#payment_id_lbl').hide();
 
+        function validateForm() {
+            let isValid = true;
 
-    function validateForm() {
-                let isValid = true;
+            function showError(fieldId, errorMessage) {
+                const errorSpan = $(fieldId + '-error');
+                errorSpan.text(errorMessage);
+                errorSpan.show();
+                isValid = false;
+            }
 
-                function showError(fieldId, errorMessage) {
-                    $(fieldId + '-error').text(errorMessage);
-                    isValid = false;
-                }
+            function clearError(fieldId) {
+                const errorSpan = $(fieldId + '-error');
+                errorSpan.text('');
+                errorSpan.hide();
+            }
 
-                function clearError(fieldId) {
-                    $(fieldId + '-error').text('');
-                }
+            const fullnameValue = $('#fullname').val();
+            if (fullnameValue === '' || !/^[a-zA-Z ]+$/.test(fullnameValue)) {
+                showError('#fullname', 'Please enter a valid Full Name with only letters and spaces.');
+            } else {
+                clearError('#fullname');
+            }
 
-                const fullnameValue = $('#fullname').val();
-                if (fullnameValue === '' || !/^[a-zA-Z ]+$/.test(fullnameValue)) {
-                    showError('#fullname', 'Please enter a valid Full Name with only letters and spaces.');
-                } else {
-                    clearError('#fullname');
-                }
+            const mobileNoValue = $('#mobileNo').val();
+            if (mobileNoValue === '' || !/^\d{10}$/.test(mobileNoValue)) {
+                showError('#mobileNo', 'Please enter a valid 10-digit Phone Number.');
+            } else {
+                clearError('#mobileNo');
+            }
+            const addressValue = $('#address').val();
+            if (addressValue === '') {
+                showError('#address', 'Address is required.');
+            } else {
+                clearError('#address');
+            }
 
-                const mobileNoValue = $('#mobileNo').val();
-                if (mobileNoValue === '' || !/^\d{10}$/.test(mobileNoValue)) {
-                    showError('#mobileNo', 'Please enter a valid 10-digit Phone Number.');
-                } else {
-                    clearError('#mobileNo');
-                }
+            const dateofBirthValue = $('#dateofBirth').val();
+            if (dateofBirthValue === '') {
+                showError('#dateofBirth', 'Date of Birth is required.');
+            } else {
+                clearError('#dateofBirth');
+            }
 
-                // Add validation for other fields here
+            const castStdValue = $('#cast_std').val();
+            if (castStdValue === '') {
+                showError('#cast_std', 'Category is required.');
+            } else {
+                clearError('#cast_std');
+            }
 
-                if (!isValid) {
-                    alert('Please fill in all required fields and correct any errors.');
-                }
+            const educationValue = $('#education').val();
+            if (educationValue === '--') {
+                showError('#education', 'Education is required.');
+            } else {
+                clearError('#education');
+            }
 
-                return isValid;
+            const instituteNameValue = $('#institute_name').val();
+            if (instituteNameValue === '') {
+                showError('#institute_name', 'Institute Name is required.');
+            } else {
+                clearError('#institute_name');
+            }
+
+            const instituteAddressValue = $('#institute_address').val();
+            if (instituteAddressValue === '') {
+                showError('#institute_address', 'Institute Address is required.');
+            } else {
+                clearError('#institute_address');
+            }
+
+            const imgStdValue = $('#img_std').val();
+            if (imgStdValue === '') {
+                alert(1111);
+                showError('#photo-upload-error-student', 'Please upload a photo.');
+            } else {
+                clearError('#photo-upload-error-student');
+            }
+
+            const addressProofValue = $('#address_proof').val();
+            if (addressProofValue === '--') {
+                alert(1222);
+                showError('#address_proof-error', 'Please select a Document for Address Proof.');
+            } else {
+                clearError('#address_proof-error');
+            }
+
+            const studentAddressProofValue = $('#student_address_proof_upload').val();
+            if (studentAddressProofValue === '') {
+                alert(13333331);
+                
+                showError('#address-proof-student-error', 'Please upload a proof for address.');
+            } else {
+                clearError('#address-proof-student-error');
             }
 
 
-    function pay_now() {
+            const fromPlaceStudentValue = $('#fromPlaceStudent').val();
+            if (fromPlaceStudentValue === '' || fromPlaceStudentValue === ' ') {
+                showError('#fromPlaceStudent', 'Please select a From Place.');
+            } else {
+                clearError('#fromPlaceStudent');
+            }
 
-        if (validateForm()) {
-            var amtWithSuffix = $('#pay-value').val();
-            var amt = parseInt(amtWithSuffix.match(/\d+/)[0], 10);
-            console.log(amt);
+            const toPlaceStudentValue = $('#toPlaceStudent').val();
+            if (toPlaceStudentValue === '' || toPlaceStudentValue === ' ') {
+                showError('#toPlaceStudent', 'Please select a To Place.');
+            } else {
+                clearError('#toPlaceStudent');
+            }
 
-            var options = {
-                "key": "rzp_test_qScTznNfxHjAQP",
-                "amount": amt * 100,
-                "currency": "INR",
-                "name": "BUS PASS ",
-                "description": "Your Pass Payment ",
-                "image": "../img/buslogo.png",
+            if (!isValid) {
+                alert('Please fill in all required fields and correct any errors.');
+            }
+            return isValid;
+        }
 
-                "handler": function(response) {
-                    console.log(response.razorpay_payment_id);
-                    if (response.razorpay_payment_id) {
+        window.pay_now = function() {
+            if (validateForm()) {
+                var amtWithSuffix = $('#pay-value').val();
+                var amt = parseInt(amtWithSuffix.match(/\d+/)[0], 10);
+                console.log(amt);
 
-                        $('#paynow').hide();
-                        $('#payment_id_lbl').val(response.razorpay_payment_id);
-                        $('#paymentButton').show();
+                var options = {
+                    "key": "rzp_test_qScTznNfxHjAQP",
+                    "amount": amt * 100,
+                    "currency": "INR",
+                    "name": "BUS PASS ",
+                    "description": "Your Pass Payment ",
+                    "image": "../img/buslogo.png",
+
+                    "handler": function(response) {
+                        console.log(response.razorpay_payment_id);
+                        if (response.razorpay_payment_id) {
+
+                            $('#paynow').hide();
+                            $('#payment_id_lbl').val(response.razorpay_payment_id);
+                            $('#paymentButton').show();
+                        }
                     }
-                }
-            };
-            var rzp1 = new Razorpay(options);
-            rzp1.open();
-        }
-    }
-</script>
-<script>
-    $(document).ready(function() {
-        function addFileInputValidation_std(inputId, errorId, maxSizeKB) {
-            $(inputId).on('change', function() {
-                const file = this.files[0];
-                const errorElement = $(errorId);
-
-                if (!file) {
-                    errorElement.text('No file selected');
-                    return;
-                }
-
-                const allowedExtensions = /\.(jpg|jpeg|png)$/i;
-                if (!allowedExtensions.test(file.name)) {
-                    errorElement.text('Invalid file type. Allowed: JPG, JPEG, PNG');
-                    this.value = '';
-                    return;
-                }
-
-                const maxFileSize = maxSizeKB * 1024;
-                if (file.size > maxFileSize) {
-                    errorElement.text('File size exceeds the maximum allowed (' + maxSizeKB + 'KB)');
-                    this.value = '';
-                    return;
-                }
-                errorElement.text('');
-            });
-        }
-
-        addFileInputValidation_std('#img_std', '#photo-upload-error-student', 300, [".jpg", ".jpeg", ".png"]);
-        addFileInputValidation_std('#student_address_proof_upload', '#address-proof-error-student', 200, [".jpg", ".jpeg", ".png"]);
-
+                };
+                var rzp1 = new Razorpay(options);
+                rzp1.open();
+            }
+        };
     });
 </script>
 
