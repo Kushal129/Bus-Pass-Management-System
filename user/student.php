@@ -61,11 +61,11 @@
             <br><br>
 
             <label>Gender:</label>
-            <input type="radio" name="gender" value="M" checked="checked" required>
+            <input type="radio" name="gender" value="Male" checked="checked" required>
             <span class="bodytext">Male</span>
-            <input type="radio" name="gender" value="F">
+            <input type="radio" name="gender" value="Female">
             <span class="bodh2ytext">Female</span>
-            <input type="radio" name="gender" value="T">
+            <input type="radio" name="gender" value="Transgender">
             <span class="bodytext">Transgender</span>
             <span id="gender-error" class="error-message" style="color:red"></span>
             <br><br>
@@ -120,8 +120,8 @@
             <label for="img_std">Photo Upload:</label>
             <input type="file" name="img_std" id="img_std" accept=".pdf, .jpg, .jpeg, .png" required>
             <p>[Self-attached Passport size Photo Copy. Max size: 300KB]</p>
-            <span id="photo-upload-error-student" class="error-message" style="color: red;">PHOTOOOO</span>
-            <br><br>
+            <span id="photo_error" class="error-message" style="color: red;"></span>
+            <br>
 
             <label for="address_proof">Select Document for Address Proof:</label>
             <select id="address_proof" name="address_proof" class="error-message" required>
@@ -136,15 +136,14 @@
                 }
                 ?>
             </select>
-            <br>
-            <span id="address_proof-error" class="error-message" style="color: red;">SELECTTTTTTTTTTTTTTT</span>
+            <span id="address_error" class="error-message" style="color: red;"></span>
             <br><br>
 
             <label for="student_address_proof_upload">Upload Proof For Address:</label>
             <input type="file" id="student_address_proof_upload" name="student_address_proof_upload" accept=".pdf, .jpg, .jpeg, .png" required>
             <p>[Self-attached size Max size: 200KB]</p>
+            <span id="address_proof_error" class="error-message" style="color: red;"></span>
             <br>
-            <span id="address-proof-student-error" class="error-message" style="color: red;">APLOADDDDDDDDDDDD</span>
         </div>
 
         <div class="form-group">
@@ -229,13 +228,10 @@
     </form>
 </body>
 
-
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
-
 
 <script>
     $(document).ready(function() {
@@ -549,25 +545,24 @@
 
             const imgStdValue = $('#img_std').val();
             if (imgStdValue === '') {
-                alert(1111);
-                showError('#photo-upload-error-student', 'Please upload a photo.');
+                // showError('#photo-upload-error-student', 'Please upload a photo.');
+                document.getElementById("photo_error").innerHTML = "Please Upload a Photo"
             } else {
                 clearError('#photo-upload-error-student');
             }
 
             const addressProofValue = $('#address_proof').val();
             if (addressProofValue === '--') {
-                alert(1222);
-                showError('#address_proof-error', 'Please select a Document for Address Proof.');
+                document.getElementById("address_error").innerHTML = "Please select a Document for Address Proof"
+                // showError('#address_proof-error', 'Please select a Document for Address Proof.');
             } else {
                 clearError('#address_proof-error');
             }
 
             const studentAddressProofValue = $('#student_address_proof_upload').val();
             if (studentAddressProofValue === '') {
-                alert(13333331);
-                
-                showError('#address-proof-student-error', 'Please upload a proof for address.');
+                document.getElementById("address_proof_error").innerHTML = "Please upload a proof for address."
+                // showError('#address-proof-student-error', 'Please upload a proof for address.');
             } else {
                 clearError('#address-proof-student-error');
             }

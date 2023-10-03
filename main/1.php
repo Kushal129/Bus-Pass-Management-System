@@ -10,7 +10,7 @@ $Institute_name = $_POST['institute_name'];
 $Institute_address = $_POST['institute_address'];
 $qry = "INSERT INTO student (education, Institute_name, Institute_address) VALUES ('$education', '$Institute_name', '$Institute_address')";
 mysqli_query($con, $qry);
-$studentInsertedId = mysqli_insert_id($con);  // give a id for student
+$studentInsertedId = mysqli_insert_id($con);  
 
 
 
