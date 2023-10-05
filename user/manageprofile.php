@@ -80,29 +80,31 @@ if (!isset($_SESSION['username'])) {
             <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>
         </div>
 
-        <h1>Manage Profile</h1>
         <form action="#" method="POST" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="fullname">Full Name:</label>
-                <input type="text" id="fullname" name="fullname" value="<?php echo $user['full_name']; ?>">
-
-                <label for="mobileNo">Phone Number:</label>
-                <input type="text" id="mobileNo" name="mobileNo" value="<?php echo $user['phone_number']; ?>">
-
-                <label for="gender">Gender:</label>
-                <select id="gender" name="gender">
-                    <option value="M" <?php if ($user['gender'] == 'M') echo 'selected'; ?>>Male</option>
-                    <option value="F" <?php if ($user['gender'] == 'F') echo 'selected'; ?>>Female</option>
-                    <option value="T" <?php if ($user['gender'] == 'T') echo 'selected'; ?>>Transgender</option>
-                </select>
-
-                <label for="address">Address:</label>
-                <textarea id="address" name="address"><?php echo $user['address']; ?></textarea>
-
-                <label for="profilePic">Profile Picture:</label>
-                <input type="file" id="profilePic" name="profilePic">
-
-                <input type="submit" value="Update Profile">
+            <div class="down-container">
+                <div class="form-group" ml-5>
+                    <h1>Manage Profile</h1>
+                    <label for="fullname">Full Name:</label>
+                    <input type="text" id="fullname" name="fullname" value="">
+                    <br>
+                    <label for="mobileNo">Phone Number:</label>
+                    <input type="text" id="mobileNo" name="mobileNo" value="">
+                    <br>
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Transgender">Transgender</option>
+                    </select>
+                    <br>
+                    <label for="address">Address:</label>
+                    <textarea id="address" name="address"></textarea>
+                    <br>
+                    <label for="profilePic">Profile Picture:</label>
+                    <input type="file" id="profilePic" name="profilePic">
+                    <br>
+                    <input type="submit" class="btn-upload" value="Update Profile">
+                </div>
             </div>
         </form>
     </section>

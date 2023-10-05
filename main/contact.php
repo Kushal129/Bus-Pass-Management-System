@@ -2,33 +2,34 @@
 session_start();
 include '../connection.php';
 include '../toaster.php';
-if($_SESSION['MESSAGECHECK'] == 1){
-	echo '<script>showToaster(" Thank you for reporting! We will contact you soon.", "green")</script>';
-	$_SESSION['MESSAGECHECK'] = 0;
-}
-
+// if(isset($_SERVER['MESSAGECHECK'])){
+// 	if($_SESSION['MESSAGECHECK'] == 1){
+// 		echo '<script>showToaster(" Thank you for reporting! We will contact you soon.", "green")</script>';
+// 		$_SESSION['MESSAGECHECK'] = 0;
+// 	}
+// }
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $note = $_POST['note'];
 
-	$name = $_POST['name'];
-	$email = $_POST['email'];
-	$note = $_POST['note'];
+    $qry = "INSERT INTO report (name, email, note) VALUES (?, ?, ?)";
+    $stmt = $con->prepare($qry);
+    $stmt->bind_param("sss", $name, $email, $note);
 
-
-	$qry = "INSERT INTO report (name, email, note) VALUES (?, ?, ?)";
-	$stmt = $con->prepare($qry);
-	$stmt->bind_param("sss", $name, $email, $note);
-	if ($stmt->execute()) {
-		$_SESSION['MESSAGECHECK'] = 1;
-		//echo '<script>showToaster(" Thank you for reporting! We will contact you soon.", "green")</script>';
-		header("Location: contact.php");
+    if ($stmt->execute()) {
+        $_SESSION['MESSAGECHECK'] = "success"; // Set a session variable to indicate success
+        header("Location: contact.php");
         exit();
-	} else {
-		$_SESSION['MESSAGECHECK'] = 0;
-		echo '<script>showToaster("Report submission failed. Please try again later.", "red")</script>';
-	}
+    } else {
+        $_SESSION['MESSAGECHECK'] = "error"; // Set a session variable to indicate an error
+        header("Location: contact.php");
+        exit();
+    }
 }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -259,20 +260,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
 				<form action="../main/contact.php" method="POST">
 					<h2>Give Feedback</h2>
 					<hr>
+					<?php
+					?>
 					<div class="inputBox">
 						<input type="text" name="name" id="name" required="required" oninput="validateName(this)">
 						<span>Full Name</span>
-						<span class="error" id="name-error"></span>
+						<span class="error" id="name-error" style="color: red;"></span>
 					</div><br>
 					<div class="inputBox">
 						<input type="text" name="email" id="email" required="required" oninput="validateEmail(this)">
 						<span>Email</span>
-						<span class="error" id="email-error"></span>
+						<span class="error" id="email-error" style="color: red;"></span>
 					</div><br>
 					<div class="inputBox">
 						<textarea required="required" name="note" id="note" oninput="validateNote(this)"></textarea>
 						<span>Type Your Message...</span>
-						<span class="error" id="note-error"></span>
+						<span class="error" id="note-error" style="color: red;"></span>
 					</div>
 					<br>
 					<div class="inputBox">
@@ -334,6 +337,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
 
 		return true;
 	}
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const messageCheck = "<?php echo isset($_SESSION['MESSAGECHECK']) ? $_SESSION['MESSAGECHECK'] : ''; ?>";
+    
+    if (messageCheck === "success") {
+        showToaster("Thank you for reporting! We will contact you soon.", "green");
+    } else if (messageCheck === "error") {
+        showToaster("Report submission failed. Please try again later.", "red");
+    }
+    
+    <?php unset($_SESSION['MESSAGECHECK']); ?>
+});
+
 </script>
 
 </html>

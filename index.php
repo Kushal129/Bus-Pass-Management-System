@@ -2,6 +2,7 @@
   session_start();
   include 'connection.php';
   include 'toaster.php';
+  $_SESSION['MESSAGECHECK']=0;
 
   if (isset($_SESSION['username'])) {
     header('location: user/user.php');

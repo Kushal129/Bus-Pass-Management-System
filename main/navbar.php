@@ -26,7 +26,6 @@ if (isset($_POST["login_submit"])) {
             $row = $result->fetch_assoc();
             $hashedPassword = $row["password"];
 
-            // Verify the password
             if (password_verify($password, $hashedPassword)) {
                 $user_id = $row['id'];
                 $_SESSION['username'] = $email;
@@ -166,10 +165,7 @@ $con->close();
 
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-            </ul>
-
-            <!-- //login button logout button -->
+        <marquee scrollamount="20" style="font-weight:600; font-size: 2rem; " >Bus Pass Management System </marquee>
             <?php
             if (!isset($_SESSION['username'])) { ?>
                 <button type="button" class="btn-lg" data-toggle="modal" data-target="#loginModal" id="login_btn">Login</button>
@@ -177,8 +173,6 @@ $con->close();
                 <a href="logout.php" class="btn-lg">Logout</a>
             <?php } ?>
 
-
-            <!-- Login and Registration Modal -->
             <div class="modal fade" id="loginModal" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -189,7 +183,6 @@ $con->close();
                             </button>
                         </div>
                         <div class="modal-body">
-                            <!-- Login Form -->
                             <form id="loginForm" method="post">
                                 <div class="form-group">
                                     <input type="email" class="form-control" id="login_email" placeholder="Enter Email" name="login_email" required>
@@ -201,8 +194,6 @@ $con->close();
                                 </div>
                                 <button type="submit" class="btn-lr btn-block" name="login_submit">Sign In</button>
                             </form>
-                            <!-- Registration Form -->
-
                             <form id="registrationForm" style="display:none;" method="post">
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="fullName" placeholder=" Firstname Lastname" name="full_name" required>
