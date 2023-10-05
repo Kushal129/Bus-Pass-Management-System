@@ -41,7 +41,7 @@
             <br><br>
 
             <label for="mobileNo">Phone Number:</label>
-            <input type="text" name="mobileNo" id="mobileNo" maxlength="13" value="" required>
+            <input type="text" name="mobileNo" id="mobileNo" maxlength="10" value="" required>
             <span id="mobileNo-error" class="error-message" style="color:red"></span>
             <br><br>
 
@@ -118,7 +118,7 @@
             <h1>Proof Details</h1>
             <hr>
             <label for="img_std">Photo Upload:</label>
-            <input type="file" name="img_std" id="img_std" accept=".pdf, .jpg, .jpeg, .png" required>
+            <input type="file" name="img_std" id="img_std" accept=".png, .jpg, .jpeg" required>
             <p>[Self-attached Passport size Photo Copy. Max size: 300KB]</p>
             <span id="photo_error" class="error-message" style="color: red;"></span>
             <br>
@@ -489,7 +489,7 @@
             }
 
             const fullnameValue = $('#fullname').val();
-            if (fullnameValue === '' || !/^[a-zA-Z ]+$/.test(fullnameValue)) {
+            if (fullnameValue === '' || /[0-9~!@#$%^&*()_+={}\[\]:;"'<>,.?/\\|`\-]/.test(fullnameValue)) {
                 showError('#fullname', 'Please enter a valid Full Name with only letters and spaces.');
             } else {
                 clearError('#fullname');
@@ -501,6 +501,7 @@
             } else {
                 clearError('#mobileNo');
             }
+
             const addressValue = $('#address').val();
             if (addressValue === '') {
                 showError('#address', 'Address is required.');
@@ -543,13 +544,13 @@
                 clearError('#institute_address');
             }
 
-            const imgStdValue = $('#img_std').val();
-            if (imgStdValue === '') {
-                // showError('#photo-upload-error-student', 'Please upload a photo.');
-                document.getElementById("photo_error").innerHTML = "Please Upload a Photo"
-            } else {
-                clearError('#photo-upload-error-student');
-            }
+            // const imgStdValue = $('#img_std').val();
+            // if (imgStdValue === '') {
+            //     // showError('#photo-upload-error-student', 'Please upload a photo.');
+            //     document.getElementById("photo_error").innerHTML = "Please Upload a Photo"
+            // } else {
+            //     clearError('#photo-upload-error-student');
+            // }
 
             const addressProofValue = $('#address_proof').val();
             if (addressProofValue === '--') {
@@ -617,6 +618,76 @@
             }
         };
     });
+</script>
+<script>
+    $(document).ready(function() {
+        const imgStdInput = $('#img_std');
+        const photoErrorElement = $('#photo_error');
+
+        imgStdInput.on('change', function() {
+            const file = this.files[0];
+
+            if (file) {
+                const allowedFormats = ['image/png', 'image/jpeg', 'image/jpg'];
+                const maxFileSize = 300 * 1024;
+                const minFileSize = 50 * 1024;
+
+                if (!allowedFormats.includes(file.type)) {
+                    displayError(photoErrorElement, 'Please upload an image in PNG, JPG, or JPEG format.');
+                    imgStdInput.val('');
+                } else if (file.size < minFileSize) {
+                    displayError(photoErrorElement, 'Please upload an image that is at least 50KB in size.');
+                    imgStdInput.val('');
+                } else if (file.size > maxFileSize) {
+                    displayError(photoErrorElement, 'Please upload an image that is no more than 300KB in size.');
+                    imgStdInput.val('');
+                } else {
+                    clearError(photoErrorElement);
+                }
+
+            } else {
+                clearError(photoErrorElement);
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        const addressProofInput = $('#student_address_proof_upload');
+        const addressProofErrorElement = $('#address_proof_error');
+
+        addressProofInput.on('change', function() {
+            const file = this.files[0];
+
+            if (file) {
+                const allowedFormats = ['application/pdf', 'image/jpg', 'image/jpeg', 'image/png'];
+                const maxFileSize = 200 * 1024;
+                const minFileSize = 20 * 1024;
+
+                if (!allowedFormats.includes(file.type)) {
+                    displayError(addressProofErrorElement, 'Please upload a PDF, JPG, JPEG, or PNG file.');
+                    addressProofInput.val('');
+                } else if (file.size < minFileSize) {
+                    displayError(photoErrorElement, 'Please upload an image that is at least 50KB in size.');
+                    imgStdInput.val('');
+                } else if (file.size > maxFileSize) {
+                    displayError(addressProofErrorElement, 'Please upload a file that is no more than 200KB in size.');
+                    addressProofInput.val('');
+                } else {
+                    clearError(addressProofErrorElement);
+                }
+            } else {
+                clearError(addressProofErrorElement);
+            }
+        });
+    });
+
+    function displayError(element, message) {
+        element.text(message);
+    }
+
+    function clearError(element) {
+        element.text('');
+    }
 </script>
 
 </html>
