@@ -387,7 +387,7 @@
 }
 
 .down-container button.btn-upload {
-    background-color: #292929;
+    background-color: #000000;
     color: #ffffff;
     border: none;
     border-radius: 5px;
@@ -399,7 +399,7 @@
 }
 
 .down-container button.btn-payment:hover {
-    background-color: #000000;
+    background-color: #1b1b1b;
     color: white;
 }
 
@@ -445,3 +445,4 @@
     background-color: #212121;
     font-size: 18px;
  }
+ 

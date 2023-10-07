@@ -684,34 +684,34 @@
     </form>
 </body>
 <script>
-     $(document).ready(function() {
+    $(document).ready(function() {
+        $('.form').hide();
+
+        function showForm(selectedCategory) {
+            $('#' + selectedCategory + 'Form').show();
+        }
+
+        $('#new_pass').click(function() {
+            $('.pass-page-container').show();
+
+            var selectedCategory = $('#categorySelect option:first').val();
+            console.log("Selected Category:", selectedCategory);
+
+            showForm(selectedCategory);
+        });
+
+        $('#categorySelect').change(function() {
+            var selectedCategory = $(this).val();
+            console.log("Selected Category:", selectedCategory);
             $('.form').hide();
 
-            function showForm(selectedCategory) {
-                $('#' + selectedCategory + 'Form').show();
-            }
-
-            $('#new_pass').click(function() {
-                $('.pass-page-container').show();
-
-                var selectedCategory = $('#categorySelect option:first').val();
-                console.log("Selected Category:", selectedCategory);
-
-                showForm(selectedCategory);
-            });
-
-            $('#categorySelect').change(function() {
-                var selectedCategory = $(this).val();
-                console.log("Selected Category:", selectedCategory);
-                $('.form').hide();
-
-                showForm(selectedCategory);
-                console.log("Displaying Form:", $('#' + selectedCategory + 'Form'));
-            });
-
-            var defaultCategory = $('#categorySelect').val();
-            showForm(defaultCategory);
+            showForm(selectedCategory);
+            console.log("Displaying Form:", $('#' + selectedCategory + 'Form'));
         });
+
+        var defaultCategory = $('#categorySelect').val();
+        showForm(defaultCategory);
+    });
 </script>
 
 

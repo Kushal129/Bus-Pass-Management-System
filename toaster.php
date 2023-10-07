@@ -17,7 +17,6 @@
     </style>
 </head>
 <body>
-    <!-- Toaster Alert Container -->
     <div class="toaster-alert" id="toaster"></div>
 </body>
 </html>

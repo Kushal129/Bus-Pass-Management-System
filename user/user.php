@@ -54,7 +54,7 @@ if (!isset($_SESSION['username'])) {
             </li>
             <li>
                 <a href="../user/Managepass.php">
-                    <i class='bx bx-edit'></i>
+                <i class='bx bx-credit-card-front'></i>
                     <span class="links_name">Manage Pass</span>
                 </a>
                 <span class="tooltip">Manage Pass</span>
@@ -65,6 +65,13 @@ if (!isset($_SESSION['username'])) {
                     <span class="links_name">Manage Profile</span>
                 </a>
                 <span class="tooltip">Manage Profile</span>
+            </li>
+            <li>
+                <a href="../user/changepass.php">
+                    <i class='bx bx-edit'></i>
+                    <span class="links_name">Change Password</span>
+                </a>
+                <span class="tooltip">Change Password</span>
             </li>
             <li>
                 <a href="../user/userreport.php">
@@ -122,7 +129,7 @@ if (!isset($_SESSION['username'])) {
             <div class="form" id="PassengerForm" style="display: none;">
                 <?php include '../user/passanger.php'; ?>
             </div>
-            
+
             <div class="form" id="HandicapForm" style="display: none;">
                 <?php include '../user/handicap.php'; ?>
             </div>
@@ -186,8 +193,6 @@ if (!isset($_SESSION['username'])) {
             document.getElementById('logout-btn').addEventListener('click', logout);
         });
     </script>
-
-
 
     <script>
         $('input[name="have_disability_cert"]').on('change', function() {

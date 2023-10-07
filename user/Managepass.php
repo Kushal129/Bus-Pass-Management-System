@@ -52,7 +52,7 @@ if (!isset($_SESSION['username'])) {
             </li>
             <li>
                 <a href="../user/Managepass.php">
-                    <i class='bx bx-edit'></i>
+                <i class='bx bx-credit-card-front'></i>
                     <span class="links_name">Manage Pass</span>
                 </a>
                 <span class="tooltip">Manage Pass</span>
@@ -63,6 +63,13 @@ if (!isset($_SESSION['username'])) {
                     <span class="links_name">Manage Profile</span>
                 </a>
                 <span class="tooltip">Manage Profile</span>
+            </li>
+            <li>
+                <a href="../user/changepass.php">
+                    <i class='bx bx-edit'></i>
+                    <span class="links_name">Change Password</span>
+                </a>
+                <span class="tooltip">Change Password</span>
             </li>
             <li>
                 <a href="../user/userreport.php">
