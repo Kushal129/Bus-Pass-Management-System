@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <form action="../main/1.php" method="POST" enctype="multipart/form-data">
+    <form action="../main/passformate.php" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <h1>Student Pass Details</h1>
             <hr>

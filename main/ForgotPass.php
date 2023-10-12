@@ -39,12 +39,10 @@ if (isset($_POST["verify_otp"])) {
         mysqli_query($con, $qry);
         echo '<script>alert("Password reset successful!");</script>';
         header("Location: ../index.php?popup=login&msg=true");
-        exit();
     } else {
         unset($_SESSION['temp_mail']);
         echo '<script>alert("Invalid OTP. Please try again.", "red");</script>';
         header("Location: ForgotPass.php");
-        exit();
     }
 }
 
