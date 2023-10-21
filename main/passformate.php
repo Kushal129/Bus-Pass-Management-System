@@ -6,7 +6,7 @@ if (!isset($_POST['education'], $_POST['institute_name'], $_POST['institute_addr
     die("Required fields are missing.");
 }
 
-print_r($_POST);
+// print_r($_POST);
 
 
 
@@ -140,14 +140,18 @@ if (isset($_FILES["img_std"])) {
 <head>
     <meta charset="UTF-8">
     <title>Bus Pass | Your Pass</title>
+    <link rel="stylesheet" href="../css/passformate.css">
     <link rel="stylesheet" href="../css/user.css">
     <link rel="icon" type="image/ico" href="../img/buslogo.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
     <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         * {
@@ -166,146 +170,11 @@ if (isset($_FILES["img_std"])) {
         .form-group {
             background-color: #f8f9fa;
         }
-
-        .btn-downloadpdf,
-        .btn-downloadpdf *,
-        .btn-downloadpdf :after,
-        .btn-downloadpdf :before,
-        .btn-downloadpdf:after,
-        .btn-downloadpdf:before {
-            border: 0 solid;
-            box-sizing: border-box;
-        }
-
-        .btn-downloadpdf {
-            -webkit-tap-highlight-color: transparent;
-            /* -webkit-appearance: button; */
-            background-color: #000;
-            background-image: none;
-            color: #fff;
-            cursor: pointer;
-            
-            font-size: 100%;
-            line-height: 1.5;
-            margin: 0;
-            /* -webkit-mask-image: -webkit-radial-gradient(#000, #fff); */
-            padding: 0;
-        }
-
-        .btn-downloadpdf:disabled {
-            cursor: default;
-        }
-
-        .btn-downloadpdf:-moz-focusring {
-            outline: auto;
-        }
-
-        .btn-downloadpdf svg {
-            display: block;
-            /* vertical-align: middle; */
-        }
-
-        .btn-downloadpdf [hidden] {
-            display: none;
-        }
-
-        .btn-downloadpdf {
-            width: 100%;
-            border-radius: 10px;
-            box-sizing: border-box;
-            display: block;
-            font-weight: 900;
-            overflow: hidden;
-            padding: 1.2rem 3rem;
-            position: relative;
-            text-transform: uppercase;
-        }
-
-        .btn-downloadpdf .original {
-            background: #000000;
-            color: #fff;
-            display: grid;
-            inset: 0;
-            place-content: center;
-            position: absolute;
-            transition: transform 0.2s cubic-bezier(0.87, 0, 0.13, 1);
-        }
-
-        .btn-downloadpdf:hover .original {
-            transform: translateY(100%);
-        }
-
-        .btn-downloadpdf .letters {
-            display: inline-flex;
-        }
-
-        .btn-downloadpdf span {
-            opacity: 0;
-            transform: translateY(-15px);
-            transition: transform 0.2s cubic-bezier(0.87, 0, 0.13, 1), opacity 0.2s;
-        }
-
-        .btn-downloadpdf span:nth-child(2n) {
-            transform: translateY(15px);
-        }
-
-        .btn-downloadpdf:hover span {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .btn-downloadpdf:hover span:nth-child(2) {
-            transition-delay: 0.1s;
-        }
-
-        .btn-downloadpdf:hover span:nth-child(3) {
-            transition-delay: 0.2s;
-        }
-
-        .btn-downloadpdf:hover span:nth-child(4) {
-            transition-delay: 0.3s;
-        }
-
-        .btn-downloadpdf:hover span:nth-child(5) {
-            transition-delay: 0.4s;
-        }
-
-        .btn-downloadpdf:hover span:nth-child(6) {
-            transition-delay: 0.5s;
-        }
-
-        .btn-downloadpdf:hover span:nth-child(7) {
-            transition-delay: 0.6s;
-        }
-
-        .btn-downloadpdf:hover span:nth-child(8) {
-            transition-delay: 0.7s;
-        }
-
-        .btn-downloadpdf:hover span:nth-child(9) {
-            transition-delay: 0.8s;
-        }
-
-        .btn-downloadpdf:hover span:nth-child(10) {
-            transition-delay: 0.9s;
-        }
-
-        .btn-downloadpdf:hover span:nth-child(11) {
-            transition-delay: 1s;
-        }
-
-        .btn-downloadpdf:hover span:nth-child(12) {
-            transition-delay: 1.1s;
-        }
-
-        .btn-downloadpdf:hover span:nth-child(13) {
-            transition-delay: 1.2s;
-        }
     </style>
 </head>
 
 <body>
-    <div class="form-group">
+    <div class="form-group" id="pdf-content">
         <section>
             <hr>
             <div class="py-2">
@@ -348,7 +217,6 @@ if (isset($_FILES["img_std"])) {
             <div class="container-fluid">
                 <div class="row">
                     <div id="qrcode-container" style="display: flex;justify-content: center;width: 40%;height: 250px !important;" class="col-lg-6 col-md-6 col-12">
-                        <!--  QR CODE  -->
                     </div>
                     <div class="col-lg-6 col-md-6 col-12">
                         <p><strong>From Location:</strong> <?php echo $start_term_id; ?></p>
@@ -360,64 +228,50 @@ if (isset($_FILES["img_std"])) {
         </section>
     </div>
     <div class="form-group mt-2">
-        <button class="btn-downloadpdf" class="form-group" id="download-pdf">
-            <div class="original">Download PDF</div>
-            <div class="letters">
-                <span>D</span>
-                <span>O</span>
-                <span>W</span>
-                <span>N</span>
-                <span>L</span>
-                <span>O</span>
-                <span>A</span>
-                <span>D</span>
-                <span>-</span>
-                <span>P</span>
-                <span>D</span>
-                <span>F</span>
-            </div>
-        </button>
+        <button class="btn-download-pdf" class="form-group btn btn-primary" id="download-pdf-button">Download PDF</button>
     </div>
 </body>
 
-<script>
-    $(document).ready(function() {
-        $("#download-pdf").on("click", function() {
-            const element = document.body;
-            const pdfOptions = {
-                margin: 10,
-                filename: 'bus_pass.pdf',
-                image: {
-                    type: 'png',
-                },
-                html2canvas: {
-                    scale: 2
-                },
-                jsPDF: {
-                    unit: 'mm',
-                    format: 'a4',
-                    orientation: 'portrait'
-                }
-            };
+</html>
 
-            try {
-                html2pdf().from(element).set(pdfOptions).outputPdf(function(pdf) {
-                    const blob = pdf.output('blob');
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'bus_pass.pdf';
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    URL.revokeObjectURL(url);
-                });
-            } catch (error) {
-                console.error('PDF generation error:', error);
+<script>
+    // Get the button element
+    const downloadButton = document.getElementById('download-pdf-button');
+
+    downloadButton.addEventListener('click', function() {
+
+        const content = document.getElementById('pdf-content');
+
+
+        const pdfOptions = {
+            margin: 10,
+            filename: 'your_page.pdf',
+            image: {
+                type: 'jpeg',
+                quality: 0.98
+            },
+            html2canvas: {
+                scale: 2
+            },
+            jsPDF: {
+                unit: 'mm',
+                format: 'a4',
+                orientation: 'portrait'
             }
-        });
+        };
+
+        html2pdf()
+            .from(content)
+            .set(pdfOptions)
+            .outputPdf()
+            .then(function(pdf) {
+                // Save the PDF
+                pdf.save();
+            });
     });
 </script>
+
+
 <script>
     $(document).ready(function() {
         console.log("QR code generation function is executing.");
@@ -444,7 +298,3 @@ if (isset($_FILES["img_std"])) {
         }
     });
 </script>
-
-
-
-</html>
