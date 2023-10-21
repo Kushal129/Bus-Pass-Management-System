@@ -65,8 +65,8 @@
             <span class="bodytext">Male</span>
             <input type="radio" name="gender" value="Female">
             <span class="bodh2ytext">Female</span>
-            <input type="radio" name="gender" value="Transgender">
-            <span class="bodytext">Transgender</span>
+            <input type="radio" name="gender" value="Other">
+            <span class="bodytext">Other</span>
             <span id="gender-error" class="error-message" style="color:red"></span>
             <br><br>
 
