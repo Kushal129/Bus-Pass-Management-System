@@ -179,7 +179,7 @@ if (isset($_FILES["img_std"])) {
 
         .btn-downloadpdf {
             -webkit-tap-highlight-color: transparent;
-            -webkit-appearance: button;
+            /* -webkit-appearance: button; */
             background-color: #000;
             background-image: none;
             color: #fff;
@@ -188,7 +188,7 @@ if (isset($_FILES["img_std"])) {
             font-size: 100%;
             line-height: 1.5;
             margin: 0;
-            -webkit-mask-image: -webkit-radial-gradient(#000, #fff);
+            /* -webkit-mask-image: -webkit-radial-gradient(#000, #fff); */
             padding: 0;
         }
 
@@ -202,7 +202,7 @@ if (isset($_FILES["img_std"])) {
 
         .btn-downloadpdf svg {
             display: block;
-            vertical-align: middle;
+            /* vertical-align: middle; */
         }
 
         .btn-downloadpdf [hidden] {
