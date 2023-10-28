@@ -1,3 +1,51 @@
+<?php
+include '../connection.php';
+include '../toaster.php';
+
+$query = "SELECT pi.full_name, pi.validate_through, pi.dob, p.bus_type, p.start_term_id, p.ends_term_id, p.from_date, p.to_date FROM passenger_info pi
+          INNER JOIN pass p ON pi.id = p.id";
+
+$result = $con->query($query);
+
+if ($result) {
+    $table = '<table id="passenger-table" class="display">';
+    $table .= '<thead>';
+    $table .= '<tr>';
+    $table .= '<th>Full Name</th>';
+    $table .= '<th>Validation Through</th>';
+    $table .= '<th>Date of Birth</th>';
+    $table .= '<th>Bus Type</th>';
+    $table .= '<th>Start Term</th>';
+    $table .= '<th>End Term</th>';
+    $table .= '<th>From Date</th>';
+    $table .= '<th>To Date</th>';
+    $table .= '</tr>';
+    $table .= '</thead>';
+    $table .= '<tbody>';
+
+    while ($row = $result->fetch_assoc()) {
+        $table .= '<tr>';
+        $table .= '<td>' . $row['full_name'] . '</td>';
+        $table .= '<td>' . $row['validate_through'] . '</td>';
+        $table .= '<td>' . $row['dob'] . '</td>';
+        $table .= '<td>' . $row['bus_type'] . '</td>';
+        $table .= '<td>' . $row['start_term_id'] . '</td>';
+        $table .= '<td>' . $row['ends_term_id'] . '</td>';
+        $table .= '<td>' . $row['from_date'] . '</td>';
+        $table .= '<td>' . $row['to_date'] . '</td>';
+        $table .= '</tr>';
+    }
+
+    $table .= '</tbody>';
+    $table .= '</table>';
+} else {
+    $table = 'Error: ' . $con->error;
+}
+$con->close();
+?>
+
+
+
 <!DOCTYPE html>
 
 <html lang="en" dir="ltr">
@@ -61,41 +109,32 @@
             </div>
             <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>
         </div>
-        <section class="search">
-            <!-- <div class="search-form">
-                <form>
-                    <label for="search-passenger">Search Passenger:</label>
-                    <input type="text" id="search-passenger" name="search-passenger">
-                    <button type="submit">Search</button>
-                    <p>search karin ne table ma data batavse....</p>
-                </form>
-            </div> -->
-            <div class="form-group">
-                <h1>Search Passenger Details </h1>
-                <form class="search-form">
-                    <label for="search-passenger">Search:</label>
-                    <input type="text" id="search-passenger" name="search-passenger">
-                    <button type="submit">Search</button>
-                </form>
-                <hr style="margin: 2rem;">
-                <div class="table-container">
-                    <table id="passenger-table" class="display">
-                        <thead>
-                            <tr>
-                                <th>Bus ID</th>
-                                <th>Name</th>
-                                <th>Date</th>
-                                <!-- Add more table headers as needed -->
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Table rows will be populated dynamically using jQuery -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
+        <!-- [{"full_name":"Kushal","validate_through":"2024-04-21","dob":"2004-08-12","bus_type":"1","start_term_id":"1","ends_term_id":"2","from_date":"2023-10-21","to_date":"2023-11-20"}] -->
 
+        <!-- <section class="search">
+            <table id="passenger-table" class="display">
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Validation Through</th>
+                        <th>Date of Birth</th>
+                        <th>Bus Type</th>
+                        <th>Start Term </th>
+                        <th>End Term </th>
+                        <th>From Date</th>
+                        <th>To Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </section> -->
+
+        <section class="search">
+            <?php echo $table; ?>
+        </section>
+        
     </section>
 
     <script>
@@ -123,38 +162,36 @@
     </script>
     <script>
         $(document).ready(function() {
-            const dataTable = $('#passenger-table').DataTable();
-
-            $('#search-form').submit(function(e) {
-                e.preventDefault();
-
-                const searchKeyword = $('#search-passenger').val();
-
-                $.ajax({
-                    method: 'POST',
-                    data: {
-                        searchKeyword: searchKeyword
-                    },
-                    dataType: 'json',
-                    success: function(data) {
-                        dataTable.clear().draw();
-
-                        data.forEach(function(record) {
-                            dataTable.row.add([
-                                record.bus_id,
-                                record.name,
-                                record.date,
-                            ]).draw(false);
-                        });
-                    },
-                    error: function(error) {
-                        console.error('Error:', error);
-                    }
-                });
+            $('#passenger-table').DataTable({
+                "paging": true, // Enable paging
+                "searching": true, // Enable searching
+                "ordering": true, // Enable sorting
             });
         });
     </script>
-
+    <script>
+    $(document).ready(function() {
+        $.ajax({
+            url: '../admin-all/Search.php', // Replace with the correct URL to fetch your data
+            dataType: 'json',
+            success: function(data) {
+                var table = $('#passenger-table').DataTable({
+                    data: data,
+                    columns: [
+                        { data: 'full_name' },
+                        { data: 'validate_through' },
+                        { data: 'dob' },
+                        { data: 'bus_type' },
+                        { data: 'start_term_id' },
+                        { data: 'ends_term_id' },
+                        { data: 'from_date' },
+                        { data: 'to_date' }
+                    ]
+                });
+            }
+        });
+    });
+</script>
 
     <script>
         function logout() {

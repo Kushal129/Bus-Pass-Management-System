@@ -158,11 +158,10 @@ $con->close();
     <nav class="navbar navbar-expand-lg " style="background-color: #ffd900;">
         <a class="navbar-brand" href="#"><img src="img/buslogo.png" width="30" height="30" class="d-inline-block align-top" alt="Logo"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon" style="color: black;">
-                <img src="../img/admin.ico" alt="Login" width="30" height="30">
-            </span>
+            <!-- <span class="navbar-toggler-icon" style="color: black;" > -->
+                <img src="img/menu.png" alt="Login" width="30" height="30">
+            <!-- </span> -->
         </button>
-
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <marquee scrollamount="20" style="font-weight:600; font-size: 2rem; " >Bus Pass Management System </marquee>
