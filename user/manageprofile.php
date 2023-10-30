@@ -27,16 +27,16 @@ if (!isset($_SESSION['username'])) {
 
     $email = $row['email'];
     $phone_number = $row['phone_number'];
-    $full_name = $row1['full_name'];
-
+    $full_name = $row['full_name'];
     $dob = $row1['dob'];
+    echo "-----------------------------------------------=======-----$dob=";
     $gender = $row1['gender'];
     $address = $row1['address'];
     $user_img_path = $row1['user_img_path'];
 }
 
 if (isset($_POST['update_profile'])) {
-    $full_name = $_POST['fullname'];
+    $full_name = $_POST['full_name'];
     $gender = $_POST['gender'];
     $dob = $_POST['dob'];
 
@@ -87,6 +87,13 @@ if (isset($_POST['update_profile'])) {
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+<style>
+    .img_update{
+        background-color: green;
+        cursor: pointer;
+        width: 50%;
+    }
+</style>
 
 <body>
     <div class="sidebar">
@@ -101,13 +108,6 @@ if (isset($_POST['update_profile'])) {
                     <span class="links_name">Generate Pass</span>
                 </a>
                 <span class="tooltip">Generate Pass</span>
-            </li>
-            <li>
-                <a href="../user/Managepass.php">
-                    <i class='bx bx-credit-card-front'></i>
-                    <span class="links_name">Manage Pass</span>
-                </a>
-                <span class="tooltip">Manage Pass</span>
             </li>
             <li>
                 <a href="../user/manageprofile.php">
@@ -149,8 +149,8 @@ if (isset($_POST['update_profile'])) {
                 <div class="form-group">
                     <h1>Manage Profile</h1>
                     <hr>
-                    <label for="fullname">Full Name:</label>
-                    <input type="text" id="fullname" name="fullname" value="<?php echo $full_name; ?>">
+                    <label for="full_name">Full Name:</label>
+                    <input type="text" id="full_name" name="full_name" value="<?php echo $full_name; ?>">
                     <br>
                     <label for="mobileNo">Phone Number:</label>
                     <input type="text" id="mobileNo" name="mobileNo" value="<?php echo $phone_number; ?>">
@@ -167,8 +167,8 @@ if (isset($_POST['update_profile'])) {
                     <br>
                     <br>
                     <label for="img_update">Photo Upload:</label>
-                    <input type="file" name="img_update" id="img_update" accept=".png, .jpg, .jpeg" required>
-                    <p>[Self-attached Passport size Photo Copy. Max size: 300KB]</p>
+                    <input type="file" name="img_update" id="img_update" accept=".png, .jpg, .jpeg" >
+                    <p>[Self-attached Passport size Photo Copy. Max size: 200KB]</p>
                     <span id="img_update" class="error-message" style="color: red;"></span>
                     <br>
                     <br>
@@ -176,7 +176,6 @@ if (isset($_POST['update_profile'])) {
                 </div>
             </div>
         </form>
-
     </section>
 </body>
 
@@ -216,6 +215,7 @@ if (isset($_POST['update_profile'])) {
 
 <script>
     $(document).ready(function() {
+        alert('Pic ma jai che');
         const imgUpdateInput = $('#img_update');
         const photoErrorElement = $('#img_update');
 
@@ -224,7 +224,7 @@ if (isset($_POST['update_profile'])) {
 
             if (file) {
                 const allowedFormats = ['image/png', 'image/jpeg', 'image/jpg'];
-                const maxFileSize = 300 * 1024;
+                const maxFileSize = 200 * 1024;
                 const minFileSize = 50 * 1024;
 
                 if (!allowedFormats.includes(file.type)) {
@@ -234,7 +234,7 @@ if (isset($_POST['update_profile'])) {
                     displayError(photoErrorElement, 'Please upload an image that is at least 50KB in size.');
                     imgUpdateInput.val('');
                 } else if (file.size > maxFileSize) {
-                    displayError(photoErrorElement, 'Please upload an image that is no more than 300KB in size.');
+                    displayError(photoErrorElement, 'Please upload an image that is no more than 200KB in size.');
                     imgUpdateInput.val('');
                 } else {
                     clearError(photoErrorElement);

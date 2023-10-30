@@ -119,7 +119,7 @@
             <hr>
             <label for="img_std">Photo Upload:</label>
             <input type="file" name="img_std" id="img_std" accept=".png, .jpg, .jpeg" required>
-            <p>[Self-attached Passport size Photo Copy. Max size: 300KB]</p>
+            <p>[Self-attached Passport size Photo Copy. Max size: 200KB]</p>
             <span id="photo_error" class="error-message" style="color: red;"></span>
             <br>
 
@@ -623,7 +623,7 @@
 
             if (file) {
                 const allowedFormats = ['image/png', 'image/jpeg', 'image/jpg'];
-                const maxFileSize = 300 * 1024;
+                const maxFileSize = 200 * 1024;
                 const minFileSize = 50 * 1024;
 
                 if (!allowedFormats.includes(file.type)) {
@@ -633,7 +633,7 @@
                     displayError(photoErrorElement, 'Please upload an image that is at least 50KB in size.');
                     imgStdInput.val('');
                 } else if (file.size > maxFileSize) {
-                    displayError(photoErrorElement, 'Please upload an image that is no more than 300KB in size.');
+                    displayError(photoErrorElement, 'Please upload an image that is no more than 200KB in size.');
                     imgStdInput.val('');
                 } else {
                     clearError(photoErrorElement);

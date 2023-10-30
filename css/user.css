@@ -247,14 +247,14 @@
     border: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
+    -webkit-transition: transform 0.3s, box-shadow 0.3s;
+    -moz-transition: transform 0.3s, box-shadow 0.3s;
+    -ms-transition: transform 0.3s, box-shadow 0.3s;
+    -o-transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .card-body {
-    -ms-flex: 1 1 auto;
-    flex: 1 1 auto;
-    min-height: 1px;
-    padding: 1.25rem;
-    background-color: beige;
+    background-color: #f5eb84;
 }
 
 .card:hover {
@@ -273,51 +273,34 @@
 }
 
 .cards {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 2rem;
-    margin: 4rem;
-    margin-right: 10rem;
-    margin-left: 10rem;
-    padding: 1rem;
     background: #f5eb84;
     box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.5s;
 }
 
-.Pass-Page {
-    justify-content: center;
-    display: flex;
-    align-items: center;
+/* .Pass-Page {
     background-color: #f5eb84;
     border-radius: 23px;
-    padding: 7px;
-    width: 50%;
-    margin-left: 22rem;
     box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.5s;
-}
-
+} */
+/* 
 .Pass-Page select {
-    width: 30%;
-    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #fffde4;
     font-size: 16px;
     outline: none;
-    margin-left: 3rem;
-}
+} */
 
-.Pass-Page span {
+/* .Pass-Page span {
     font-size: 2rem;
     color: rgb(0, 0, 0);
 }
 
 .Pass-Page select:focus {
     border-color: #000000;
-}
+} */
 
 
 .down-container .form h1 {

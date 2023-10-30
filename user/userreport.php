@@ -51,13 +51,6 @@ if (!isset($_SESSION['username'])) {
                 <span class="tooltip">Generate Pass</span>
             </li>
             <li>
-                <a href="../user/Managepass.php">
-                    <i class='bx bx-credit-card-front'></i>
-                    <span class="links_name">Manage Pass</span>
-                </a>
-                <span class="tooltip">Manage Pass</span>
-            </li>
-            <li>
                 <a href="../user/manageprofile.php">
                     <i class='bx bx-user-circle'></i>
                     <span class="links_name">Manage Profile</span>

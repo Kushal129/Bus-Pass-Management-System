@@ -12,7 +12,7 @@ if (!isset($_SESSION['username'])) {
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
-    $use_img=$row['user_img_path'];
+    $use_img = $row['user_img_path'];
     $role = $row['role'];
     if (!$role) {
         header("Location:../index.php");
@@ -37,6 +37,18 @@ if (!isset($_SESSION['username'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
+<style>
+    .category {
+        width: 100%;
+        background: #fffef3!important;
+        border: 1px solid black;
+        padding: 10px;
+        border-radius: 10px;
+    }
+    .card-body{
+        background-color: beige !important;
+    }
+</style>
 
 <body>
     <div class="sidebar">
@@ -51,13 +63,6 @@ if (!isset($_SESSION['username'])) {
                     <span class="links_name">Generate Pass</span>
                 </a>
                 <span class="tooltip">Generate Pass</span>
-            </li>
-            <li>
-                <a href="../user/Managepass.php">
-                <i class='bx bx-credit-card-front'></i>
-                    <span class="links_name">Manage Pass</span>
-                </a>
-                <span class="tooltip">Manage Pass</span>
             </li>
             <li>
                 <a href="../user/manageprofile.php">
@@ -86,39 +91,51 @@ if (!isset($_SESSION['username'])) {
     <section class="home-section">
         <div class="head">
             <div class="profile">
-            <img class="pro-img" id="user-avatar" alt="User Avatar" src="../uploads/user_photo/<?php echo $use_img; ?>">
+                <img class="pro-img" id="user-avatar" alt="User Avatar" src="../uploads/user_photo/<?php echo $use_img; ?>">
                 <div class="profile-text"><?php echo $row['full_name']; ?></div>
             </div>
 
             <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>
         </div>
-        <div class="cards">
-            <div class="card" id="new_pass">
-                <div class="card-body">
-                    <h5 class="card-title">Generate New Pass</h5>
-                    <i class='bx bx-user'></i>
+        <section class="my-5">
+            <div class="py-5">
+                <h2 class="text-center" style="text-decoration: underline #f4db00;">Select Pass Category</h2>
+            </div>
+            <div class="container-fluid">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-4 col-md-4 col-12">
+                        <div class="card" id="new_pass">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Generate New Pass</h5>
+                                <i class='bx bx-user'></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-12">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Re-New Pass</h5>
+                                <i class='bx bx-user'></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Re-New Pass</h5>
-                    <i class='bx bx-user'></i>
+        <div class="downpage d-flex justify-content-center" style="display: none;">
+            <div class="Category-down col-lg-4 col-md-4 col-sm-12 " style="display: none;">
+                <div class="card card-body text-center">
+                    <select name="category" id="category" class="category">
+                        <option value="">Select</option>
+                        <option value="Student">Student</option>
+                        <option value="Passenger" disabled>Passenger</option>
+                        <option value="Handicap" disabled>Handicap</option>
+                    </select>
                 </div>
             </div>
         </div>
 
-        <div class="pass-page-container" style="display: none;">
-            <div class="Pass-Page">
-                <span>Select Pass Category</span>
-                <select name="category" id="category">
-                    <option value="">Select</option>
-                    <option value="Student">Student</option>
-                    <option value="Passenger">Passenger</option>
-                    <option value="Handicap" disabled>Handicap</option>
-                </select>
-            </div>
-        </div>
 
         <div class="down-container">
             <div class="form" id="StudentForm" style="display: none;">
@@ -135,26 +152,26 @@ if (!isset($_SESSION['username'])) {
             </div>
         </div>
     </section>
-
-
     <script>
         $(document).ready(function() {
             $('.form').hide();
+            $('#downpage').hide();
 
             function showForm(selectedCategory) {
                 $('#' + selectedCategory + 'Form').show();
             }
 
             $('#new_pass').click(function() {
-                $('.pass-page-container').show();
+                $('.Category-down').show();
+                $('#downpage').show();
 
-                var selectedCategory = $('#categorySelect option:first').val();
+                var selectedCategory = $('#category option:first').val();
                 console.log("Selected Category:", selectedCategory);
 
                 showForm(selectedCategory);
             });
 
-            $('#categorySelect').change(function() {
+            $('#category').change(function() {
                 var selectedCategory = $(this).val();
                 console.log("Selected Category:", selectedCategory);
                 $('.form').hide();
@@ -163,7 +180,7 @@ if (!isset($_SESSION['username'])) {
                 console.log("Displaying Form:", $('#' + selectedCategory + 'Form'));
             });
 
-            var defaultCategory = $('#categorySelect').val();
+            var defaultCategory = $('#category option:first').val();
             showForm(defaultCategory);
         });
     </script>
@@ -192,38 +209,6 @@ if (!isset($_SESSION['username'])) {
 
             document.getElementById('logout-btn').addEventListener('click', logout);
         });
-    </script>
-
-    <script>
-        $('input[name="have_disability_cert"]').on('change', function() {
-            var disabilityCertField = $('.disabilitycert');
-            if ($(this).val() === "1") {
-                disabilityCertField.show();
-            } else {
-                disabilityCertField.hide();
-            }
-        });
-    </script>
-
-    <script>
-        var checkboxes = document.querySelectorAll('input[name="disability_area[]"]');
-        var selectedData = document.getElementById('selectedData');
-
-        checkboxes.forEach(function(checkbox) {
-            checkbox.addEventListener('change', function() {
-                updateSelectedData();
-            });
-        });
-
-        function updateSelectedData() {
-            var selectedValues = [];
-            checkboxes.forEach(function(checkbox) {
-                if (checkbox.checked) {
-                    selectedValues.push(checkbox.value);
-                }
-            });
-            selectedData.value = selectedValues.join(', ');
-        }
     </script>
 
     <script>
