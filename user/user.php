@@ -91,7 +91,7 @@ if (!isset($_SESSION['username'])) {
     <section class="home-section">
         <div class="head">
             <div class="profile">
-                <img class="pro-img" id="user-avatar" alt="User Avatar" src="../uploads/user_photo/<?php echo $use_img; ?>">
+            <img class="pro-img" id="user-avatar" alt="User Avatar" src="../uploads/<?php echo $use_img; ?>">
                 <div class="profile-text"><?php echo $row['full_name']; ?></div>
             </div>
 

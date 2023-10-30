@@ -14,7 +14,7 @@ if (!isset($_SESSION['username'])) {
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
-
+    $use_img = $row['user_img_path'];
     $role = $row['role'];
     if (!$role) {
         header("Location:../index.php");
@@ -59,6 +59,7 @@ if (!isset($_SESSION['username'])) {
         border-radius: 5px;
         font-size: 17px;
     }
+
     input[type="text"] {
         background-color: #ffffe2;
         width: 30%;
@@ -132,7 +133,9 @@ if (!isset($_SESSION['username'])) {
     <section class="home-section">
         <div class="head">
             <div class="profile">
-            <img src="<?php echo $user_img_path; ?>" class="pro-img" id="user-avatar" alt="User Avatar">
+                <!-- <img src="" class="pro-img" id="user-avatar" alt="User Avatar"> -->
+                <img class="pro-img" id="user-avatar" alt="User Avatar" src="../uploads/<?php echo $use_img; ?>">
+
                 <div class="profile-text"><?php echo $row['full_name']; ?></div>
             </div>
             <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>
@@ -144,12 +147,12 @@ if (!isset($_SESSION['username'])) {
                     <hr>
                     <label for="new-pass">Enter New Password</label>
 
-                    <input type="password" class="cgshowpass" name="newpass" id="newpass" required  style="width: 30%;">
+                    <input type="password" class="cgshowpass" name="newpass" id="newpass" required style="width: 30%;">
                     <i class="bx bx-hide" id="toggle-password" style="cursor: pointer;"></i>
 
 
                     <label for="renew-pass">Re-Enter New Password</label>
-                    <input type="password" class="cgshowpass" name="renewpass" id="renewpass" required  style="width: 30%; margin-right: 1.3rem;" >
+                    <input type="password" class="cgshowpass" name="renewpass" id="renewpass" required style="width: 30%; margin-right: 1.3rem;">
                     <span id="renewpass-error" class="error" style="color: red;"></span>
                     <br><br>
                     <button type="submit" class="btn-cg" value="Update Password">Update Password</button>

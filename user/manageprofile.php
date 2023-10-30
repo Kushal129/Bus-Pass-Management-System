@@ -5,6 +5,7 @@ include_once '../toaster.php';
 
 if (!isset($_SESSION['username'])) {
     header('location:../index.php');
+    exit;
 } else {
     $checkEmailQuery = "SELECT * FROM users WHERE email=?";
     $stmt = $con->prepare($checkEmailQuery);
@@ -12,10 +13,12 @@ if (!isset($_SESSION['username'])) {
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
+    $use_img = $row['user_img_path'];
 
     $role = $row['role'];
     if (!$role) {
         header("Location:../index.php");
+        exit;
     }
 
     $email = $_SESSION['username'];
@@ -28,49 +31,69 @@ if (!isset($_SESSION['username'])) {
     $email = $row['email'];
     $phone_number = $row['phone_number'];
     $full_name = $row['full_name'];
-    $dob = $row1['dob'];
-    echo "-----------------------------------------------=======-----$dob=";
-    $gender = $row1['gender'];
-    $address = $row1['address'];
-    $user_img_path = $row1['user_img_path'];
+
+    $dob = isset($row1['dob']) ? $row1['dob'] : '';
+    $gender = isset($row1['gender']) ? $row1['gender'] : '';
+    $user_img_path = isset($row1['user_img_path']) ? $row1['user_img_path'] : '';
 }
 
-if (isset($_POST['update_profile'])) {
+if (isset($_POST['update_profile'])) 
+{
     $full_name = $_POST['full_name'];
     $gender = $_POST['gender'];
     $dob = $_POST['dob'];
+    // $user_img_path = $_POST['user_img_path']; 
 
-    if (!empty($_FILES['img_update']['name'])) {
-        $targetDirectory = "../uploads/";
-        $targetFile = $targetDirectory . basename($_FILES['img_update']['name']);
-        if (move_uploaded_file($_FILES['img_update']['tmp_name'], $targetFile)) {
-            $user_img_path = $targetFile;
+    if ($full_name == $row['full_name'] && $gender == $row1['gender'] && $dob == $row1['dob'] && empty($_FILES['img_update']['name'])) {
+        echo '<script>showToaster("No changes made to the profile data.", "orange")</script>';
 
-            $updatePassengerInfoQuery = "UPDATE passenger_info SET full_name=?, gender=?, dob=?, user_img_path=? WHERE user_id=?";
+    } else {
+        if (!empty($_FILES['img_update']['name'])) {
+            $targetDirectory = "../uploads/";
+            $targetFile = $targetDirectory . basename($_FILES['img_update']['name']);
+
+            if (move_uploaded_file($_FILES['img_update']['tmp_name'], $targetFile)) {
+                $user_img_path = $targetFile;
+
+                $updatePassengerInfoQuery = "UPDATE passenger_info SET full_name=?, gender=?, dob=?, user_img_path=? WHERE user_id=?";
+                $stmt = $con->prepare($updatePassengerInfoQuery);
+                $stmt->bind_param("ssssi", $full_name, $gender, $dob, $user_img_path, $id);
+
+                if ($stmt->execute()) {
+                    $updateUserQuery = "UPDATE users SET full_name=?, user_img_path=? WHERE id=?";
+                    $stmt = $con->prepare($updateUserQuery);
+                    $stmt->bind_param("ssi", $full_name, $user_img_path, $id);
+
+                    if ($stmt->execute()) {
+                        echo '<script>showToaster("Profile updated successfully.", "green")</script>';
+                    } else {
+                        echo '<script>showToaster("Failed to update user image in the users table.", "red")</script>';
+                    }
+                } else {
+                    echo '<script>showToaster("Failed to update user image in the passenger_info table.", "red")</script>';
+                }
+            } else {
+                echo '<script>showToaster("Image upload failed. Please try again.", "red")</script>';
+            }
+        } else {
+            $updatePassengerInfoQuery = "UPDATE passenger_info SET full_name=?, gender=?, dob=? WHERE user_id=?";
             $stmt = $con->prepare($updatePassengerInfoQuery);
-            $stmt->bind_param("ssssi", $full_name, $gender, $dob, $user_img_path, $id);
-
-            $updateUserQuery = "UPDATE users SET full_name=? WHERE id=?";
-            $stmt = $con->prepare($updateUserQuery);
-            $stmt->bind_param("si", $full_name, $id);
+            $stmt->bind_param("sssi", $full_name, $gender, $dob, $id);
 
             if ($stmt->execute()) {
-                echo '<script>showToaster("Profile updated successfully.", "green")</script>';
+                $updateUserQuery = "UPDATE users SET full_name=? WHERE id=?";
+                $stmt = $con->prepare($updateUserQuery);
+                $stmt->bind_param("si", $full_name, $id);
+
+                if ($stmt->execute()) {
+                    echo '<script>showToaster("Profile updated successfully.", "green")</script>';
+                    echo '<script>setTimeout(function(){ window.location.reload(); }, 2000);</script>';
+                } else {
+                    echo '<script>showToaster("Failed to update profile in the users table.", "red")</script>';
+                }
             } else {
                 echo '<script>showToaster("Profile update failed. Please try again.", "red")</script>';
             }
-        } else {
-            echo '<script>showToaster("Image upload failed. Please try again.", "red")</script>';
-        }
-    } else {
-        $updatePassengerInfoQuery = "UPDATE passenger_info SET full_name=?, gender=?, dob=? WHERE user_id=?";
-        $stmt = $con->prepare($updatePassengerInfoQuery);
-        $stmt->bind_param("sssi", $full_name, $gender, $dob, $id);
-
-        if ($stmt->execute()) {
-            echo '<script>showToaster("Profile updated successfully.", "green")</script>';
-        } else {
-            echo '<script> showToaster("Profile update failed. Please try again.", "red")</script>';
         }
     }
 }
@@ -85,10 +108,16 @@ if (isset($_POST['update_profile'])) {
     <link rel="stylesheet" href="../css/user.css">
     <link rel="icon" type="image/ico" href="../img/buslogo.png">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <style>
-    .img_update{
+    .img_update {
         background-color: green;
         cursor: pointer;
         width: 50%;
@@ -137,8 +166,8 @@ if (isset($_POST['update_profile'])) {
         <div class="head">
             <div class="profile">
                 <!-- <img src="../img/admin.ico" class="pro-img" id="user-avatar" alt="User Avatar"> -->
-                <img src="<?php echo $user_img_path; ?>" class="pro-img" id="user-avatar" alt="User Avatar">
-
+                <!-- <img src="<php echo $user_img_path; ?>" class="pro-img" id="user-avatar" alt="User Avatar"> -->
+                <img class="pro-img" id="user-avatar" alt="User Avatar" src="../uploads/<?php echo $use_img; ?>">
                 <div class="profile-text"><?php echo $row['full_name']; ?></div>
             </div>
             <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>
@@ -167,12 +196,12 @@ if (isset($_POST['update_profile'])) {
                     <br>
                     <br>
                     <label for="img_update">Photo Upload:</label>
-                    <input type="file" name="img_update" id="img_update" accept=".png, .jpg, .jpeg" >
-                    <p>[Self-attached Passport size Photo Copy. Max size: 200KB]</p>
-                    <span id="img_update" class="error-message" style="color: red;"></span>
+                    <input type="file" name="img_update" id="img_update" accept=".png, .jpg, .jpeg">
+                    <p>[Self-attached Passport size Photo Copy. Max size: 300KB]</p>
+                    <span id="img_update_error" class="error-message" style="color: red;"></span>
                     <br>
                     <br>
-                    <input type="submit" class="btn-upload btn-" id="update_profile" name="update_profile" value="Update Profile">
+                    <input type="submit" class="btn-pmt" id="update_profile" name="update_profile" value="Update Profile">
                 </div>
             </div>
         </form>
@@ -215,42 +244,25 @@ if (isset($_POST['update_profile'])) {
 
 <script>
     $(document).ready(function() {
-        alert('Pic ma jai che');
-        const imgUpdateInput = $('#img_update');
-        const photoErrorElement = $('#img_update');
+        $('#img_update').on('change', function() {
+            const fileInput = this;
+            const errorElement = $('#img_update_error');
 
-        imgUpdateInput.on('change', function() {
-            const file = this.files[0];
+            errorElement.text('');
 
-            if (file) {
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
                 const allowedFormats = ['image/png', 'image/jpeg', 'image/jpg'];
-                const maxFileSize = 200 * 1024;
-                const minFileSize = 50 * 1024;
+                const maxFileSize = 300 * 1024;
 
                 if (!allowedFormats.includes(file.type)) {
-                    displayError(photoErrorElement, 'Please upload an image in PNG, JPG, or JPEG format.');
-                    imgUpdateInput.val('');
-                } else if (file.size < minFileSize) {
-                    displayError(photoErrorElement, 'Please upload an image that is at least 50KB in size.');
-                    imgUpdateInput.val('');
+                    errorElement.text('Please upload an image in PNG, JPG, or JPEG format.');
+                    fileInput.value = '';
                 } else if (file.size > maxFileSize) {
-                    displayError(photoErrorElement, 'Please upload an image that is no more than 200KB in size.');
-                    imgUpdateInput.val('');
-                } else {
-                    clearError(photoErrorElement);
+                    errorElement.text('Please upload an image that is no more than 300KB in size.');
+                    fileInput.value = '';
                 }
-
-            } else {
-                clearError(photoErrorElement);
             }
         });
-
-        function displayError(element, message) {
-            element.text(message);
-        }
-
-        function clearError(element) {
-            element.text('');
-        }
     });
 </script>

@@ -13,6 +13,7 @@ if (!isset($_SESSION['username'])) {
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
+    $use_img = $row['user_img_path'];
 
     $role = $row['role'];
     // echo $role;
@@ -77,7 +78,8 @@ if (!isset($_SESSION['username'])) {
     <section class="home-section">
         <div class="head">
             <div class="profile">
-                <img src="<?php echo $user_img_path; ?>" class="pro-img" id="user-avatar" alt="User Avatar">
+
+            <img class="pro-img" id="user-avatar" alt="User Avatar" src="../uploads/<?php echo $use_img; ?>">
                 <div class="profile-text"><?php echo $row['full_name']; ?></div>
             </div>
             <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>
