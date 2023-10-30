@@ -75,6 +75,7 @@ if (isset($_FILES["img_std"])) {
     mysqli_query($con, $qry);
     $pasangerInsertedId = mysqli_insert_id($con);
 
+
     $passenger_id = $pasangerInsertedId;
     $bus_type = $_POST['classOfService'];
     $start_term_id = $_POST['fromPlaceStudent'];
@@ -94,6 +95,10 @@ if (isset($_FILES["img_std"])) {
             ($passenger_id, {$_SESSION['user_id']}, $bus_type, $start_term_id, $ends_term_id, '$payment_id', $image_id, '$from_date', '$to_date')";
 
     mysqli_query($con, $qry);
+
+    $frussian=$_SESSION['user_id'];
+    $updateUserImgQuery = "UPDATE users SET user_img_path='$user_img_path' WHERE id=$frussian";
+    mysqli_query($con,$updateUserImgQuery);
 
     $query = "SELECT
         pi.validate_through,

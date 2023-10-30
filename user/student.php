@@ -603,6 +603,7 @@
                             $('#paynow').hide();
                             $('#payment_id_lbl').val(response.razorpay_payment_id);
                             $('#paymentButton').show();
+                    
                         }
                     }
                 };
