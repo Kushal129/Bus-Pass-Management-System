@@ -544,13 +544,6 @@
                 clearError('#institute_address');
             }
 
-            // const imgStdValue = $('#img_std').val();
-            // if (imgStdValue === '') {
-            //     // showError('#photo-upload-error-student', 'Please upload a photo.');
-            //     document.getElementById("photo_error").innerHTML = "Please Upload a Photo"
-            // } else {
-            //     clearError('#photo-upload-error-student');
-            // }
 
             const addressProofValue = $('#address_proof').val();
             if (addressProofValue === '--') {

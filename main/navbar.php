@@ -57,30 +57,30 @@ if (isset($_POST["submit"])) {
     $confirm_password = $_POST["confirm_password"];
     $validationErrors = array();
 
-    if (!preg_match('/^[A-Za-z]+\s[A-Za-z]+$/', $full_name)) {
-        $validationErrors[] = "Please enter a valid Full Name. Firstname _ Lastname ";
-        echo '<script>window.location.href = "#registrationForm";</script>';
-    }
-    if (strlen($password) < 8) {
-        $validationErrors[] = "Please enter a password with at least 8 characters.";
-        echo '<script>window.location.href = "#registrationForm";</script>';
-    }
+    // if (!preg_match('/^[A-Za-z]+\s[A-Za-z]+$/', $full_name)) {
+    //     $validationErrors[] = "Please enter a valid Full Name. Firstname _ Lastname ";
+    //     echo '<script>window.location.href = "#registrationForm";</script>';
+    // }
+    // if (strlen($password) < 8) {
+    //     $validationErrors[] = "Please enter a password with at least 8 characters.";
+    //     echo '<script>window.location.href = "#registrationForm";</script>';
+    // }
 
-    if (!preg_match('/[0-9]/', $password) || !preg_match('/[!@#$%^&*()_+{}\[\]:;<>,.?~\\\-]/', $password)) {
-        $validationErrors[] = "Password must contain at least one number and one special character.";
-        echo '<script>window.location.href = "#registrationForm";</script>';
-    }
+    // if (!preg_match('/[0-9]/', $password) || !preg_match('/[!@#$%^&*()_+{}\[\]:;<>,.?~\\\-]/', $password)) {
+    //     $validationErrors[] = "Password must contain at least one number and one special character.";
+    //     echo '<script>window.location.href = "#registrationForm";</script>';
+    // }
 
-    if (!preg_match('/^[6-9]\d{9}$/', $phone_number)) {
-        $validationErrors[] = "Invalid Indian Phone Number. Enter a 10-digit number starting with 6, 7, 8, 9.";
-        echo '<script>window.location.href = "#registrationForm";</script>';
-    }
+    // if (!preg_match('/^[6-9]\d{9}$/', $phone_number)) {
+    //     $validationErrors[] = "Invalid Indian Phone Number. Enter a 10-digit number starting with 6, 7, 8, 9.";
+    //     echo '<script>window.location.href = "#registrationForm";</script>';
+    // }
 
-    // Check if passwords match
-    if ($password !== $confirm_password) {
-        $validationErrors[] = "Passwords do not match.";
-        echo '<script>window.location.href = "#registrationForm";</script>';
-    }
+    // // Check if passwords match
+    // if ($password !== $confirm_password) {
+    //     $validationErrors[] = "Passwords do not match.";
+    //     echo '<script>window.location.href = "#registrationForm";</script>';
+    // }
 
     if (!empty($validationErrors)) {
         foreach ($validationErrors as $error) {
@@ -159,12 +159,12 @@ $con->close();
         <a class="navbar-brand" href="#"><img src="img/buslogo.png" width="30" height="30" class="d-inline-block align-top" alt="Logo"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <!-- <span class="navbar-toggler-icon" style="color: black;" > -->
-                <img src="img/menu.png" alt="Login" width="30" height="30">
+            <img src="img/menu.png" alt="Login" width="30" height="30">
             <!-- </span> -->
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <marquee scrollamount="20" style="font-weight:600; font-size: 2rem; " >Bus Pass Management System </marquee>
+            <marquee scrollamount="20" style="font-weight:600; font-size: 2rem; ">Bus Pass Management System </marquee>
             <?php
             if (!isset($_SESSION['username'])) { ?>
                 <button type="button" class="btn-lg" data-toggle="modal" data-target="#loginModal" id="login_btn">Login</button>
@@ -195,24 +195,29 @@ $con->close();
                             </form>
                             <form id="registrationForm" style="display:none;" method="post">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="fullName" placeholder=" Firstname Lastname" name="full_name" required>
+                                    <input type="text" class="form-control" id="fullName" placeholder="Firstname Lastname" name="full_name" required>
+                                    <span id="fullNameError" class="error"></span>
                                 </div>
                                 <div class="form-group">
-                                    <input type="tel" class="form-control" id="phoneNumber" placeholder=" Phone Number" name="phone_number" maxlength="10" required>
+                                    <input type="tel" class="form-control" id="phoneNumber" placeholder="Phone Number" name="phone_number" maxlength="10" required>
+                                    <span id="phoneNumberError" class="error"></span>
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control" id="regEmail" placeholder=" Email" name="email">
+                                    <input type="email" class="form-control" id="regEmail" placeholder="Email" name="email">
+                                    <span id="emailError" class="error"></span>
                                 </div>
                                 <div class="form-group password-container">
-                                    <input type="password" class="form-control login_password" id="regPassword" placeholder=" Password" name="password" required>
+                                    <input type="password" class="form-control login_password" id="regPassword" placeholder="Password" name="password" required>
+                                    <span id="passwordError" class="error"></span>
                                 </div>
                                 <div class="form-group password-container">
-                                    <input type="password" class="form-control login_password" id="confirmPassword" placeholder=" Confirm Password" name="confirm_password" required>
+                                    <input type="password" class="form-control login_password" id="confirmPassword" placeholder="Confirm Password" name="confirm_password" required>
+                                    <span id="confirmPasswordError" class="error"></span>
                                     <i class="show-password-icon fa-solid fa-eye" onclick="togglePasswordVisibility('.login_password', this)"></i>
                                 </div>
-                                <button type="submit" class="btn-lr btn-block" value="registr" name="submit">Sign
-                                    Up</button>
+                                <button type="submit" class="btn-lr btn-block" value="registr" name="submit">Sign Up</button>
                             </form>
+
                             <p class="text-center mt-3 mb-0">
                                 <a href="#" id="signupLink">Create an account</a>
                                 <a href="main/ForgotPass.php" id="signupLink">ForgotPassword?</a>
@@ -225,19 +230,6 @@ $con->close();
     </nav>
 
     <script>
-        var phoneNumberInput = document.getElementById('phoneNumber');
-        phoneNumberInput.addEventListener('input', function(event) {
-            var inputValue = event.target.value;
-            var numericValue = inputValue.replace(/\D/g, ''); // Remove non-numeric characters
-            var maxLength = parseInt(event.target.getAttribute('maxlength'));
-            var truncatedValue = numericValue.slice(0, maxLength); // Limit to 10 digits
-            event.target.value = truncatedValue;
-        });
-    </script>
-
-
-    <script>
-        // Toggle between Login and Registration forms
         document.getElementById('signupLink').addEventListener('click', function() {
             document.getElementById('loginForm').style.display = 'none';
             document.getElementById('registrationForm').style.display = 'block';
@@ -254,7 +246,6 @@ $con->close();
             this.style.display = 'none';
         });
 
-        // show password 
         function togglePasswordVisibility(fieldId, icon) {
             var passwordFields = document.querySelectorAll(fieldId);
             console.log(passwordFields);
@@ -288,6 +279,92 @@ $con->close();
                 }
             }
         })
+    </script>
+    <script>
+        document.getElementById('fullName').addEventListener('input', function() {
+            validateFullName();
+        });
+
+        document.getElementById('phoneNumber').addEventListener('input', function() {
+            validatePhoneNumber();
+        });
+
+        document.getElementById('regEmail').addEventListener('input', function() {
+            validateEmail();
+        });
+
+        document.getElementById('regPassword').addEventListener('input', function() {
+            validatePassword();
+        });
+
+        document.getElementById('confirmPassword').addEventListener('input', function() {
+            validateConfirmPassword();
+        });
+
+        function validateFullName() {
+            const fullNameInput = document.getElementById('fullName');
+            const fullNameError = document.getElementById('fullNameError');
+            const fullName = fullNameInput.value;
+
+            if (!/^[A-Za-z]+\s[A-Za-z]+$/.test(fullName)) {
+                fullNameError.textContent = "Please enter a valid Full Name. Firstname _ Lastname";
+            } else {
+                fullNameError.textContent = "";
+            }
+        }
+
+        function validatePhoneNumber() {
+            const phoneNumberInput = document.getElementById('phoneNumber');
+            const phoneNumberError = document.getElementById('phoneNumberError');
+            const phoneNumber = phoneNumberInput.value;
+
+            if (!/^[6-9]\d{9}$/.test(phoneNumber)) {
+                phoneNumberError.textContent = "Invalid Indian Phone Number. Enter a 10-digit number starting with 6, 7, 8, 9.";
+            } else {
+                phoneNumberError.textContent = "";
+            }
+        }
+
+        function validateEmail() {
+            const emailInput = document.getElementById('regEmail');
+            const emailError = document.getElementById('emailError');
+            const email = emailInput.value;
+            const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+
+            if (!emailPattern.test(email)) {
+                emailError.textContent = "Please enter a valid email address.";
+            } else {
+                emailError.textContent = "";
+            }
+        }
+
+        function validatePassword() {
+            const passwordInput = document.getElementById('regPassword');
+            const passwordError = document.getElementById('passwordError');
+            const password = passwordInput.value;
+
+            if (password.length < 8) {
+                passwordError.textContent = "Please enter a password with at least 8 characters.";
+            } else if (!/[0-9]/.test(password) || !/[!@#$%^&*()_+{}\[\]:;<>,.?~\\\-]/.test(password)) {
+                passwordError.textContent = "Password must contain at least one number and one special character.";
+            } else {
+                passwordError.textContent = "";
+            }
+        }
+
+        function validateConfirmPassword() {
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            const confirmPasswordError = document.getElementById('confirmPasswordError');
+            const confirmPassword = confirmPasswordInput.value;
+            const passwordInput = document.getElementById('regPassword');
+            const password = passwordInput.value;
+
+            if (confirmPassword !== password) {
+                confirmPasswordError.textContent = "Passwords do not match.";
+            } else {
+                confirmPasswordError.textContent = "";
+            }
+        }
     </script>
 
 </body>

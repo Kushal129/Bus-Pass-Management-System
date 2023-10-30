@@ -52,7 +52,7 @@ if (!isset($_SESSION['username'])) {
             </li>
             <li>
                 <a href="../user/Managepass.php">
-                <i class='bx bx-credit-card-front'></i>
+                    <i class='bx bx-credit-card-front'></i>
                     <span class="links_name">Manage Pass</span>
                 </a>
                 <span class="tooltip">Manage Pass</span>
@@ -84,7 +84,7 @@ if (!isset($_SESSION['username'])) {
     <section class="home-section">
         <div class="head">
             <div class="profile">
-                <img src="../img/admin.ico" class="pro-img" id="user-avatar" alt="User Avatar">
+                <img src="<?php echo $user_img_path; ?>" class="pro-img" id="user-avatar" alt="User Avatar">
                 <div class="profile-text"><?php echo $row['full_name']; ?></div>
             </div>
             <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>
