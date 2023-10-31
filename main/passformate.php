@@ -96,9 +96,9 @@ if (isset($_FILES["img_std"])) {
 
     mysqli_query($con, $qry);
 
-    $frussian=$_SESSION['user_id'];
+    $frussian = $_SESSION['user_id'];
     $updateUserImgQuery = "UPDATE users SET user_img_path='$user_img_path' WHERE id=$frussian";
-    mysqli_query($con,$updateUserImgQuery);
+    mysqli_query($con, $updateUserImgQuery);
 
     $query = "SELECT
         pi.validate_through,
@@ -135,11 +135,16 @@ if (isset($_FILES["img_std"])) {
     die("User image upload is missing.");
 }
 
+$query = "SELECT bus_name from bus_type where price_multiply =$bus_type";
+$result = mysqli_query($con, $query);
+if ($result) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $bus_type = $row['bus_name'];
+    }
+}
 
 $query = "SELECT ter_name from bus_terminals where ter_id=$start_term_id";
-
 $result = mysqli_query($con, $query);
-
 if ($result) {
     while ($row = mysqli_fetch_assoc($result)) {
         $start_term_id = $row['ter_name'];
@@ -148,9 +153,7 @@ if ($result) {
 
 
 $query = "SELECT ter_name from bus_terminals where ter_id=$ends_term_id";
-
 $result = mysqli_query($con, $query);
-
 if ($result) {
     while ($row = mysqli_fetch_assoc($result)) {
         $ends_term_id = $row['ter_name'];
@@ -217,12 +220,13 @@ if ($result) {
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-lg-3 col-md-3 col-6">
-                                <img src="../img/buslogo.png" class="img-fluid" style="width: 20%;height: 70% !important;" alt="Your image">
+                                <img src="../img/buslogo.png" class="img-fluid" style="width: 30%;height: 70% !important;" alt="Your image">
                             </div>
                             <div class="col-lg-6 col-md-6 col-12">
                                 <h2 class="ml-2 mt-3 text-center">Bus Pass Managment System</h2>
                             </div>
                             <div class="col-lg-3 col-md-3 col-6 text-right">
+                                <p><strong>User Id: </strong> <?php echo  $user_id ?></p>
                                 <p><strong>From Date:</strong> <?php echo date('d-m-Y', strtotime($from_date)); ?></p>
                                 <p><strong>To Date:</strong> <?php echo date('d-m-Y', strtotime($to_date)); ?></p>
                             </div>

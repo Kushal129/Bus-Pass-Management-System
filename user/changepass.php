@@ -134,7 +134,8 @@ if (!isset($_SESSION['username'])) {
         <div class="head">
             <div class="profile">
                 <!-- <img src="" class="pro-img" id="user-avatar" alt="User Avatar"> -->
-                <img class="pro-img" id="user-avatar" alt="User Avatar" src="../uploads/<?php echo $use_img; ?>">
+                <img class="pro-img" id="user-avatar" alt="User Avatar" src="../uploads/user_photo/<?php echo $use_img; ?>">
+
 
                 <div class="profile-text"><?php echo $row['full_name']; ?></div>
             </div>

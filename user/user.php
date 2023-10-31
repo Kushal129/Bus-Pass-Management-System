@@ -40,12 +40,13 @@ if (!isset($_SESSION['username'])) {
 <style>
     .category {
         width: 100%;
-        background: #fffef3!important;
+        background: #fffef3 !important;
         border: 1px solid black;
         padding: 10px;
         border-radius: 10px;
     }
-    .card-body{
+
+    .card-body {
         background-color: beige !important;
     }
 </style>
@@ -91,16 +92,16 @@ if (!isset($_SESSION['username'])) {
     <section class="home-section">
         <div class="head">
             <div class="profile">
-            <img class="pro-img" id="user-avatar" alt="User Avatar" src="../uploads/<?php echo $use_img; ?>">
+                <img class="pro-img" id="user-avatar" alt="User Avatar" src="../uploads/user_photo/<?php echo $use_img; ?>">
                 <div class="profile-text"><?php echo $row['full_name']; ?></div>
             </div>
 
             <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>
         </div>
         <section class="my-5">
-            <div class="py-5">
+            <!-- <div class="py-5">
                 <h2 class="text-center" style="text-decoration: underline #f4db00;">Select Pass Category</h2>
-            </div>
+            </div> -->
             <div class="container-fluid">
                 <div class="row d-flex justify-content-center">
                     <div class="col-lg-4 col-md-4 col-12">
@@ -111,17 +112,19 @@ if (!isset($_SESSION['username'])) {
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-12">
-                        <div class="card">
+                    <!-- <div class="col-lg-4 col-md-4 col-12">
+                        <div class="card" id="renew_pass">
                             <div class="card-body text-center">
                                 <h5 class="card-title">Re-New Pass</h5>
                                 <i class='bx bx-user'></i>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </section>
+
+
 
         <div class="downpage d-flex justify-content-center" style="display: none;">
             <div class="Category-down col-lg-4 col-md-4 col-sm-12 " style="display: none;">
@@ -136,12 +139,10 @@ if (!isset($_SESSION['username'])) {
             </div>
         </div>
 
-
         <div class="down-container">
             <div class="form" id="StudentForm" style="display: none;">
                 <?php include '../user/student.php';
                 ?>
-
             </div>
             <div class="form" id="PassengerForm" style="display: none;">
                 <?php include '../user/passanger.php'; ?>
@@ -149,6 +150,10 @@ if (!isset($_SESSION['username'])) {
 
             <div class="form" id="HandicapForm" style="display: none;">
                 <?php include '../user/handicap.php'; ?>
+            </div>
+
+            <div class="form renewpass" id="renewpass" style="display: none;">
+                <?php include '../user/renewpass.php' ?>
             </div>
         </div>
     </section>
@@ -170,6 +175,9 @@ if (!isset($_SESSION['username'])) {
 
                 showForm(selectedCategory);
             });
+            $('#renew_pass').click(function() {
+                $('#renewpass').show();
+            })
 
             $('#category').change(function() {
                 var selectedCategory = $(this).val();
@@ -184,6 +192,7 @@ if (!isset($_SESSION['username'])) {
             showForm(defaultCategory);
         });
     </script>
+
 
     <script>
         $(document).ready(function() {

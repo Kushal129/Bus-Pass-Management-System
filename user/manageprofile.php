@@ -167,7 +167,8 @@ if (isset($_POST['update_profile']))
             <div class="profile">
                 <!-- <img src="../img/admin.ico" class="pro-img" id="user-avatar" alt="User Avatar"> -->
                 <!-- <img src="<php echo $user_img_path; ?>" class="pro-img" id="user-avatar" alt="User Avatar"> -->
-                <img class="pro-img" id="user-avatar" alt="User Avatar" src="../uploads/<?php echo $use_img; ?>">
+                <img class="pro-img" id="user-avatar" alt="User Avatar" src="../uploads/user_photo/<?php echo $use_img; ?>">
+
                 <div class="profile-text"><?php echo $row['full_name']; ?></div>
             </div>
             <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>

@@ -5,6 +5,7 @@ include_once '../connection.php';
 
 if (!isset($_SESSION['username'])) {
     header('location:../index.php');
+    exit;
 } else {
     $checkEmailQuery = "SELECT * FROM users WHERE email=?";
     $stmt = $con->prepare($checkEmailQuery);
@@ -12,12 +13,37 @@ if (!isset($_SESSION['username'])) {
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
-
+    $full_name = $row['full_name'];
     $role = $row['role'];
-    // echo $role;
+
     if ($role) {
         header("Location:../user/user.php");
+        exit;
     }
+    
+
+}
+
+$sql = "SELECT COUNT(*) as pass_count FROM pass";
+$result = $con->query($sql);
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $pass_count = $row['pass_count'];
+} else {
+    $pass_count = 0;
+}
+
+$todayDate = date('Y-m-d');
+
+$sql = "SELECT COUNT(*) as pass_count FROM pass WHERE DATE(from_date) = '$todayDate'";
+$result = $con->query($sql);
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $pass_count = $row['pass_count'];
+} else {
+    $pass_count = 0;
 }
 ?>
 <!DOCTYPE html>
@@ -75,7 +101,9 @@ if (!isset($_SESSION['username'])) {
         <div class="head">
             <div class="profile">
                 <img src="../img/admin.ico" class="pro-img" id="user-avatar" alt="User Avatar">
-                <div class="profile-text"><?php echo $row['full_name']; ?></div>
+                <!-- <div class="profile-text"><php echo $row['full_name']; ?></div> -->
+                <div class="profile-text"><?php echo $full_name ?></div>
+
             </div>
             <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>
         </div>
@@ -83,15 +111,15 @@ if (!isset($_SESSION['username'])) {
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">Total Pass</h5>
-                    <p>100</p>
+                    <p><?php echo $pass_count; ?></p>
                     <i class='bx bx-message-square-edit'></i>
                 </div>
             </div>
-
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">Pass Created Today</h5>
-                    <p>20</p>
+                    <p><?php echo $pass_count; ?></p>
+
                     <i class='bx bx-message-square-edit'></i>
                 </div>
             </div>
@@ -111,7 +139,7 @@ if (!isset($_SESSION['username'])) {
                     <i class='bx bx-message-square-edit'></i>
                 </div>
             </div>
-            <div class="card" id="passengerPassCard">
+            <!-- <div class="card" id="passengerPassCard">
                 <div class="card-body">
                     <h5 class="card-title">Total Passenger Pass</h5>
                     <p>40</p>
@@ -124,7 +152,7 @@ if (!isset($_SESSION['username'])) {
                     <p>10</p>
                     <i class='bx bx-message-square-edit'></i>
                 </div>
-            </div>
+            </div> -->
         </div>
     </section>
     <script>

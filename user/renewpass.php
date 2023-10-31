@@ -1,28 +1,60 @@
+<?php
+include '../connection.php';
+
+
+if (isset($_POST['user_id'])) {
+    $user_id = $_POST['user_id'];
+    
+    $sql = "SELECT full_name FROM users WHERE user_id = $user_id";
+    $result = $conn->query($sql);
+    
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $full_name = $row['full_name'];
+    } else {
+        $full_name = "User not found";
+    }
+    
+    $conn->close();
+} else {
+    $full_name = ""; 
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Bus Pass | User | Student Pass </title>
+    <title>Bus Pass | User | Renew Pass </title>
     <link rel="stylesheet" href="../css/user.css">
     <link rel="icon" type="image/ico" href="../img/buslogo.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
 
 <body>
+
+
     <form action="../main/passformate.php" method="POST" enctype="multipart/form-data">
+        
+            <div class="form-group">
+                <label for="user_id">Enter User Id :</label>
+                <input type="text" id="user_id" name="user_id" placeholder="User ID">
+                <br><br>
+                <input type="submit" value="Fetch Data">
+            </div>
         <div class="form-group">
             <h1>Student Pass Details</h1>
             <hr>
-            <label for="id">Application No:</label>
-            <input type="text" disabled id="id" name="id" style="cursor: not-allowed;background-color:#efefef;color: #000000;" placeholder="NEW PASS">
-            <br><br>
-        </div>
-
-        <div class="form-group">
             <label for="Entry_date">Entry Date:</label>
             <input type="date" name="Entry_date" value="<?php echo date('Y-m-d') ?>" readonly style="cursor: not-allowed;background-color:#efefef;color: #000000;">
             <br><br>
@@ -36,10 +68,9 @@
             <hr>
 
             <label for="fullname">Full Name:</label>
-            <input type="text" id="fullname" name="fullname" required>
-            <span id="fullname-error" class="error-message" style="color:red"></span>
+            <input type="text" id="fullname" name="fullname" value="<?php echo $full_name; ?>" disabled>
             <br><br>
-
+            <!-- 
             <label for="mobileNo">Phone Number:</label>
             <input type="text" name="mobileNo" id="mobileNo" maxlength="10" value="" required>
             <span id="mobileNo-error" class="error-message" style="color:red"></span>
@@ -48,10 +79,10 @@
             <label for="address">Address:</label>
             <textarea name="address" id="address" cols="20" rows="3" required></textarea>
             <span id="address-error" class="error-message" style="color:red"></span>
-            <br><br>
+            <br><br> -->
 
-            <label for="dateofBirth">Date of Birth:</label>
-            <input type="date" name="dateofBirth" id="dateofBirth" required>
+            <!-- <label for="dateofBirth">Date of Birth:</label>
+            <input type="date" name="dateofBirth" id="dateofBirth" >
             <span id="dateofBirth-error" class="error-message" style="color:red"></span>
             <br><br>
 
@@ -61,7 +92,7 @@
             <br><br>
 
             <label>Gender:</label>
-            <input type="radio" name="gender" value="Male" checked="checked" required>
+            <input type="radio" name="gender" value="Male" checked="checked" >
             <span class="bodytext">Male</span>
             <input type="radio" name="gender" value="Female">
             <span class="bodh2ytext">Female</span>
@@ -71,7 +102,7 @@
             <br><br>
 
             <label for="cast_std">Category: </label>
-            <select name="cast_std" id="cast_std" required>
+            <select name="cast_std" id="cast_std" >
                 <option value="">Please Select Cast </option>
                 <?php
                 $cast_type_qry_s = "select * from cast";
@@ -87,7 +118,7 @@
             <br><br>
 
             <label for="education">Education:</label>
-            <select name="education" id="education" required>
+            <select name="education" id="education" >
                 <option value="--">Please Select Highest Qualification</option>
                 <option value="Primary">Primary</option>
                 <option value="Middle/Higher Primary">Middle/Higher Primary</option>
@@ -104,12 +135,12 @@
             <br><br>
 
             <label for="institute_name">Institute Name:</label>
-            <input type="text" id="institute_name" name="institute_name" required>
+            <input type="text" id="institute_name" name="institute_name" >
             <span id="institute_name-error" class="error-message" style="color:red"></span>
             <br><br>
 
             <label for="institute_address">Institute Address:</label>
-            <textarea name="institute_address" id="institute_address" cols="20" rows="3" required></textarea>
+            <textarea name="institute_address" id="institute_address" cols="20" rows="3" ></textarea>
             <span id="institute_address-error" class="error-message" style="color:red"></span>
             <br><br>
         </div>
@@ -118,13 +149,13 @@
             <h1>Proof Details</h1>
             <hr>
             <label for="img_std">Photo Upload:</label>
-            <input type="file" name="img_std" id="img_std" accept=".png, .jpg, .jpeg" required>
+            <input type="file" name="img_std" id="img_std" accept=".png, .jpg, .jpeg" >
             <p>[Self-attached Passport size Photo Copy. Max size: 300KB]</p>
             <span id="photo_error" class="error-message" style="color: red;"></span>
             <br>
 
             <label for="address_proof">Select Document for Address Proof:</label>
-            <select id="address_proof" name="address_proof" class="error-message" required>
+            <select id="address_proof" name="address_proof" class="error-message" >
                 <option value="--">Please Select Document</option>
                 <?php
                 $address_proof_qry_s = "SELECT * FROM document_type";
@@ -140,7 +171,7 @@
             <br><br>
 
             <label for="student_address_proof_upload">Upload Proof For Address:</label>
-            <input type="file" id="student_address_proof_upload" name="student_address_proof_upload" accept=".pdf, .jpg, .jpeg, .png" required>
+            <input type="file" id="student_address_proof_upload" name="student_address_proof_upload" accept=".pdf, .jpg, .jpeg, .png" >
             <p>[Self-attached size Max size: 200KB]</p>
             <span id="address_proof_error" class="error-message" style="color: red;"></span>
             <br>
@@ -150,11 +181,10 @@
             <h1>Location Details</h1>
             <hr>
             <label for="passType">Pass Type:</label>
-            <select name="passType" id="passType" required>
+            <select name="passType" id="passType" >
                 <option value="30" selected>Monthly</option>
                 <option value="90">Quarterly</option>
             </select>
-
             <br><br>
 
             <label for="fromDate">From Date:</label>
@@ -167,7 +197,7 @@
 
             <div class="student-form">
                 <label for="fromPlaceStudent">From Place:</label>
-                <select name="fromPlaceStudent" id="fromPlaceStudent" class="fromPlace" required>
+                <select name="fromPlaceStudent" id="fromPlaceStudent" class="fromPlace" >
                     <option value=" ">Select From Location</option>
                     <?php
                     $from_qry_s  =  "SELECT * FROM bus_terminals";
@@ -183,7 +213,7 @@
                 <br><br>
 
                 <label for="toPlaceStudent">To Place:</label>
-                <select name="toPlaceStudent" id="toPlaceStudent" class="toPlace" required>
+                <select name="toPlaceStudent" id="toPlaceStudent" class="toPlace" >
                     <option value=" ">Select To Location</option>
                     <?php
                     $from_qry_s  =  "SELECT * FROM bus_terminals";
@@ -200,7 +230,7 @@
             <br><br>
 
             <label for="classOfService">Class Of Service:</label>
-            <select name="classOfService" id="classOfService" required>
+            <select name="classOfService" id="classOfService" >
                 <?php
                 $bus_type_qry_s  =  "SELECT * FROM bus_type ";
                 $bus_types_s = mysqli_query($con, $bus_type_qry_s);
@@ -225,7 +255,7 @@
             <br><br>
             <div class="btn-paynow btn-pmt" id="paynow" onclick="pay_now()">Pay Now</div>
             <button class="btn-pmt" type="submit" id="paymentButton">Submit and Proceed </button>
-        </div>
+        </div> -->
     </form>
 </body>
 
@@ -233,37 +263,6 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
-
-<script>
-    $(document).ready(function() {
-        $('.form').hide();
-
-        function showForm(selectedCategory) {
-            $('#' + selectedCategory + 'Form').show();
-        }
-
-        $('#new_pass').click(function() {
-            $('.pass-page-container').show();
-
-            var selectedCategory = $('#categorySelect option:first').val();
-            console.log("Selected Category:", selectedCategory);
-
-            showForm(selectedCategory);
-        });
-
-        $('#categorySelect').change(function() {
-            var selectedCategory = $(this).val();
-            console.log("Selected Category:", selectedCategory);
-            $('.form').hide();
-
-            showForm(selectedCategory);
-            console.log("Displaying Form:", $('#' + selectedCategory + 'Form'));
-        });
-
-        var defaultCategory = $('#categorySelect').val();
-        showForm(defaultCategory);
-    });
-</script>
 
 <script>
     let sidebar = document.querySelector(".sidebar");
@@ -505,7 +504,7 @@
 
             const addressValue = $('#address').val();
             if (addressValue === '') {
-                showError('#address', 'Address is required.');
+                showError('#address', 'Address is required .');
             } else {
                 clearError('#address');
             }
@@ -604,7 +603,7 @@
                             $('#paynow').hide();
                             $('#payment_id_lbl').val(response.razorpay_payment_id);
                             $('#paymentButton').show();
-                    
+
                         }
                     }
                 };
