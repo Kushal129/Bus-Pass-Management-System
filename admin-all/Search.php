@@ -2,8 +2,16 @@
 include '../connection.php';
 include '../toaster.php';
 
-$query = "SELECT pi.full_name, pi.validate_through, pi.dob, p.bus_type, p.start_term_id, p.ends_term_id, p.from_date, p.to_date FROM passenger_info pi
-          INNER JOIN pass p ON pi.id = p.id";
+$query = "SELECT pi.full_name, pi.validate_through, pi.dob,p.user_id, p.bus_type ,
+                 b.bus_name , p.start_term_id, s.ter_name ,p.ends_term_id, e.ter_name,
+                 p.from_date, p.to_date FROM passenger_info pi
+                 INNER JOIN pass p ON pi.id = p.passenger_id 
+                 INNER JOIN bus_type b on p.bus_type = b.bus_id 
+                 INNER JOIN bus_terminals s on p.start_term_id = s.ter_id 
+                 INNER JOIN bus_terminals e on p.ends_term_id = e.ter_id ";
+$start = ['s.ter_name'];
+$end = ['e.ter_name'];
+
 
 $result = $con->query($query);
 
@@ -11,6 +19,7 @@ if ($result) {
     $table = '<table id="passenger-table" class="display">';
     $table .= '<thead>';
     $table .= '<tr>';
+    $table .= '<th>User Id</th>';
     $table .= '<th>Full Name</th>';
     $table .= '<th>Validation Through</th>';
     $table .= '<th>Date of Birth</th>';
@@ -25,12 +34,13 @@ if ($result) {
 
     while ($row = $result->fetch_assoc()) {
         $table .= '<tr>';
+        $table .= '<td>' . $row['user_id'] . '</td>';
         $table .= '<td>' . $row['full_name'] . '</td>';
         $table .= '<td>' . $row['validate_through'] . '</td>';
         $table .= '<td>' . $row['dob'] . '</td>';
-        $table .= '<td>' . $row['bus_type'] . '</td>';
-        $table .= '<td>' . $row['start_term_id'] . '</td>';
-        $table .= '<td>' . $row['ends_term_id'] . '</td>';
+        $table .= '<td>' . $row['bus_name'] . '</td>';
+        $table .= '<td>' . $row['ter_name'] . '</td>';
+        $table .= '<td>' . $row['ter_name'] . '</td>';
         $table .= '<td>' . $row['from_date'] . '</td>';
         $table .= '<td>' . $row['to_date'] . '</td>';
         $table .= '</tr>';
@@ -61,6 +71,17 @@ $con->close();
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+<style>
+    thead {
+        background-color: #000;
+        color: #feff3c;
+        padding: 10px;
+        font-weight: bold;
+        font-size: 14px;
+        text-transform: uppercase;
+        text-align: center;
+    }
+</style>
 
 <body>
     <div class="sidebar">
@@ -109,32 +130,12 @@ $con->close();
             </div>
             <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>
         </div>
-        <!-- [{"full_name":"Kushal","validate_through":"2024-04-21","dob":"2004-08-12","bus_type":"1","start_term_id":"1","ends_term_id":"2","from_date":"2023-10-21","to_date":"2023-11-20"}] -->
-
-        <!-- <section class="search">
-            <table id="passenger-table" class="display">
-                <thead>
-                    <tr>
-                        <th>Full Name</th>
-                        <th>Validation Through</th>
-                        <th>Date of Birth</th>
-                        <th>Bus Type</th>
-                        <th>Start Term </th>
-                        <th>End Term </th>
-                        <th>From Date</th>
-                        <th>To Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-            </table>
-        </section> -->
-
         <section class="search">
-            <?php echo $table; ?>
+            <div class="form-group">
+                <?php echo $table; ?>
+            </div>
         </section>
-        
+
     </section>
 
     <script>
@@ -163,35 +164,53 @@ $con->close();
     <script>
         $(document).ready(function() {
             $('#passenger-table').DataTable({
-                "paging": true, // Enable paging
-                "searching": true, // Enable searching
-                "ordering": true, // Enable sorting
+                "paging": true,
+                "searching": true,
+                "ordering": true,
             });
         });
     </script>
     <script>
-    $(document).ready(function() {
-        $.ajax({
-            url: '../admin-all/Search.php', // Replace with the correct URL to fetch your data
-            dataType: 'json',
-            success: function(data) {
-                var table = $('#passenger-table').DataTable({
-                    data: data,
-                    columns: [
-                        { data: 'full_name' },
-                        { data: 'validate_through' },
-                        { data: 'dob' },
-                        { data: 'bus_type' },
-                        { data: 'start_term_id' },
-                        { data: 'ends_term_id' },
-                        { data: 'from_date' },
-                        { data: 'to_date' }
-                    ]
-                });
-            }
+        $(document).ready(function() {
+            $.ajax({
+                url: '../Search.php',
+                dataType: 'json',
+                success: function(data) {
+                    var table = $('#passenger-table').DataTable({
+                        data: data,
+                        columns: [{
+                                data: 'user_id'
+                            },
+                            {
+                                data: 'full_name'
+                            },
+                            {
+                                data: 'validate_through'
+                            },
+                            {
+                                data: 'dob'
+                            },
+                            {
+                                data: 'bus_name'
+                            },
+                            {
+                                data: 'ter_name'
+                            },
+                            {
+                                data: 'ter_name'
+                            },
+                            {
+                                data: 'from_date'
+                            },
+                            {
+                                data: 'to_date'
+                            }
+                        ]
+                    });
+                }
+            });
         });
-    });
-</script>
+    </script>
 
     <script>
         function logout() {

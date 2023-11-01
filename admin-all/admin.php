@@ -20,9 +20,8 @@ if (!isset($_SESSION['username'])) {
         header("Location:../user/user.php");
         exit;
     }
-    
-
 }
+
 
 $sql = "SELECT COUNT(*) as pass_count FROM pass";
 $result = $con->query($sql);
@@ -35,16 +34,40 @@ if ($result->num_rows > 0) {
 }
 
 $todayDate = date('Y-m-d');
-
-$sql = "SELECT COUNT(*) as pass_count FROM pass WHERE DATE(from_date) = '$todayDate'";
+$sql = "SELECT COUNT(*) as today_pass_count FROM pass WHERE DATE(from_date) = '$todayDate'";
 $result = $con->query($sql);
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    $pass_count = $row['pass_count'];
+    $today_pass_count = $row['today_pass_count'];
 } else {
-    $pass_count = 0;
+    $today_pass_count = 0;
 }
+
+$todayDate = date('Y-m-d');
+$sevenDaysAgo = date('Y-m-d', strtotime('-7 days'));
+
+$sql = "SELECT COUNT(*) as last_7_days_pass_count FROM pass WHERE DATE(from_date) BETWEEN '$sevenDaysAgo' AND '$todayDate'";
+$result = $con->query($sql);
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $last_7_days_pass_count = $row['last_7_days_pass_count'];
+} else {
+    $last_7_days_pass_count = 0;
+}
+
+
+$sql = "SELECT COUNT(*) as std_pass_count FROM student";
+$result = $con->query($sql);
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $std_pass_count = $row['std_pass_count'];
+} else {
+    $std_pass_count = 0;
+}
+
 ?>
 <!DOCTYPE html>
 
@@ -112,22 +135,23 @@ if ($result->num_rows > 0) {
                 <div class="card-body">
                     <h5 class="card-title">Total Pass</h5>
                     <p><?php echo $pass_count; ?></p>
-                    <i class='bx bx-message-square-edit'></i>
+                    <i><img src="../img/pass.gif" alt="" style="width: 25px;"></i>
                 </div>
             </div>
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">Pass Created Today</h5>
-                    <p><?php echo $pass_count; ?></p>
+                    <p><?php echo $today_pass_count; ?></p>
+                    <!-- <i class='bx bx-food-menu'></i> -->
+                    <i><img src="../img/pass.gif" alt="" style="width: 25px;"></i>
 
-                    <i class='bx bx-message-square-edit'></i>
                 </div>
             </div>
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">Pass Created in 7 Days</h5>
-                    <p>80</p>
-                    <i class='bx bx-message-square-edit'></i>
+                    <p><?php echo $last_7_days_pass_count; ?></p>
+                    <i><img src="../img/pass.gif" alt="" style="width: 25px;"></i>
                 </div>
             </div>
         </div>
@@ -135,8 +159,9 @@ if ($result->num_rows > 0) {
             <div class="card" id="totalPassCard">
                 <div class="card-body">
                     <h5 class="card-title">Total Student Pass</h5>
-                    <p>50</p>
-                    <i class='bx bx-message-square-edit'></i>
+                    <p><?php echo $std_pass_count; ?></p>
+                    <i><img src="../img/pass.gif" alt="" style="width: 25px;"></i>
+                    <!-- <i class='bx bx-message-square-edit'></i> -->
                 </div>
             </div>
             <!-- <div class="card" id="passengerPassCard">
@@ -166,22 +191,19 @@ if ($result->num_rows > 0) {
         });
 
         searchBtn.addEventListener("click", () => {
-            // Sidebar open when you click on the search iocn
             sidebar.classList.toggle("open");
             menuBtnChange();
         });
 
-        // following are the code to change sidebar button
         function menuBtnChange() {
             if (sidebar.classList.contains("open")) {
-                closeBtn.classList.replace("bx-menu", "bx-menu-alt-right"); //replacing the iocns class
+                closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
             } else {
-                closeBtn.classList.replace("bx-menu-alt-right", "bx-menu"); //replacing the iocns class
+                closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");
             }
         }
     </script>
     <script>
-        // Function to handle logout
         function logout() {
 
             window.location.href = '../logout.php';

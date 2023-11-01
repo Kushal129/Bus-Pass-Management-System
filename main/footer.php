@@ -18,8 +18,7 @@
                     <div class="col-sm-4 col-md-3 item">
                         <h3>Contact Us</h3>
                         <ul>
-                            <li><a href="main/contact.php">Support</a></li>
-                           
+                            <li><a href="main/contact.php">Click Me</a></li>
                         </ul>
                     </div>
                     <div class="col-sm-3 col-md-6 item"">
@@ -33,20 +32,8 @@
                             <li></li>
                         </ul>
                     </div>
-                    <!-- <div class="col-sm-4 col-md-3 item">
-                        <h3>Careers</h3>
-                        <ul>
-                            <li><a href="#">Job openings</a></li>
-                            <li><a href="#">Employee success</a></li>
-                            <li><a href="#">Benefits</a></li>
-                            
-                        </ul>
-                    </div> -->
                     <div class="col-lg-1 ml-5 item social">
                     <a href="https://www.linkedin.com/in/kushal-pipaliya"><i class="icon ion-social-linkedin"></i></a>
-                    <!-- <a href="#"><i class="icon ion-social-facebook"></i></a>
-                    <a href="#"><i class="icon ion-social-instagram"></i></a> -->
-                    <!-- <a href="#"><i class="icon ion-social-googleplus"></i></a> -->
                     <p class="copyright">buspassbykh © 2023</p>
                     </div>
                 </div>
@@ -58,5 +45,3 @@
 </body>
 
 </html>
-
-<!-- Credit to https://epicbootstrap.com/snippets/footer-with-columns -->

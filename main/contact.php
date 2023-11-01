@@ -9,23 +9,23 @@ include '../toaster.php';
 // 	}
 // }
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $note = $_POST['note'];
+	$name = $_POST['name'];
+	$email = $_POST['email'];
+	$note = $_POST['note'];
 
-    $qry = "INSERT INTO report (name, email, note) VALUES (?, ?, ?)";
-    $stmt = $con->prepare($qry);
-    $stmt->bind_param("sss", $name, $email, $note);
+	$qry = "INSERT INTO report (name, email, note) VALUES (?, ?, ?)";
+	$stmt = $con->prepare($qry);
+	$stmt->bind_param("sss", $name, $email, $note);
 
-    if ($stmt->execute()) {
-        $_SESSION['MESSAGECHECK'] = "success"; // Set a session variable to indicate success
-        header("Location: contact.php");
-        exit();
-    } else {
-        $_SESSION['MESSAGECHECK'] = "error"; // Set a session variable to indicate an error
-        header("Location: contact.php");
-        exit();
-    }
+	if ($stmt->execute()) {
+		$_SESSION['MESSAGECHECK'] = "success"; // Set a session variable to indicate success
+		header("Location: contact.php");
+		exit();
+	} else {
+		$_SESSION['MESSAGECHECK'] = "error"; // Set a session variable to indicate an error
+		header("Location: contact.php");
+		exit();
+	}
 }
 
 ?>
@@ -185,12 +185,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
 		}
 
 		.home-link {
+			display: flex;
 			color: black;
-			top: 0;
-			right: 0;
-			margin-left: 20rem;
-			text-decoration: none;
 			font-size: 15px;
+			justify-content: center;
 		}
 
 		.home-link:hover {
@@ -245,14 +243,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
 					<div class="icon"><i class="fa-solid fa-envelope"></i></div>
 					<div class="text">
 						<h3>Email</h3>
-						<p>buspassmsofficial@gmail.com</p>
+						<a href="mailto:buspassmsofficial@gmail.com" style="color: white !important;">buspassmsofficial@gmail.com</a>
 					</div>
 				</div>
 				<div class="box">
 					<div class="icon"><i class="fa-solid fa-phone"></i></div>
 					<div class="text">
 						<h3>Phone</h3>
-						<p>123-456-789</p>
+						<p>+91 9574476496</p>
 					</div>
 				</div>
 			</div>
@@ -282,7 +280,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
 						<input type="submit" name="submit" value="Send">
 					</div>
 				</form>
-				<a href="../user/user.php" class="home-link">Home</a>
+				<a href="../user/user.php" class="home-link">Home Page ?</a>
 			</div>
 		</div>
 	</section>
@@ -339,18 +337,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
 	}
 </script>
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const messageCheck = "<?php echo isset($_SESSION['MESSAGECHECK']) ? $_SESSION['MESSAGECHECK'] : ''; ?>";
-    
-    if (messageCheck === "success") {
-        showToaster("Thank you for reporting! We will contact you soon.", "green");
-    } else if (messageCheck === "error") {
-        showToaster("Report submission failed. Please try again later.", "red");
-    }
-    
-    <?php unset($_SESSION['MESSAGECHECK']); ?>
-});
+	document.addEventListener("DOMContentLoaded", function() {
+		const messageCheck = "<?php echo isset($_SESSION['MESSAGECHECK']) ? $_SESSION['MESSAGECHECK'] : ''; ?>";
 
+		if (messageCheck === "success") {
+			showToaster("Thank you for reporting! We will contact you soon.", "green");
+		} else if (messageCheck === "error") {
+			showToaster("Report submission failed. Please try again later.", "red");
+		}
+
+		<?php unset($_SESSION['MESSAGECHECK']); ?>
+	});
 </script>
 
 </html>

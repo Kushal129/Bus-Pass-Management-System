@@ -52,6 +52,13 @@ if (!isset($_SESSION['username'])) {
                 <span class="tooltip">Generate Pass</span>
             </li>
             <li>
+                <a href="../user/Managepass.php">
+                <i class='bx bx-credit-card-front'></i>
+                    <span class="links_name">Manage Pass</span>
+                </a>
+                <span class="tooltip">Manage Pass</span>
+            </li>
+            <li>
                 <a href="../user/manageprofile.php">
                     <i class='bx bx-user-circle'></i>
                     <span class="links_name">Manage Profile</span>
@@ -79,17 +86,22 @@ if (!isset($_SESSION['username'])) {
         <div class="head">
             <div class="profile">
 
-            <img class="pro-img" id="user-avatar" alt="User Avatar" src="../uploads/user_photo/<?php echo $use_img; ?>">
+                <img class="pro-img" id="user-avatar" alt="User Avatar" src="../uploads/user_photo/<?php echo $use_img; ?>">
                 <div class="profile-text"><?php echo $row['full_name']; ?></div>
             </div>
             <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>
         </div>
+
         <div class="container">
-            <div class="card" style="width: 16rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Reports </h5>
-                    <p>User can see passes reports & also he/she can give feedcack</p>
-                    <a href="../main/contact.php">Contact us</a>
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-4 col-md-4 col-12">
+                    <div class="card">
+                        <div class="card-body text-center" style="padding: 15px;">
+                            <h5 class="card-title" style="text-align: center;">Reports & Feedback</h5>
+                            <p>User can see passes reports & also he/she can give feedcack</p>
+                            <a href="../main/contact.php" style="color: black!important;display: flex;justify-content: center;">Contact us</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -105,22 +117,19 @@ if (!isset($_SESSION['username'])) {
         });
 
         searchBtn.addEventListener("click", () => {
-            // Sidebar open when you click on the search iocn
             sidebar.classList.toggle("open");
             menuBtnChange();
         });
 
-        // following are the code to change sidebar button
         function menuBtnChange() {
             if (sidebar.classList.contains("open")) {
-                closeBtn.classList.replace("bx-menu", "bx-menu-alt-right"); //replacing the iocns class
+                closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
             } else {
-                closeBtn.classList.replace("bx-menu-alt-right", "bx-menu"); //replacing the iocns class
+                closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");
             }
         }
     </script>
     <script>
-        // Function to handle logout
         function logout() {
 
             window.location.href = '../logout.php';

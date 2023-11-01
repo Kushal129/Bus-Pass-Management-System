@@ -5,6 +5,7 @@ $edit = false;
 $deleted = false;
 
 include_once '../connection.php';
+include_once '../toaster.php';
 
 if (!isset($_SESSION['username'])) {
     header('location:../index.php');
@@ -18,11 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['add_bus'])) {
     }
     $sql = "INSERT INTO `bus_type` (`bus_name`, `price_multiply`) VALUES ('$bus_name', '$price_multiply')";
     $result = mysqli_query($con, $sql);
-    if ($result) {
-        $insert = true;
-    } else {
-        echo "Not Done";
-    }
+    // if ($result) {
+    //     $insert = true;
+    // } else {
+    //     echo "Not Done";
+    // }
 }
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['edit_bus'])) {
@@ -35,24 +36,24 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['edit_bus'])) {
     }
     $sql = "UPDATE `bus_type` SET `bus_name`='$bus_name', `price_multiply`='$price_multiply' WHERE `bus_id`='$bus_id'";
     $result = mysqli_query($con, $sql);
-    if ($result) {
-        $edit = true;
-    } else {
-        echo "Not Done";
-    }
+    // if ($result) {
+    //     $edit = true;
+    // } else {
+    //     echo "Not Done";
+    // }
 }
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['delete_bus'])) {
     $bus_id = $_POST['bus_id'];
     $sql = "DELETE FROM `bus_type` WHERE `bus_id`='$bus_id'";
     $result = mysqli_query($con, $sql);
-    if ($result) {
-        $deleted = true;
-        echo "Deleted";
-        exit;
-    } else {
-        echo "Not Done";
-    }
+    // if ($result) {
+    //     $deleted = true;
+    //     echo "Deleted";
+    //     exit;
+    // } else {
+    //     echo "Not Done";
+    // }
 }
 ?>
 
@@ -118,30 +119,16 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['delete_bus'])) {
         </div>
         <?php
         if ($insert) {
-            echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>
-            <strong>Success!</strong> Your Data Has been Inserted Successfully.
-            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-              <span aria-hidden='true'>&times;</span>
-            </button>
-          </div>";
+            echo '<script>showToaster("Your Data Has been Inserted Successfully.", "green")</script>';
         }
 
         if ($edit) {
-            echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>
-            <strong>Updated!</strong> Your Data Has been Updated Successfully.
-            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-              <span aria-hidden='true'>&times;</span>
-            </button>
-          </div>";
+
+            echo '<script>showToaster("Your Data Has been Updated Successfully.", "green")</script>';
         }
 
         if ($deleted) {
-            echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>
-            <strong>Delete!</strong> Your Data Has been Deleted Successfully.
-            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-              <span aria-hidden='true'>&times;</span>
-            </button>
-          </div>";
+            echo '<script>showToaster(" Your Data Has been Deleted Successfully.", "green")</script>';
         }
         ?>
         <div class="form-group">
@@ -171,9 +158,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['delete_bus'])) {
                         <?php
                         $sql = "SELECT * FROM bus_type";
                         $result = mysqli_query($con, $sql);
-                        // $b_id = 0;
+                        $b_id = 0;
                         while ($row = mysqli_fetch_assoc($result)) {
-                            // $b_id = $b_id + 1;
+                            $b_id = $b_id + 1;
                             echo "<tr>";
                             echo "<th scope='row'>" . $row['bus_id'] . "</th>";
                             echo "<td class='bus-name' contenteditable='false'>" . $row['bus_name'] . "</td>";
@@ -226,7 +213,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['delete_bus'])) {
                             bus_id: bus_id,
                             bus_name: bus_name,
                             price_multiply: price_multiply,
-                            edit_bus: true 
+                            edit_bus: true
                         },
                         success: function(response) {
                             console.log(response);
@@ -251,7 +238,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['delete_bus'])) {
                     row.find('.edit-button, .delete-button').prop('disabled', false);
                 });
 
-                $(document).on('click' , '.delete-button' , function() {
+                $(document).on('click', '.delete-button', function() {
                     if (confirm("Are you sure you want to delete this record?")) {
                         const row = $(this).closest('tr');
                         const bus_id = row.find('th').text(); // Use 'th' instead of 'bus-id'

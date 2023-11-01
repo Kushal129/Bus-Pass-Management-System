@@ -57,37 +57,13 @@ if (isset($_POST["submit"])) {
     $confirm_password = $_POST["confirm_password"];
     $validationErrors = array();
 
-    // if (!preg_match('/^[A-Za-z]+\s[A-Za-z]+$/', $full_name)) {
-    //     $validationErrors[] = "Please enter a valid Full Name. Firstname _ Lastname ";
-    //     echo '<script>window.location.href = "#registrationForm";</script>';
-    // }
-    // if (strlen($password) < 8) {
-    //     $validationErrors[] = "Please enter a password with at least 8 characters.";
-    //     echo '<script>window.location.href = "#registrationForm";</script>';
-    // }
 
-    // if (!preg_match('/[0-9]/', $password) || !preg_match('/[!@#$%^&*()_+{}\[\]:;<>,.?~\\\-]/', $password)) {
-    //     $validationErrors[] = "Password must contain at least one number and one special character.";
-    //     echo '<script>window.location.href = "#registrationForm";</script>';
-    // }
-
-    // if (!preg_match('/^[6-9]\d{9}$/', $phone_number)) {
-    //     $validationErrors[] = "Invalid Indian Phone Number. Enter a 10-digit number starting with 6, 7, 8, 9.";
-    //     echo '<script>window.location.href = "#registrationForm";</script>';
-    // }
-
-    // // Check if passwords match
-    // if ($password !== $confirm_password) {
-    //     $validationErrors[] = "Passwords do not match.";
-    //     echo '<script>window.location.href = "#registrationForm";</script>';
-    // }
 
     if (!empty($validationErrors)) {
         foreach ($validationErrors as $error) {
             echo '<script>showToaster("' . $error . '", "red")</script>';
         }
     } else {
-        // Check if the email already exists in the database
         $checkEmailQuery = "SELECT id FROM users WHERE email=?";
         $stmt = $con->prepare($checkEmailQuery);
         $stmt->bind_param("s", $email);
@@ -140,7 +116,7 @@ $con->close();
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <title>Home</title>
+    <title>Home Page</title>
 </head>
 
 <body>
@@ -153,14 +129,10 @@ $con->close();
             $("#registrationForm").modal('show');
         }
     </script>
-
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg " style="background-color: #ffd900;">
         <a class="navbar-brand" href="#"><img src="img/buslogo.png" width="30" height="30" class="d-inline-block align-top" alt="Logo"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <!-- <span class="navbar-toggler-icon" style="color: black;" > -->
             <img src="img/menu.png" alt="Login" width="30" height="30">
-            <!-- </span> -->
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">

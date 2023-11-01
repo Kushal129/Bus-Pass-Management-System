@@ -66,6 +66,13 @@ if (!isset($_SESSION['username'])) {
                 <span class="tooltip">Generate Pass</span>
             </li>
             <li>
+                <a href="../user/Managepass.php">
+                <i class='bx bx-credit-card-front'></i>
+                    <span class="links_name">Manage Pass</span>
+                </a>
+                <span class="tooltip">Manage Pass</span>
+            </li>
+            <li>
                 <a href="../user/manageprofile.php">
                     <i class='bx bx-user-circle'></i>
                     <span class="links_name">Manage Profile</span>
@@ -112,14 +119,14 @@ if (!isset($_SESSION['username'])) {
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="col-lg-4 col-md-4 col-12">
+                    <div class="col-lg-4 col-md-4 col-12">
                         <div class="card" id="renew_pass">
                             <div class="card-body text-center">
                                 <h5 class="card-title">Re-New Pass</h5>
                                 <i class='bx bx-user'></i>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </section>
