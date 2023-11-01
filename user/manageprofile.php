@@ -36,33 +36,31 @@ if (!isset($_SESSION['username'])) {
     $gender = isset($row1['gender']) ? $row1['gender'] : '';
     $user_img_path = isset($row1['user_img_path']) ? $row1['user_img_path'] : '';
 }
-
-if (isset($_POST['update_profile'])) 
-{
+if (isset($_POST['update_profile'])) {
     $full_name = $_POST['full_name'];
     $gender = $_POST['gender'];
     $dob = $_POST['dob'];
-    // $user_img_path = $_POST['user_img_path']; 
 
     if ($full_name == $row['full_name'] && $gender == $row1['gender'] && $dob == $row1['dob'] && empty($_FILES['img_update']['name'])) {
         echo '<script>showToaster("No changes made to the profile data.", "orange")</script>';
-
     } else {
         if (!empty($_FILES['img_update']['name'])) {
-            $targetDirectory = "../uploads/";
-            $targetFile = $targetDirectory . basename($_FILES['img_update']['name']);
+            $targetDirectory = __DIR__ . '/../uploads/user_photo/'; // Include a directory separator at the end
+            $original_filename = $_FILES['img_update']['name'];
+            $filename = preg_replace("/[^A-Za-z0-9.]/", '', $original_filename);
+            $targetFile = $targetDirectory . $filename;
 
             if (move_uploaded_file($_FILES['img_update']['tmp_name'], $targetFile)) {
-                $user_img_path = $targetFile;
+                $user_img_filename = $filename;
 
                 $updatePassengerInfoQuery = "UPDATE passenger_info SET full_name=?, gender=?, dob=?, user_img_path=? WHERE user_id=?";
                 $stmt = $con->prepare($updatePassengerInfoQuery);
-                $stmt->bind_param("ssssi", $full_name, $gender, $dob, $user_img_path, $id);
+                $stmt->bind_param("ssssi", $full_name, $gender, $dob, $user_img_filename, $id);
 
                 if ($stmt->execute()) {
                     $updateUserQuery = "UPDATE users SET full_name=?, user_img_path=? WHERE id=?";
                     $stmt = $con->prepare($updateUserQuery);
-                    $stmt->bind_param("ssi", $full_name, $user_img_path, $id);
+                    $stmt->bind_param("ssi", $full_name, $user_img_filename, $id);
 
                     if ($stmt->execute()) {
                         echo '<script>showToaster("Profile updated successfully.", "green")</script>';
@@ -97,6 +95,7 @@ if (isset($_POST['update_profile']))
         }
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -140,7 +139,7 @@ if (isset($_POST['update_profile']))
             </li>
             <li>
                 <a href="../user/Managepass.php">
-                <i class='bx bx-credit-card-front'></i>
+                    <i class='bx bx-credit-card-front'></i>
                     <span class="links_name">Manage Pass</span>
                 </a>
                 <span class="tooltip">Manage Pass</span>
