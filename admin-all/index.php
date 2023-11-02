@@ -1,2 +1,3 @@
-<?php
-header("location:admin.php");
+<?php 
+header("location:../admin-all/admin.php")
+?>
