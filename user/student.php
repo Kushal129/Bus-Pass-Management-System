@@ -234,53 +234,9 @@
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 
-<script>
-    $(document).ready(function() {
-        $('.form').hide();
-
-        function showForm(selectedCategory) {
-            $('#' + selectedCategory + 'Form').show();
-        }
-
-        $('#new_pass').click(function() {
-            $('.pass-page-container').show();
-
-            var selectedCategory = $('#categorySelect option:first').val();
-            console.log("Selected Category:", selectedCategory);
-
-            showForm(selectedCategory);
-        });
-
-        $('#categorySelect').change(function() {
-            var selectedCategory = $(this).val();
-            console.log("Selected Category:", selectedCategory);
-            $('.form').hide();
-
-            showForm(selectedCategory);
-            console.log("Displaying Form:", $('#' + selectedCategory + 'Form'));
-        });
-
-        var defaultCategory = $('#categorySelect').val();
-        showForm(defaultCategory);
-    });
-</script>
 
 <script>
-    let sidebar = document.querySelector(".sidebar");
-    let closeBtn = document.querySelector("#btn");
-
-    closeBtn.addEventListener("click", () => {
-        sidebar.classList.toggle("open");
-        menuBtnChange();
-    });
-
-    function menuBtnChange() {
-        if (sidebar.classList.contains("open")) {
-            closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
-        } else {
-            closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");
-        }
-    }
+  
 
     function logout() {
         window.location.href = '../logout.php';

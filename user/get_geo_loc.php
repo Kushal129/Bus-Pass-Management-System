@@ -16,3 +16,4 @@ if ($num == 2) {
     }
     echo json_encode($res);
 }
+?>

@@ -3,21 +3,19 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Bus Pass | User | Passenger Pass </title>
+    <title>Bus Pass | User | Student Pass </title>
     <link rel="stylesheet" href="../css/user.css">
     <link rel="icon" type="image/ico" href="../img/buslogo.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 
 <body>
-
-    <form action="../main/payment.php" method="POST">
+    <form action="../main/passformate.php" method="POST" enctype="multipart/form-data">
         <div class="form-group">
-            <h1>Passenger Pass Details</h1>
+            <h1>Passanger Pass Details</h1>
             <hr>
             <label for="id">Application No:</label>
             <input type="text" disabled id="id" name="id" style="cursor: not-allowed;background-color:#efefef;color: #000000;" placeholder="NEW PASS">
@@ -25,237 +23,224 @@
         </div>
 
         <div class="form-group">
-            <label for="entryDate">Entry Date:</label>
-            <input type="date" name="Entrydate" value="<?php echo date('Y-m-d') ?>" disabled style="cursor: not-allowed;background-color:#efefef;color: #000000;">
+            <label for="Entry_date">Entry Date:</label>
+            <input type="date" name="Entry_date" value="<?php echo date('Y-m-d') ?>" readonly style="cursor: not-allowed;background-color:#efefef;color: #000000;">
             <br><br>
             <label for="validate_through">Validate Through:</label>
-            <input type="date" id="validate_through" value="<?php echo date('Y-m-d', strtotime('+6 months')) ?>" name="validate_through" disabled style="cursor: not-allowed;background-color:#efefef;color: #000000;">
-
+            <input type="date" id="validate_through" value="<?php echo date('Y-m-d', strtotime('+6 months')) ?>" name="validate_through" readonly style="cursor: not-allowed;background-color:#efefef;color: #000000;">
             <br><br>
         </div>
 
         <div class="form-group">
             <h1>Personal Details</h1>
             <hr>
-            <label for="fullname">Full Name:</label>
-            <input type="text" id="fullname" name="fullname">
 
+            <label for="fullname">Full Name:</label>
+            <input type="text" id="fullname" name="fullname" required>
+            <span id="fullname-error" class="error-message" style="color:red"></span>
             <br><br>
 
             <label for="mobileNo">Phone Number:</label>
-            <input type="text" name="mobileNo" maxlength="13" value="">
-
+            <input type="text" name="mobileNo" id="mobileNo" maxlength="10" value="" required>
+            <span id="mobileNo-error" class="error-message" style="color:red"></span>
             <br><br>
 
             <label for="address">Address:</label>
-            <textarea name="address" id="address" cols="20" rows="3"></textarea>
-
-
+            <textarea name="address" id="address" cols="20" rows="3" required></textarea>
+            <span id="address-error" class="error-message" style="color:red"></span>
             <br><br>
-            <label for="dateofBirth_passanger">Date of Birth:</label>
-            <input type="date" name="dateofBirth_passanger" id="dateofBirth_passanger">
 
+            <label for="dateofBirth">Date of Birth:</label>
+            <input type="date" name="dateofBirth" id="dateofBirth" required>
+            <span id="dateofBirth-error" class="error-message" style="color:red"></span>
             <br><br>
-            <label for="age_passanger">Age:</label>
-            <input type="text" id="age_passanger" name="age_passanger" value="" disabled style="cursor: not-allowed;background-color:#efefef;color: #000000;">
 
+            <label for="age_p">Age:</label>
+            <input type="text" id="age_p" name="age_p" value="" disabled style="cursor: not-allowed;background-color:#efefef;color: #000000;">
+            <span id="age_p-error" class="error-message" style="color:red"></span>
             <br><br>
+
             <label>Gender:</label>
-            <input type="radio" name="gender" value="M" checked="checked">
+            <input type="radio" name="gender" value="Male" checked="checked" required>
             <span class="bodytext">Male</span>
-            <input type="radio" name="gender" value="F">
+            <input type="radio" name="gender" value="Female">
             <span class="bodh2ytext">Female</span>
-            <input type="radio" name="gender" value="T">
-            <span class="bodytext">Transgender</span>
-
-            <br><br>
-            <label for="education">Education:</label>
-            <select name="education">
-                <option value="">Please Select Highest Qualification</option>
-                <option value="1">Primary</option>
-                <option value="2">Middle/Higher Primary</option>
-                <option value="3">Senior Secondary</option>
-                <option value="4">Higher Secondary</option>
-                <option value="5">Diploma</option>
-                <option value="6">Graduate</option>
-                <option value="7">PG Diploma</option>
-                <option value="8">Post Graduate</option>
-                <option value="9">Doctorate</option>
-                <option value="10">Illiterate</option>
-            </select>
+            <input type="radio" name="gender" value="Other">
+            <span class="bodytext">Other</span>
+            <span id="gender-error" class="error-message" style="color:red"></span>
             <br><br>
 
-            <label for="cast_p">Category:</label>
+            <label for="cast_p">Category: </label>
             <select name="cast_p" id="cast_p" required>
+                <option value="">Please Select Cast </option>
                 <?php
-                $cast_type_qry_p = "select * from cast";
-                $cast_type_p = mysqli_query($con, $cast_type_qry_p);
-                foreach ($cast_type_p as $key => $cast_p) {
+                $cast_type_qry_s = "select * from cast";
+                $cast_type_s = mysqli_query($con, $cast_type_qry_s);
+                foreach ($cast_type_s as $key => $cast_s) {
                 ?>
-                    <option value="">Please Select Cast </option>
-                    <option value="<?php echo $cast_p['cast_id'] ?>"><?php echo $cast_p['cast_name'] ?></option>
-                <?php
-                }
-                ?>
-            </select>
-            <br><br>
-        </div>
-        <div class="form-group">
-            <label for="img_passenger">Photo Upload:</label>
-            <input type="file" name="img_passenger" id="img_passenger" accept=".jpg, .jpeg, .png">
-            <p>[Self-attached Passport size Photo Copy. Max size: 200KB]</p>
-            <span id="photo-upload-error-passenger" style="color: red;"></span>
-
-            <br><br>
-            <label for="address_proof">Select Document for Address Proof:</label>
-            <select id="address_proof" name="address_proof" class="hasCustomSelect valid">
-                <?php
-                $address_proof_qry_p = "SELECT * FROM document_type";
-                $add_p = mysqli_query($con, $address_proof_qry_p);
-                foreach ($add_p as $key => $add_proof_p) {
-                ?>
-                    <option value="">Please Select Document</option>
-                    <option value="<?php echo $add_proof_p['id'] ?>"><?php echo $add_proof_p['name'] ?></option>
+                    <option value="<?php echo $cast_s['cast_id'] ?>"><?php echo $cast_s['cast_name'] ?></option>
                 <?php
                 }
                 ?>
             </select>
+            <span id="cast_p-error" class="error-message" style="color:red"></span>
             <br><br>
-            <label for="passenger_address_proof_upload">Upload Proof of Correspondence Address:</label>
-            <input type="file" id="passenger_address_proof_upload" name="passenger_address_proof_upload" accept=".jpg, .jpeg, .png">
-            <p>[Self-attached Passport size Photo Copy. Max size: 200KB]</p>
-            <span id="address-proof-error-passenger" style="color: red;"></span>
 
+            <label for="education">Education:</label>
+            <select name="education" id="education" required>
+                <option value="--">Please Select Highest Qualification</option>
+                <option value="Primary">Primary</option>
+                <option value="Middle/Higher Primary">Middle/Higher Primary</option>
+                <option value="Senior Secondary">Senior Secondary</option>
+                <option value="Higher Secondary">Higher Secondary</option>
+                <option value="Diploma">Diploma</option>
+                <option value="Graduate">Graduate</option>
+                <option value="PG Diploma">PG Diploma</option>
+                <option value="Post Graduate">Post Graduate</option>
+                <option value="Doctorate">Doctorate</option>
+                <option value="Illiterate">Illiterate</option>
+            </select>
+            <span id="education-error" class="error-message" style="color:red"></span>
+            <br><br>
+
+            <label for="company_name">Company Name:</label>
+            <input type="text" id="company_name" name="company_name" required>
+            <span id="company_name-error" class="error-message" style="color:red"></span>
+            <br><br>
+
+            <label for="Company_address">Company Address:</label>
+            <textarea name="Company_address" id="Company_address" cols="20" rows="3" required></textarea>
+            <span id="Company_address-error" class="error-message" style="color:red"></span>
+            <br><br>
         </div>
 
         <div class="form-group">
-            <h1>Company Details</h1>
+            <h1>Proof Details</h1>
             <hr>
-            <label for="institute_name">Company Name:</label>
-            <input type="text" id="institute_name" name="institute_name">
+            <label for="img_p">Photo Upload:</label>
+            <input type="file" name="img_p" id="img_p" accept=".png, .jpg, .jpeg" required>
+            <p>[Self-attached Passport size Photo Copy. Max size: 300KB]</p>
+            <span id="photo_error_p" class="error-message" style="color: red;"></span>
+            <br>
+
+            <label for="address_proof">Select Document for Address Proof:</label>
+            <select id="address_proof" name="address_proof" class="error-message" required>
+                <option value="--">Please Select Document</option>
+                <?php
+                $address_proof_qry_s = "SELECT * FROM document_type";
+                $add_s = mysqli_query($con, $address_proof_qry_s);
+                foreach ($add_s as $key => $add_proof_s) {
+                ?>
+                    <option value="<?php echo $add_proof_s['id'] ?>"><?php echo $add_proof_s['name'] ?></option>
+                <?php
+                }
+                ?>
+            </select>
+            <span id="address_error" class="error-message" style="color: red;"></span>
             <br><br>
-            <label for="institute_address">Company Address:</label>
-            <textarea name="institute_address" id="institute_address" cols="20" rows="3"></textarea>
-            <br><br>
+
+            <label for="passanger_address_proof_upload">Upload Proof For Address:</label>
+            <input type="file" id="passanger_address_proof_upload" name="passanger_address_proof_upload" accept=".pdf, .jpg, .jpeg, .png" required>
+            <p>[Self-attached size Max size: 200KB]</p>
+            <span id="address_proof_error" class="error-message" style="color: red;"></span>
+            <br>
         </div>
+
         <div class="form-group">
+            <h1>Location Details</h1>
+            <hr>
             <label for="passType_p">Pass Type:</label>
-            <select name="passType_p" id="passType_p">
+            <select name="passType_p" id="passType_p" required>
                 <option value="30" selected>Monthly</option>
                 <option value="90">Quarterly</option>
             </select>
             <br><br>
+
             <label for="fromDate_p">From Date:</label>
             <input type="date" value="<?php echo date('Y-m-d') ?>" name="fromDate_p" id="fromDate_p">
-
-            <br><br>
-            <label for="toDate_passanger">To Date:</label>
-            <input type="date" name="toDate_passanger" id="toDate_passanger" disabled style="cursor: not-allowed;background-color:#efefef;color: #000000;">
             <br><br>
 
-            <label for="fromPlace_handi">From Place:</label>
-            <input type="text" id="fromPlace_handi" class="fromPlace_h">
+            <label for="toDate_p">To Date:</label>
+            <input type="date" name="toDate_p" id="toDate_p" style="cursor:not-allowed; background-color:#efefef; color:#000000;">
             <br><br>
-            <label for="toPlace_handi">To Place:</label>
-            <input type="text" id="toPlace_handi" class="toPlace_h">
 
-            <br><br>
-            <label for="classOfService_p">Class Of Service:</label>
-            <select name="classOfService_p" id="classOfService_p">
+
+            <label for="fromPlace_p">From Place:</label>
+            <select name="fromPlace_p" id="fromPlace_p" class="fromPlace_p" required>
+                <option value=" ">Select From Location</option>
                 <?php
-                $bus_type_qry_p = "select * from bus_type";
-                $bus_types_p = mysqli_query($con, $bus_type_qry_p);
-                foreach ($bus_types_p as $key => $bus_t_p) {
+                $from_qry_s  =  "SELECT * FROM bus_terminals";
+                $from_types_s = mysqli_query($con, $from_qry_s);
+                foreach ($from_types_s as $key => $from_t_s) {
                 ?>
-                    <option value="<?php echo $bus_t_p['price_multiply'] ?>"><?php echo $bus_t_p['bus_name'] ?></option>
+                    <option value="<?php echo $from_t_s['ter_id'] ?>"><?php echo $from_t_s['ter_name'] ?></option>
                 <?php
                 }
                 ?>
             </select>
+            <span id="fromPlace_p-error" class="error-message" style="color: red;"></span>
+            <br><br>
+
+            <label for="toPlace_p">To Place:</label>
+            <select name="toPlace_p" id="toPlace_p" class="toPlace_p" required>
+                <option value=" ">Select To Location</option>
+                <?php
+                $from_qry_s  =  "SELECT * FROM bus_terminals";
+                $from_types_s = mysqli_query($con, $from_qry_s);
+                foreach ($from_types_s as $key => $from_t_s) {
+                ?>
+                    <option value="<?php echo $from_t_s['ter_id'] ?>"><?php echo $from_t_s['ter_name'] ?></option>
+                <?php
+                }
+                ?>
+            </select>
+            <span id="toPlace_p-error" class="error-message" style="color: red;"></span>
+            <br><br>
+
+            <label for="classOfService_p">Class Of Service:</label>
+            <select name="classOfService_p" id="classOfService_p" required>
+                <?php
+                $bus_type_qry_s  =  "SELECT * FROM bus_type ";
+                $bus_types_s = mysqli_query($con, $bus_type_qry_s);
+                foreach ($bus_types_s as $key => $bus_t_s) {
+                ?>
+                    <option value="<?php echo $bus_t_s['price_multiply'] ?>"><?php echo $bus_t_s['bus_name'] ?></option>
+                <?php
+                }
+                ?>
+            </select>
+            <span id="classOfService_p-error" class="error-message" style="color: red;"></span>
             <br><br>
             <hr>
         </div>
+
         <div class="form-group">
             <h2> Payment </h2>
             <hr>
             <input type="text" placeholder="Pay Amount.." id="pay-value_p" disabled style="cursor: not-allowed;background-color:#efefef;color: #000000;">
+            <br>
+            <input type="text" placeholder="Payment ID " id="payment_id_lbl_p" readonly name="payment_id" style="cursor: not-allowed;background-color:#efefef;color: #000000;">
+
             <br><br>
-            <button class="btn-pmt" id="paymentButton">Submit and Proceed to Payment</button>
+            <div class="btn-paynow btn-pmt" id="paynow_p" onclick="pay_now_p()">Pay Now</div>
+            <button class="btn-pmt" type="submit" id="paymentButton_p">Submit and Proceed </button>
         </div>
     </form>
-
 </body>
-<script>
-    $(document).ready(function() {
-        $('.form').hide();
 
-        function showForm(selectedCategory) {
-            $('#' + selectedCategory + 'Form').show();
-        }
-
-        $('#new_pass').click(function() {
-            $('.pass-page-container').show();
-
-            var selectedCategory = $('#categorySelect option:first').val();
-            console.log("Selected Category:", selectedCategory);
-
-            showForm(selectedCategory);
-        });
-
-        $('#categorySelect').change(function() {
-            var selectedCategory = $(this).val();
-            console.log("Selected Category:", selectedCategory);
-            $('.form').hide();
-
-            showForm(selectedCategory);
-            console.log("Displaying Form:", $('#' + selectedCategory + 'Form'));
-        });
-
-        var defaultCategory = $('#categorySelect').val();
-        showForm(defaultCategory);
-    });
-</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 
 
 <script>
-    $(document).ready(function() {
-        $('.form').hide();
+    function logout() {
+        window.location.href = '../logout.php';
+    }
 
-        $('#category_p').change(function() {
-            var selectedCategory = $(this).val();
-            console.log("Selected Category:", selectedCategory);
+    document.getElementById('logout-btn').addEventListener('click', logout);
 
-            $('.form').hide();
-
-            $('#category_p' + selectedCategory + 'Form').show();
-            console.log("Displaying Form:", $('#category_p' + selectedCategory + 'Form'));
-        });
-
-        let sidebar = document.querySelector(".sidebar");
-        let closeBtn = document.querySelector("#btn");
-
-        closeBtn.addEventListener("click", () => {
-            sidebar.classList.toggle("open");
-            menuBtnChange();
-        });
-
-        function menuBtnChange() {
-            if (sidebar.classList.contains("open")) {
-                closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
-            } else {
-                closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");
-            }
-        }
-
-        function logout() {
-            window.location.href = '../logout.php';
-        }
-
-        document.getElementById('logout-btn').addEventListener('click', logout);
-
-    });
-
-    // ---------------------------------------------------------------
 
     $(function() {
         var placesInGujarat = [
@@ -317,27 +302,26 @@
             "Wankaner",
             "Padra",
             "Dabhoi",
+            "Buhari",
         ];
 
-        $(".fromPlace_h, .toPlace_h").autocomplete({
+        $(".fromPlace_p, .toPlace_p").autocomplete({
             source: placesInGujarat,
             minLength: 1,
         });
     });
 
-
-    // ------------------------------------------------------------------
-
-
-    $(".fromPlace_h , .toPlace_h").change(function() {
+    $(".fromPlace_p, .toPlace_p").change(function() {
         calculatePassAmount_p();
     })
 
     function calculatePassAmount_p() {
-        var from = $('.fromPlace_h').val();
-        var to = $('.toPlace_h').val();
+        var from = $(document).find('#fromPlace_p').val();
+        var to = $(document).find('#toPlace_p').val();
 
-        if (from != '' && to != '') {
+        console.log(from , to);
+
+        if (from != '' && to != '' && from != to) {
             $.ajax({
                 type: 'post',
                 url: 'get_geo_loc.php',
@@ -347,6 +331,7 @@
                     to: to,
                 },
                 success: function(res) {
+                    rs = 0;
                     console.log(calculateDistance_p(res[0].lati, res[0].long, res[1].lati, res[1].long));
                     distance = Math.ceil(calculateDistance_p(res[0].lati, res[0].long, res[1].lati, res[1].long));
                     rs = distance * 13;
@@ -358,17 +343,27 @@
                     } else if (passType_p === "90") {
                         rs = distance * 13 * multipy * 3;
                     }
+
                     $("#pay-value_p").val(Math.ceil(rs) + " Rs/-");
                 }
             })
+        } else {
+            $("#pay-value_p").val(0 + " Rs/-");
         }
+
     }
 
     $('#classOfService_p').change(function() {
+        console.log(1111111);
         calculatePassAmount_p();
+        console.log(22222222);
     })
     $('#passType_p').change(function() {
+        console.log(33333333);
+
         calculatePassAmount_p();
+
+        console.log(44444444);
     })
 
     function calculateDistance_p(lat1, lon1, lat2, lon2) {
@@ -386,34 +381,34 @@
         return distance;
     }
 
-
-    // ------------------------------------------------------------------
-
-
-    $(document).on('change', "#dateofBirth_passanger", function() {
-        var date = $(document).find("#dateofBirth_passanger").val();
+    $(document).on('change', "#dateofBirth", function() {
+        var date = $(document).find("#dateofBirth").val();
         var dob = new Date(date);
 
         var today = new Date();
         var diff = today.getTime() - dob.getTime();
         var age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
 
-        $(document).find("#age_passanger").val(age);
+        $(document).find("#age_p").val(age);
         console.log(age);
     });
 
-    updateToDate_passanger();
+    updateToDate_p();
 
-    function updateToDate_passanger() {
-        var passType = $('#passType_p').val();
-        var fromDate = $("#fromDate_p").val();
+    function updateToDate_p() {
+        var passType_p = $('#passType_p').val();
+        var fromDate_p = $("#fromDate_p").val();
 
-        var fromDateObj = new Date(fromDate);
-        var toDateObj = new Date(fromDateObj);
+        if (passType_p === "--" || fromDate_p === " ") {
+            return;
+        }
 
-        if (passType === "30") {
+        var fromDate_pObj = new Date(fromDate_p);
+        var toDateObj = new Date(fromDate_pObj);
+
+        if (passType_p === "30") {
             toDateObj.setDate(toDateObj.getDate() + 30);
-        } else if (passType === "90") {
+        } else if (passType_p === "90") {
             toDateObj.setDate(toDateObj.getDate() + 90);
         }
 
@@ -421,87 +416,233 @@
         var month = String(toDateObj.getMonth() + 1).padStart(2, '0');
         var day = String(toDateObj.getDate()).padStart(2, '0');
 
-        var toDate_passanger = year + '-' + month + '-' + day;
+        var toDate = year + '-' + month + '-' + day;
 
-        $(document).find("#toDate_passanger").val(toDate_passanger);
+        $(document).find("#toDate_p").val(toDate);
     }
 
     $(document).on('change', "#fromDate_p", function() {
-        updateToDate_passanger();
+        updateToDate_p();
     });
 
     $(document).on('change', "#passType_p", function() {
-        updateToDate_passanger();
+        updateToDate_p();
     });
 </script>
 <script>
     $(document).ready(function() {
-        function addFileInputValidation_pas(inputId, errorId, maxSizeKB) {
-            $(inputId).on('change', function() {
-                const file = this.files[0];
-                const errorElement = $(errorId);
+        $('#paymentButton_p').hide();
+        $('#payment_id_lbl_p').hide();
 
-                if (!file) {
-                    errorElement.text('No file selected');
-                    return;
-                }
+        function validateForm() {
+            let isValid = true;
 
-                const allowedExtensions = /\.(jpg|jpeg|png)$/i;
-                if (!allowedExtensions.test(file.name)) {
-                    errorElement.text('Invalid file type. Allowed: JPG, JPEG, PNG');
-                    this.value = '';
-                    return;
-                }
+            function showError(fieldId, errorMessage) {
+                const errorSpan = $(fieldId + '-error');
+                errorSpan.text(errorMessage);
+                errorSpan.show();
+                isValid = false;
+            }
 
-                const maxFileSize = maxSizeKB * 1024;
-                if (file.size > maxFileSize) {
-                    errorElement.text('File size exceeds the maximum allowed (' + maxSizeKB + 'KB)');
-                    this.value = '';
-                    return;
-                }
-                errorElement.text('');
-            });
+            function clearError(fieldId) {
+                const errorSpan = $(fieldId + '-error');
+                errorSpan.text('');
+                errorSpan.hide();
+            }
+
+            const fullnameValue = $('#fullname').val();
+            if (fullnameValue === '' || /[0-9~!@#$%^&*()_+={}\[\]:;"'<>,.?/\\|`\-]/.test(fullnameValue)) {
+                showError('#fullname', 'Please enter a valid Full Name with only letters and spaces.');
+            } else {
+                clearError('#fullname');
+            }
+
+            const mobileNoValue = $('#mobileNo').val();
+            if (mobileNoValue === '' || !/^\d{10}$/.test(mobileNoValue)) {
+                showError('#mobileNo', 'Please enter a valid 10-digit Phone Number.');
+            } else {
+                clearError('#mobileNo');
+            }
+
+            const addressValue = $('#address').val();
+            if (addressValue === '') {
+                showError('#address', 'Address is required.');
+            } else {
+                clearError('#address');
+            }
+
+            const dateofBirthValue = $('#dateofBirth').val();
+            if (dateofBirthValue === '') {
+                showError('#dateofBirth', 'Date of Birth is required.');
+            } else {
+                clearError('#dateofBirth');
+            }
+
+            const castStdValue = $('#cast_p').val();
+            if (castStdValue === '') {
+                showError('#cast_p', 'Category is required.');
+            } else {
+                clearError('#cast_p');
+            }
+
+            const educationValue = $('#education').val();
+            if (educationValue === '--') {
+                showError('#education', 'Education is required.');
+            } else {
+                clearError('#education');
+            }
+
+            const instituteNameValue = $('#company_name').val();
+            if (instituteNameValue === '') {
+                showError('#company_name', 'Institute Name is required.');
+            } else {
+                clearError('#company_name');
+            }
+
+            const instituteAddressValue = $('#Company_address').val();
+            if (instituteAddressValue === '') {
+                showError('#Company_address', 'Institute Address is required.');
+            } else {
+                clearError('#Company_address');
+            }
+
+
+            const addressProofValue = $('#address_proof').val();
+            if (addressProofValue === '--') {
+                document.getElementById("address_error").innerHTML = "Please select a Document for Address Proof"
+                // showError('#address_proof-error', 'Please select a Document for Address Proof.');
+            } else {
+                clearError('#address_proof-error');
+            }
+
+            const studentAddressProofValue = $('#passanger_address_proof_upload').val();
+            if (studentAddressProofValue === '') {
+                document.getElementById("address_proof_error").innerHTML = "Please upload a proof for address."
+                // showError('#address-proof-student-error', 'Please upload a proof for address.');
+            } else {
+                clearError('#address-proof-student-error');
+            }
+
+
+            const fromPlace_pValue = $('#fromPlace_p').val();
+            if (fromPlace_pValue === '' || fromPlace_pValue === ' ') {
+                showError('#fromPlace_p', 'Please select a From Place.');
+            } else {
+                clearError('#fromPlace_p');
+            }
+
+            const toPlace_pValue = $('#toPlace_p').val();
+            if (toPlace_pValue === '' || toPlace_pValue === ' ') {
+                showError('#toPlace_p', 'Please select a To Place.');
+            } else {
+                clearError('#toPlace_p');
+            }
+
+            if (!isValid) {
+                alert('Please fill in all required fields and correct any errors.');
+            }
+            return isValid;
         }
 
-        addFileInputValidation_pas('#img_passenger', '#photo-upload-error-passenger', 200);
-        addFileInputValidation_pas('#passenger_address_proof_upload', '#address-proof-error-passenger', 200);
+        window.pay_now_p = function() {
+            if (validateForm()) {
+                var amtWithSuffix = $('#pay-value_p').val();
+                var amt = parseInt(amtWithSuffix.match(/\d+/)[0], 10);
+                console.log(amt);
 
+                var options = {
+                    "key": "rzp_test_qScTznNfxHjAQP",
+                    "amount": amt * 100,
+                    "currency": "INR",
+                    "name": "BUS PASS ",
+                    "description": "Your Pass Payment ",
+                    "image": "../img/buslogo.png",
 
+                    "handler": function(response) {
+                        console.log(response.razorpay_payment_id);
+                        if (response.razorpay_payment_id) {
+
+                            $('#paynow_p').hide();
+                            $('#payment_id_lbl_p').val(response.razorpay_payment_id);
+                            $('#paymentButton_p').show();
+
+                        }
+                    }
+                };
+                var rzp1 = new Razorpay(options);
+                rzp1.open();
+            }
+        };
     });
 </script>
 <script>
-    $('input[name="have_disability_cert"]').on('change', function() {
-        var disabilityCertField = $('.disabilitycert');
-        if ($(this).val() === "1") {
-            disabilityCertField.show();
-        } else {
-            disabilityCertField.hide();
-        }
-    });
-</script>
-<script>
-    var checkboxes = document.querySelectorAll('input[name="disability_area[]"]');
-    var selectedData = document.getElementById('selectedData');
+    $(document).ready(function() {
+        const imgStdInput = $('#img_p');
+        const photoErrorElement = $('#photo_error_p');
 
-    checkboxes.forEach(function(checkbox) {
-        checkbox.addEventListener('change', function() {
-            updateSelectedData();
-        });
-    });
+        imgStdInput.on('change', function() {
+            const file = this.files[0];
 
-    function updateSelectedData() {
-        var selectedValues = [];
-        checkboxes.forEach(function(checkbox) {
-            if (checkbox.checked) {
-                selectedValues.push(checkbox.value);
+            if (file) {
+                const allowedFormats = ['image/png', 'image/jpeg', 'image/jpg'];
+                const maxFileSize = 300 * 1024;
+                const minFileSize = 50 * 1024;
+
+                if (!allowedFormats.includes(file.type)) {
+                    displayError(photoErrorElement, 'Please upload an image in PNG, JPG, or JPEG format.');
+                    imgStdInput.val('');
+                } else if (file.size < minFileSize) {
+                    displayError(photoErrorElement, 'Please upload an image that is at least 50KB in size.');
+                    imgStdInput.val('');
+                } else if (file.size > maxFileSize) {
+                    displayError(photoErrorElement, 'Please upload an image that is no more than 300KB in size.');
+                    imgStdInput.val('');
+                } else {
+                    clearError(photoErrorElement);
+                }
+
+            } else {
+                clearError(photoErrorElement);
             }
         });
-        selectedData.value = selectedValues.join(', ');
+    });
+
+    $(document).ready(function() {
+        const addressProofInput = $('#passanger_address_proof_upload');
+        const addressProofErrorElement = $('#address_proof_error');
+
+        addressProofInput.on('change', function() {
+            const file = this.files[0];
+
+            if (file) {
+                const allowedFormats = ['application/pdf', 'image/jpg', 'image/jpeg', 'image/png'];
+                const maxFileSize = 200 * 1024;
+                const minFileSize = 20 * 1024;
+
+                if (!allowedFormats.includes(file.type)) {
+                    displayError(addressProofErrorElement, 'Please upload a PDF, JPG, JPEG, or PNG file.');
+                    addressProofInput.val('');
+                } else if (file.size < minFileSize) {
+                    displayError(photoErrorElement, 'Please upload an image that is at least 50KB in size.');
+                    imgStdInput.val('');
+                } else if (file.size > maxFileSize) {
+                    displayError(addressProofErrorElement, 'Please upload a file that is no more than 200KB in size.');
+                    addressProofInput.val('');
+                } else {
+                    clearError(addressProofErrorElement);
+                }
+            } else {
+                clearError(addressProofErrorElement);
+            }
+        });
+    });
+
+    function displayError(element, message) {
+        element.text(message);
     }
-</script>
-<script>
-    function redirectToPayment() {
-        window.location.href = "../main/payment.php";
+
+    function clearError(element) {
+        element.text('');
     }
 </script>
 

@@ -27,6 +27,7 @@ if ($result->num_rows > 0) {
         $ends_term_id = $row['ends_term_id'];
         $from_date = $row['from_date'];
         $to_date = $row['to_date'];
+        $passType = $row['passType'];
     }
 }
 $query = "SELECT bus_name from bus_type where price_multiply =$bus_type";
@@ -138,6 +139,8 @@ if ($result) {
                         <p><strong>Date of Birth:</strong> <?php echo date('d-m-Y', strtotime($dob)); ?></p>
                         <hr style="width: 60%!important;">
                         <p><strong>Pass Type:</strong> <?php echo $bus_type; ?></p>
+                        <p><strong>Pass Type:</strong> <?php echo $passType; ?></p>
+
                     </div>
                 </div>
             </div>
@@ -177,6 +180,7 @@ if ($result) {
     Name: <?php echo $full_name; ?>
     Gender: <?php echo $gender; ?>
     Pass Type: <?php echo $bus_type; ?>
+    Pass Type: <?php echo $passType?>
     From Location: <?php echo $start_term_id; ?>
     To Location: <?php echo $ends_term_id; ?>
 `;

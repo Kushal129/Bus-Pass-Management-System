@@ -139,7 +139,7 @@ if (!isset($_SESSION['username'])) {
                     <select name="category" id="category" class="category">
                         <option value="">Select</option>
                         <option value="Student">Student</option>
-                        <option value="Passenger" disabled>Passenger</option>
+                        <option value="Passenger">Passenger</option>
                         <option value="Handicap" disabled>Handicap</option>
                     </select>
                 </div>

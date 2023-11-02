@@ -3,159 +3,159 @@ session_start();
 
 include_once '../connection.php';
 
-if (!isset($_POST['education'], $_POST['institute_name'], $_POST['institute_address'], $_POST['address_proof'], $_POST['fullname'], $_POST['address'], $_POST['gender'], $_POST['validate_through'], $_POST['dateofBirth'], $_POST['classOfService'], $_POST['fromPlaceStudent'], $_POST['toPlaceStudent'], $_POST['payment_id'], $_POST['fromDate'], $_POST['toDate'])) {
-    die("Required fields are missing. passs formate mathi");
-}
+// if (!isset($_POST['education'], $_POST['institute_name'], $_POST['institute_address'], $_POST['address_proof'], $_POST['fullname'], $_POST['address'], $_POST['gender'], $_POST['validate_through'], $_POST['dateofBirth'], $_POST['classOfService'], $_POST['fromPlaceStudent'], $_POST['toPlaceStudent'], $_POST['payment_id'], $_POST['fromDate'], $_POST['toDate'])) {
+//     die("Required fields are missing. passs formate mathi");
+// }
 
-// print_r($_POST);
+print_r($_POST);
 
-$user_id = $_SESSION['user_id'];
-$education = $_POST['education'];
-$institute_name = $_POST['institute_name'];
-$institute_address = $_POST['institute_address'];
+// $user_id = $_SESSION['user_id'];
+// $education = $_POST['education'];
+// $institute_name = $_POST['institute_name'];
+// $institute_address = $_POST['institute_address'];
 
-$education = mysqli_real_escape_string($con, $education);
-$institute_name = mysqli_real_escape_string($con, $institute_name);
-$institute_address = mysqli_real_escape_string($con, $institute_address);
+// $education = mysqli_real_escape_string($con, $education);
+// $institute_name = mysqli_real_escape_string($con, $institute_name);
+// $institute_address = mysqli_real_escape_string($con, $institute_address);
 
-$qry = "INSERT INTO student (education, Institute_name, Institute_address ,user_id) VALUES ('$education', '$institute_name', '$institute_address' ,$user_id)";
-mysqli_query($con, $qry);
-$studentInsertedId = mysqli_insert_id($con);
+// $qry = "INSERT INTO student (education, Institute_name, Institute_address ,user_id) VALUES ('$education', '$institute_name', '$institute_address' ,$user_id)";
+// mysqli_query($con, $qry);
+// $studentInsertedId = mysqli_insert_id($con);
 
-$uploadsDirectory = "../uploads/documents/";
+// $uploadsDirectory = "../uploads/documents/";
 
-if (!file_exists($uploadsDirectory)) {
-    mkdir($uploadsDirectory, 0777, true);
-}
+// if (!file_exists($uploadsDirectory)) {
+//     mkdir($uploadsDirectory, 0777, true);
+// }
 
-if (isset($_FILES["student_address_proof_upload"])) {
-    $filename = date('Ymd') . rand(0, 10000) . basename($_FILES["student_address_proof_upload"]["name"]);
-    $targetFile = $uploadsDirectory . $filename;
-    if (move_uploaded_file($_FILES["student_address_proof_upload"]["tmp_name"], $targetFile)) {
-    } else {
-        die("Sorry, there was an error uploading your file.");
-    }
+// if (isset($_FILES["student_address_proof_upload"])) {
+//     $filename = date('Ymd') . rand(0, 10000) . basename($_FILES["student_address_proof_upload"]["name"]);
+//     $targetFile = $uploadsDirectory . $filename;
+//     if (move_uploaded_file($_FILES["student_address_proof_upload"]["tmp_name"], $targetFile)) {
+//     } else {
+//         die("Sorry, there was an error uploading your file.");
+//     }
 
-    $document_type_id = $_POST['address_proof'];
-    $document_file_name = $filename;
+//     $document_type_id = $_POST['address_proof'];
+//     $document_file_name = $filename;
 
-    $document_type_id = mysqli_real_escape_string($con, $document_type_id);
-    $document_file_name = mysqli_real_escape_string($con, $document_file_name);
+//     $document_type_id = mysqli_real_escape_string($con, $document_type_id);
+//     $document_file_name = mysqli_real_escape_string($con, $document_file_name);
 
-    $qry = "INSERT INTO document (document_type_id, document_file_name) VALUES ('$document_type_id', '$document_file_name')";
-    mysqli_query($con, $qry);
-    $lastInsertedId = mysqli_insert_id($con);
-} else {
-    die("Student address proof upload is missing.");
-}
+//     $qry = "INSERT INTO document (document_type_id, document_file_name) VALUES ('$document_type_id', '$document_file_name')";
+//     mysqli_query($con, $qry);
+//     $lastInsertedId = mysqli_insert_id($con);
+// } else {
+//     die("Student address proof upload is missing.");
+// }
 
-$full_name = $_POST['fullname'];
-$address = $_POST['address'];
-$gender = $_POST['gender'];
-$role = 0;
-$validate_through = $_POST['validate_through'];
-$dob = $_POST['dateofBirth'];
-$uploadsDirectory = "../uploads/user_photo/";
+// $full_name = $_POST['fullname'];
+// $address = $_POST['address'];
+// $gender = $_POST['gender'];
+// $role = 0;
+// $validate_through = $_POST['validate_through'];
+// $dob = $_POST['dateofBirth'];
+// $uploadsDirectory = "../uploads/user_photo/";
 
-if (!file_exists($uploadsDirectory)) {
-    mkdir($uploadsDirectory, 0777, true);
-}
+// if (!file_exists($uploadsDirectory)) {
+//     mkdir($uploadsDirectory, 0777, true);
+// }
 
-if (isset($_FILES["img_std"])) {
-    $filename = date('Ymd') . rand(0, 10000) . basename($_FILES["img_std"]["name"]);
-    $targetFile = $uploadsDirectory . $filename;
-    if (move_uploaded_file($_FILES["img_std"]["tmp_name"], $targetFile)) {
-    } else {
-        die("Sorry, there was an error uploading your user image.");
-    }
+// if (isset($_FILES["img_std"])) {
+//     $filename = date('Ymd') . rand(0, 10000) . basename($_FILES["img_std"]["name"]);
+//     $targetFile = $uploadsDirectory . $filename;
+//     if (move_uploaded_file($_FILES["img_std"]["tmp_name"], $targetFile)) {
+//     } else {
+//         die("Sorry, there was an error uploading your user image.");
+//     }
 
-    $user_img_path = $filename;
+//     $user_img_path = $filename;
 
-    $qry = "INSERT INTO passenger_info (full_name, address, document_id, gender, role, r_id, user_id, validate_through, dob, user_img_path) 
-            VALUES ('$full_name', '$address', $lastInsertedId, '$gender', $role, $studentInsertedId, {$_SESSION['user_id']}, '$validate_through', '$dob', '$user_img_path')";
-    mysqli_query($con, $qry);
-    $pasangerInsertedId = mysqli_insert_id($con);
+//     $qry = "INSERT INTO passenger_info (full_name, address, document_id, gender, role, r_id, user_id, validate_through, dob, user_img_path) 
+//             VALUES ('$full_name', '$address', $lastInsertedId, '$gender', $role, $studentInsertedId, {$_SESSION['user_id']}, '$validate_through', '$dob', '$user_img_path')";
+//     mysqli_query($con, $qry);
+//     $pasangerInsertedId = mysqli_insert_id($con);
 
-    $passenger_id = $pasangerInsertedId;
-    $bus_type = $_POST['classOfService'];
-    $start_term_id = $_POST['fromPlaceStudent'];
-    $ends_term_id = $_POST['toPlaceStudent'];
-    $payment_id = $_POST['payment_id'];
-    $image_id = 1;
-    $from_date = $_POST['fromDate'];
-    $_COOKIE['from_date'] = $from_date;
-    $to_date = $_POST['toDate'];
-    setcookie("from_date", $from_date);
-    $_SESSION["from_date"] = $from_date;
-    $_COOKIE['to_date'] = $to_date;
-    $_SESSION['to_date'] = $to_date;
-    $passType = $_POST['passType'];
+//     $passenger_id = $pasangerInsertedId;
+//     $bus_type = $_POST['classOfService'];
+//     $start_term_id = $_POST['fromPlaceStudent'];
+//     $ends_term_id = $_POST['toPlaceStudent'];
+//     $payment_id = $_POST['payment_id'];
+//     $image_id = 1;
+//     $from_date = $_POST['fromDate'];
+//     $_COOKIE['from_date'] = $from_date;
+//     $to_date = $_POST['toDate'];
+//     setcookie("from_date", $from_date);
+//     $_SESSION["from_date"] = $from_date;
+//     $_COOKIE['to_date'] = $to_date;
+//     $_SESSION['to_date'] = $to_date;
+//     $passType = $_POST['passType'];
 
-    $qry = "INSERT INTO pass (passenger_id, user_id,passType ,bus_type, start_term_id, ends_term_id, payment_id, image_id, from_date, to_date) VALUES 
-            ($passenger_id, {$_SESSION['user_id']}, $passType ,$bus_type, $start_term_id, $ends_term_id, '$payment_id', $image_id, '$from_date', '$to_date')";
+//     $qry = "INSERT INTO pass (passenger_id, user_id,passType ,bus_type, start_term_id, ends_term_id, payment_id, image_id, from_date, to_date) VALUES 
+//             ($passenger_id, {$_SESSION['user_id']}, $passType ,$bus_type, $start_term_id, $ends_term_id, '$payment_id', $image_id, '$from_date', '$to_date')";
 
-    mysqli_query($con, $qry);
+//     mysqli_query($con, $qry);
 
-    $frussian = $_SESSION['user_id'];
-    $updateUserImgQuery = "UPDATE users SET user_img_path='$user_img_path' WHERE id=$frussian";
-    mysqli_query($con, $updateUserImgQuery);
+//     $frussian = $_SESSION['user_id'];
+//     $updateUserImgQuery = "UPDATE users SET user_img_path='$user_img_path' WHERE id=$frussian";
+//     mysqli_query($con, $updateUserImgQuery);
 
-    $query = "SELECT
-        pi.validate_through,
-        pi.gender,
-        pi.dob,
-        pi.user_img_path,
-        pi.role,
-        pi.user_id,
-        pi.address,
-        pi.full_name
-    FROM
-        passenger_info AS pi
-    WHERE
-        pi.user_id = {$_SESSION['user_id']}";
+//     $query = "SELECT
+//         pi.validate_through,
+//         pi.gender,
+//         pi.dob,
+//         pi.user_img_path,
+//         pi.role,
+//         pi.user_id,
+//         pi.address,
+//         pi.full_name
+//     FROM
+//         passenger_info AS pi
+//     WHERE
+//         pi.user_id = {$_SESSION['user_id']}";
 
-    $result = mysqli_query($con, $query);
+//     $result = mysqli_query($con, $query);
 
-    if ($result) {
-        while ($row = mysqli_fetch_assoc($result)) {
-            $validate_through = $row['validate_through'];
-            $user_id = $row['user_id'];
-            $full_name = $row['full_name'];
-            $dob = $row['dob'];
-            $gender = $row['gender'];
-            $user_img_path = $row['user_img_path'];
-            $role = $row['role'];
-            $address = $row['address'];
-        }
-    }
-} else {
-    die("User image upload is missing.");
-}
+//     if ($result) {
+//         while ($row = mysqli_fetch_assoc($result)) {
+//             $validate_through = $row['validate_through'];
+//             $user_id = $row['user_id'];
+//             $full_name = $row['full_name'];
+//             $dob = $row['dob'];
+//             $gender = $row['gender'];
+//             $user_img_path = $row['user_img_path'];
+//             $role = $row['role'];
+//             $address = $row['address'];
+//         }
+//     }
+// } else {
+//     die("User image upload is missing.");
+// }
 
-$query = "SELECT bus_name from bus_type where price_multiply =$bus_type";
-$result = mysqli_query($con, $query);
-if ($result) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $bus_type = $row['bus_name'];
-    }
-}
+// $query = "SELECT bus_name from bus_type where price_multiply =$bus_type";
+// $result = mysqli_query($con, $query);
+// if ($result) {
+//     while ($row = mysqli_fetch_assoc($result)) {
+//         $bus_type = $row['bus_name'];
+//     }
+// }
 
-$query = "SELECT ter_name from bus_terminals where ter_id=$start_term_id";
-$result = mysqli_query($con, $query);
-if ($result) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $start_term_id = $row['ter_name'];
-    }
-}
+// $query = "SELECT ter_name from bus_terminals where ter_id=$start_term_id";
+// $result = mysqli_query($con, $query);
+// if ($result) {
+//     while ($row = mysqli_fetch_assoc($result)) {
+//         $start_term_id = $row['ter_name'];
+//     }
+// }
 
 
-$query = "SELECT ter_name from bus_terminals where ter_id=$ends_term_id";
-$result = mysqli_query($con, $query);
-if ($result) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $ends_term_id = $row['ter_name'];
-    }
-}
+// $query = "SELECT ter_name from bus_terminals where ter_id=$ends_term_id";
+// $result = mysqli_query($con, $query);
+// if ($result) {
+//     while ($row = mysqli_fetch_assoc($result)) {
+//         $ends_term_id = $row['ter_name'];
+//     }
+// }
 
 ?>
 
