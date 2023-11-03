@@ -52,7 +52,7 @@ if (isset($_FILES["student_address_proof_upload"])) {
 $full_name = $_POST['fullname'];
 $address = $_POST['address'];
 $gender = $_POST['gender'];
-$role = 0;
+$role = "Student Pass ";
 $validate_through = $_POST['validate_through'];
 $dob = $_POST['dateofBirth'];
 $uploadsDirectory = "../uploads/user_photo/";
@@ -72,7 +72,7 @@ if (isset($_FILES["img_std"])) {
     $user_img_path = $filename;
 
     $qry = "INSERT INTO passenger_info (full_name, address, document_id, gender, role, r_id, user_id, validate_through, dob, user_img_path) 
-            VALUES ('$full_name', '$address', $lastInsertedId, '$gender', $role, $studentInsertedId, {$_SESSION['user_id']}, '$validate_through', '$dob', '$user_img_path')";
+            VALUES ('$full_name', '$address', $lastInsertedId, '$gender', '$role', $studentInsertedId, {$_SESSION['user_id']}, '$validate_through', '$dob', '$user_img_path')";
     mysqli_query($con, $qry);
     $pasangerInsertedId = mysqli_insert_id($con);
 
@@ -220,6 +220,8 @@ if ($result) {
                             </div>
                             <div class="col-lg-6 col-md-6 col-12">
                                 <h2 class="ml-2 mt-3 text-center">Bus Pass Managment System</h2>
+                                <hr>
+                                <h4 class="ml-2 mt-3 text-center"><?php echo $role ?></h4>
                             </div>
                             <div class="col-lg-3 col-md-3 col-6 text-right">
                                 <p><strong>User Id: </strong> <?php echo  $user_id ?></p>
@@ -277,6 +279,7 @@ if ($result) {
     $(document).ready(function() {
         console.log("QR code generation function is executing.");
         const qrData = `
+    Pass: <?php echo $role; ?>
     From Date: <?php echo date('d-m-Y', strtotime($from_date)); ?>
     To Date: <?php echo date('d-m-Y', strtotime($to_date)); ?>
     Name: <?php echo $full_name; ?>

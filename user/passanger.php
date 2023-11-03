@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <form action="../main/passformate.php" method="POST" enctype="multipart/form-data">
+    <form action="../main/passformatep.php" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <h1>Passanger Pass Details</h1>
             <hr>
@@ -35,24 +35,24 @@
             <h1>Personal Details</h1>
             <hr>
 
-            <label for="fullname">Full Name:</label>
-            <input type="text" id="fullname" name="fullname" required>
-            <span id="fullname-error" class="error-message" style="color:red"></span>
+            <label for="fullnamep">Full Name:</label>
+            <input type="text" id="fullnamep" name="fullnamep" required>
+            <span id="fullnamep-error" class="error-error-message" style="color:red"></span>
             <br><br>
 
-            <label for="mobileNo">Phone Number:</label>
-            <input type="text" name="mobileNo" id="mobileNo" maxlength="10" value="" required>
-            <span id="mobileNo-error" class="error-message" style="color:red"></span>
+            <label for="mobileNop">Phone Number:</label>
+            <input type="text" name="mobileNop" id="mobileNop" maxlength="10" value="" required>
+            <span id="mobileNop-error" class="error-message" style="color:red"></span>
             <br><br>
 
-            <label for="address">Address:</label>
-            <textarea name="address" id="address" cols="20" rows="3" required></textarea>
-            <span id="address-error" class="error-message" style="color:red"></span>
+            <label for="addressp">Address:</label>
+            <textarea name="addressp" id="addressp" cols="20" rows="3" required></textarea>
+            <span id="addressp-error" class="error-message" style="color:red"></span>
             <br><br>
 
-            <label for="dateofBirth">Date of Birth:</label>
-            <input type="date" name="dateofBirth" id="dateofBirth" required>
-            <span id="dateofBirth-error" class="error-message" style="color:red"></span>
+            <label for="dateofBirthp">Date of Birth:</label>
+            <input type="date" name="dateofBirthp" id="dateofBirthp" required>
+            <span id="dateofBirthp-error" class="error-message" style="color:red"></span>
             <br><br>
 
             <label for="age_p">Age:</label>
@@ -67,7 +67,7 @@
             <span class="bodh2ytext">Female</span>
             <input type="radio" name="gender" value="Other">
             <span class="bodytext">Other</span>
-            <span id="gender-error" class="error-message" style="color:red"></span>
+            <span id="genderp-error" class="error-message" style="color:red"></span>
             <br><br>
 
             <label for="cast_p">Category: </label>
@@ -86,8 +86,8 @@
             <span id="cast_p-error" class="error-message" style="color:red"></span>
             <br><br>
 
-            <label for="education">Education:</label>
-            <select name="education" id="education" required>
+            <label for="educationp">Education:</label>
+            <select name="educationp" id="educationp" required>
                 <option value="--">Please Select Highest Qualification</option>
                 <option value="Primary">Primary</option>
                 <option value="Middle/Higher Primary">Middle/Higher Primary</option>
@@ -100,7 +100,7 @@
                 <option value="Doctorate">Doctorate</option>
                 <option value="Illiterate">Illiterate</option>
             </select>
-            <span id="education-error" class="error-message" style="color:red"></span>
+            <span id="educationp-error" class="error-message" style="color:red"></span>
             <br><br>
 
             <label for="company_name">Company Name:</label>
@@ -123,8 +123,8 @@
             <span id="photo_error_p" class="error-message" style="color: red;"></span>
             <br>
 
-            <label for="address_proof">Select Document for Address Proof:</label>
-            <select id="address_proof" name="address_proof" class="error-message" required>
+            <label for="address_proofp">Select Document for Address Proof:</label>
+            <select id="address_proofp" name="address_proofp" class="error-message" required>
                 <option value="--">Please Select Document</option>
                 <?php
                 $address_proof_qry_s = "SELECT * FROM document_type";
@@ -136,13 +136,13 @@
                 }
                 ?>
             </select>
-            <span id="address_error" class="error-message" style="color: red;"></span>
+            <span id="address_errorp" class="error-message" style="color: red;"></span>
             <br><br>
 
             <label for="passanger_address_proof_upload">Upload Proof For Address:</label>
             <input type="file" id="passanger_address_proof_upload" name="passanger_address_proof_upload" accept=".pdf, .jpg, .jpeg, .png" required>
             <p>[Self-attached size Max size: 200KB]</p>
-            <span id="address_proof_error" class="error-message" style="color: red;"></span>
+            <span id="address_proof_errorp" class="error-message" style="color: red;"></span>
             <br>
         </div>
 
@@ -319,7 +319,7 @@
         var from = $(document).find('#fromPlace_p').val();
         var to = $(document).find('#toPlace_p').val();
 
-        console.log(from , to);
+        console.log(from, to);
 
         if (from != '' && to != '' && from != to) {
             $.ajax({
@@ -332,16 +332,17 @@
                 },
                 success: function(res) {
                     rs = 0;
+                    console.log(111111111);
                     console.log(calculateDistance_p(res[0].lati, res[0].long, res[1].lati, res[1].long));
                     distance = Math.ceil(calculateDistance_p(res[0].lati, res[0].long, res[1].lati, res[1].long));
-                    rs = distance * 13;
+                    rs = distance * <?php echo $price ?>
                     var multipy = $('#classOfService_p').val();
                     var passType_p = $('#passType_p').val();
 
                     if (passType_p === "30") {
-                        rs = distance * 13 * multipy;
+                        rs = distance * <?php echo $price ?> * multipy;
                     } else if (passType_p === "90") {
-                        rs = distance * 13 * multipy * 3;
+                        rs = distance * <?php echo $price ?> * multipy * 3;
                     }
 
                     $("#pay-value_p").val(Math.ceil(rs) + " Rs/-");
@@ -354,16 +355,10 @@
     }
 
     $('#classOfService_p').change(function() {
-        console.log(1111111);
         calculatePassAmount_p();
-        console.log(22222222);
     })
     $('#passType_p').change(function() {
-        console.log(33333333);
-
         calculatePassAmount_p();
-
-        console.log(44444444);
     })
 
     function calculateDistance_p(lat1, lon1, lat2, lon2) {
@@ -381,8 +376,8 @@
         return distance;
     }
 
-    $(document).on('change', "#dateofBirth", function() {
-        var date = $(document).find("#dateofBirth").val();
+    $(document).on('change', "#dateofBirthp", function() {
+        var date = $(document).find("#dateofBirthp").val();
         var dob = new Date(date);
 
         var today = new Date();
@@ -435,113 +430,121 @@
         $('#payment_id_lbl_p').hide();
 
         function validateForm() {
+            // Initialize a flag to check if the form is valid
             let isValid = true;
 
-            function showError(fieldId, errorMessage) {
-                const errorSpan = $(fieldId + '-error');
-                errorSpan.text(errorMessage);
-                errorSpan.show();
+            // Helper function to show an error message
+            function showError(elementId, errorMessage) {
                 isValid = false;
+                $(elementId).text(errorMessage);
             }
 
-            function clearError(fieldId) {
-                const errorSpan = $(fieldId + '-error');
-                errorSpan.text('');
-                errorSpan.hide();
+            // Helper function to clear an error message
+            function clearError(elementId) {
+                $(elementId).text('');
             }
 
-            const fullnameValue = $('#fullname').val();
-            if (fullnameValue === '' || /[0-9~!@#$%^&*()_+={}\[\]:;"'<>,.?/\\|`\-]/.test(fullnameValue)) {
-                showError('#fullname', 'Please enter a valid Full Name with only letters and spaces.');
+            // Full Name Validation
+            const fullnameValue = $('#fullnamep').val();
+            if (fullnameValue === '' || /[^A-Za-z\s]/.test(fullnameValue)) {
+                showError('#fullnamep-error', 'Please enter a valid Full Name with only letters and spaces.');
             } else {
-                clearError('#fullname');
+                clearError('#fullnamep-error');
             }
 
-            const mobileNoValue = $('#mobileNo').val();
+            // Phone Number Validation
+            const mobileNoValue = $('#mobileNop').val();
             if (mobileNoValue === '' || !/^\d{10}$/.test(mobileNoValue)) {
-                showError('#mobileNo', 'Please enter a valid 10-digit Phone Number.');
+                showError('#mobileNop-error', 'Please enter a valid 10-digit Phone Number.');
             } else {
-                clearError('#mobileNo');
+                clearError('#mobileNop-error');
             }
 
-            const addressValue = $('#address').val();
+            // Address Validation
+            const addressValue = $('#addressp').val();
             if (addressValue === '') {
-                showError('#address', 'Address is required.');
+                showError('#addressp-error', 'Address is required.');
             } else {
-                clearError('#address');
+                clearError('#addressp-error');
             }
 
-            const dateofBirthValue = $('#dateofBirth').val();
+            // Date of Birth Validation
+            const dateofBirthValue = $('#dateofBirthp').val();
             if (dateofBirthValue === '') {
-                showError('#dateofBirth', 'Date of Birth is required.');
+                showError('#dateofBirthp-error', 'Date of Birth is required.');
             } else {
-                clearError('#dateofBirth');
+                clearError('#dateofBirthp-error');
             }
 
+            // Category (Cast) Validation
             const castStdValue = $('#cast_p').val();
             if (castStdValue === '') {
-                showError('#cast_p', 'Category is required.');
+                showError('#cast_p-error', 'Category is required.');
             } else {
-                clearError('#cast_p');
+                clearError('#cast_p-error');
             }
 
-            const educationValue = $('#education').val();
-            if (educationValue === '--') {
-                showError('#education', 'Education is required.');
+            // Education Validation
+            const educationpValue = $('#educationp').val();
+            if (educationpValue === '--') {
+                showError('#educationp-error', 'Education is required.');
             } else {
-                clearError('#education');
+                clearError('#educationp-error');
             }
 
+            // Company Name Validation
             const instituteNameValue = $('#company_name').val();
             if (instituteNameValue === '') {
-                showError('#company_name', 'Institute Name is required.');
+                showError('#company_name-error', 'Company Name is required.');
             } else {
-                clearError('#company_name');
+                clearError('#company_name-error');
             }
 
+            // Company Address Validation
             const instituteAddressValue = $('#Company_address').val();
             if (instituteAddressValue === '') {
-                showError('#Company_address', 'Institute Address is required.');
+                showError('#Company_address-error', 'Company Address is required.');
             } else {
-                clearError('#Company_address');
+                clearError('#Company_address-error');
             }
 
-
-            const addressProofValue = $('#address_proof').val();
+            // Address Proof Validation
+            const addressProofValue = $('#address_proofp').val();
             if (addressProofValue === '--') {
-                document.getElementById("address_error").innerHTML = "Please select a Document for Address Proof"
-                // showError('#address_proof-error', 'Please select a Document for Address Proof.');
+                showError('#address_errorp', 'Please select a Document for Address Proof.');
             } else {
-                clearError('#address_proof-error');
+                clearError('#address_errorp');
             }
 
+            // Address Proof Upload Validation
             const studentAddressProofValue = $('#passanger_address_proof_upload').val();
             if (studentAddressProofValue === '') {
-                document.getElementById("address_proof_error").innerHTML = "Please upload a proof for address."
-                // showError('#address-proof-student-error', 'Please upload a proof for address.');
+                showError('#address_proof_errorp', 'Please upload a proof for address.');
             } else {
-                clearError('#address-proof-student-error');
+                clearError('#address_proof_errorp');
             }
 
-
+            // From Place Validation
             const fromPlace_pValue = $('#fromPlace_p').val();
             if (fromPlace_pValue === '' || fromPlace_pValue === ' ') {
-                showError('#fromPlace_p', 'Please select a From Place.');
+                showError('#fromPlace_p-error', 'Please select a From Place.');
             } else {
-                clearError('#fromPlace_p');
+                clearError('#fromPlace_p-error');
             }
 
+            // To Place Validation
             const toPlace_pValue = $('#toPlace_p').val();
             if (toPlace_pValue === '' || toPlace_pValue === ' ') {
-                showError('#toPlace_p', 'Please select a To Place.');
+                showError('#toPlace_p-error', 'Please select a To Place.');
             } else {
-                clearError('#toPlace_p');
+                clearError('#toPlace_p-error');
             }
 
             if (!isValid) {
                 alert('Please fill in all required fields and correct any errors.');
             }
             return isValid;
+
         }
 
         window.pay_now_p = function() {

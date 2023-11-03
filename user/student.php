@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -241,7 +242,6 @@
     function logout() {
         window.location.href = '../logout.php';
     }
-
     document.getElementById('logout-btn').addEventListener('click', logout);
 
 
@@ -322,6 +322,7 @@
         var from = $('.fromPlace').val();
         var to = $('.toPlace').val();
 
+
         if (from != '' && to != '' && from != to) {
             $.ajax({
                 type: 'post',
@@ -335,14 +336,14 @@
                     rs = 0;
                     console.log(calculateDistance(res[0].lati, res[0].long, res[1].lati, res[1].long));
                     distance = Math.ceil(calculateDistance(res[0].lati, res[0].long, res[1].lati, res[1].long));
-                    rs = distance * 13;
+                    rs = distance * <?php echo $price ?>;
                     var multipy = $('#classOfService').val();
                     var passType = $('#passType').val();
 
                     if (passType === "30") {
-                        rs = distance * 13 * multipy;
+                        rs = distance * <?php echo $price ?> * multipy;
                     } else if (passType === "90") {
-                        rs = distance * 13 * multipy * 3;
+                        rs = distance * <?php echo $price ?> * multipy * 3;
                     }
 
                     $("#pay-value").val(Math.ceil(rs) + " Rs/-");

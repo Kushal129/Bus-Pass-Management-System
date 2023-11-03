@@ -3,7 +3,7 @@
 -- Host: localhost	Database: buspassms
 -- ------------------------------------------------------
 -- Server version 	10.4.28-MariaDB
--- Date: Wed, 01 Nov 2023 11:28:49 +0100
+-- Date: Fri, 03 Nov 2023 19:13:49 +0100
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -59,7 +59,7 @@ CREATE TABLE `bus_type` (
   `bus_name` varchar(120) NOT NULL,
   `price_multiply` float NOT NULL,
   PRIMARY KEY (`bus_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -134,34 +134,6 @@ COMMIT;
 --
 
 --
--- Table structure for table `disability_type`
---
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `disability_type` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(80) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `disability_type`
---
-
-LOCK TABLES `disability_type` WRITE;
-/*!40000 ALTER TABLE `disability_type` DISABLE KEYS */;
-SET autocommit=0;
-INSERT INTO `disability_type` VALUES (1,'Physical Disability'),(2,'Intellectual Disability'),(3,'Visual Disability'),(4,'Hearing Disability'),(5,'Other');
-/*!40000 ALTER TABLE `disability_type` ENABLE KEYS */;
-UNLOCK TABLES;
-COMMIT;
-
--- Dumped table `disability_type` with 5 row(s)
---
-
---
 -- Table structure for table `document`
 --
 
@@ -172,7 +144,7 @@ CREATE TABLE `document` (
   `document_type_id` int(11) NOT NULL,
   `document_file_name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=247 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=286 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -182,12 +154,12 @@ CREATE TABLE `document` (
 LOCK TABLES `document` WRITE;
 /*!40000 ALTER TABLE `document` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `document` VALUES (219,1,'202310303143Screenshot 2023-10-06 191819.png'),(220,1,'202310314482Screenshot 2023-10-06 191819.png'),(221,1,'202310318815Screenshot 2023-10-06 191819.png'),(222,1,'202310317823Screenshot 2023-10-06 191819.png'),(223,1,'202310315884Screenshot 2023-10-06 191819.png'),(224,1,'202310318351Screenshot 2023-10-06 191819.png'),(225,1,'202310311875Screenshot 2023-10-06 191819.png'),(226,1,'202310311400Screenshot 2023-10-06 191819.png'),(227,1,'202310319953Screenshot 2023-10-06 191819.png'),(228,1,'202310319218Screenshot 2023-10-06 191819.png'),(229,1,'202310316117Screenshot 2023-10-06 191819.png'),(230,1,'202310311277Screenshot 2023-10-06 191819.png'),(231,1,'202310317353Screenshot 2023-10-06 191819.png'),(232,1,'202310314266Screenshot 2023-10-06 191819.png'),(233,1,'202310312581Screenshot 2023-10-06 191819.png'),(234,1,'202310314708Screenshot 2023-10-06 191819.png'),(235,1,'202310319633Screenshot 2023-10-06 191819.png'),(236,1,'20231031122Screenshot 2023-10-06 191819.png'),(237,1,'20231031887Screenshot 2023-10-06 191819.png'),(238,1,'202310318090Screenshot 2023-10-06 191819.png'),(239,1,'202310311339Screenshot 2023-10-06 191819.png'),(240,1,'202310319868Screenshot 2023-10-06 191819.png'),(241,2,'20231101886Screenshot 2023-10-06 191819.png'),(242,1,'202311018085Screenshot 2023-10-06 191819.png'),(243,2,'202311019729Screenshot 2023-10-06 191819.png'),(244,1,'202311018889Screenshot 2023-10-06 191819.png'),(245,1,'202311019950Screenshot 2023-10-06 191819.png'),(246,1,'202311013463Screenshot 2023-10-06 191819.png');
+INSERT INTO `document` VALUES (219,1,'202310303143Screenshot 2023-10-06 191819.png'),(220,1,'202310314482Screenshot 2023-10-06 191819.png'),(221,1,'202310318815Screenshot 2023-10-06 191819.png'),(222,1,'202310317823Screenshot 2023-10-06 191819.png'),(223,1,'202310315884Screenshot 2023-10-06 191819.png'),(224,1,'202310318351Screenshot 2023-10-06 191819.png'),(225,1,'202310311875Screenshot 2023-10-06 191819.png'),(226,1,'202310311400Screenshot 2023-10-06 191819.png'),(227,1,'202310319953Screenshot 2023-10-06 191819.png'),(228,1,'202310319218Screenshot 2023-10-06 191819.png'),(229,1,'202310316117Screenshot 2023-10-06 191819.png'),(230,1,'202310311277Screenshot 2023-10-06 191819.png'),(231,1,'202310317353Screenshot 2023-10-06 191819.png'),(232,1,'202310314266Screenshot 2023-10-06 191819.png'),(233,1,'202310312581Screenshot 2023-10-06 191819.png'),(234,1,'202310314708Screenshot 2023-10-06 191819.png'),(235,1,'202310319633Screenshot 2023-10-06 191819.png'),(236,1,'20231031122Screenshot 2023-10-06 191819.png'),(237,1,'20231031887Screenshot 2023-10-06 191819.png'),(238,1,'202310318090Screenshot 2023-10-06 191819.png'),(239,1,'202310311339Screenshot 2023-10-06 191819.png'),(240,1,'202310319868Screenshot 2023-10-06 191819.png'),(241,2,'20231101886Screenshot 2023-10-06 191819.png'),(242,1,'202311018085Screenshot 2023-10-06 191819.png'),(243,2,'202311019729Screenshot 2023-10-06 191819.png'),(244,1,'202311018889Screenshot 2023-10-06 191819.png'),(245,1,'202311019950Screenshot 2023-10-06 191819.png'),(246,1,'202311013463Screenshot 2023-10-06 191819.png'),(247,1,'202311022720Screenshot 2023-10-06 191819.png'),(248,1,'202311024262Screenshot 2023-10-06 191819.png'),(249,1,'202311027044Screenshot 2023-10-06 191819.png'),(250,1,'202311024010Screenshot 2023-10-06 191819.png'),(251,1,'202311025018Screenshot 2023-10-06 191819.png'),(252,1,'202311028679Screenshot 2023-10-06 191819.png'),(253,1,'20231102890Screenshot 2023-10-06 191819.png'),(254,1,'202311023647Screenshot 2023-10-06 191819.png'),(255,1,'202311023644Screenshot 2023-10-06 191819.png'),(256,1,'202311026222Screenshot 2023-10-06 191819.png'),(257,0,'20231103619Screenshot 2023-10-06 191819.png'),(258,1,'202311039225Screenshot 2023-10-06 191819.png'),(259,1,'202311039465Screenshot 2023-10-06 191819.png'),(260,1,'202311037456Screenshot 2023-10-06 191819.png'),(261,1,'20231103681Screenshot 2023-10-06 191819.png'),(262,1,'202311033329Screenshot 2023-10-06 191819.png'),(263,1,'202311032957Screenshot 2023-10-06 191819.png'),(264,1,'202311036508Screenshot 2023-10-06 191819.png'),(265,1,'202311036613Screenshot 2023-10-06 191819.png'),(266,1,'202311037986Screenshot 2023-10-06 191819.png'),(267,1,'202311032163Screenshot 2023-10-06 191819.png'),(268,1,'202311038274Screenshot 2023-10-06 191819.png'),(269,1,'202311033091Screenshot 2023-10-06 191819.png'),(270,1,'202311034736Screenshot 2023-10-06 191819.png'),(271,1,'202311037880Screenshot 2023-10-06 191819.png'),(272,1,'202311035053Screenshot 2023-10-06 191819.png'),(273,1,'202311031737Screenshot 2023-10-06 191819.png'),(274,1,'202311036048Screenshot 2023-10-06 191819.png'),(275,1,'202311036546Screenshot 2023-10-06 191819.png'),(276,1,'202311032038Screenshot 2023-10-06 191819.png'),(277,1,'202311037824Screenshot 2023-10-06 191819.png'),(278,1,'20231103655Screenshot 2023-10-06 191819.png'),(279,2,'202311033261Screenshot 2023-10-06 191819.png'),(280,1,'202311037191Screenshot 2023-10-06 191819.png'),(281,1,'202311037307Screenshot 2023-10-06 191819.png'),(282,1,'202311034737Screenshot 2023-10-06 191819.png'),(283,1,'202311039412Screenshot 2023-10-06 191819.png'),(284,1,'202311039149Screenshot 2023-10-06 191819.png'),(285,1,'202311033627Screenshot 2023-10-06 191819.png');
 /*!40000 ALTER TABLE `document` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `document` with 28 row(s)
+-- Dumped table `document` with 67 row(s)
 --
 
 --
@@ -287,6 +259,7 @@ CREATE TABLE `pass` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `passenger_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
+  `passType` int(11) NOT NULL,
   `bus_type` int(11) NOT NULL,
   `start_term_id` int(11) NOT NULL,
   `ends_term_id` int(11) NOT NULL,
@@ -295,7 +268,7 @@ CREATE TABLE `pass` (
   `from_date` date DEFAULT NULL,
   `to_date` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=212 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=247 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -305,12 +278,12 @@ CREATE TABLE `pass` (
 LOCK TABLES `pass` WRITE;
 /*!40000 ALTER TABLE `pass` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `pass` VALUES (206,237,18,1,1,16,'pay_Mv5QaC00cMnEyS',1,'2023-11-01','2023-12-01'),(207,238,18,1,1,2,'pay_Mv7MeQVrovMKDC',1,'2023-11-01','2023-12-01'),(208,239,20,1,1,2,'pay_Mv8aFjwgHJd40a',1,'2023-11-01','2023-12-01'),(209,240,18,1,2,1,'pay_Mv9odOBkleM0aS',1,'2023-11-01','2023-12-01'),(210,241,20,1,1,2,'pay_MvA3O9LHSBaxII',1,'2023-11-01','2023-12-01'),(211,242,18,1,4,10,'pay_MvAVFg6572wPBU',1,'2023-11-01','2023-12-01');
+INSERT INTO `pass` VALUES (240,272,18,30,1,1,2,'pay_MvyduDYJGlq3ew',1,'2023-11-03','2023-12-03'),(241,273,18,30,1,1,2,'pay_MvyduDYJGlq3ew',1,'2023-11-03','2023-12-03'),(242,274,18,30,1,1,2,'pay_MvyduDYJGlq3ew',1,'2023-11-03','2023-12-03'),(243,275,18,30,1,3,10,'pay_Mvzl5NcfmR9zxv',1,'2023-11-03','2023-12-03'),(244,277,18,30,1,1,2,'pay_Mw3V4WjzesULA5',1,'2023-11-03','2023-12-03'),(245,278,18,30,1,1,2,'pay_Mw3V4WjzesULA5',1,'2023-11-03','2023-12-03'),(246,279,18,30,1,1,2,'pay_Mw3Zc3P9rdNtXU',1,'2023-11-03','2023-12-03');
 /*!40000 ALTER TABLE `pass` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `pass` with 6 row(s)
+-- Dumped table `pass` with 7 row(s)
 --
 
 --
@@ -321,11 +294,12 @@ COMMIT;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `passenger` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `emp_type` varchar(100) NOT NULL,
+  `educationp` varchar(100) NOT NULL,
   `com_name` varchar(200) NOT NULL,
   `com_address` varchar(200) NOT NULL,
+  `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -354,8 +328,8 @@ CREATE TABLE `passenger_info` (
   `address` varchar(255) NOT NULL,
   `document_id` int(11) NOT NULL,
   `gender` char(20) NOT NULL,
-  `role` int(11) NOT NULL COMMENT 'Role which define the actual role (passenger , student , handicapt)',
-  `r_id` int(11) NOT NULL COMMENT 'Role_id which defines the users id ex (student id , handicap_id)',
+  `role` varchar(15) NOT NULL COMMENT 'Role which define the actual role (passenger , student )',
+  `r_id` int(11) NOT NULL COMMENT 'Role_id which defines the users id ex (student id , pasanger_id)',
   `user_id` int(11) NOT NULL,
   `validate_through` date NOT NULL,
   `dob` date NOT NULL,
@@ -365,7 +339,7 @@ CREATE TABLE `passenger_info` (
   KEY `document_id_foregin` (`document_id`),
   CONSTRAINT `document_id_foregin` FOREIGN KEY (`document_id`) REFERENCES `document` (`id`),
   CONSTRAINT `user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=243 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=280 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -375,40 +349,12 @@ CREATE TABLE `passenger_info` (
 LOCK TABLES `passenger_info` WRITE;
 /*!40000 ALTER TABLE `passenger_info` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `passenger_info` VALUES (240,'Kushal Pipaliya','Hari Hari ',244,'Male',0,268,18,'2024-05-01','2004-08-12','kp1.jpeg'),(241,'Henvi Pipaliya','HHSHS',245,'Female',0,269,20,'2024-05-01','2004-08-12','admin.ico'),(242,'Kushal Pipaliya','KKKKKKKKKK',246,'Male',0,270,18,'2024-05-01','2004-08-12','kp1.jpeg');
+INSERT INTO `passenger_info` VALUES (279,'Kushal Pipaliya','NAHR ',285,'Male','passenger',29,18,'2024-05-03','2004-08-12','202311034788kp (1).jpeg');
 /*!40000 ALTER TABLE `passenger_info` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `passenger_info` with 3 row(s)
---
-
---
--- Table structure for table `pass_method`
---
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pass_method` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` char(50) NOT NULL,
-  `duration` date NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pass_method`
---
-
-LOCK TABLES `pass_method` WRITE;
-/*!40000 ALTER TABLE `pass_method` DISABLE KEYS */;
-SET autocommit=0;
-/*!40000 ALTER TABLE `pass_method` ENABLE KEYS */;
-UNLOCK TABLES;
-COMMIT;
-
--- Dumped table `pass_method` with 0 row(s)
+-- Dumped table `passenger_info` with 1 row(s)
 --
 
 --
@@ -431,7 +377,7 @@ CREATE TABLE `price` (
 LOCK TABLES `price` WRITE;
 /*!40000 ALTER TABLE `price` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `price` VALUES (1,13);
+INSERT INTO `price` VALUES (1,15);
 /*!40000 ALTER TABLE `price` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
@@ -451,7 +397,7 @@ CREATE TABLE `report` (
   `email` varchar(80) NOT NULL,
   `note` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -461,7 +407,7 @@ CREATE TABLE `report` (
 LOCK TABLES `report` WRITE;
 /*!40000 ALTER TABLE `report` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `report` VALUES (60,'kushal','21bmmit119@gmail.com','jhgfhghg');
+INSERT INTO `report` VALUES (62,'Kushal H Pipalioya','Kushalhpipaliya01@gmail.com','Hello');
 /*!40000 ALTER TABLE `report` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
@@ -484,7 +430,7 @@ CREATE TABLE `student` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=271 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=281 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -494,12 +440,11 @@ CREATE TABLE `student` (
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `student` VALUES (268,'Middle/Higher Primary','asdf','asdf',18),(269,'PG Diploma','JJJ','uasdbbkb vadsfkjbvaskdv',20),(270,'Primary','PPPP','bjbbnbndfnbfn',18);
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `student` with 3 row(s)
+-- Dumped table `student` with 0 row(s)
 --
 
 --
@@ -516,8 +461,9 @@ CREATE TABLE `users` (
   `password` varchar(200) NOT NULL,
   `role` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1- user 0- admin',
   `user_img_path` varchar(255) NOT NULL DEFAULT '../img/admin.ico',
-  PRIMARY KEY (`email`),
-  UNIQUE KEY `id` (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -528,7 +474,7 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `users` VALUES (1,'Admin',1234567891,'21bmiit129@gmail.com','$2y$10$omAf0m3yrxH/cFklDaeIj.fnVTQxAxV6cNjv3a0DM5MTRzawacrou',0,'../img/admin.ico'),(24,'rohan Narigara',7894561239,'21bmiit137@gmail.com','$2y$10$AILqKVTy62bP8K3o7gRhUu0TsG3Vj2WQYPZ7Og1tQwcbqIdbIICmC',1,'admin.ico'),(22,'Aruna Pipaliya',9913402465,'abc@gmail.com','$2y$10$NGkvSEyyivA/9rCm/44lbes7NbKO46n096sOhaBCCLxNY6qI43Hma',1,'admin.ico'),(21,'Aruna Pipaliya',9099260609,'annu01@gmail.com','$2y$10$o5GcQMI/IGH92lF1Vhfu3Ok5OwpUyjDBj8VUHqF2f8UCl.susD.FK',1,'admin.ico'),(20,'Henvi kaklotar',9913402465,'henvi08@gmail.com','$2y$10$w9SrwUkHdwp9cH.Ej.wxKewj8zPzEAC1eesgXlBq.VxzdVBaGQjEe',1,'admin.ico'),(18,'Kushal Pipaliya',9574476496,'kushalhpipaliya01@gmail.com','$2y$10$jZFytD5hUf7VDq4F8X9KfOWAb4IR0jla1UB4ZeFdjtLw9sjAbjkIW',1,'kp1.jpeg');
+INSERT INTO `users` VALUES (1,'Admin',1234567891,'21bmiit129@gmail.com','$2y$10$omAf0m3yrxH/cFklDaeIj.fnVTQxAxV6cNjv3a0DM5MTRzawacrou',0,'../img/admin.ico'),(18,'Kushal Pipaliya',9574476496,'kushalhpipaliya01@gmail.com','$2y$10$jZFytD5hUf7VDq4F8X9KfOWAb4IR0jla1UB4ZeFdjtLw9sjAbjkIW',1,'202311034788kp (1).jpeg'),(20,'Henvi kaklotar',9913402465,'henvi08@gmail.com','$2y$10$w9SrwUkHdwp9cH.Ej.wxKewj8zPzEAC1eesgXlBq.VxzdVBaGQjEe',1,'admin.ico'),(21,'Aruna Pipaliya',9099260609,'annu01@gmail.com','$2y$10$o5GcQMI/IGH92lF1Vhfu3Ok5OwpUyjDBj8VUHqF2f8UCl.susD.FK',1,'admin.ico'),(22,'Aruna Pipaliya',9913402465,'abc@gmail.com','$2y$10$NGkvSEyyivA/9rCm/44lbes7NbKO46n096sOhaBCCLxNY6qI43Hma',1,'admin.ico'),(24,'rohan Narigara',7894561239,'21bmiit137@gmail.com','$2y$10$AILqKVTy62bP8K3o7gRhUu0TsG3Vj2WQYPZ7Og1tQwcbqIdbIICmC',1,'admin.ico');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
@@ -546,4 +492,4 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on: Wed, 01 Nov 2023 11:28:49 +0100
+-- Dump completed on: Fri, 03 Nov 2023 19:13:49 +0100

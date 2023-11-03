@@ -28,7 +28,7 @@ if (!isset($_SESSION['username'])) {
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
 
-    $query = "SELECT pi.full_name, pi.validate_through, pi.dob, p.user_id, p.bus_type,
+    $query = "SELECT pi.full_name, pi.validate_through, pi.dob, p.user_id, p.bus_type,pi.role,
                      b.bus_name, p.start_term_id, s.ter_name as s_ter, p.ends_term_id, e.ter_name as e_ter,
                      p.from_date, p.to_date
               FROM passenger_info pi
@@ -72,7 +72,11 @@ if ($result) {
         $table .= '<td>' . $row['from_date'] . '</td>';
         $table .= '<td>' . $row['to_date'] . '</td>';
         $table .= '<td>';
-        $table .= '<a class="button view-button" href="../main/view_pass.php">View <i class="fas fa-eye" style= "margin-left: 5px;"></i></a>';
+        if($row['role'] == "passenger")
+        $table .= '<a class="button view-button" href="../main/view_passp.php">View <i class="fas fa-eye" style= "margin-left: 5px;"></i></a>';
+        else {
+            $table .= '<a class="button view-button" href="../main/view_pass.php">View <i class="fas fa-eye" style= "margin-left: 5px;"></i></a>';
+        }
         $table .= '</td>';
         // $table .= '<td>';
         // $table .= '<button class="download-button">Download <i class="fas fa-download"></i></button>';

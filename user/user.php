@@ -2,6 +2,11 @@
 session_start();
 
 include_once '../connection.php';
+$qry = 'SELECT * FROM price';
+$res = mysqli_query($con, $qry);
+$row = mysqli_fetch_array($res);
+$price = $row['price'];
+
 
 if (!isset($_SESSION['username'])) {
     header('location:../index.php');
@@ -18,6 +23,10 @@ if (!isset($_SESSION['username'])) {
         header("Location:../index.php");
     }
 }
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -155,9 +164,9 @@ if (!isset($_SESSION['username'])) {
                 <?php include '../user/passanger.php'; ?>
             </div>
 
-            <div class="form" id="HandicapForm" style="display: none;">
-                <?php include '../user/handicap.php'; ?>
-            </div>
+            <!-- <div class="form" id="HandicapForm" style="display: none;">
+                <php include '../user/handicap.php'; ?>
+            </div> -->
 
             <div class="form renewpass" id="renewpass" style="display: none;">
                 <?php include '../user/renewpass.php' ?>
