@@ -30,7 +30,7 @@ if (isset($_SESSION['user_id'])) {
 
     $query = "SELECT pi.full_name, pi.validate_through, pi.dob, p.user_id, p.bus_type,pi.role,
                      b.bus_name, p.start_term_id, s.ter_name as s_ter, p.ends_term_id, e.ter_name as e_ter,
-                     p.from_date, p.to_date
+                     p.from_date, p.to_date , p.id as pass_id
               FROM passenger_info pi
               INNER JOIN pass p ON pi.id = p.passenger_id
               INNER JOIN bus_type b ON p.bus_type = b.bus_id
@@ -61,6 +61,7 @@ if ($result) {
     $table .= '<tbody>';
 
     while ($row = $result->fetch_assoc()) {
+        $pass_id  = $row['pass_id'];
         $table .= '<tr>';
         $table .= '<td>' . $row['user_id'] . '</td>';
         $table .= '<td>' . $row['full_name'] . '</td>';
@@ -72,10 +73,10 @@ if ($result) {
         $table .= '<td>' . $row['from_date'] . '</td>';
         $table .= '<td>' . $row['to_date'] . '</td>';
         $table .= '<td>';
-        if($row['role'] == "passenger")
-        $table .= '<a class="button view-button" href="../main/view_passp.php">View <i class="fas fa-eye" style= "margin-left: 5px;"></i></a>';
+        if($row['role'] == "Student")
+        $table .= '<a class="button view-button" href="../main/view_pass.php?pass_id='.$pass_id.'">View <i class="fas fa-eye" style= "margin-left: 5px;"></i></a>';
         else {
-            $table .= '<a class="button view-button" href="../main/view_pass.php">View <i class="fas fa-eye" style= "margin-left: 5px;"></i></a>';
+            $table .= '<a class="button view-button" href="../main/view_passp.php">View <i class="fas fa-eye" style= "margin-left: 5px;"></i></a>';
         }
         $table .= '</td>';
         // $table .= '<td>';

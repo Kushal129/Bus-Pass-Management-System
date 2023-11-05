@@ -4,10 +4,10 @@ session_start();
 include_once '../connection.php';
 
 if (!isset($_POST['educationp'], $_POST['company_name'], $_POST['Company_address'], $_POST['address_proofp'], $_POST['fullnamep'], $_POST['addressp'], $_POST['gender'], $_POST['validate_through'], $_POST['dateofBirthp'], $_POST['classOfService_p'], $_POST['fromPlace_p'], $_POST['toPlace_p'], $_POST['payment_id'], $_POST['fromDate_p'], $_POST['toDate_p'])) {
-    die("Required fields are missing. passs formate mathi");
+    die("Required fields are missing. passnger passs formate mathi");
 }
 
-// print_r($_POST);
+print_r($_POST);
 
 $user_id = $_SESSION['user_id'];
 $educationp = $_POST['educationp'];

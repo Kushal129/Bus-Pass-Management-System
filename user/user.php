@@ -2,11 +2,6 @@
 session_start();
 
 include_once '../connection.php';
-$qry = 'SELECT * FROM price';
-$res = mysqli_query($con, $qry);
-$row = mysqli_fetch_array($res);
-$price = $row['price'];
-
 
 if (!isset($_SESSION['username'])) {
     header('location:../index.php');
@@ -23,9 +18,6 @@ if (!isset($_SESSION['username'])) {
         header("Location:../index.php");
     }
 }
-
-
-
 
 ?>
 
@@ -76,7 +68,7 @@ if (!isset($_SESSION['username'])) {
             </li>
             <li>
                 <a href="../user/Managepass.php">
-                <i class='bx bx-credit-card-front'></i>
+                    <i class='bx bx-credit-card-front'></i>
                     <span class="links_name">Manage Pass</span>
                 </a>
                 <span class="tooltip">Manage Pass</span>
@@ -140,10 +132,8 @@ if (!isset($_SESSION['username'])) {
             </div>
         </section>
 
-
-
-        <div class="downpage d-flex justify-content-center" style="display: none;">
-            <div class="Category-down col-lg-4 col-md-4 col-sm-12 " style="display: none;">
+        <div class="downpage d-flex justify-content-center" id="downpage" style="display: none;">
+            <div class="Category-down col-lg-4 col-md-4 col-sm-12" style="display: none;">
                 <div class="card card-body text-center">
                     <select name="category" id="category" class="category">
                         <option value="">Select</option>
@@ -156,59 +146,43 @@ if (!isset($_SESSION['username'])) {
         </div>
 
         <div class="down-container">
-            <div class="form" id="StudentForm" style="display: none;">
-                <?php include '../user/student.php';
-                ?>
-            </div>
-            <div class="form" id="PassengerForm" style="display: none;">
-                <?php include '../user/passanger.php'; ?>
-            </div>
-
-            <!-- <div class="form" id="HandicapForm" style="display: none;">
-                <php include '../user/handicap.php'; ?>
-            </div> -->
-
-            <div class="form renewpass" id="renewpass" style="display: none;">
-                <?php include '../user/renewpass.php' ?>
-            </div>
         </div>
+
     </section>
     <script>
         $(document).ready(function() {
-            $('.form').hide();
-            $('#downpage').hide();
-
-            function showForm(selectedCategory) {
-                $('#' + selectedCategory + 'Form').show();
-            }
-
-            $('#new_pass').click(function() {
-                $('.Category-down').show();
-                $('#downpage').show();
-
-                var selectedCategory = $('#category option:first').val();
-                console.log("Selected Category:", selectedCategory);
-
-                showForm(selectedCategory);
+            $("#new_pass").click(function() {
+                $(".downpage").toggle();
+                $(".Category-down").toggle();
+               
+                if ($(".downpage").is(":visible")) {
+                    $("#category").val(""); 
+                    $(".down-container").empty(); 
+                }
             });
-            $('#renew_pass').click(function() {
-                $('#renewpass').show();
-            })
 
-            $('#category').change(function() {
+            $("#category").change(function() {
                 var selectedCategory = $(this).val();
-                console.log("Selected Category:", selectedCategory);
-                $('.form').hide();
 
-                showForm(selectedCategory);
-                console.log("Displaying Form:", $('#' + selectedCategory + 'Form'));
+                if (selectedCategory === "Student") {
+                    $(".down-container").load("../user/student.php");
+                    
+                } else {
+                    $(".down-container").empty(); 
+                }
+                if (selectedCategory === "Passenger") {
+                    $(".down-container").load("../user/passanger.php");
+                } else {
+                    $(".down-container").empty(); 
+                }
+                if (selectedCategory === "Handicap") {
+                    $(".down-container").load("../user/handicap.php");
+                } else {
+                    $(".down-container").empty(); 
+                }
             });
-
-            var defaultCategory = $('#category option:first').val();
-            showForm(defaultCategory);
         });
     </script>
-
 
     <script>
         $(document).ready(function() {

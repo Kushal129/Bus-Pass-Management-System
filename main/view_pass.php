@@ -2,13 +2,15 @@
 session_start();
 
 $user_id = $_SESSION['user_id'];
+$pass_id  = $_GET['pass_id'];
 
 include_once '../connection.php';
 
-$qry = 'SELECT pi.*, p.*, s.Institute_address
+$qry = "SELECT pi.*, p.*, s.Institute_address
         FROM passenger_info AS pi
         INNER JOIN pass AS p ON pi.id = p.passenger_id
-        INNER JOIN student AS s ON pi.user_id = s.user_id';
+        INNER JOIN student AS s ON s.pass_id = p.id
+        Where p.id = $pass_id";
 
 $result = $con->query($qry);
 if ($result->num_rows > 0) {
@@ -118,7 +120,7 @@ if ($result) {
                                 <h4 class="ml-2 mt-3 text-center"><?php echo $role ?></h4>
                             </div>
                             <div class="col-lg-3 col-md-3 col-6 text-right">
-                                <p><strong>User Id: </strong> <?php echo  $user_id ?></p>
+                                <p><strong>PASS Id: </strong> <?php echo  $pass_id ?></p>
                                 <p><strong>From Date:</strong> <?php echo date('d-m-Y', strtotime($from_date)); ?></p>
                                 <p><strong>To Date:</strong> <?php echo date('d-m-Y', strtotime($to_date)); ?></p>
                             </div>

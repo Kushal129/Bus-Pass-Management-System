@@ -1,4 +1,16 @@
+<?php
 
+include_once '../connection.php';
+include "../toaster.php";
+
+$qry = 'SELECT * FROM price';
+$res = mysqli_query($con, $qry);
+$row = mysqli_fetch_array($res);
+$price = $row['price'];
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,6 +19,10 @@
     <title>Bus Pass | User | Student Pass </title>
     <link rel="stylesheet" href="../css/user.css">
     <link rel="icon" type="image/ico" href="../img/buslogo.png">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -143,7 +159,7 @@
             <label for="student_address_proof_upload">Upload Proof For Address:</label>
             <input type="file" id="student_address_proof_upload" name="student_address_proof_upload" accept=".pdf, .jpg, .jpeg, .png" required>
             <p>[Self-attached size Max size: 200KB]</p>
-            <span id="address_proof_error" class="error-message" style="color: red;"></span>
+            <span id="std_address_proof_error" class="error-message" style="color: red;"></span>
             <br>
         </div>
 
@@ -230,15 +246,9 @@
     </form>
 </body>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 
 
 <script>
-  
-
     function logout() {
         window.location.href = '../logout.php';
     }
@@ -400,21 +410,21 @@
         }
 
         var fromDateObj = new Date(fromDate);
-        var toDateObj = new Date(fromDateObj);
+        var toDate_sObj = new Date(fromDateObj);
 
         if (passType === "30") {
-            toDateObj.setDate(toDateObj.getDate() + 30);
+            toDate_sObj.setDate(toDate_sObj.getDate() + 30);
         } else if (passType === "90") {
-            toDateObj.setDate(toDateObj.getDate() + 90);
+            toDate_sObj.setDate(toDate_sObj.getDate() + 90);
         }
 
-        var year = toDateObj.getFullYear();
-        var month = String(toDateObj.getMonth() + 1).padStart(2, '0');
-        var day = String(toDateObj.getDate()).padStart(2, '0');
+        var year = toDate_sObj.getFullYear();
+        var month = String(toDate_sObj.getMonth() + 1).padStart(2, '0');
+        var day = String(toDate_sObj.getDate()).padStart(2, '0');
 
-        var toDate = year + '-' + month + '-' + day;
+        var toDate_s = year + '-' + month + '-' + day;
 
-        $(document).find("#toDate").val(toDate);
+        $(document).find("#toDate_s").val(toDate_s);
     }
 
     $(document).on('change', "#fromDate", function() {
@@ -502,24 +512,27 @@
                 clearError('#institute_address');
             }
 
+            const studentimgValue = $('#img_std').val();
+            if (studentimgValue === '') {
+                showError('#photo_error', 'Please upload a proof for address.');
+            } else {
+                clearError('#photo_error');
+            }
 
             const addressProofValue = $('#address_proof').val();
             if (addressProofValue === '--') {
-                document.getElementById("address_error").innerHTML = "Please select a Document for Address Proof"
-                // showError('#address_proof-error', 'Please select a Document for Address Proof.');
+                showError('#address_error', 'Please select a Document for Address Proof.');
             } else {
-                clearError('#address_proof-error');
+                clearError('#address_error');
             }
 
-            const studentAddressProofValue = $('#student_address_proof_upload').val();
-            if (studentAddressProofValue === '') {
-                document.getElementById("address_proof_error").innerHTML = "Please upload a proof for address."
-                // showError('#address-proof-student-error', 'Please upload a proof for address.');
-            } else {
-                clearError('#address-proof-student-error');
+            const studentuploadvalue = $('#student_address_proof_upload').val();
+            if (studentuploadvalue === '') {
+                showError('#std_address_proof_error','Please upload a Document for Address Proof.');
+            } else{
+                clearError('#std_address_proof_error');
             }
-
-
+           
             const fromPlaceStudentValue = $('#fromPlaceStudent').val();
             if (fromPlaceStudentValue === '' || fromPlaceStudentValue === ' ') {
                 showError('#fromPlaceStudent', 'Please select a From Place.');
@@ -535,7 +548,9 @@
             }
 
             if (!isValid) {
+                // showToaster("Please fill in all required fields .", "red");
                 alert('Please fill in all required fields and correct any errors.');
+
             }
             return isValid;
         }
@@ -561,7 +576,7 @@
                             $('#paynow').hide();
                             $('#payment_id_lbl').val(response.razorpay_payment_id);
                             $('#paymentButton').show();
-                    
+
                         }
                     }
                 };

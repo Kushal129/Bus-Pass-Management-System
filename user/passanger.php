@@ -1,3 +1,14 @@
+<?php
+include_once '../connection.php';
+
+$qry = 'SELECT * FROM price';
+$res = mysqli_query($con, $qry);
+$row = mysqli_fetch_array($res);
+$price = $row['price'];
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,6 +17,10 @@
     <title>Bus Pass | User | Student Pass </title>
     <link rel="stylesheet" href="../css/user.css">
     <link rel="icon" type="image/ico" href="../img/buslogo.png">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -228,10 +243,7 @@
     </form>
 </body>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
 
 
 <script>
@@ -332,17 +344,16 @@
                 },
                 success: function(res) {
                     rs = 0;
-                    console.log(111111111);
                     console.log(calculateDistance_p(res[0].lati, res[0].long, res[1].lati, res[1].long));
-                    distance = Math.ceil(calculateDistance_p(res[0].lati, res[0].long, res[1].lati, res[1].long));
-                    rs = distance * <?php echo $price ?>
-                    var multipy = $('#classOfService_p').val();
+                    distance_p = Math.ceil(calculateDistance_p(res[0].lati, res[0].long, res[1].lati, res[1].long));
+                    rs = distance_p * <?php echo $price ?>;
+                    var multipy_p = $('#classOfService_p').val();
                     var passType_p = $('#passType_p').val();
 
                     if (passType_p === "30") {
-                        rs = distance * <?php echo $price ?> * multipy;
+                        rs = distance_p * <?php echo $price ?> * multipy_p;
                     } else if (passType_p === "90") {
-                        rs = distance * <?php echo $price ?> * multipy * 3;
+                        rs = distance_p * <?php echo $price ?> * multipy_p * 3;
                     }
 
                     $("#pay-value_p").val(Math.ceil(rs) + " Rs/-");
@@ -372,8 +383,8 @@
             Math.sin(dLon / 2) *
             Math.sin(dLon / 2);
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        const distance = R * c;
-        return distance;
+        const distance_p = R * c;
+        return distance_p;
     }
 
     $(document).on('change', "#dateofBirthp", function() {
@@ -399,21 +410,21 @@
         }
 
         var fromDate_pObj = new Date(fromDate_p);
-        var toDateObj = new Date(fromDate_pObj);
+        var toDate_pObj = new Date(fromDate_pObj);
 
         if (passType_p === "30") {
-            toDateObj.setDate(toDateObj.getDate() + 30);
+            toDate_pObj.setDate(toDate_pObj.getDate() + 30);
         } else if (passType_p === "90") {
-            toDateObj.setDate(toDateObj.getDate() + 90);
+            toDate_pObj.setDate(toDate_pObj.getDate() + 90);
         }
 
-        var year = toDateObj.getFullYear();
-        var month = String(toDateObj.getMonth() + 1).padStart(2, '0');
-        var day = String(toDateObj.getDate()).padStart(2, '0');
+        var year = toDate_pObj.getFullYear();
+        var month = String(toDate_pObj.getMonth() + 1).padStart(2, '0');
+        var day = String(toDate_pObj.getDate()).padStart(2, '0');
 
-        var toDate = year + '-' + month + '-' + day;
+        var toDate_p = year + '-' + month + '-' + day;
 
-        $(document).find("#toDate_p").val(toDate);
+        $(document).find("#toDate_p").val(toDate_p);
     }
 
     $(document).on('change', "#fromDate_p", function() {
@@ -430,21 +441,17 @@
         $('#payment_id_lbl_p').hide();
 
         function validateForm() {
-            // Initialize a flag to check if the form is valid
             let isValid = true;
 
-            // Helper function to show an error message
             function showError(elementId, errorMessage) {
                 isValid = false;
                 $(elementId).text(errorMessage);
             }
 
-            // Helper function to clear an error message
             function clearError(elementId) {
                 $(elementId).text('');
             }
 
-            // Full Name Validation
             const fullnameValue = $('#fullnamep').val();
             if (fullnameValue === '' || /[^A-Za-z\s]/.test(fullnameValue)) {
                 showError('#fullnamep-error', 'Please enter a valid Full Name with only letters and spaces.');
@@ -452,7 +459,6 @@
                 clearError('#fullnamep-error');
             }
 
-            // Phone Number Validation
             const mobileNoValue = $('#mobileNop').val();
             if (mobileNoValue === '' || !/^\d{10}$/.test(mobileNoValue)) {
                 showError('#mobileNop-error', 'Please enter a valid 10-digit Phone Number.');
@@ -460,7 +466,6 @@
                 clearError('#mobileNop-error');
             }
 
-            // Address Validation
             const addressValue = $('#addressp').val();
             if (addressValue === '') {
                 showError('#addressp-error', 'Address is required.');
@@ -468,7 +473,6 @@
                 clearError('#addressp-error');
             }
 
-            // Date of Birth Validation
             const dateofBirthValue = $('#dateofBirthp').val();
             if (dateofBirthValue === '') {
                 showError('#dateofBirthp-error', 'Date of Birth is required.');
@@ -476,15 +480,14 @@
                 clearError('#dateofBirthp-error');
             }
 
-            // Category (Cast) Validation
             const castStdValue = $('#cast_p').val();
             if (castStdValue === '') {
                 showError('#cast_p-error', 'Category is required.');
             } else {
                 clearError('#cast_p-error');
+
             }
 
-            // Education Validation
             const educationpValue = $('#educationp').val();
             if (educationpValue === '--') {
                 showError('#educationp-error', 'Education is required.');
@@ -492,23 +495,35 @@
                 clearError('#educationp-error');
             }
 
-            // Company Name Validation
-            const instituteNameValue = $('#company_name').val();
-            if (instituteNameValue === '') {
+            const companyNameValue = $('#company_name').val();
+            if (companyNameValue === '') {
                 showError('#company_name-error', 'Company Name is required.');
             } else {
                 clearError('#company_name-error');
             }
 
-            // Company Address Validation
-            const instituteAddressValue = $('#Company_address').val();
-            if (instituteAddressValue === '') {
+            const companyressValue = $('#Company_address').val();
+            if (companyressValue === '') {
                 showError('#Company_address-error', 'Company Address is required.');
             } else {
                 clearError('#Company_address-error');
             }
 
-            // Address Proof Validation
+            
+            const addressProofValuep = $('#img_p').val();
+            if (addressProofValuep === '') {
+                showError('#photo_error_p', 'Please select a Document for Image Proof.');
+            } else {
+                clearError('#photo_error_p');
+            }
+
+            const passangerproofimg = $('#passanger_address_proof_upload').val();
+            if (passangerproofimg === '') {
+                showError('#address_proof_errorp', 'Please upload a Document for Address Proof.');
+            } else {
+                clearError('#address_proof_errorp');
+            }
+
             const addressProofValue = $('#address_proofp').val();
             if (addressProofValue === '--') {
                 showError('#address_errorp', 'Please select a Document for Address Proof.');
@@ -516,15 +531,7 @@
                 clearError('#address_errorp');
             }
 
-            // Address Proof Upload Validation
-            const studentAddressProofValue = $('#passanger_address_proof_upload').val();
-            if (studentAddressProofValue === '') {
-                showError('#address_proof_errorp', 'Please upload a proof for address.');
-            } else {
-                clearError('#address_proof_errorp');
-            }
 
-            // From Place Validation
             const fromPlace_pValue = $('#fromPlace_p').val();
             if (fromPlace_pValue === '' || fromPlace_pValue === ' ') {
                 showError('#fromPlace_p-error', 'Please select a From Place.');
@@ -532,7 +539,6 @@
                 clearError('#fromPlace_p-error');
             }
 
-            // To Place Validation
             const toPlace_pValue = $('#toPlace_p').val();
             if (toPlace_pValue === '' || toPlace_pValue === ' ') {
                 showError('#toPlace_p-error', 'Please select a To Place.');
@@ -578,6 +584,7 @@
         };
     });
 </script>
+
 <script>
     $(document).ready(function() {
         const imgStdInput = $('#img_p');
@@ -603,7 +610,6 @@
                 } else {
                     clearError(photoErrorElement);
                 }
-
             } else {
                 clearError(photoErrorElement);
             }
@@ -612,7 +618,7 @@
 
     $(document).ready(function() {
         const addressProofInput = $('#passanger_address_proof_upload');
-        const addressProofErrorElement = $('#address_proof_error');
+        const addressProofErrorElement = $('#address_proof_errorp');
 
         addressProofInput.on('change', function() {
             const file = this.files[0];
@@ -626,8 +632,8 @@
                     displayError(addressProofErrorElement, 'Please upload a PDF, JPG, JPEG, or PNG file.');
                     addressProofInput.val('');
                 } else if (file.size < minFileSize) {
-                    displayError(photoErrorElement, 'Please upload an image that is at least 50KB in size.');
-                    imgStdInput.val('');
+                    displayError(addressProofErrorElement, 'Please upload a file that is at least 20KB in size.'); // Corrected error message
+                    addressProofInput.val('');
                 } else if (file.size > maxFileSize) {
                     displayError(addressProofErrorElement, 'Please upload a file that is no more than 200KB in size.');
                     addressProofInput.val('');

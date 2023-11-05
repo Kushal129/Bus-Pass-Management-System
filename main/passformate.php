@@ -4,12 +4,12 @@ session_start();
 include_once '../connection.php';
 
 if (!isset($_POST['education'], $_POST['institute_name'], $_POST['institute_address'], $_POST['address_proof'], $_POST['fullname'], $_POST['address'], $_POST['gender'], $_POST['validate_through'], $_POST['dateofBirth'], $_POST['classOfService'], $_POST['fromPlaceStudent'], $_POST['toPlaceStudent'], $_POST['payment_id'], $_POST['fromDate'], $_POST['toDate'])) {
-    die("Required fields are missing. passs formate mathi");
+    die("Required fields are missing. std pass formate mathi");
 }
 
 // print_r($_POST);
 
-$user_id = $_SESSION['user_id'];
+$pass_id = $_SESSION['user_id'];
 $education = $_POST['education'];
 $institute_name = $_POST['institute_name'];
 $institute_address = $_POST['institute_address'];
@@ -18,9 +18,10 @@ $education = mysqli_real_escape_string($con, $education);
 $institute_name = mysqli_real_escape_string($con, $institute_name);
 $institute_address = mysqli_real_escape_string($con, $institute_address);
 
-$qry = "INSERT INTO student (education, Institute_name, Institute_address ,user_id) VALUES ('$education', '$institute_name', '$institute_address' ,$user_id)";
+$qry = "INSERT INTO student (education, Institute_name, Institute_address) VALUES ('$education', '$institute_name', '$institute_address')";
 mysqli_query($con, $qry);
 $studentInsertedId = mysqli_insert_id($con);
+$NewstudentInsertedId = $studentInsertedId;
 
 $uploadsDirectory = "../uploads/documents/";
 
@@ -52,7 +53,7 @@ if (isset($_FILES["student_address_proof_upload"])) {
 $full_name = $_POST['fullname'];
 $address = $_POST['address'];
 $gender = $_POST['gender'];
-$role = "Student Pass ";
+$role = "Student";
 $validate_through = $_POST['validate_through'];
 $dob = $_POST['dateofBirth'];
 $uploadsDirectory = "../uploads/user_photo/";
@@ -74,6 +75,7 @@ if (isset($_FILES["img_std"])) {
     $qry = "INSERT INTO passenger_info (full_name, address, document_id, gender, role, r_id, user_id, validate_through, dob, user_img_path) 
             VALUES ('$full_name', '$address', $lastInsertedId, '$gender', '$role', $studentInsertedId, {$_SESSION['user_id']}, '$validate_through', '$dob', '$user_img_path')";
     mysqli_query($con, $qry);
+
     $pasangerInsertedId = mysqli_insert_id($con);
 
     $passenger_id = $pasangerInsertedId;
@@ -83,21 +85,20 @@ if (isset($_FILES["img_std"])) {
     $payment_id = $_POST['payment_id'];
     $image_id = 1;
     $from_date = $_POST['fromDate'];
-    $_COOKIE['from_date'] = $from_date;
     $to_date = $_POST['toDate'];
-    setcookie("from_date", $from_date);
-    $_SESSION["from_date"] = $from_date;
-    $_COOKIE['to_date'] = $to_date;
-    $_SESSION['to_date'] = $to_date;
     $passType = $_POST['passType'];
 
     $qry = "INSERT INTO pass (passenger_id, user_id,passType ,bus_type, start_term_id, ends_term_id, payment_id, image_id, from_date, to_date) VALUES 
             ($passenger_id, {$_SESSION['user_id']}, $passType ,$bus_type, $start_term_id, $ends_term_id, '$payment_id', $image_id, '$from_date', '$to_date')";
 
     mysqli_query($con, $qry);
+    $newPassId = mysqli_insert_id($con);
 
-    $frussian = $_SESSION['user_id'];
-    $updateUserImgQuery = "UPDATE users SET user_img_path='$user_img_path' WHERE id=$frussian";
+    $stdupdate = "UPDATE student SET pass_id = $newPassId WHERE id = $NewstudentInsertedId";
+    mysqli_query($con, $stdupdate);
+
+    $fid = $_SESSION['user_id'];
+    $updateUserImgQuery = "UPDATE users SET user_img_path='$user_img_path' WHERE id=$fid";
     mysqli_query($con, $updateUserImgQuery);
 
     $query = "SELECT
@@ -224,7 +225,7 @@ if ($result) {
                                 <h4 class="ml-2 mt-3 text-center"><?php echo $role ?></h4>
                             </div>
                             <div class="col-lg-3 col-md-3 col-6 text-right">
-                                <p><strong>User Id: </strong> <?php echo  $user_id ?></p>
+                                <p><strong>PASS Id: </strong> <?php echo  $newPassId ?></p>
                                 <p><strong>From Date:</strong> <?php echo date('d-m-Y', strtotime($from_date)); ?></p>
                                 <p><strong>To Date:</strong> <?php echo date('d-m-Y', strtotime($to_date)); ?></p>
                             </div>
@@ -278,18 +279,9 @@ if ($result) {
 <script>
     $(document).ready(function() {
         console.log("QR code generation function is executing.");
-        const qrData = `
-    Pass: <?php echo $role; ?>
-    From Date: <?php echo date('d-m-Y', strtotime($from_date)); ?>
-    To Date: <?php echo date('d-m-Y', strtotime($to_date)); ?>
-    Name: <?php echo $full_name; ?>
-    Gender: <?php echo $gender; ?>
-    Pass Type: <?php echo $bus_type; ?>
-    Pass Days: <?php echo $pass_Type; ?>
-    From Location: <?php echo $start_term_id; ?>
-    To Location: <?php echo $ends_term_id; ?>
-`;
+        var qrData = "Pass: <?php echo $role; ?>\nFrom Date: <?php echo date('d-m-Y', strtotime($from_date)); ?>\nTo Date: <?php echo date('d-m-Y', strtotime($to_date)); ?>Name: <?php echo $full_name; ?>Gender: <?php echo $gender; ?>Pass Type: <?php echo $bus_type; ?>Pass Days: <?php echo $passType; ?>From Location: <?php echo $start_term_id; ?>To Location: <?php echo $ends_term_id; ?>";
 
+        // qrData = "Testing";
         console.log("QR Data:", qrData);
 
         const qrcodeContainer = document.getElementById("qrcode-container");
