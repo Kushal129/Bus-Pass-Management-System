@@ -3,7 +3,7 @@
 -- Host: localhost	Database: buspassms
 -- ------------------------------------------------------
 -- Server version 	10.4.28-MariaDB
--- Date: Mon, 06 Nov 2023 07:04:58 +0100
+-- Date: Mon, 06 Nov 2023 14:08:30 +0100
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -488,4 +488,4 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on: Mon, 06 Nov 2023 07:04:58 +0100
+-- Dump completed on: Mon, 06 Nov 2023 14:08:30 +0100

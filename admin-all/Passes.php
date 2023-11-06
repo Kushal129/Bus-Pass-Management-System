@@ -19,11 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['add_bus'])) {
     }
     $sql = "INSERT INTO `bus_type` (`bus_name`, `price_multiply`) VALUES ('$bus_name', '$price_multiply')";
     $result = mysqli_query($con, $sql);
-    // if ($result) {
-    //     $insert = true;
-    // } else {
-    //     echo "Not Done";
-    // }
 }
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['edit_bus'])) {
@@ -36,24 +31,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['edit_bus'])) {
     }
     $sql = "UPDATE `bus_type` SET `bus_name`='$bus_name', `price_multiply`='$price_multiply' WHERE `bus_id`='$bus_id'";
     $result = mysqli_query($con, $sql);
-    // if ($result) {
-    //     $edit = true;
-    // } else {
-    //     echo "Not Done";
-    // }
+
 }
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['delete_bus'])) {
     $bus_id = $_POST['bus_id'];
     $sql = "DELETE FROM `bus_type` WHERE `bus_id`='$bus_id'";
     $result = mysqli_query($con, $sql);
-    // if ($result) {
-    //     $deleted = true;
-    //     echo "Deleted";
-    //     exit;
-    // } else {
-    //     echo "Not Done";
-    // }
+ 
 }
 ?>
 

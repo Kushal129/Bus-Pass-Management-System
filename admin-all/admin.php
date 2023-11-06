@@ -68,6 +68,16 @@ if ($result->num_rows > 0) {
     $std_pass_count = 0;
 }
 
+$sql = "SELECT COUNT(*) as psg_pass_count FROM passenger";
+$result = $con->query($sql);
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $psg_pass_count = $row['psg_pass_count'];
+} else {
+    $psg_pass_count = 0;
+}
+
 ?>
 <!DOCTYPE html>
 
@@ -77,7 +87,6 @@ if ($result->num_rows > 0) {
     <meta charset="UTF-8">
     <title> Admin Page </title>
     <link rel="stylesheet" href="../css/admin.css">
-    <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -124,9 +133,7 @@ if ($result->num_rows > 0) {
         <div class="head">
             <div class="profile">
                 <img src="../img/admin.ico" class="pro-img" id="user-avatar" alt="User Avatar">
-                <!-- <div class="profile-text"><php echo $row['full_name']; ?></div> -->
                 <div class="profile-text"><?php echo $full_name ?></div>
-
             </div>
             <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>
         </div>
@@ -142,9 +149,7 @@ if ($result->num_rows > 0) {
                 <div class="card-body">
                     <h5 class="card-title">Pass Created Today</h5>
                     <p><?php echo $today_pass_count; ?></p>
-                    <!-- <i class='bx bx-food-menu'></i> -->
                     <i><img src="../img/pass.gif" alt="" style="width: 25px;"></i>
-
                 </div>
             </div>
             <div class="card" style="width: 18rem;">
@@ -161,24 +166,15 @@ if ($result->num_rows > 0) {
                     <h5 class="card-title">Total Student Pass</h5>
                     <p><?php echo $std_pass_count; ?></p>
                     <i><img src="../img/pass.gif" alt="" style="width: 25px;"></i>
-                    <!-- <i class='bx bx-message-square-edit'></i> -->
                 </div>
             </div>
-            <!-- <div class="card" id="passengerPassCard">
+            <div class="card" id="passengerPassCard">
                 <div class="card-body">
                     <h5 class="card-title">Total Passenger Pass</h5>
-                    <p>40</p>
+                    <p><?php echo $psg_pass_count; ?></p>
                     <i class='bx bx-message-square-edit'></i>
                 </div>
-            </div>
-            <div class="card" id="handicapPassCard">
-                <div class="card-body">
-                    <h5 class="card-title">Total Handicap Pass</h5>
-                    <p>10</p>
-                    <i class='bx bx-message-square-edit'></i>
-                </div>
-            </div> -->
-        </div>
+            </div </div>
     </section>
     <script>
         let sidebar = document.querySelector(".sidebar");
