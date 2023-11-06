@@ -424,7 +424,7 @@ $price = $row['price'];
 
         var toDate_s = year + '-' + month + '-' + day;
 
-        $(document).find("#toDate_s").val(toDate_s);
+        $(document).find("#toDate").val(toDate_s);
     }
 
     $(document).on('change', "#fromDate", function() {

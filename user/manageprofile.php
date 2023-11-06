@@ -45,7 +45,7 @@ if (isset($_POST['update_profile'])) {
         echo '<script>showToaster("No changes made to the profile data.", "orange")</script>';
     } else {
         if (!empty($_FILES['img_update']['name'])) {
-            $targetDirectory = __DIR__ . '/../uploads/user_photo/'; // Include a directory separator at the end
+            $targetDirectory = __DIR__ . '/../uploads/user_photo/'; 
             $original_filename = $_FILES['img_update']['name'];
             $filename = preg_replace("/[^A-Za-z0-9.]/", '', $original_filename);
             $targetFile = $targetDirectory . $filename;
@@ -103,7 +103,7 @@ if (isset($_POST['update_profile'])) {
 
 <head>
     <meta charset="UTF-8">
-    <title>Bus Pass | Profile </title>
+    <title>Bus Pass | Profile Update </title>
     <link rel="stylesheet" href="../css/user.css">
     <link rel="icon" type="image/ico" href="../img/buslogo.png">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
@@ -171,8 +171,6 @@ if (isset($_POST['update_profile'])) {
     <section class="home-section">
         <div class="head">
             <div class="profile">
-                <!-- <img src="../img/admin.ico" class="pro-img" id="user-avatar" alt="User Avatar"> -->
-                <!-- <img src="<php echo $user_img_path; ?>" class="pro-img" id="user-avatar" alt="User Avatar"> -->
                 <img class="pro-img" id="user-avatar" alt="User Avatar" src="../uploads/user_photo/<?php echo $use_img; ?>">
 
                 <div class="profile-text"><?php echo $row['full_name']; ?></div>

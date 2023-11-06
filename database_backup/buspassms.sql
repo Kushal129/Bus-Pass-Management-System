@@ -3,7 +3,7 @@
 -- Host: localhost	Database: buspassms
 -- ------------------------------------------------------
 -- Server version 	10.4.28-MariaDB
--- Date: Fri, 03 Nov 2023 19:13:49 +0100
+-- Date: Mon, 06 Nov 2023 07:04:58 +0100
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -144,7 +144,7 @@ CREATE TABLE `document` (
   `document_type_id` int(11) NOT NULL,
   `document_file_name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=286 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=314 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -154,12 +154,12 @@ CREATE TABLE `document` (
 LOCK TABLES `document` WRITE;
 /*!40000 ALTER TABLE `document` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `document` VALUES (219,1,'202310303143Screenshot 2023-10-06 191819.png'),(220,1,'202310314482Screenshot 2023-10-06 191819.png'),(221,1,'202310318815Screenshot 2023-10-06 191819.png'),(222,1,'202310317823Screenshot 2023-10-06 191819.png'),(223,1,'202310315884Screenshot 2023-10-06 191819.png'),(224,1,'202310318351Screenshot 2023-10-06 191819.png'),(225,1,'202310311875Screenshot 2023-10-06 191819.png'),(226,1,'202310311400Screenshot 2023-10-06 191819.png'),(227,1,'202310319953Screenshot 2023-10-06 191819.png'),(228,1,'202310319218Screenshot 2023-10-06 191819.png'),(229,1,'202310316117Screenshot 2023-10-06 191819.png'),(230,1,'202310311277Screenshot 2023-10-06 191819.png'),(231,1,'202310317353Screenshot 2023-10-06 191819.png'),(232,1,'202310314266Screenshot 2023-10-06 191819.png'),(233,1,'202310312581Screenshot 2023-10-06 191819.png'),(234,1,'202310314708Screenshot 2023-10-06 191819.png'),(235,1,'202310319633Screenshot 2023-10-06 191819.png'),(236,1,'20231031122Screenshot 2023-10-06 191819.png'),(237,1,'20231031887Screenshot 2023-10-06 191819.png'),(238,1,'202310318090Screenshot 2023-10-06 191819.png'),(239,1,'202310311339Screenshot 2023-10-06 191819.png'),(240,1,'202310319868Screenshot 2023-10-06 191819.png'),(241,2,'20231101886Screenshot 2023-10-06 191819.png'),(242,1,'202311018085Screenshot 2023-10-06 191819.png'),(243,2,'202311019729Screenshot 2023-10-06 191819.png'),(244,1,'202311018889Screenshot 2023-10-06 191819.png'),(245,1,'202311019950Screenshot 2023-10-06 191819.png'),(246,1,'202311013463Screenshot 2023-10-06 191819.png'),(247,1,'202311022720Screenshot 2023-10-06 191819.png'),(248,1,'202311024262Screenshot 2023-10-06 191819.png'),(249,1,'202311027044Screenshot 2023-10-06 191819.png'),(250,1,'202311024010Screenshot 2023-10-06 191819.png'),(251,1,'202311025018Screenshot 2023-10-06 191819.png'),(252,1,'202311028679Screenshot 2023-10-06 191819.png'),(253,1,'20231102890Screenshot 2023-10-06 191819.png'),(254,1,'202311023647Screenshot 2023-10-06 191819.png'),(255,1,'202311023644Screenshot 2023-10-06 191819.png'),(256,1,'202311026222Screenshot 2023-10-06 191819.png'),(257,0,'20231103619Screenshot 2023-10-06 191819.png'),(258,1,'202311039225Screenshot 2023-10-06 191819.png'),(259,1,'202311039465Screenshot 2023-10-06 191819.png'),(260,1,'202311037456Screenshot 2023-10-06 191819.png'),(261,1,'20231103681Screenshot 2023-10-06 191819.png'),(262,1,'202311033329Screenshot 2023-10-06 191819.png'),(263,1,'202311032957Screenshot 2023-10-06 191819.png'),(264,1,'202311036508Screenshot 2023-10-06 191819.png'),(265,1,'202311036613Screenshot 2023-10-06 191819.png'),(266,1,'202311037986Screenshot 2023-10-06 191819.png'),(267,1,'202311032163Screenshot 2023-10-06 191819.png'),(268,1,'202311038274Screenshot 2023-10-06 191819.png'),(269,1,'202311033091Screenshot 2023-10-06 191819.png'),(270,1,'202311034736Screenshot 2023-10-06 191819.png'),(271,1,'202311037880Screenshot 2023-10-06 191819.png'),(272,1,'202311035053Screenshot 2023-10-06 191819.png'),(273,1,'202311031737Screenshot 2023-10-06 191819.png'),(274,1,'202311036048Screenshot 2023-10-06 191819.png'),(275,1,'202311036546Screenshot 2023-10-06 191819.png'),(276,1,'202311032038Screenshot 2023-10-06 191819.png'),(277,1,'202311037824Screenshot 2023-10-06 191819.png'),(278,1,'20231103655Screenshot 2023-10-06 191819.png'),(279,2,'202311033261Screenshot 2023-10-06 191819.png'),(280,1,'202311037191Screenshot 2023-10-06 191819.png'),(281,1,'202311037307Screenshot 2023-10-06 191819.png'),(282,1,'202311034737Screenshot 2023-10-06 191819.png'),(283,1,'202311039412Screenshot 2023-10-06 191819.png'),(284,1,'202311039149Screenshot 2023-10-06 191819.png'),(285,1,'202311033627Screenshot 2023-10-06 191819.png');
+INSERT INTO `document` VALUES (219,1,'202310303143Screenshot 2023-10-06 191819.png'),(220,1,'202310314482Screenshot 2023-10-06 191819.png'),(221,1,'202310318815Screenshot 2023-10-06 191819.png'),(222,1,'202310317823Screenshot 2023-10-06 191819.png'),(223,1,'202310315884Screenshot 2023-10-06 191819.png'),(224,1,'202310318351Screenshot 2023-10-06 191819.png'),(225,1,'202310311875Screenshot 2023-10-06 191819.png'),(226,1,'202310311400Screenshot 2023-10-06 191819.png'),(227,1,'202310319953Screenshot 2023-10-06 191819.png'),(228,1,'202310319218Screenshot 2023-10-06 191819.png'),(229,1,'202310316117Screenshot 2023-10-06 191819.png'),(230,1,'202310311277Screenshot 2023-10-06 191819.png'),(231,1,'202310317353Screenshot 2023-10-06 191819.png'),(232,1,'202310314266Screenshot 2023-10-06 191819.png'),(233,1,'202310312581Screenshot 2023-10-06 191819.png'),(234,1,'202310314708Screenshot 2023-10-06 191819.png'),(235,1,'202310319633Screenshot 2023-10-06 191819.png'),(236,1,'20231031122Screenshot 2023-10-06 191819.png'),(237,1,'20231031887Screenshot 2023-10-06 191819.png'),(238,1,'202310318090Screenshot 2023-10-06 191819.png'),(239,1,'202310311339Screenshot 2023-10-06 191819.png'),(240,1,'202310319868Screenshot 2023-10-06 191819.png'),(241,2,'20231101886Screenshot 2023-10-06 191819.png'),(242,1,'202311018085Screenshot 2023-10-06 191819.png'),(243,2,'202311019729Screenshot 2023-10-06 191819.png'),(244,1,'202311018889Screenshot 2023-10-06 191819.png'),(245,1,'202311019950Screenshot 2023-10-06 191819.png'),(246,1,'202311013463Screenshot 2023-10-06 191819.png'),(247,1,'202311022720Screenshot 2023-10-06 191819.png'),(248,1,'202311024262Screenshot 2023-10-06 191819.png'),(249,1,'202311027044Screenshot 2023-10-06 191819.png'),(250,1,'202311024010Screenshot 2023-10-06 191819.png'),(251,1,'202311025018Screenshot 2023-10-06 191819.png'),(252,1,'202311028679Screenshot 2023-10-06 191819.png'),(253,1,'20231102890Screenshot 2023-10-06 191819.png'),(254,1,'202311023647Screenshot 2023-10-06 191819.png'),(255,1,'202311023644Screenshot 2023-10-06 191819.png'),(256,1,'202311026222Screenshot 2023-10-06 191819.png'),(257,0,'20231103619Screenshot 2023-10-06 191819.png'),(258,1,'202311039225Screenshot 2023-10-06 191819.png'),(259,1,'202311039465Screenshot 2023-10-06 191819.png'),(260,1,'202311037456Screenshot 2023-10-06 191819.png'),(261,1,'20231103681Screenshot 2023-10-06 191819.png'),(262,1,'202311033329Screenshot 2023-10-06 191819.png'),(263,1,'202311032957Screenshot 2023-10-06 191819.png'),(264,1,'202311036508Screenshot 2023-10-06 191819.png'),(265,1,'202311036613Screenshot 2023-10-06 191819.png'),(266,1,'202311037986Screenshot 2023-10-06 191819.png'),(267,1,'202311032163Screenshot 2023-10-06 191819.png'),(268,1,'202311038274Screenshot 2023-10-06 191819.png'),(269,1,'202311033091Screenshot 2023-10-06 191819.png'),(270,1,'202311034736Screenshot 2023-10-06 191819.png'),(271,1,'202311037880Screenshot 2023-10-06 191819.png'),(272,1,'202311035053Screenshot 2023-10-06 191819.png'),(273,1,'202311031737Screenshot 2023-10-06 191819.png'),(274,1,'202311036048Screenshot 2023-10-06 191819.png'),(275,1,'202311036546Screenshot 2023-10-06 191819.png'),(276,1,'202311032038Screenshot 2023-10-06 191819.png'),(277,1,'202311037824Screenshot 2023-10-06 191819.png'),(278,1,'20231103655Screenshot 2023-10-06 191819.png'),(279,2,'202311033261Screenshot 2023-10-06 191819.png'),(280,1,'202311037191Screenshot 2023-10-06 191819.png'),(281,1,'202311037307Screenshot 2023-10-06 191819.png'),(282,1,'202311034737Screenshot 2023-10-06 191819.png'),(283,1,'202311039412Screenshot 2023-10-06 191819.png'),(284,1,'202311039149Screenshot 2023-10-06 191819.png'),(285,1,'202311033627Screenshot 2023-10-06 191819.png'),(286,2,'202311056621Screenshot 2023-10-06 191819.png'),(287,2,'202311057610Screenshot 2023-10-06 191819.png'),(288,2,'202311053557Screenshot 2023-10-06 191819.png'),(289,2,'202311056928Screenshot 2023-10-06 191819.png'),(290,2,'202311057395Screenshot 2023-10-06 191819.png'),(291,2,'202311059485Screenshot 2023-10-06 191819.png'),(292,2,'20231105741Screenshot 2023-10-06 191819.png'),(293,2,'202311055798Screenshot 2023-10-06 191819.png'),(294,2,'202311052122Screenshot 2023-10-06 191819.png'),(295,2,'202311059891Screenshot 2023-10-06 191819.png'),(296,2,'202311052792Screenshot 2023-10-06 191819.png'),(297,2,'202311055411Screenshot 2023-10-06 191819.png'),(298,4,'202311052516Screenshot 2023-10-06 191819.png'),(299,1,'20231105312Screenshot 2023-10-06 191819.png'),(300,1,'20231105512Screenshot 2023-10-06 191819.png'),(301,1,'202311068713Screenshot 2023-10-06 191819.png'),(302,2,'202311067289Screenshot 2023-10-06 191819.png'),(303,2,'202311069710Screenshot 2023-10-06 191819.png'),(304,2,'202311064222Screenshot 2023-10-06 191819.png'),(305,2,'20231106138Screenshot 2023-10-06 191819.png'),(306,2,'20231106208Screenshot 2023-10-06 191819.png'),(307,1,'202311067147Screenshot 2023-10-06 191819.png'),(308,1,'202311064858Screenshot 2023-10-06 191819.png'),(309,1,'202311064936Screenshot 2023-10-06 191819.png'),(310,1,'202311063163Screenshot 2023-10-06 191819.png'),(311,1,'202311065487Screenshot 2023-10-06 191819.png'),(312,1,'202311065120Screenshot 2023-10-06 191819.png'),(313,1,'202311068764Screenshot 2023-10-06 191819.png');
 /*!40000 ALTER TABLE `document` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `document` with 67 row(s)
+-- Dumped table `document` with 95 row(s)
 --
 
 --
@@ -268,7 +268,7 @@ CREATE TABLE `pass` (
   `from_date` date DEFAULT NULL,
   `to_date` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=247 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=275 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -278,12 +278,11 @@ CREATE TABLE `pass` (
 LOCK TABLES `pass` WRITE;
 /*!40000 ALTER TABLE `pass` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `pass` VALUES (240,272,18,30,1,1,2,'pay_MvyduDYJGlq3ew',1,'2023-11-03','2023-12-03'),(241,273,18,30,1,1,2,'pay_MvyduDYJGlq3ew',1,'2023-11-03','2023-12-03'),(242,274,18,30,1,1,2,'pay_MvyduDYJGlq3ew',1,'2023-11-03','2023-12-03'),(243,275,18,30,1,3,10,'pay_Mvzl5NcfmR9zxv',1,'2023-11-03','2023-12-03'),(244,277,18,30,1,1,2,'pay_Mw3V4WjzesULA5',1,'2023-11-03','2023-12-03'),(245,278,18,30,1,1,2,'pay_Mw3V4WjzesULA5',1,'2023-11-03','2023-12-03'),(246,279,18,30,1,1,2,'pay_Mw3Zc3P9rdNtXU',1,'2023-11-03','2023-12-03');
 /*!40000 ALTER TABLE `pass` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `pass` with 7 row(s)
+-- Dumped table `pass` with 0 row(s)
 --
 
 --
@@ -297,9 +296,9 @@ CREATE TABLE `passenger` (
   `educationp` varchar(100) NOT NULL,
   `com_name` varchar(200) NOT NULL,
   `com_address` varchar(200) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `pass_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -339,7 +338,7 @@ CREATE TABLE `passenger_info` (
   KEY `document_id_foregin` (`document_id`),
   CONSTRAINT `document_id_foregin` FOREIGN KEY (`document_id`) REFERENCES `document` (`id`),
   CONSTRAINT `user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=280 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=308 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -349,12 +348,11 @@ CREATE TABLE `passenger_info` (
 LOCK TABLES `passenger_info` WRITE;
 /*!40000 ALTER TABLE `passenger_info` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `passenger_info` VALUES (279,'Kushal Pipaliya','NAHR ',285,'Male','passenger',29,18,'2024-05-03','2004-08-12','202311034788kp (1).jpeg');
 /*!40000 ALTER TABLE `passenger_info` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `passenger_info` with 1 row(s)
+-- Dumped table `passenger_info` with 0 row(s)
 --
 
 --
@@ -426,11 +424,9 @@ CREATE TABLE `student` (
   `education` varchar(50) NOT NULL,
   `Institute_name` varchar(150) NOT NULL,
   `Institute_address` varchar(150) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=281 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `pass_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=297 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -474,7 +470,7 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `users` VALUES (1,'Admin',1234567891,'21bmiit129@gmail.com','$2y$10$omAf0m3yrxH/cFklDaeIj.fnVTQxAxV6cNjv3a0DM5MTRzawacrou',0,'../img/admin.ico'),(18,'Kushal Pipaliya',9574476496,'kushalhpipaliya01@gmail.com','$2y$10$jZFytD5hUf7VDq4F8X9KfOWAb4IR0jla1UB4ZeFdjtLw9sjAbjkIW',1,'202311034788kp (1).jpeg'),(20,'Henvi kaklotar',9913402465,'henvi08@gmail.com','$2y$10$w9SrwUkHdwp9cH.Ej.wxKewj8zPzEAC1eesgXlBq.VxzdVBaGQjEe',1,'admin.ico'),(21,'Aruna Pipaliya',9099260609,'annu01@gmail.com','$2y$10$o5GcQMI/IGH92lF1Vhfu3Ok5OwpUyjDBj8VUHqF2f8UCl.susD.FK',1,'admin.ico'),(22,'Aruna Pipaliya',9913402465,'abc@gmail.com','$2y$10$NGkvSEyyivA/9rCm/44lbes7NbKO46n096sOhaBCCLxNY6qI43Hma',1,'admin.ico'),(24,'rohan Narigara',7894561239,'21bmiit137@gmail.com','$2y$10$AILqKVTy62bP8K3o7gRhUu0TsG3Vj2WQYPZ7Og1tQwcbqIdbIICmC',1,'admin.ico');
+INSERT INTO `users` VALUES (1,'Admin',1234567891,'21bmiit129@gmail.com','$2y$10$omAf0m3yrxH/cFklDaeIj.fnVTQxAxV6cNjv3a0DM5MTRzawacrou',0,'../img/admin.ico'),(18,'Kushal Pipaliya',9574476496,'kushalhpipaliya01@gmail.com','$2y$10$UovFCHX1dS6n8NirhWd7YOaraNMsA9AJeqg6lh.XithhEISusiDTq',1,'kp1.jpeg'),(20,'Henvi kaklotar',9913402465,'henvi08@gmail.com','$2y$10$w9SrwUkHdwp9cH.Ej.wxKewj8zPzEAC1eesgXlBq.VxzdVBaGQjEe',1,'../img/admin.ico'),(21,'Aruna Pipaliya',9099260609,'annu01@gmail.com','$2y$10$o5GcQMI/IGH92lF1Vhfu3Ok5OwpUyjDBj8VUHqF2f8UCl.susD.FK',1,'../img/admin.ico'),(22,'Aruna Pipaliya',9913402465,'abc@gmail.com','$2y$10$NGkvSEyyivA/9rCm/44lbes7NbKO46n096sOhaBCCLxNY6qI43Hma',1,'../img/admin.ico'),(24,'rohan Narigara',7894561239,'21bmiit137@gmail.com','$2y$10$AILqKVTy62bP8K3o7gRhUu0TsG3Vj2WQYPZ7Og1tQwcbqIdbIICmC',1,'../img/admin.ico');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
@@ -492,4 +488,4 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on: Fri, 03 Nov 2023 19:13:49 +0100
+-- Dump completed on: Mon, 06 Nov 2023 07:04:58 +0100

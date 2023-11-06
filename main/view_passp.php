@@ -2,13 +2,15 @@
 session_start();
 
 $user_id = $_SESSION['user_id'];
+$pass_pid  = $_GET['pass_id'];
 
 include_once '../connection.php';
 
-$qry = 'SELECT pi.*, p.*, s.Institute_address
+$qry = "SELECT pi.*, p.*, ps.com_address
         FROM passenger_info AS pi
         INNER JOIN pass AS p ON pi.id = p.passenger_id
-        INNER JOIN passenger AS s ON pi.user_id = s.user_id';
+        INNER JOIN passenger AS ps ON ps.pass_id = p.id 
+        WHERE p.id = $pass_pid";
 
 $result = $con->query($qry);
 if ($result->num_rows > 0) {
@@ -118,7 +120,7 @@ if ($result) {
                                 <h4 class="ml-2 mt-3 text-center"><?php echo $role ?></h4>
                             </div>
                             <div class="col-lg-3 col-md-3 col-6 text-right">
-                                <p><strong>User Id: </strong> <?php echo  $user_id ?></p>
+                                <p><strong>Pass Id: </strong> <?php echo  $pass_pid ?></p>
                                 <p><strong>From Date:</strong> <?php echo date('d-m-Y', strtotime($from_date)); ?></p>
                                 <p><strong>To Date:</strong> <?php echo date('d-m-Y', strtotime($to_date)); ?></p>
                             </div>
@@ -172,19 +174,8 @@ if ($result) {
 
 <script>
     $(document).ready(function() {
-        console.log("QR code generation function is executing.");
-        const qrData = `
-    Pass: <?php echo $role; ?>
-    From Date: <?php echo date('d-m-Y', strtotime($from_date)); ?>
-    To Date: <?php echo date('d-m-Y', strtotime($to_date)); ?>
-    Name: <?php echo $full_name; ?>
-    Gender: <?php echo $gender; ?>
-    Pass Type: <?php echo $bus_type; ?>
-    Pass Type: <?php echo $passType?>
-    From Location: <?php echo $start_term_id; ?>
-    To Location: <?php echo $ends_term_id; ?>
-`;
-
+        console.log("QR code generat ");
+        const qrData = "Pass: <?php echo $role; ?>\nFrom Date: <?php echo date('d-m-Y', strtotime($from_date)); ?>\nTo Date: <?php echo date('d-m-Y', strtotime($to_date)); ?>\nName: <?php echo $full_name; ?>\nGender: <?php echo $gender; ?>\nPass Type: <?php echo $bus_type; ?>\nPass Type: <?php echo $passType?>\nFrom Location: <?php echo $start_term_id; ?>\nTo Location: <?php echo $ends_term_id; ?>";
         console.log("QR Data:", qrData);
 
         const qrcodeContainer = document.getElementById("qrcode-container");
@@ -201,6 +192,9 @@ if ($result) {
     function redirectToHome() {
         window.location.href = "../user/Managepass.php";
     }
+    window.onbeforeunload = function() {
+            return "You are about to leave this page. Are you sure?";
+        };
 </script>
 
 <script>

@@ -38,57 +38,35 @@ if (!isset($_SESSION['username'])) {
 </head>
 
 <style>
-    .down-container {
-        align-items: center;
-        justify-content: center;
-        text-align: center;
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box !important;
     }
 
-    label {
-        display: block;
-        font-size: 16px;
-        margin-bottom: 8px;
-    }
-
-    input[type="password"] {
-        background-color: #ffffe2;
-        width: 30%;
-        padding: 12px;
-        margin-bottom: 20px;
-        border: 1px solid #dddb3a;
-        border-radius: 5px;
-        font-size: 17px;
-    }
-
-    input[type="text"] {
-        background-color: #ffffe2;
-        width: 30%;
-        padding: 12px;
-        margin-bottom: 20px;
-        border: 1px solid #dddb3a;
-        border-radius: 5px;
-        font-size: 17px;
-    }
-
-    .error {
-        font-size: 14px;
-        display: block;
-        color: red;
+    .form-group {
+        align-items: center !important;
+        margin-bottom: 20px !important;
+        margin: 0rem !important;
+        padding: 2rem !important;
+        background-color: #ffffff !important;
+        border-radius: 8px !important;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+        transition: transform 0.3s, box-shadow 0.5s !important;
     }
 
     .btn-cg {
         background-color: black;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
+        color: white;
+        width: 100%;
+        padding: 8px;
     }
 
-    .btn-cg:hover {
-        background-color: #434343;
+    .toggle-password {
+        cursor: pointer;
+        display: flex !important;
+        justify-content: end !important;
+        margin-top: 10px !important;
     }
 </style>
 
@@ -108,7 +86,7 @@ if (!isset($_SESSION['username'])) {
             </li>
             <li>
                 <a href="../user/Managepass.php">
-                <i class='bx bx-credit-card-front'></i>
+                    <i class='bx bx-credit-card-front'></i>
                     <span class="links_name">Manage Pass</span>
                 </a>
                 <span class="tooltip">Manage Pass</span>
@@ -149,23 +127,25 @@ if (!isset($_SESSION['username'])) {
             <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>
         </div>
         <form method="POST" id="password-form">
-            <div class="form-group">
-                <div class="down-container">
-                    <h1 style="font-size: 2rem;">Change Password</h1>
-                    <hr>
-                    <label for="new-pass">Enter New Password</label>
-
-                    <input type="password" class="cgshowpass" name="newpass" id="newpass" required style="width: 30%;">
-                    <i class="bx bx-hide" id="toggle-password" style="cursor: pointer;"></i>
-
-
-                    <label for="renew-pass">Re-Enter New Password</label>
-                    <input type="password" class="cgshowpass" name="renewpass" id="renewpass" required style="width: 30%; margin-right: 1.3rem;">
-                    <span id="renewpass-error" class="error" style="color: red;"></span>
-                    <br><br>
-                    <button type="submit" class="btn-cg" value="Update Password">Update Password</button>
+            <section class="my-5">
+                <div class="py-5">
+                    <h2 class="text-center">Change Password</h2>
                 </div>
-            </div>
+                <div class="w-50 m-auto">
+                    <form action="userinfo.php" method="post">
+                        <div class="form-group" class="col-lg-4 col-md-4 col-12">
+                            <label for="new-pass">Enter New Password</label>
+                            <input type="password" class="form-control cgshowpass" name="newpass" id="newpass" autocomplete="off" required>
+
+                            <label for="renew-pass">Re-Enter New Password</label>
+                            <input type="password" class="form-control cgshowpass" name="renewpass" id="renewpass" autocomplete="off" required>
+                            <i class="bx bx-hide toggle-password" id="toggle-password" style="cursor: pointer;"></i><br>
+                            <span id="renewpass-error" class="error" style="color: red;"></span>
+                            <button type="submit" class="btn-cg" value="Update Password">Update Password</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
         </form>
     </section>
 </body>

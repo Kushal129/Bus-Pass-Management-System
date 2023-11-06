@@ -17,8 +17,6 @@ if (!isset($_SESSION['username'])) {
     $name = $row['full_name'];
 
     $role = $row['role'];
-    // echo $role;
-    // 1 - user and 0 - admin
     if (!$role) {
         header("Location:../index.php");
     }
@@ -55,7 +53,6 @@ if ($result) {
     $table .= '<th>From Date</th>';
     $table .= '<th>To Date</th>';
     $table .= '<th>View Pass</th>';
-    // $table .= '<th>Download Pass</th>';
     $table .= '</tr>';
     $table .= '</thead>';
     $table .= '<tbody>';
@@ -65,23 +62,20 @@ if ($result) {
         $table .= '<tr>';
         $table .= '<td>' . $row['user_id'] . '</td>';
         $table .= '<td>' . $row['full_name'] . '</td>';
-        $table .= '<td>' . $row['validate_through'] . '</td>';
-        $table .= '<td>' . $row['dob'] . '</td>';
+        $table .= '<td>' . date('d/m/Y', strtotime($row['validate_through'])) . '</td>';
+        $table .= '<td>' . date('d/m/Y', strtotime($row['dob'])) . '</td>';
         $table .= '<td>' . $row['bus_name'] . '</td>';
         $table .= '<td>' . $row['s_ter'] . '</td>';
         $table .= '<td>' . $row['e_ter'] . '</td>';
-        $table .= '<td>' . $row['from_date'] . '</td>';
-        $table .= '<td>' . $row['to_date'] . '</td>';
+        $table .= '<td>' . date('d/m/Y', strtotime($row['from_date'])) . '</td>';
+        $table .= '<td>' . date('d/m/Y', strtotime($row['to_date'])) . '</td>';
         $table .= '<td>';
-        if($row['role'] == "Student")
-        $table .= '<a class="button view-button" href="../main/view_pass.php?pass_id='.$pass_id.'">View <i class="fas fa-eye" style= "margin-left: 5px;"></i></a>';
+        if ($row['role'] == "Student")
+            $table .= '<a class="button view-button" href="../main/view_pass.php?pass_id=' . $pass_id . '">View <i class="fas fa-eye" style= "margin-left: 5px;"></i></a>';
         else {
-            $table .= '<a class="button view-button" href="../main/view_passp.php">View <i class="fas fa-eye" style= "margin-left: 5px;"></i></a>';
+            $table .= '<a class="button view-button" href="../main/view_passp.php?pass_id=' . $pass_id . '">View <i class="fas fa-eye" style= "margin-left: 5px;"></i></a>';
         }
         $table .= '</td>';
-        // $table .= '<td>';
-        // $table .= '<button class="download-button">Download <i class="fas fa-download"></i></button>';
-        // $table .= '</td>';
         $table .= '</tr>';
     }
 
@@ -135,8 +129,9 @@ if ($result) {
         background-color: #feff3c;
         color: black;
     }
-    .dataTables_filter{
-        margin-bottom: 1rem !important ;
+
+    .dataTables_filter {
+        margin-bottom: 1rem !important;
     }
 </style>
 

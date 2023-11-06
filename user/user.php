@@ -107,9 +107,6 @@ if (!isset($_SESSION['username'])) {
             <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>
         </div>
         <section class="my-5">
-            <!-- <div class="py-5">
-                <h2 class="text-center" style="text-decoration: underline #f4db00;">Select Pass Category</h2>
-            </div> -->
             <div class="container-fluid">
                 <div class="row d-flex justify-content-center">
                     <div class="col-lg-4 col-md-4 col-12">
@@ -121,7 +118,7 @@ if (!isset($_SESSION['username'])) {
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-12">
-                        <div class="card" id="renew_pass">
+                        <div class="card" id="renew_pass" onclick="redirectToRenewPass()">
                             <div class="card-body text-center">
                                 <h5 class="card-title">Re-New Pass</h5>
                                 <i class='bx bx-user'></i>
@@ -150,14 +147,17 @@ if (!isset($_SESSION['username'])) {
 
     </section>
     <script>
+        function redirectToRenewPass() {
+            window.location.href = '../user/renewpass.php';
+        }
         $(document).ready(function() {
             $("#new_pass").click(function() {
                 $(".downpage").toggle();
                 $(".Category-down").toggle();
-               
+
                 if ($(".downpage").is(":visible")) {
-                    $("#category").val(""); 
-                    $(".down-container").empty(); 
+                    $("#category").val("");
+                    $(".down-container").empty();
                 }
             });
 
@@ -166,21 +166,22 @@ if (!isset($_SESSION['username'])) {
 
                 if (selectedCategory === "Student") {
                     $(".down-container").load("../user/student.php");
-                    
+
                 } else {
-                    $(".down-container").empty(); 
+                    $(".down-container").empty();
                 }
                 if (selectedCategory === "Passenger") {
                     $(".down-container").load("../user/passanger.php");
                 } else {
-                    $(".down-container").empty(); 
+                    $(".down-container").empty();
                 }
                 if (selectedCategory === "Handicap") {
                     $(".down-container").load("../user/handicap.php");
                 } else {
-                    $(".down-container").empty(); 
+                    $(".down-container").empty();
                 }
             });
+
         });
     </script>
 

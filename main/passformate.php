@@ -225,7 +225,7 @@ if ($result) {
                                 <h4 class="ml-2 mt-3 text-center"><?php echo $role ?></h4>
                             </div>
                             <div class="col-lg-3 col-md-3 col-6 text-right">
-                                <p><strong>PASS Id: </strong> <?php echo  $newPassId ?></p>
+                                <p><strong>Pass Id: </strong> <?php echo  $newPassId ?></p>
                                 <p><strong>From Date:</strong> <?php echo date('d-m-Y', strtotime($from_date)); ?></p>
                                 <p><strong>To Date:</strong> <?php echo date('d-m-Y', strtotime($to_date)); ?></p>
                             </div>
@@ -278,10 +278,8 @@ if ($result) {
 
 <script>
     $(document).ready(function() {
-        console.log("QR code generation function is executing.");
+        console.log("QR code generat ");
         var qrData = "Pass: <?php echo $role; ?>\nFrom Date: <?php echo date('d-m-Y', strtotime($from_date)); ?>\nTo Date: <?php echo date('d-m-Y', strtotime($to_date)); ?>Name: <?php echo $full_name; ?>Gender: <?php echo $gender; ?>Pass Type: <?php echo $bus_type; ?>Pass Days: <?php echo $passType; ?>From Location: <?php echo $start_term_id; ?>To Location: <?php echo $ends_term_id; ?>";
-
-        // qrData = "Testing";
         console.log("QR Data:", qrData);
 
         const qrcodeContainer = document.getElementById("qrcode-container");
@@ -298,6 +296,9 @@ if ($result) {
     function redirectToHome() {
         window.location.href = "../user/user.php";
     }
+    window.onbeforeunload = function() {
+            return "You are about to leave this page. Are you sure?";
+        };
 </script>
 
 <script>

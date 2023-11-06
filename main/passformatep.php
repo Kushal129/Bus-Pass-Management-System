@@ -7,7 +7,7 @@ if (!isset($_POST['educationp'], $_POST['company_name'], $_POST['Company_address
     die("Required fields are missing. passnger passs formate mathi");
 }
 
-print_r($_POST);
+// print_r($_POST);
 
 $user_id = $_SESSION['user_id'];
 $educationp = $_POST['educationp'];
@@ -21,6 +21,7 @@ $Company_address = mysqli_real_escape_string($con, $Company_address);
 $qry = "INSERT INTO passenger (educationp, com_name, com_address ) VALUES ('$educationp', '$company_name', '$Company_address' )";
 mysqli_query($con, $qry);
 $pasangerInsertedId = mysqli_insert_id($con);
+$NewpassangerInsertedId = $pasangerInsertedId;
 
 $uploadsDirectory = "../uploads/documents/";
 
@@ -52,7 +53,7 @@ if (isset($_FILES["passanger_address_proof_upload"])) {
 $full_namep = $_POST['fullnamep'];
 $addressp = $_POST['addressp'];
 $gender = $_POST['gender'];
-$role = "passenger";
+$role = "Passenger";
 $validate_through = $_POST['validate_through'];
 $dobp = $_POST['dateofBirthp'];
 $uploadsDirectory = "../uploads/user_photo/";
@@ -90,9 +91,13 @@ if (isset($_FILES["img_p"])) {
             ($passenger_id, {$_SESSION['user_id']}, $passType ,$bus_type, $start_term_id, $ends_term_id, '$payment_id', $image_id, '$from_datep', '$to_datep')";
 
     mysqli_query($con, $qry);
+    $newPassId = mysqli_insert_id($con);
 
-    $frussian = $_SESSION['user_id'];
-    $updateUserImgQuery = "UPDATE users SET user_img_path='$user_img_path' WHERE id=$frussian";
+    $psgupdate = "UPDATE passenger SET pass_id = $newPassId WHERE id = $NewpassangerInsertedId";
+    mysqli_query($con, $psgupdate);
+
+    $fid = $_SESSION['user_id'];
+    $updateUserImgQuery = "UPDATE users SET user_img_path='$user_img_path' WHERE id=$fid";
     mysqli_query($con, $updateUserImgQuery);
 
     $query = "SELECT
@@ -219,7 +224,7 @@ if ($result) {
                                 <h4 class="ml-2 mt-3 text-center"><?php echo $role ?></h4>
                             </div>
                             <div class="col-lg-3 col-md-3 col-6 text-right">
-                                <p><strong>User Id: </strong> <?php echo  $user_id ?></p>
+                                <p><strong>Pass Id: </strong> <?php echo  $newPassId ?></p>
                                 <p><strong>From Date:</strong> <?php echo date('d-m-Y', strtotime($from_datep)); ?></p>
                                 <p><strong>To Date:</strong> <?php echo date('d-m-Y', strtotime($to_datep)); ?></p>
                             </div>
@@ -272,22 +277,9 @@ if ($result) {
 
 <script>
     $(document).ready(function() {
-        console.log("QR code generation function is executing.");
-        const qrData = `
-    Pass: <?php echo $role; ?>
-    From Date: <?php echo date('d-m-Y', strtotime($from_datep)); ?>
-    To Date: <?php echo date('d-m-Y', strtotime($to_datep)); ?>
-    Name: <?php echo $full_namep; ?>
-    Gender: <?php echo $gender; ?>
-    Pass Type: <?php echo $bus_type; ?>
-    Pass Days: <?php echo $passType; ?>
-    From Location: <?php echo $start_term_id; ?>
-    To Location: <?php echo $ends_term_id; ?>
-
-`;
-
+        console.log("QR code generat ");
+        var qrData = "\nPass: <?php echo $role; ?>\nFrom Date: <?php echo date('d-m-Y', strtotime($from_datep)); ?>\nTo Date: <?php echo date('d-m-Y', strtotime($to_datep)); ?>\nName: <?php echo $full_namep; ?>\nGender: <?php echo $gender; ?>\nPass Type: <?php echo $bus_type; ?>\nPass Days: <?php echo $passType; ?>\nFrom Location: <?php echo $start_term_id; ?>\nTo Location: <?php echo $ends_term_id; ?>";
         console.log("QR Data:", qrData);
-
         const qrcodeContainer = document.getElementById("qrcode-container");
         if (qrcodeContainer) {
             const qrcode = new QRCode(qrcodeContainer, {
@@ -302,6 +294,9 @@ if ($result) {
     function redirectToHome() {
         window.location.href = "../user/user.php";
     }
+    window.onbeforeunload = function() {
+            return "You are about to leave this page. Are you sure?";
+        };
 </script>
 
 <script>
