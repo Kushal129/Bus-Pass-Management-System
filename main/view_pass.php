@@ -100,6 +100,12 @@ if ($result) {
                 display: none !important;
             }
         }
+        /* A4 Landscape*/
+        /* @page {
+            size: A3 landscape;
+            /* margin: 50%; */
+        /* done */
+        
     </style>
 </head>
 
@@ -192,8 +198,8 @@ if ($result) {
         window.location.href = "../user/Managepass.php";
     }
     window.onbeforeunload = function() {
-            return "You are about to leave this page. Are you sure?";
-        };
+        return "You are about to leave this page. Are you sure?";
+    };
 </script>
 
 <script>
