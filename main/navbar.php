@@ -1,5 +1,4 @@
 <?php
-// Login Form Submit
 
 include "mail_config.php";
 include "connection.php";
