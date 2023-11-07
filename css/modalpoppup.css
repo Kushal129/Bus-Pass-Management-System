@@ -9,20 +9,12 @@
 }
 
 
-
-/* ======================================================================================================= */
-/* ----------------------------------------  Sing in | Sing up ------------------------------------------- */
-/* ======================================================================================================= */
-
 body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
 }
 
-
-/* --------------------------------------------------------------------------------------------------------------------------  */
-/* Custom styles for the modal */
 .modal-content {
     border-radius: 20px;
     box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
@@ -62,7 +54,7 @@ body {
     font-size: inherit;
 }
 
-/* Optional: Style for the "Forgot Password" link */
+
 .modal-body a {
     text-decoration: none;
     color: #020814;
@@ -72,7 +64,6 @@ body {
     color: #050337;
 }
 
-/* Additional styles for the Registration form */
 #registrationForm .form-group {
     margin-bottom: 15px;
 }
@@ -118,7 +109,7 @@ body {
     color: #050337;
 }
 
-/* Show and hide the Registration form */
+
 #registrationForm.show,
 #loginForm.hide {
     display: block;
@@ -129,7 +120,7 @@ body {
     display: none;
 }
 
-/* Custom styles for buttons */
+
 .btn-lr {
     background-color: #181817;
     color: #fefeff;
@@ -149,7 +140,7 @@ body {
     color: #ffd900;
 }
 
-/* Custom styles for the "Create an account" link */
+
 #signupLink {
     font-size: 14px;
 }
@@ -157,7 +148,7 @@ body {
     font-size: 14px;
 }
 
-/* Optional: Add animation for modal open/close */
+
 .modal {
     animation: fadeInOut 0.5s ease;
 }
@@ -195,7 +186,6 @@ body {
     font-size: 12px;
 }
 
-/* =========================== Password view css =============================== */
 
 .password-container {
     position: relative;
