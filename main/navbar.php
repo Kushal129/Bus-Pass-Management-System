@@ -15,7 +15,6 @@ if (isset($_POST["login_submit"])) {
         echo '<script>showToaster("Please enter your password.", "red")</script>';
         echo '<script>showLoginModal()</script>';
     } else {
-        // Check if the email exists in the database
         $checkEmailQuery = "SELECT * FROM users WHERE email=?";
         $stmt = $con->prepare($checkEmailQuery);
         $stmt->bind_param("s", $email);
@@ -31,12 +30,9 @@ if (isset($_POST["login_submit"])) {
                 $_SESSION['username'] = $email;
                 $_SESSION['user_id'] = $user_id;
                 $role = $row['role'];
-                // 1 - user and 0 - admin
                 if ($role) {
-                    // echo "USER";
                     header("Location:user/user.php");
                 } else {
-                    // echo "ADMIN";
                     header("Location:admin-all/admin.php");
                 }
             } else {
@@ -72,7 +68,6 @@ if (isset($_POST["submit"])) {
 
         if ($result->num_rows > 0) {
             echo '<script>showToaster("Email already exists. Please use a different email.", "red")</script>';
-            // echo '<script>showRegistrationModal()</script>';
             echo '<script>window.location.href = "#registrationForm";</script>';
         } else {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
@@ -279,7 +274,7 @@ $con->close();
             const fullName = fullNameInput.value;
 
             if (!/^[A-Za-z]+\s[A-Za-z]+$/.test(fullName)) {
-                fullNameError.textContent = "Please enter a valid Full Name. Firstname _ Lastname";
+                fullNameError.textContent = "Please enter a valid Full Name. Firstname  Lastname";
             } else {
                 fullNameError.textContent = "";
             }
@@ -301,10 +296,14 @@ $con->close();
             const emailInput = document.getElementById('regEmail');
             const emailError = document.getElementById('emailError');
             const email = emailInput.value;
-            const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+            const emailPattern = /^[A-Z0-9._%+-]+@(gmail\.com|yahoo\.com)$/i;
 
-            if (!emailPattern.test(email)) {
+            if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
                 emailError.textContent = "Please enter a valid email address.";
+            } else if (!/^[A-Z0-9._%+-]+@(gmail\.com|yahoo\.com)$/i.test(email)) {
+                emailError.textContent = "Email must end with either @gmail.com or @yahoo.com.";
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email.split('@')[0])) {
+                emailError.textContent = "Email must contain characters and numbers before the @ symbol.";
             } else {
                 emailError.textContent = "";
             }

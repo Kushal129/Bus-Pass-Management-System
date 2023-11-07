@@ -184,7 +184,7 @@ if (isset($_POST['update_profile'])) {
                     <h1>Manage Profile</h1>
                     <hr>
                     <label for="full_name">Full Name:</label>
-                    <input type="text" id="full_name" name="full_name" value="<?php echo $full_name; ?>">
+                    <input type="text" id="full_name" name="full_name" disabled value="<?php echo $full_name; ?>">
                     <br>
                     <label for="mobileNo">Phone Number:</label>
                     <input type="text" id="mobileNo" name="mobileNo" value="<?php echo $phone_number; ?>">
