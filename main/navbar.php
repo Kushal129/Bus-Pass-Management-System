@@ -298,16 +298,21 @@ $con->close();
             const email = emailInput.value;
             const emailPattern = /^[A-Z0-9._%+-]+@(gmail\.com|yahoo\.com)$/i;
 
-            if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+            if (!/^[A-Z0-9._%+-]+@[A-Z.-]+\.[A-Z]{2,}$/i.test(email)) {
                 emailError.textContent = "Please enter a valid email address.";
-            } else if (!/^[A-Z0-9._%+-]+@(gmail\.com|yahoo\.com)$/i.test(email)) {
-                emailError.textContent = "Email must end with either @gmail.com or @yahoo.com.";
-            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email.split('@')[0])) {
-                emailError.textContent = "Email must contain characters and numbers before the @ symbol.";
             } else {
-                emailError.textContent = "";
+                const parts = email.split('@');
+                if (/\d/.test(parts[1])) {
+                    emailError.textContent = "After @ should not contain numbers.";
+                } else if (!emailPattern.test(email)) {
+                    emailError.textContent = "Email must end with either @gmail.com or @yahoo.com.";
+                } else {
+                    emailError.textContent = "";
+                }
             }
         }
+
+
 
         function validatePassword() {
             const passwordInput = document.getElementById('regPassword');
