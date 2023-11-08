@@ -136,7 +136,6 @@ if (!isset($_SESSION['username'])) {
                         <option value="">Select</option>
                         <option value="Student">Student</option>
                         <option value="Passenger">Passenger</option>
-                        <option value="Handicap" disabled>Handicap</option>
                     </select>
                 </div>
             </div>

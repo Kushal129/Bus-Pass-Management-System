@@ -28,6 +28,22 @@ $price = $row['price'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
+<style>
+    .custom-file-upload {
+        display: flex !important;
+        padding: 10px !important;
+        background-color: black !important;
+        color: white !important;
+        border: none;
+        cursor: pointer;
+        border-radius: 4px;
+        width: 9% !important;
+    }
+
+    #verification_s , #student_address_proof_upload , #img_std {
+        display: none;
+    }
+</style>
 
 <body>
     <form action="../main/passformate.php" method="POST" enctype="multipart/form-data">
@@ -136,6 +152,9 @@ $price = $row['price'];
             <hr>
             <label for="img_std">Photo Upload:</label>
             <input type="file" name="img_std" id="img_std" accept=".png, .jpg, .jpeg" required>
+            <label for="img_std" class="custom-file-upload">
+                Choose File
+            </label>
             <p>[Self-attached Passport size Photo Copy. Max size: 300KB]</p>
             <span id="photo_error" class="error-message" style="color: red;"></span>
             <br>
@@ -158,6 +177,9 @@ $price = $row['price'];
 
             <label for="student_address_proof_upload">Upload Proof For Address:</label>
             <input type="file" id="student_address_proof_upload" name="student_address_proof_upload" accept=".pdf, .jpg, .jpeg, .png" required>
+            <label for="student_address_proof_upload" class="custom-file-upload">
+                Choose File
+            </label>
             <p>[Self-attached size Max size: 200KB]</p>
             <span id="std_address_proof_error" class="error-message" style="color: red;"></span>
             <br>
@@ -232,6 +254,17 @@ $price = $row['price'];
             <br><br>
             <hr>
         </div>
+        <div class="form-group">
+            <label for="verification_s">Upload Document For Verification:</label>
+            <input type="file" name="verification_s" id="verification_s" accept=".png, .jpg, .jpeg" required="">
+            <label for="verification_s" class="custom-file-upload">
+                Choose File
+            </label>
+            <p>[Self-attached Passport size Photo Copy. Max size: 300KB]</p>
+            <span id="verification_s_error" class="error-message" style="color: red;"></span>
+            <br>
+        </div>
+
         <div class="form-group">
             <h2> Payment </h2>
             <hr>
@@ -528,11 +561,11 @@ $price = $row['price'];
 
             const studentuploadvalue = $('#student_address_proof_upload').val();
             if (studentuploadvalue === '') {
-                showError('#std_address_proof_error','Please upload a Document for Address Proof.');
-            } else{
+                showError('#std_address_proof_error', 'Please upload a Document for Address Proof.');
+            } else {
                 clearError('#std_address_proof_error');
             }
-           
+
             const fromPlaceStudentValue = $('#fromPlaceStudent').val();
             if (fromPlaceStudentValue === '' || fromPlaceStudentValue === ' ') {
                 showError('#fromPlaceStudent', 'Please select a From Place.');
@@ -548,7 +581,6 @@ $price = $row['price'];
             }
 
             if (!isValid) {
-                // showToaster("Please fill in all required fields .", "red");
                 alert('Please fill in all required fields and correct any errors.');
 
             }
@@ -620,7 +652,37 @@ $price = $row['price'];
 
     $(document).ready(function() {
         const addressProofInput = $('#student_address_proof_upload');
-        const addressProofErrorElement = $('#address_proof_error');
+        const addressProofErrorElement = $('#std_address_proof_error');
+
+        addressProofInput.on('change', function() {
+            const file = this.files[0];
+
+            if (file) {
+                const allowedFormats = ['application/pdf', 'image/jpg', 'image/jpeg', 'image/png'];
+                const maxFileSize = 200 * 1024;
+                const minFileSize = 20 * 1024;
+
+                if (!allowedFormats.includes(file.type)) {
+                    displayError(addressProofErrorElement, 'Please upload a PDF, JPG, JPEG, or PNG file.');
+                    addressProofInput.val('');
+                } else if (file.size < minFileSize) {
+                    displayError(photoErrorElement, 'Please upload an image that is at least 50KB in size.');
+                    imgStdInput.val('');
+                } else if (file.size > maxFileSize) {
+                    displayError(addressProofErrorElement, 'Please upload a file that is no more than 200KB in size.');
+                    addressProofInput.val('');
+                } else {
+                    clearError(addressProofErrorElement);
+                }
+            } else {
+                clearError(addressProofErrorElement);
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        const addressProofInput = $('#verification_s');
+        const addressProofErrorElement = $('#verification_s_error');
 
         addressProofInput.on('change', function() {
             const file = this.files[0];

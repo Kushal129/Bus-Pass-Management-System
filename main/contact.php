@@ -18,11 +18,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
 	$stmt->bind_param("sss", $name, $email, $note);
 
 	if ($stmt->execute()) {
-		$_SESSION['MESSAGECHECK'] = "success"; // Set a session variable to indicate success
+		$_SESSION['MESSAGECHECK'] = "success"; 
 		header("Location: contact.php");
 		exit();
 	} else {
-		$_SESSION['MESSAGECHECK'] = "error"; // Set a session variable to indicate an error
+		$_SESSION['MESSAGECHECK'] = "error";
 		header("Location: contact.php");
 		exit();
 	}
