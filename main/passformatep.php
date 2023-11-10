@@ -278,7 +278,7 @@ if ($result) {
 <script>
     $(document).ready(function() {
         console.log("QR code generat ");
-        var qrData = "\nPass: <?php echo $role; ?>\nFrom Date: <?php echo date('d-m-Y', strtotime($from_datep)); ?>\nTo Date: <?php echo date('d-m-Y', strtotime($to_datep)); ?>\nName: <?php echo $full_namep; ?>\nGender: <?php echo $gender; ?>\nPass Type: <?php echo $bus_type; ?>\nPass Days: <?php echo $passType; ?>\nFrom Location: <?php echo $start_term_id; ?>\nTo Location: <?php echo $ends_term_id; ?>";
+        var qrData = "Pass: <?php echo $role; ?>\nFrom Date: <?php echo date('d-m-Y', strtotime($from_date)); ?>\nTo Date: <?php echo date('d-m-Y', strtotime($to_date)); ?>Pass Type: <?php echo $bus_type; ?>Pass Days: <?php echo $passType; ?>From Location: <?php echo $start_term_id; ?>To Location: <?php echo $ends_term_id; ?>";
         console.log("QR Data:", qrData);
         const qrcodeContainer = document.getElementById("qrcode-container");
         if (qrcodeContainer) {

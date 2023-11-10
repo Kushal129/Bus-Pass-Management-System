@@ -27,6 +27,7 @@ if ($result->num_rows > 0) {
         $from_date = $row['from_date'];
         $to_date = $row['to_date'];
         $passType = $row['passType'];
+        $status = $row['is_verify'];
     }
 }
 $query = "SELECT bus_name from bus_type where price_multiply =$bus_type";
@@ -81,12 +82,21 @@ if ($result) {
         }
 
         body {
-            background-color: #f4f4f4;
+            background-color:whitesmoke;
         }
 
-        .form-group {
-            background-color: #f8f9fa;
+        .pass-bg {
+            margin: 8rem;
+            padding: 1.5rem;
+            background-repeat: no-repeat;
+            background-size: cover;
+
+            <?php if ($status == 0) { ?>background-image: url('../img/pending.jpg');
+            <?php } elseif ($status == 1) { ?>background-color: white;
+            <?php } elseif ($status == 2) { ?>background-image:url('../img/rejected.jpg');
+            <?php } ?>
         }
+
 
         button.btn-download_pdf {
             width: 50%;
@@ -100,17 +110,11 @@ if ($result) {
                 display: none !important;
             }
         }
-        /* A4 Landscape*/
-        /* @page {
-            size: A3 landscape;
-            /* margin: 50%; */
-        /* done */
-        
     </style>
 </head>
 
 <body>
-    <div class="form-group" id="pdf-content">
+    <div class="pass-bg" id="pdf-content">
         <section>
             <hr>
             <div class="py-2">
@@ -156,22 +160,28 @@ if ($result) {
         <section class="my-5">
             <div class="container-fluid">
                 <div class="row">
-                    <div id="qrcode-container" style="display: flex;justify-content: center;width: 40%;height: 250px !important;" class="col-lg-6 col-md-6 col-12">
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-12">
-                        <p><strong>From Location:</strong> <?php echo $start_term_id; ?></p>
-                        <p><strong>To Location:</strong> <?php echo $ends_term_id; ?></p>
-                        <p><strong>Address:</strong> <?php echo $Institute_address; ?></p>
-                    </div>
+                    <?php if ($status == 1) { ?>
+                        <div id="qrcode-container" style="display: flex; justify-content: center; width: 40%; height: 250px !important;" class="col-lg-6 col-md-6 col-12">
+                        <?php } else { ?>
+                            <div id="" style="display: flex; justify-content: center; width: 40%; height: 250px !important;" class="col-lg-6 col-md-6 col-12">
+                            <?php } ?>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <p><strong>From Location:</strong> <?php echo $start_term_id; ?></p>
+                                <p><strong>To Location:</strong> <?php echo $ends_term_id; ?></p>
+                                <p><strong>Address:</strong> <?php echo $Institute_address; ?></p>
+                            </div>
+                        </div>
                 </div>
-            </div>
         </section>
     </div>
-    <div class="form-group mt-2">
+    <div class="pass-bg mt-2">
         <div class="container-fluid py-2">
             <div class="row">
                 <button class="btn-download_pdf col-lg-6 col-md-6 col-12" class="form-group" id="home-button" onclick="redirectToHome()">Home</button>
-                <button class="btn-download_pdf col-lg-6 col-md-6 col-12" class="form-group" id="download-pdf-button" onclick="generatePDF()">Download PDF</button>
+                <?php if ($status == 1) { ?>
+                    <button class="btn-download_pdf col-lg-6 col-md-6 col-12" class="form-group" id="download-pdf-button" onclick="generatePDF()">Download PDF</button>
+                <?php } ?>
             </div>
         </div>
 </body>
@@ -181,7 +191,7 @@ if ($result) {
 <script>
     $(document).ready(function() {
         console.log("QR code generat ");
-        var qrData = "Pass: <?php echo $role; ?>\nFrom Date: <?php echo date('d-m-Y', strtotime($from_date)); ?>\nTo Date: <?php echo date('d-m-Y', strtotime($to_date)); ?>Name: <?php echo $full_name; ?>Gender: <?php echo $gender; ?>Pass Type: <?php echo $bus_type; ?>Pass Days: <?php echo $passType; ?>From Location: <?php echo $start_term_id; ?>To Location: <?php echo $ends_term_id; ?>";
+        var qrData = "Pass: <?php echo $role; ?>\nFrom Date: <?php echo date('d-m-Y', strtotime($from_date)); ?>\nTo Date: <?php echo date('d-m-Y', strtotime($to_date)); ?>Pass Type: <?php echo $bus_type; ?>Pass Days: <?php echo $passType; ?>From Location: <?php echo $start_term_id; ?>To Location: <?php echo $ends_term_id; ?>";
         console.log("QR Data:", qrData);
         const qrcodeContainer = document.getElementById("qrcode-container");
         if (qrcodeContainer) {
@@ -197,9 +207,6 @@ if ($result) {
     function redirectToHome() {
         window.location.href = "../user/Managepass.php";
     }
-    window.onbeforeunload = function() {
-        return "You are about to leave this page. Are you sure?";
-    };
 </script>
 
 <script>

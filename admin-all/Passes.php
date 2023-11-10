@@ -143,11 +143,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['delete_bus'])) {
                         <?php
                         $sql = "SELECT * FROM bus_type";
                         $result = mysqli_query($con, $sql);
-                        $b_id = 0;
+                        // $b_id = 0;
+                        $counter = 0;
                         while ($row = mysqli_fetch_assoc($result)) {
-                            $b_id = $b_id + 1;
+                            // $b_id = $b_id + 1;
+                        
                             echo "<tr>";
-                            echo "<th scope='row'>" . $row['bus_id'] . "</th>";
+                            echo "<th scope='row'>" . ++$counter . "</th>";
                             echo "<td class='bus-name' contenteditable='false'>" . $row['bus_name'] . "</td>";
                             echo "<td class='price-multiply' contenteditable='false'>" . $row['price_multiply'] . "</td>";
                             echo "<td>
@@ -158,6 +160,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['delete_bus'])) {
                                   </td>";
                             echo "</tr>";
                         }
+
+                        $counter = 0;
                         ?>
                     </tbody>
                 </table>
@@ -206,7 +210,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['delete_bus'])) {
                             row.find('.save-edit, .cancel-edit').addClass('hidden').prop('disabled', true);
                             row.find('.edit-button, .delete-button').prop('disabled', false);
 
-                            // Update the DataTable cell values
                             row.find('.bus-name').text(bus_name);
                             row.find('.price-multiply').text(price_multiply);
                         },
@@ -226,8 +229,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['delete_bus'])) {
                 $(document).on('click', '.delete-button', function() {
                     if (confirm("Are you sure you want to delete this record?")) {
                         const row = $(this).closest('tr');
-                        const bus_id = row.find('th').text(); // Use 'th' instead of 'bus-id'
-
+                        const bus_id = row.find('th').text(); 
                         $.ajax({
                             type: "POST",
                             url: "Passes.php",
@@ -236,13 +238,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['delete_bus'])) {
                                 delete_bus: true
                             },
                             success: function(response) {
-                                console.log(response);
-                                if (response.trim() === "Deleted") {
-                                    row.remove(); // Remove the row from DataTable
-                                    alert("Record Deleted"); // Show an alert
-                                } else {
-                                    console.error("Deletion failed");
-                                }
+                                $('#myTable').DataTable().destroy();
+                                    row.remove(); 
+
+                                $('#myTable').DataTable();
+
                             },
                             error: function(error) {
                                 console.error(error);

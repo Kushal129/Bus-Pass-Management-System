@@ -1,4 +1,6 @@
 <?php
+session_start();
+// print_r($_SESSION);
 
 include_once '../connection.php';
 include "../toaster.php";
@@ -7,6 +9,13 @@ $qry = 'SELECT * FROM price';
 $res = mysqli_query($con, $qry);
 $row = mysqli_fetch_array($res);
 $price = $row['price'];
+
+$user_id = $_SESSION['user_id'];
+$fqry = "SELECT * FROM users WHERE id = $user_id ";
+$fres = mysqli_query($con, $fqry);
+$row = mysqli_fetch_array($fres);
+$fname = $row['full_name'];
+$mnumber = $row['phone_number'];
 
 
 
@@ -40,7 +49,9 @@ $price = $row['price'];
         width: 9% !important;
     }
 
-    #verification_s , #student_address_proof_upload , #img_std {
+    #verification_s,
+    #student_address_proof_upload,
+    #img_std {
         display: none;
     }
 </style>
@@ -69,12 +80,12 @@ $price = $row['price'];
             <hr>
 
             <label for="fullname">Full Name:</label>
-            <input type="text" id="fullname" name="fullname" required>
+            <input type="text" id="fullname" name="fullname" style="cursor: not-allowed;background-color:#efefef;color: #000000;" value="<?php echo $fname ?>"  required>
             <span id="fullname-error" class="error-message" style="color:red"></span>
             <br><br>
 
             <label for="mobileNo">Phone Number:</label>
-            <input type="text" name="mobileNo" id="mobileNo" maxlength="10" value="" required>
+            <input type="text" name="mobileNo" id="mobileNo" style="cursor: not-allowed;background-color:#efefef;color: #000000;" value="<?php echo $mnumber ?>"  maxlength="10" value="" required>
             <span id="mobileNo-error" class="error-message" style="color:red"></span>
             <br><br>
 
@@ -256,13 +267,13 @@ $price = $row['price'];
         </div>
         <div class="form-group">
             <label for="verification_s">Upload Document For Verification:</label>
-            <input type="file" name="verification_s" id="verification_s" accept=".png, .jpg, .jpeg" required="">
+            <br>
+            <input type="file" name="verification_s" id="verification_s" accept=".png, .jpg, .jpeg" required>
             <label for="verification_s" class="custom-file-upload">
                 Choose File
             </label>
             <p>[Self-attached Passport size Photo Copy. Max size: 300KB]</p>
             <span id="verification_s_error" class="error-message" style="color: red;"></span>
-            <br>
         </div>
 
         <div class="form-group">
@@ -271,7 +282,6 @@ $price = $row['price'];
             <input type="text" placeholder="Pay Amount.." id="pay-value" disabled style="cursor: not-allowed;background-color:#efefef;color: #000000;">
             <br>
             <input type="text" placeholder="Payment ID " id="payment_id_lbl" readonly name="payment_id" style="cursor: not-allowed;background-color:#efefef;color: #000000;">
-
             <br><br>
             <div class="btn-paynow btn-pmt" id="paynow" onclick="pay_now()">Pay Now</div>
             <button class="btn-pmt" type="submit" id="paymentButton">Submit and Proceed </button>
@@ -489,19 +499,19 @@ $price = $row['price'];
                 errorSpan.hide();
             }
 
-            const fullnameValue = $('#fullname').val();
-            if (fullnameValue === '' || /[0-9~!@#$%^&*()_+={}\[\]:;"'<>,.?/\\|`\-]/.test(fullnameValue)) {
-                showError('#fullname', 'Please enter a valid Full Name with only letters and spaces.');
-            } else {
-                clearError('#fullname');
-            }
+            // const fullnameValue = $('#fullname').val();
+            // if (fullnameValue === '' || /[0-9~!@#$%^&*()_+={}\[\]:;"'<>,.?/\\|`\-]/.test(fullnameValue)) {
+            //     showError('#fullname', 'Please enter a valid Full Name with only letters and spaces.');
+            // } else {
+            //     clearError('#fullname');
+            // }
 
-            const mobileNoValue = $('#mobileNo').val();
-            if (mobileNoValue === '' || !/^\d{10}$/.test(mobileNoValue)) {
-                showError('#mobileNo', 'Please enter a valid 10-digit Phone Number.');
-            } else {
-                clearError('#mobileNo');
-            }
+            // const mobileNoValue = $('#mobileNo').val();
+            // if (mobileNoValue === '' || !/^\d{10}$/.test(mobileNoValue)) {
+            //     showError('#mobileNo', 'Please enter a valid 10-digit Phone Number.');
+            // } else {
+            //     clearError('#mobileNo');
+            // }
 
             const addressValue = $('#address').val();
             if (addressValue === '') {

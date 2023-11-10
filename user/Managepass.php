@@ -28,7 +28,7 @@ if (isset($_SESSION['user_id'])) {
 
     $query = "SELECT pi.full_name, pi.validate_through, pi.dob, p.user_id, p.bus_type,pi.role,
                      b.bus_name, p.start_term_id, s.ter_name as s_ter, p.ends_term_id, e.ter_name as e_ter,
-                     p.from_date, p.to_date , p.id as pass_id
+                     p.from_date, p.to_date , p.id  as pass_id , p.is_verify
               FROM passenger_info pi
               INNER JOIN pass p ON pi.id = p.passenger_id
               INNER JOIN bus_type b ON p.bus_type = b.bus_id
@@ -52,6 +52,7 @@ if ($result) {
     $table .= '<th>End Term</th>';
     $table .= '<th>From Date</th>';
     $table .= '<th>To Date</th>';
+    $table .= '<th>Status</th>';
     $table .= '<th>View Pass</th>';
     $table .= '</tr>';
     $table .= '</thead>';
@@ -69,6 +70,13 @@ if ($result) {
         $table .= '<td>' . $row['e_ter'] . '</td>';
         $table .= '<td>' . date('d/m/Y', strtotime($row['from_date'])) . '</td>';
         $table .= '<td>' . date('d/m/Y', strtotime($row['to_date'])) . '</td>';
+        if ($row['is_verify'] == 0){
+            $table .= '<td><span class="badge badge-warning">Panding</span> </td>';
+        }else if ($row['is_verify'] == 1){
+            $table .= '<td><span class="badge badge-success">Success</span> </td>';
+        }else{
+            $table .= '<td><span class="badge badge-danger">Reject</span> </td>';
+        }
         $table .= '<td>';
         if ($row['role'] == "Student")
             $table .= '<a class="button view-button" href="../main/view_pass.php?pass_id=' . $pass_id . '">View <i class="fas fa-eye" style= "margin-left: 5px;"></i></a>';
@@ -95,6 +103,7 @@ if ($result) {
     <title>Bus Pass | Passes </title>
     <link rel="stylesheet" href="../css/user.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>

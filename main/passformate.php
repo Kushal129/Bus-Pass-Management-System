@@ -3,11 +3,30 @@ session_start();
 
 include_once '../connection.php';
 
+// print_r($_POST);
 if (!isset($_POST['education'], $_POST['institute_name'], $_POST['institute_address'], $_POST['address_proof'], $_POST['fullname'], $_POST['address'], $_POST['gender'], $_POST['validate_through'], $_POST['dateofBirth'], $_POST['classOfService'], $_POST['fromPlaceStudent'], $_POST['toPlaceStudent'], $_POST['payment_id'], $_POST['fromDate'], $_POST['toDate'])) {
     die("Required fields are missing. std pass formate mathi");
 }
 
-// print_r($_POST);
+
+
+$uploadsDirectory_very = "../uploads/bonofide/";
+
+if (!file_exists($uploadsDirectory_very)) {
+    mkdir($uploadsDirectory_very, 0777, true);
+}
+
+if (isset($_FILES["verification_s"])) {
+    $filenamev = date('Ymd') . rand(0, 10000) . basename($_FILES["verification_s"]["name"]);
+    $targetFilev = $uploadsDirectory_very . $filenamev;
+    if (move_uploaded_file($_FILES["verification_s"]["tmp_name"], $targetFilev)) {
+        $stdbonofide = $filenamev;
+    } else {
+        die("Sorry, there was an error uploading your file.");
+    }
+} else {
+    die("Student address proof upload is missing.");
+}
 
 $pass_id = $_SESSION['user_id'];
 $education = $_POST['education'];
@@ -18,7 +37,7 @@ $education = mysqli_real_escape_string($con, $education);
 $institute_name = mysqli_real_escape_string($con, $institute_name);
 $institute_address = mysqli_real_escape_string($con, $institute_address);
 
-$qry = "INSERT INTO student (education, Institute_name, Institute_address) VALUES ('$education', '$institute_name', '$institute_address')";
+$qry = "INSERT INTO student (education, Institute_name, Institute_address , bono_pass) VALUES ('$education', '$institute_name', '$institute_address','$stdbonofide')";
 mysqli_query($con, $qry);
 $studentInsertedId = mysqli_insert_id($con);
 $NewstudentInsertedId = $studentInsertedId;
@@ -49,6 +68,9 @@ if (isset($_FILES["student_address_proof_upload"])) {
 } else {
     die("Student address proof upload is missing.");
 }
+
+
+
 
 $full_name = $_POST['fullname'];
 $address = $_POST['address'];
@@ -178,38 +200,88 @@ if ($result) {
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
         }
 
-        .form-group {
-            background-color: #f8f9fa;
+        .bus {
+            width: 25%;
         }
 
-        button.btn-download_pdf {
-            width: 50%;
-            padding: 10px;
-            background-color: black;
-            color: white;
+        .success-message {
+            text-align: center;
+            margin: 20px 0;
+            animation: fadeIn 2s ease-in-out 1s forwards;
         }
 
-        @media print {
-            .btn-download_pdf {
-                display: none !important;
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
             }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .logo-container {
+            opacity: 0;
+            animation: logoAnimation 2s ease-in-out 1s forwards;
+        }
+
+        @keyframes logoAnimation {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .logo-animation {
+            width: 150px;
+            height: auto;
+        }
+
+        .redirect-button {
+            display: flex;
+            justify-content: center;
+            padding: 10px 20px;
+            background-color: rgb(0, 0, 0);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .redirect-button:hover {
+            background-color: rgb(36, 36, 36);
+            color: rgb(255, 255, 255);
+            text-decoration: none;
         }
     </style>
 </head>
 
 <body>
-    <div class="form-group" id="pdf-content">
+    <!-- <div class="form-group" id="pdf-content">
         <section>
             <hr>
             <div class="py-2">
@@ -222,12 +294,12 @@ if ($result) {
                             <div class="col-lg-6 col-md-6 col-12">
                                 <h2 class="ml-2 mt-3 text-center">Bus Pass Managment System</h2>
                                 <hr>
-                                <h4 class="ml-2 mt-3 text-center"><?php echo $role ?></h4>
+                                <h4 class="ml-2 mt-3 text-center"><php echo $role ?></h4>
                             </div>
                             <div class="col-lg-3 col-md-3 col-6 text-right">
-                                <p><strong>Pass Id: </strong> <?php echo  $newPassId ?></p>
-                                <p><strong>From Date:</strong> <?php echo date('d-m-Y', strtotime($from_date)); ?></p>
-                                <p><strong>To Date:</strong> <?php echo date('d-m-Y', strtotime($to_date)); ?></p>
+                                <p><strong>Pass Id: </strong> <php echo  $newPassId ?></p>
+                                <p><strong>From Date:</strong> <php echo date('d-m-Y', strtotime($from_date)); ?></p>
+                                <p><strong>To Date:</strong> <php echo date('d-m-Y', strtotime($to_date)); ?></p>
                             </div>
                         </div>
                     </div>
@@ -237,15 +309,15 @@ if ($result) {
             <div class="container-fluid py-2">
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-12" style="display: flex; justify-content: center;">
-                        <img src="../uploads/user_photo/<?php echo $user_img_path; ?>" alt="User Photo" style="width: 300px;height: 250px !important;" class="img-fluid  ">
+                        <img src="../uploads/user_photo/<php echo $user_img_path; ?>" alt="User Photo" style="width: 300px;height: 250px !important;" class="img-fluid  ">
                     </div>
                     <div class="col-lg-6 col-md-6 col-12">
-                        <p><strong>Name:</strong> <?php echo $full_name; ?></p>
-                        <p><strong>Gender:</strong> <?php echo $gender; ?></p>
-                        <p><strong>Date of Birth:</strong> <?php echo date('d-m-Y', strtotime($dob)); ?></p>
+                        <p><strong>Name:</strong> <php echo $full_name; ?></p>
+                        <p><strong>Gender:</strong> <php echo $gender; ?></p>
+                        <p><strong>Date of Birth:</strong> <php echo date('d-m-Y', strtotime($dob)); ?></p>
                         <hr style="width: 60%!important;">
-                        <p><strong>Pass Type:</strong> <?php echo $bus_type; ?></p>
-                        <p><strong>Pass Days:</strong> <?php echo $passType; ?></p>
+                        <p><strong>Pass Type:</strong> <php echo $bus_type; ?></p>
+                        <p><strong>Pass Days:</strong> <php echo $passType; ?></p>
                     </div>
                 </div>
             </div>
@@ -257,9 +329,9 @@ if ($result) {
                     <div id="qrcode-container" style="display: flex;justify-content: center;width: 40%;height: 250px !important;" class="col-lg-6 col-md-6 col-12">
                     </div>
                     <div class="col-lg-6 col-md-6 col-12">
-                        <p><strong>From Location:</strong> <?php echo $start_term_id; ?></p>
-                        <p><strong>To Location:</strong> <?php echo $ends_term_id; ?></p>
-                        <p><strong>Address:</strong> <?php echo $institute_address; ?></p>
+                        <p><strong>From Location:</strong> <php echo $start_term_id; ?></p>
+                        <p><strong>To Location:</strong> <php echo $ends_term_id; ?></p>
+                        <p><strong>Address:</strong> <php echo $institute_address; ?></p>
                     </div>
                 </div>
             </div>
@@ -272,37 +344,28 @@ if ($result) {
                 <button class="btn-download_pdf col-lg-6 col-md-6 col-12" class="form-group" id="download-pdf-button" onclick="generatePDF()">Download PDF</button>
             </div>
         </div>
+    </div> -->
+    <div class="form-group">
+        <div class="marquee-container">
+            <marquee class="marquee" scrollamount="20" direction="right">
+                <img class="bus" src="../img/travel.png" style="float: left;">
+            </marquee>
+        </div>
+
+        <div class="success-message">
+            <h1>Pass Request Submitted Successfully</h1>
+            <div class="logo-container" id="logoContainer">
+                <img class="logo-animation" src="../img/tik.gif" alt="True">
+            </div>
+        </div>
+        <a onclick="redirectToHome()" class="redirect-button">Go Home</a>
+    </div>
 </body>
 
 </html>
 
 <script>
-    $(document).ready(function() {
-        console.log("QR code generat ");
-        var qrData = "Pass: <?php echo $role; ?>\nFrom Date: <?php echo date('d-m-Y', strtotime($from_date)); ?>\nTo Date: <?php echo date('d-m-Y', strtotime($to_date)); ?>Name: <?php echo $full_name; ?>Gender: <?php echo $gender; ?>Pass Type: <?php echo $bus_type; ?>Pass Days: <?php echo $passType; ?>From Location: <?php echo $start_term_id; ?>To Location: <?php echo $ends_term_id; ?>";
-        console.log("QR Data:", qrData);
-
-        const qrcodeContainer = document.getElementById("qrcode-container");
-        if (qrcodeContainer) {
-            const qrcode = new QRCode(qrcodeContainer, {
-                text: qrData,
-            });
-        } else {
-            console.error("QR code container not found.");
-        }
-    });
-</script>
-<script>
     function redirectToHome() {
         window.location.href = "../user/user.php";
-    }
-    window.onbeforeunload = function() {
-            return "You are about to leave this page. Are you sure?";
-        };
-</script>
-
-<script>
-    function generatePDF() {
-        window.print();
     }
 </script>

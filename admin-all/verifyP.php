@@ -2,33 +2,40 @@
 session_start();
 
 $user_id = $_SESSION['user_id'];
-$pass_pid  = $_GET['pass_id'];
 
 include_once '../connection.php';
 
-$qry = "SELECT pi.*, p.*, ps.com_address
+$qry = "SELECT pi.*, p.*, s.* , d.*
         FROM passenger_info AS pi
         INNER JOIN pass AS p ON pi.id = p.passenger_id
-        INNER JOIN passenger AS ps ON ps.pass_id = p.id 
-        WHERE p.id = $pass_pid";
+        INNER JOIN student AS s ON s.pass_id = p.id
+        JOIN document AS d ON pi.document_id = d.id
+        Where p.id = s.pass_id";
 
 $result = $con->query($qry);
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
+        $pass_sid = $row['pass_id'];
+        $studentadd = $row['document_id'];
+        $studentdoc = $row['bono_pass'];
         $user_img_path = $row['user_img_path'];
         $full_name = $row['full_name'];
         $gender = $row['gender'];
         $role = $row['role'];
         $dob = $row['dob'];
         $bus_type = $row['bus_type'];
-        $Institute_address = $row['com_address'];
+        $Institute_address = $row['Institute_address'];
         $start_term_id = $row['start_term_id'];
         $ends_term_id = $row['ends_term_id'];
         $from_date = $row['from_date'];
         $to_date = $row['to_date'];
         $passType = $row['passType'];
+        $document_file_name = $row['document_file_name'];
+        print_r($document_file_name);
     }
 }
+
+
 $query = "SELECT bus_name from bus_type where price_multiply =$bus_type";
 $result = mysqli_query($con, $query);
 if ($result) {
@@ -80,25 +87,52 @@ if ($result) {
             box-sizing: border-box;
         }
 
-        body {
-            background-color: #f4f4f4;
-        }
-
         .form-group {
             background-color: #f8f9fa;
         }
 
-        button.btn-download_pdf {
-            width: 50%;
-            padding: 10px;
-            background-color: black;
-            color: white;
-        }
 
         @media print {
             .btn-download_pdf {
                 display: none !important;
             }
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .custom-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #000;
+            color: #fff;
+            transition: background-color 0.3s;
+        }
+
+        .btn-approve:hover {
+            background-color: #0a9c00;
+        }
+
+        .btn-reject:hover {
+            background-color: #9c000c;
+        }
+
+        .btn-home:hover {
+            background-color: #c9c702;
         }
     </style>
 </head>
@@ -120,7 +154,7 @@ if ($result) {
                                 <h4 class="ml-2 mt-3 text-center"><?php echo $role ?></h4>
                             </div>
                             <div class="col-lg-3 col-md-3 col-6 text-right">
-                                <p><strong>Pass Id: </strong> <?php echo  $pass_pid ?></p>
+                                <p><strong>Pass Id: </strong> <?php echo  $pass_sid ?></p>
                                 <p><strong>From Date:</strong> <?php echo date('d-m-Y', strtotime($from_date)); ?></p>
                                 <p><strong>To Date:</strong> <?php echo date('d-m-Y', strtotime($to_date)); ?></p>
                             </div>
@@ -141,7 +175,6 @@ if ($result) {
                         <hr style="width: 60%!important;">
                         <p><strong>Pass Type:</strong> <?php echo $bus_type; ?></p>
                         <p><strong>Pass Type:</strong> <?php echo $passType; ?></p>
-
                     </div>
                 </div>
             </div>
@@ -161,13 +194,23 @@ if ($result) {
             </div>
         </section>
     </div>
-    <div class="form-group mt-2">
-        <div class="container-fluid py-2">
-            <div class="row">
-                <button class="btn-download_pdf col-lg-6 col-md-6 col-12" class="form-group" id="home-button" onclick="redirectToHome()">Home</button>
-                <button class="btn-download_pdf col-lg-6 col-md-6 col-12" class="form-group" id="download-pdf-button" onclick="generatePDF()">Download PDF</button>
-            </div>
+    <div class="form-group">
+        <h1 class="text-center">Address Verification</h1>
+        <hr>
+        <img src="../uploads/documents/<?php echo $document_file_name; ?>" alt=" Address Verification image" style="width: 100%;height: 100% !important;" class="img-fluid  ">
+    </div>
+    <div class="form-group">
+        <h1 class="text-center">Student Bonofide</h1>
+        <hr>
+        <img src="../uploads/bonofide/<?php echo $studentdoc; ?>" alt="Bonofide image" style="width: 100%;height: 100% !important;" class="img-fluid  ">
+    </div>
+   <div class="form-group">
+        <div class="button-container">
+            <a class="custom-button btn-approve" href="change_status.php?pass_id=<?php echo $pass_sid ?>&status=1">Approve</a>
+            <a class="custom-button btn-reject" href="change_status.php?pass_id=<?php echo $pass_sid ?>&status=2">Reject</a>
+            <button class="custom-button btn-home" id="home-button" onclick="redirectToHome()">Home</button>
         </div>
+    </div>
 </body>
 
 </html>
@@ -177,7 +220,6 @@ if ($result) {
         console.log("QR code generat ");
         var qrData = "Pass: <?php echo $role; ?>\nFrom Date: <?php echo date('d-m-Y', strtotime($from_date)); ?>\nTo Date: <?php echo date('d-m-Y', strtotime($to_date)); ?>Pass Type: <?php echo $bus_type; ?>Pass Days: <?php echo $passType; ?>From Location: <?php echo $start_term_id; ?>To Location: <?php echo $ends_term_id; ?>";
         console.log("QR Data:", qrData);
-
         const qrcodeContainer = document.getElementById("qrcode-container");
         if (qrcodeContainer) {
             const qrcode = new QRCode(qrcodeContainer, {
@@ -190,11 +232,8 @@ if ($result) {
 </script>
 <script>
     function redirectToHome() {
-        window.location.href = "../user/Managepass.php";
+        window.location.href = "../admin-all/Search.php";
     }
-    window.onbeforeunload = function() {
-            return "You are about to leave this page. Are you sure?";
-        };
 </script>
 
 <script>

@@ -4,17 +4,14 @@ include '../toaster.php';
 
 $query = "SELECT pi.full_name, pi.validate_through, pi.dob,p.user_id, p.bus_type ,
                  b.bus_name , p.start_term_id, s.ter_name ,p.ends_term_id, e.ter_name,
-                 p.from_date, p.to_date FROM passenger_info pi
+                 p.from_date, p.to_date , p.is_verify FROM passenger_info pi
                  INNER JOIN pass p ON pi.id = p.passenger_id 
                  INNER JOIN bus_type b on p.bus_type = b.bus_id 
                  INNER JOIN bus_terminals s on p.start_term_id = s.ter_id 
                  INNER JOIN bus_terminals e on p.ends_term_id = e.ter_id ";
 $start = ['s.ter_name'];
 $end = ['e.ter_name'];
-
-
 $result = $con->query($query);
-
 if ($result) {
     $table = '<table id="passenger-table" class="display">';
     $table .= '<thead>';
@@ -28,6 +25,8 @@ if ($result) {
     $table .= '<th>End Term</th>';
     $table .= '<th>From Date</th>';
     $table .= '<th>To Date</th>';
+    $table .= '<th>Staus</th>';
+    $table .= '<th>Verification</th>';
     $table .= '</tr>';
     $table .= '</thead>';
     $table .= '<tbody>';
@@ -43,6 +42,14 @@ if ($result) {
         $table .= '<td>' . $row['ter_name'] . '</td>';
         $table .= '<td>' . $row['from_date'] . '</td>';
         $table .= '<td>' . $row['to_date'] . '</td>';
+        if($row['is_verify']  == 0){
+        $table .= '<td><span class="bedge bedge-warning"> Panding </span> </td>';
+        }elseif($row['is_verify']  == 1){
+        $table .= '<td><span class="bedge bedge-success"> Approve </span></td>';
+        }else{
+        $table .= '<td> <span class="bedge bedge-danger"> Reject </span> </td>';
+        }
+        $table .= '<td><button class="btn-view" onclick="window.location.href=\'verifyP.php\'">View</button></td>';
         $table .= '</tr>';
     }
 
@@ -64,6 +71,7 @@ $con->close();
     <meta charset="UTF-8">
     <title> Admin Page </title>
     <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
@@ -80,6 +88,24 @@ $con->close();
         font-size: 14px;
         text-transform: uppercase;
         text-align: center;
+    }
+
+    .btn-view {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 15px;
+        border-radius: 5px;
+        border: none;
+        padding: 8px;
+        background-color: #000;
+        color: white;
+        margin-left: 2.5rem;
+    }
+
+    .btn-view:hover {
+        background-color: #feff3c;
+        color: #000;
     }
 </style>
 
