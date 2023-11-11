@@ -31,7 +31,7 @@ if ($result->num_rows > 0) {
         $to_date = $row['to_date'];
         $passType = $row['passType'];
         $document_file_name = $row['document_file_name'];
-        print_r($document_file_name);
+        // print_r($document_file_name);
     }
 }
 
@@ -117,22 +117,33 @@ if ($result) {
             font-size: 16px;
             cursor: pointer;
             border: none;
+            text-decoration: none;
             border-radius: 5px;
             background-color: #000;
             color: #fff;
             transition: background-color 0.3s;
         }
-
+        .btn-panding:hover {
+            background-color: #ff8a0d;
+            text-decoration: none;
+            color: #f8f9fa;
+        }
         .btn-approve:hover {
             background-color: #0a9c00;
+            text-decoration: none;
+            color: #f8f9fa;
         }
 
         .btn-reject:hover {
-            background-color: #9c000c;
+            background-color: #ec0214;
+            text-decoration: none;
+            color: #f8f9fa;
         }
 
         .btn-home:hover {
-            background-color: #c9c702;
+            background-color: #efd103;
+            text-decoration: none;
+            color: #f8f9fa;
         }
     </style>
 </head>
@@ -206,6 +217,7 @@ if ($result) {
     </div>
    <div class="form-group">
         <div class="button-container">
+        <a class="custom-button btn-panding" href="change_status.php?pass_id=<?php echo $pass_sid ?>&status=0">Panding</a>
             <a class="custom-button btn-approve" href="change_status.php?pass_id=<?php echo $pass_sid ?>&status=1">Approve</a>
             <a class="custom-button btn-reject" href="change_status.php?pass_id=<?php echo $pass_sid ?>&status=2">Reject</a>
             <button class="custom-button btn-home" id="home-button" onclick="redirectToHome()">Home</button>

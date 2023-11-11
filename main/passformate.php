@@ -69,9 +69,6 @@ if (isset($_FILES["student_address_proof_upload"])) {
     die("Student address proof upload is missing.");
 }
 
-
-
-
 $full_name = $_POST['fullname'];
 $address = $_POST['address'];
 $gender = $_POST['gender'];
@@ -141,11 +138,11 @@ if (isset($_FILES["img_std"])) {
 
     if ($result) {
         while ($row = mysqli_fetch_assoc($result)) {
-            $validate_through = $row['validate_through'];
             $user_id = $row['user_id'];
             $full_name = $row['full_name'];
             $dob = $row['dob'];
             $gender = $row['gender'];
+            $validate_through = $row['validate_through'];
             $user_img_path = $row['user_img_path'];
             $role = $row['role'];
             $address = $row['address'];
@@ -281,70 +278,6 @@ if ($result) {
 </head>
 
 <body>
-    <!-- <div class="form-group" id="pdf-content">
-        <section>
-            <hr>
-            <div class="py-2">
-                <section class="my-1">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-lg-3 col-md-3 col-6">
-                                <img src="../img/buslogo.png" class="img-fluid" style="width: 30%;height: 70% !important;" alt="Your image">
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <h2 class="ml-2 mt-3 text-center">Bus Pass Managment System</h2>
-                                <hr>
-                                <h4 class="ml-2 mt-3 text-center"><php echo $role ?></h4>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-6 text-right">
-                                <p><strong>Pass Id: </strong> <php echo  $newPassId ?></p>
-                                <p><strong>From Date:</strong> <php echo date('d-m-Y', strtotime($from_date)); ?></p>
-                                <p><strong>To Date:</strong> <php echo date('d-m-Y', strtotime($to_date)); ?></p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-            <hr>
-            <div class="container-fluid py-2">
-                <div class="row">
-                    <div class="col-lg-6 col-md-6 col-12" style="display: flex; justify-content: center;">
-                        <img src="../uploads/user_photo/<php echo $user_img_path; ?>" alt="User Photo" style="width: 300px;height: 250px !important;" class="img-fluid  ">
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-12">
-                        <p><strong>Name:</strong> <php echo $full_name; ?></p>
-                        <p><strong>Gender:</strong> <php echo $gender; ?></p>
-                        <p><strong>Date of Birth:</strong> <php echo date('d-m-Y', strtotime($dob)); ?></p>
-                        <hr style="width: 60%!important;">
-                        <p><strong>Pass Type:</strong> <php echo $bus_type; ?></p>
-                        <p><strong>Pass Days:</strong> <php echo $passType; ?></p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <hr style="width: 70%;margin-left: 15em;">
-        <section class="my-5">
-            <div class="container-fluid">
-                <div class="row">
-                    <div id="qrcode-container" style="display: flex;justify-content: center;width: 40%;height: 250px !important;" class="col-lg-6 col-md-6 col-12">
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-12">
-                        <p><strong>From Location:</strong> <php echo $start_term_id; ?></p>
-                        <p><strong>To Location:</strong> <php echo $ends_term_id; ?></p>
-                        <p><strong>Address:</strong> <php echo $institute_address; ?></p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-    <div class="form-group mt-2">
-        <div class="container-fluid py-2">
-            <div class="row">
-                <button class="btn-download_pdf col-lg-6 col-md-6 col-12" class="form-group" id="home-button" onclick="redirectToHome()">Home</button>
-                <button class="btn-download_pdf col-lg-6 col-md-6 col-12" class="form-group" id="download-pdf-button" onclick="generatePDF()">Download PDF</button>
-            </div>
-        </div>
-    </div> -->
     <div class="form-group">
         <div class="marquee-container">
             <marquee class="marquee" scrollamount="20" direction="right">
@@ -361,7 +294,6 @@ if ($result) {
         <a onclick="redirectToHome()" class="redirect-button">Go Home</a>
     </div>
 </body>
-
 </html>
 
 <script>

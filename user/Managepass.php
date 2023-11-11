@@ -4,7 +4,6 @@ session_start();
 include_once '../connection.php';
 
 if (!isset($_SESSION['username'])) {
-    // echo "usename not found";
     header('location:../index.php');
 } else {
     $checkEmailQuery = "SELECT * FROM users WHERE email=?";

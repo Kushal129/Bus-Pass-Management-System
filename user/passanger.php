@@ -1,10 +1,21 @@
 <?php
+session_start();
+// print_r($_SESSION);
+
 include_once '../connection.php';
+include "../toaster.php";
 
 $qry = 'SELECT * FROM price';
 $res = mysqli_query($con, $qry);
 $row = mysqli_fetch_array($res);
 $price = $row['price'];
+
+$user_id = $_SESSION['user_id'];
+$fqryp = "SELECT * FROM users WHERE id = $user_id ";
+$fres = mysqli_query($con, $fqryp);
+$row = mysqli_fetch_array($fres);
+$fnamep = $row['full_name'];
+$mnumberp = $row['phone_number'];
 
 ?>
 
@@ -26,7 +37,24 @@ $price = $row['price'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
+<style>
+    .custom-file-upload {
+        display: flex !important;
+        padding: 10px !important;
+        background-color: black !important;
+        color: white !important;
+        border: none;
+        cursor: pointer;
+        border-radius: 4px;
+        width: 9% !important;
+    }
 
+    #verification_p,
+    #passanger_address_proof_upload,
+    #img_p {
+        display: none;
+    }
+</style>
 <body>
     <form action="../main/passformatep.php" method="POST" enctype="multipart/form-data">
         <div class="form-group">
@@ -51,12 +79,12 @@ $price = $row['price'];
             <hr>
 
             <label for="fullnamep">Full Name:</label>
-            <input type="text" id="fullnamep" name="fullnamep" required>
-            <span id="fullnamep-error" class="error-error-message" style="color:red"></span>
+            <input type="text" id="fullnamep" name="fullnamep" value="<?php echo $fnamep ?>" required>
+            <span id="fullnamep-error" class="error-error-message"  style="color:red"></span>
             <br><br>
 
             <label for="mobileNop">Phone Number:</label>
-            <input type="text" name="mobileNop" id="mobileNop" maxlength="10" value="" required>
+            <input type="text" name="mobileNop" id="mobileNop" maxlength="10" value="<?php echo $mnumberp ?>" required>
             <span id="mobileNop-error" class="error-message" style="color:red"></span>
             <br><br>
 
@@ -134,6 +162,9 @@ $price = $row['price'];
             <hr>
             <label for="img_p">Photo Upload:</label>
             <input type="file" name="img_p" id="img_p" accept=".png, .jpg, .jpeg" required>
+            <label for="img_p" class="custom-file-upload">
+            Choose File
+            </label>
             <p>[Self-attached Passport size Photo Copy. Max size: 300KB]</p>
             <span id="photo_error_p" class="error-message" style="color: red;"></span>
             <br>
@@ -156,6 +187,9 @@ $price = $row['price'];
 
             <label for="passanger_address_proof_upload">Upload Proof For Address:</label>
             <input type="file" id="passanger_address_proof_upload" name="passanger_address_proof_upload" accept=".pdf, .jpg, .jpeg, .png" required>
+            <label for="passanger_address_proof_upload" class="custom-file-upload">
+                Choose File
+            </label>
             <p>[Self-attached size Max size: 200KB]</p>
             <span id="address_proof_errorp" class="error-message" style="color: red;"></span>
             <br>
@@ -228,6 +262,16 @@ $price = $row['price'];
             <br><br>
             <hr>
         </div>
+        <div class="form-group">
+            <label for="verification_p">Upload Document For Verification:</label>
+            <br>
+            <input type="file" name="verification_p" id="verification_p" accept=".png, .jpg, .jpeg" required>
+            <label for="verification_p" class="custom-file-upload">
+                Choose File
+            </label>
+            <p>[Self-attached Passport size Photo Copy. Max size: 300KB]</p>
+            <span id="verification_p_error" class="error-message" style="color: red;"></span>
+        </div>
 
         <div class="form-group">
             <h2> Payment </h2>
@@ -243,16 +287,12 @@ $price = $row['price'];
     </form>
 </body>
 
-
-
-
 <script>
     function logout() {
         window.location.href = '../logout.php';
     }
 
     document.getElementById('logout-btn').addEventListener('click', logout);
-
 
     $(function() {
         var placesInGujarat = [
@@ -452,19 +492,19 @@ $price = $row['price'];
                 $(elementId).text('');
             }
 
-            const fullnameValue = $('#fullnamep').val();
-            if (fullnameValue === '' || /[^A-Za-z\s]/.test(fullnameValue)) {
-                showError('#fullnamep-error', 'Please enter a valid Full Name with only letters and spaces.');
-            } else {
-                clearError('#fullnamep-error');
-            }
+            // const fullnameValue = $('#fullnamep').val();
+            // if (fullnameValue === '' || /[^A-Za-z\s]/.test(fullnameValue)) {
+            //     showError('#fullnamep-error', 'Please enter a valid Full Name with only letters and spaces.');
+            // } else {
+            //     clearError('#fullnamep-error');
+            // }
 
-            const mobileNoValue = $('#mobileNop').val();
-            if (mobileNoValue === '' || !/^\d{10}$/.test(mobileNoValue)) {
-                showError('#mobileNop-error', 'Please enter a valid 10-digit Phone Number.');
-            } else {
-                clearError('#mobileNop-error');
-            }
+            // const mobileNoValue = $('#mobileNop').val();
+            // if (mobileNoValue === '' || !/^\d{10}$/.test(mobileNoValue)) {
+            //     showError('#mobileNop-error', 'Please enter a valid 10-digit Phone Number.');
+            // } else {
+            //     clearError('#mobileNop-error');
+            // }
 
             const addressValue = $('#addressp').val();
             if (addressValue === '') {
@@ -570,11 +610,9 @@ $price = $row['price'];
                     "handler": function(response) {
                         console.log(response.razorpay_payment_id);
                         if (response.razorpay_payment_id) {
-
                             $('#paynow_p').hide();
                             $('#payment_id_lbl_p').val(response.razorpay_payment_id);
                             $('#paymentButton_p').show();
-
                         }
                     }
                 };
@@ -645,6 +683,37 @@ $price = $row['price'];
             }
         });
     });
+
+    $(document).ready(function() {
+        const addressProofInput = $('#verification_p');
+        const addressProofErrorElement = $('#verification_p_error');
+
+        addressProofInput.on('change', function() {
+            const file = this.files[0];
+
+            if (file) {
+                const allowedFormats = ['application/pdf', 'image/jpg', 'image/jpeg', 'image/png'];
+                const maxFileSize = 200 * 1024;
+                const minFileSize = 20 * 1024;
+
+                if (!allowedFormats.includes(file.type)) {
+                    displayError(addressProofErrorElement, 'Please upload a PDF, JPG, JPEG, or PNG file.');
+                    addressProofInput.val('');
+                } else if (file.size < minFileSize) {
+                    displayError(photoErrorElement, 'Please upload an image that is at least 50KB in size.');
+                    imgStdInput.val('');
+                } else if (file.size > maxFileSize) {
+                    displayError(addressProofErrorElement, 'Please upload a file that is no more than 200KB in size.');
+                    addressProofInput.val('');
+                } else {
+                    clearError(addressProofErrorElement);
+                }
+            } else {
+                clearError(addressProofErrorElement);
+            }
+        });
+    });
+
 
     function displayError(element, message) {
         element.text(message);

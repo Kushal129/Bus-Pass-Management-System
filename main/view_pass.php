@@ -82,7 +82,7 @@ if ($result) {
         }
 
         body {
-            background-color:whitesmoke;
+            background-color: #f4f4f4;
         }
 
         .pass-bg {
@@ -90,10 +90,9 @@ if ($result) {
             padding: 1.5rem;
             background-repeat: no-repeat;
             background-size: cover;
-
             <?php if ($status == 0) { ?>background-image: url('../img/pending.jpg');
             <?php } elseif ($status == 1) { ?>background-color: white;
-            <?php } elseif ($status == 2) { ?>background-image:url('../img/rejected.jpg');
+            <?php } elseif ($status == 2) { ?>background-image: url('../img/rejected.jpg');
             <?php } ?>
         }
 
@@ -151,7 +150,6 @@ if ($result) {
                         <hr style="width: 60%!important;">
                         <p><strong>Pass Type:</strong> <?php echo $bus_type; ?></p>
                         <p><strong>Pass Type:</strong> <?php echo $passType; ?></p>
-
                     </div>
                 </div>
             </div>
@@ -161,17 +159,20 @@ if ($result) {
             <div class="container-fluid">
                 <div class="row">
                     <?php if ($status == 1) { ?>
-                        <div id="qrcode-container" style="display: flex; justify-content: center; width: 40%; height: 250px !important;" class="col-lg-6 col-md-6 col-12">
-                        <?php } else { ?>
-                            <div id="" style="display: flex; justify-content: center; width: 40%; height: 250px !important;" class="col-lg-6 col-md-6 col-12">
-                            <?php } ?>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <p><strong>From Location:</strong> <?php echo $start_term_id; ?></p>
-                                <p><strong>To Location:</strong> <?php echo $ends_term_id; ?></p>
-                                <p><strong>Address:</strong> <?php echo $Institute_address; ?></p>
-                            </div>
+                        <div id="qrcode-container" style="display: flex; justify-content: center; width: 40%; height: 250px !important;" class="col-lg-6 col-md-6 col-12"></div>
+                        <div class="col-lg-6 col-md-6 col-12">
+                            <p><strong>From Location:</strong> <?php echo $start_term_id; ?></p>
+                            <p><strong>To Location:</strong> <?php echo $ends_term_id; ?></p>
+                            <p><strong>Address:</strong> <?php echo $Institute_address; ?></p>
                         </div>
+                    <?php } else { ?>
+                        <div id="Pass_pending" style="display: flex; justify-content: center; width: 40%; height: 250px !important;" class="col-lg-6 col-md-6 col-12"></div>
+                        <div class="col-lg-6 col-md-6 col-12">
+                            <p><strong>From Location:</strong> <?php echo $start_term_id; ?></p>
+                            <p><strong>To Location:</strong> <?php echo $ends_term_id; ?></p>
+                            <p><strong>Address:</strong> <?php echo $Institute_address; ?></p>
+                        </div>
+                    <?php } ?>
                 </div>
         </section>
     </div>

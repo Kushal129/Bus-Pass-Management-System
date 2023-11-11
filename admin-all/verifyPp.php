@@ -2,19 +2,22 @@
 session_start();
 
 $user_id = $_SESSION['user_id'];
-$pass_pid  = $_GET['pass_id'];
 
 include_once '../connection.php';
 
-$qry = "SELECT pi.*, p.*, ps.com_address
+$qry = "SELECT pi.*, p.*, ,d.*, ps.*
         FROM passenger_info AS pi
         INNER JOIN pass AS p ON pi.id = p.passenger_id
         INNER JOIN passenger AS ps ON ps.pass_id = p.id 
-        WHERE p.id = $pass_pid";
+        JOIN document AS d ON pi.document_id = d.id
+        WHERE p.id = ps.pass_id";
 
 $result = $con->query($qry);
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
+        $pass_sid = $row['pass_id'];
+        $studentadd = $row['document_id'];
+        $passangerdoc = $row['letter_pass'];
         $user_img_path = $row['user_img_path'];
         $full_name = $row['full_name'];
         $gender = $row['gender'];
@@ -27,7 +30,7 @@ if ($result->num_rows > 0) {
         $from_date = $row['from_date'];
         $to_date = $row['to_date'];
         $passType = $row['passType'];
-        $status = $row['is_verify'];
+        $document_file_name = $row['document_file_name'];
     }
 }
 $query = "SELECT bus_name from bus_type where price_multiply =$bus_type";
@@ -81,38 +84,71 @@ if ($result) {
             box-sizing: border-box;
         }
 
-        body {
-            background-color: #f4f4f4;
+        .form-group {
+            background-color: #f8f9fa;
         }
 
-        .pass-bgp {
-            margin: 8rem;
-            padding: 1.5rem;
-            background-repeat: no-repeat;
-            background-size: cover;
-            <?php if ($status == 0) { ?>background-image: url('../img/pending.jpg');
-            <?php } elseif ($status == 1) { ?>background-color: white;
-            <?php } elseif ($status == 2) { ?>background-image: url('../img/rejected.jpg');
-            <?php } ?>
-        }
-
-        button.btn-download_pdf {
-            width: 50%;
-            padding: 10px;
-            background-color: black;
-            color: white;
-        }
 
         @media print {
             .btn-download_pdf {
                 display: none !important;
             }
         }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .custom-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+            border-radius: 5px;
+            background-color: #000;
+            color: #fff;
+            transition: background-color 0.3s;
+        }
+
+        .btn-panding:hover {
+            background-color: #ff8a0d;
+            text-decoration: none;
+            color: #f8f9fa;
+        }
+
+        .btn-approve:hover {
+            background-color: #0a9c00;
+            text-decoration: none;
+            color: #f8f9fa;
+        }
+
+        .btn-reject:hover {
+            background-color: #ec0214;
+            text-decoration: none;
+            color: #f8f9fa;
+        }
+
+        .btn-home:hover {
+            background-color: #efd103;
+            text-decoration: none;
+            color: #f8f9fa;
+        }
     </style>
 </head>
 
 <body>
-    <div class="pass-bgp" id="pdf-content">
+    <div class="form-group" id="pdf-content">
         <section>
             <hr>
             <div class="py-2">
@@ -157,11 +193,8 @@ if ($result) {
         <section class="my-5">
             <div class="container-fluid">
                 <div class="row">
-                    <?php if ($status == 1) { ?>
-                        <div id="qrcode-container" style="display: flex; justify-content: center; width: 40%; height: 250px !important;" class="col-lg-6 col-md-6 col-12"></div>
-                    <?php } else { ?>
-                        <div id="Pass_pending" style="display: flex; justify-content: center; width: 40%; height: 250px !important;" class="col-lg-6 col-md-6 col-12"></div>
-                    <?php } ?>
+                    <div id="qrcode-container" style="display: flex; justify-content: center; width: 40%; height: 250px !important;" class="col-lg-6 col-md-6 col-12">
+                    </div>
                     <div class="col-lg-6 col-md-6 col-12">
                         <p><strong>From Location:</strong> <?php echo $start_term_id; ?></p>
                         <p><strong>To Location:</strong> <?php echo $ends_term_id; ?></p>
@@ -170,15 +203,24 @@ if ($result) {
                 </div>
         </section>
     </div>
-    <div class="pass-bgp mt-2">
-        <div class="container-fluid py-2">
-            <div class="row">
-                <button class="btn-download_pdf col-lg-6 col-md-6 col-12" class="form-group" id="home-button" onclick="redirectToHome()">Home</button>
-                <?php if ($status == 1) { ?>
-                    <button class="btn-download_pdf col-lg-6 col-md-6 col-12" class="form-group" id="download-pdf-button" onclick="generatePDF()">Download PDF</button>
-                <?php } ?>
-            </div>
+    <div class="form-group">
+        <h1 class="text-center">Address Verification</h1>
+        <hr>
+        <img src="../uploads/documents/<?php echo $document_file_name; ?>" alt=" Address Verification image" style="width: 100%;height: 100% !important;" class="img-fluid  ">
+    </div>
+    <div class="form-group">
+        <h1 class="text-center">Student Bonofide</h1>
+        <hr>
+        <img src="../uploads/company/<?php echo $passangerdoc; ?>" alt="Company Letter image" style="width: 100%;height: 100% !important;" class="img-fluid  ">
+    </div>
+    <div class="form-group">
+        <div class="button-container">
+            <a class="custom-button btn-panding" href="change_status.php?pass_id=<?php echo $pass_sid ?>&status=0">Panding</a>
+            <a class="custom-button btn-approve" href="change_status.php?pass_id=<?php echo $pass_sid ?>&status=1">Approve</a>
+            <a class="custom-button btn-reject" href="change_status.php?pass_id=<?php echo $pass_sid ?>&status=2">Reject</a>
+            <button class="custom-button btn-home" id="home-button" onclick="redirectToHome()">Home</button>
         </div>
+    </div>
 </body>
 
 </html>

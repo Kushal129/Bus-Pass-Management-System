@@ -1,16 +1,23 @@
 <?php
+session_start();
+
 include '../connection.php';
 include '../toaster.php';
 
-$query = "SELECT pi.full_name, pi.validate_through, pi.dob,p.user_id, p.bus_type ,
-                 b.bus_name , p.start_term_id, s.ter_name ,p.ends_term_id, e.ter_name,
+
+$query = "SELECT pi.full_name, pi.validate_through, pi.dob,p.user_id, p.bus_type ,u.role,
+                 b.bus_name , p.start_term_id, p.id  as pass_id, s.ter_name ,p.ends_term_id, e.ter_name,
                  p.from_date, p.to_date , p.is_verify FROM passenger_info pi
                  INNER JOIN pass p ON pi.id = p.passenger_id 
                  INNER JOIN bus_type b on p.bus_type = b.bus_id 
                  INNER JOIN bus_terminals s on p.start_term_id = s.ter_id 
-                 INNER JOIN bus_terminals e on p.ends_term_id = e.ter_id ";
+                 INNER JOIN bus_terminals e on p.ends_term_id = e.ter_id 
+                 INNER JOIN users u ON pi.user_id = u.id";
 $start = ['s.ter_name'];
 $end = ['e.ter_name'];
+$role = ['role'];
+$pass_id = ['pass_id'];
+
 $result = $con->query($query);
 if ($result) {
     $table = '<table id="passenger-table" class="display">';
@@ -49,7 +56,13 @@ if ($result) {
         }else{
         $table .= '<td> <span class="bedge bedge-danger"> Reject </span> </td>';
         }
-        $table .= '<td><button class="btn-view" onclick="window.location.href=\'verifyP.php\'">View</button></td>';
+        $table .= '<td>';
+        if($row['role'] == "Student")
+        $table .= '<a class="button view-button" href="verifyP.php">View <i class="fas fa-eye" style= "margin-left: 5px;"></i></a>';
+        else {
+        $table .= '<a class="button view-button" href="verifyPp.php">View <i class="fas fa-eye" style= "margin-left: 5px;"></i></a>';
+        }
+        $table .= '</td>';
         $table .= '</tr>';
     }
 

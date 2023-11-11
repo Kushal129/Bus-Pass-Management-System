@@ -289,14 +289,11 @@ $mnumber = $row['phone_number'];
     </form>
 </body>
 
-
-
 <script>
     function logout() {
         window.location.href = '../logout.php';
     }
     document.getElementById('logout-btn').addEventListener('click', logout);
-
 
     $(function() {
         var placesInGujarat = [
@@ -614,11 +611,9 @@ $mnumber = $row['phone_number'];
                     "handler": function(response) {
                         console.log(response.razorpay_payment_id);
                         if (response.razorpay_payment_id) {
-
                             $('#paynow').hide();
                             $('#payment_id_lbl').val(response.razorpay_payment_id);
                             $('#paymentButton').show();
-
                         }
                     }
                 };
