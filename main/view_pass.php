@@ -137,6 +137,7 @@ if ($result) {
                     </div>
                 </section>
             </div>
+
             <hr>
             <div class="container-fluid py-2">
                 <div class="row">
