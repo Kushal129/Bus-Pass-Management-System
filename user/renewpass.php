@@ -91,20 +91,6 @@ if (!isset($_SESSION['username'])) {
             </div>
             <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>
         </div>
-
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="card">
-                    <div class="card-body text-center" style="padding: 15px;">
-                        <h5 class="card-title" style="text-align: center;">RE-NEW PASS</h5>
-                        <p>pass id ( data fetch )</p>
-                        <p>locaiton s e</p>
-                        <p> pass 30 / 90</p>
-                        <p>bus_type</p>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="form-group down-container">
             <h1>Re New Pass</h1>
             <hr>
@@ -120,34 +106,8 @@ if (!isset($_SESSION['username'])) {
         </div>
 
         <div class="down-findpass down-container" style="display: none;">
-            <!-- php for chack  -->
-            adasdasdasd
         </div>
     </section>
-
-    <!-- <script>
-        let sidebar = document.querySelector(".sidebar");
-        let closeBtn = document.querySelector("#btn");
-        let searchBtn = document.querySelector(".bx-search");
-
-        closeBtn.addEventListener("click", () => {
-            sidebar.classList.toggle("open");
-            menuBtnChange();
-        });
-        searchBtn.addEventListener("click", () => {
-            sidebar.classList.toggle("open");
-            menuBtnChange();
-        });
-
-        function menuBtnChange() {
-            if (sidebar.classList.contains("open")) {
-                closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
-            } else {
-                closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");
-            }
-        }
-    </script> -->
-
     <script>
         $(document).ready(function() {
 
@@ -162,10 +122,7 @@ if (!isset($_SESSION['username'])) {
                             passId : passId
                         } , function(res){
                             $(document).find('.down-findpass').show();
-                            // $(document).find('.down-findpass').html(res);
                         });
-
-                        // window.location.href = "../main/renewstd.php";
                     } else if (selectedCategory === 'Passenger') {
                         $(".down-findpass").load("../main/renewpsg.php", {
                             passid: passId
@@ -179,33 +136,6 @@ if (!isset($_SESSION['username'])) {
             });
         });
     </script>
-
-    <!-- <script>
-        document.getElementById('findpassid').addEventListener('click', function() {
-            // Get the pass ID entered by the user
-            var passId = document.getElementById('passid').value;
-
-            // Check the pass ID in the database (you need to implement this part)
-            var passIdFound = checkPassIdInDatabase(passId);
-
-            // Show or hide the 'down-findpass' based on the result
-            var downContainer = document.querySelector('.down-findpass');
-
-            if (passIdFound) {
-                downContainer.style.display = 'block'; // Show the container
-            } else {
-                downContainer.style.display = 'none'; // Hide the container
-                alert('Pass ID not found'); // Display an error message
-            }
-        });
-
-        // Simulate checking the pass ID in the database
-        function checkPassIdInDatabase(passId) {
-            // Replace this with your database query logic
-            // Return true if pass ID is found, false otherwise
-            return passId === '10'; // Example check for a pass ID '12345'
-        }
-    </script> -->
 </body>
 
 </html>
