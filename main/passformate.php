@@ -40,7 +40,7 @@ $institute_address = mysqli_real_escape_string($con, $institute_address);
 $qry = "INSERT INTO student (education, Institute_name, Institute_address , bono_pass) VALUES ('$education', '$institute_name', '$institute_address','$stdbonofide')";
 mysqli_query($con, $qry);
 $studentInsertedId = mysqli_insert_id($con);
-$NewstudentInsertedId = $studentInsertedId;
+// $NewstudentInsertedId = $studentInsertedId;
 
 $uploadsDirectory = "../uploads/documents/";
 
@@ -113,8 +113,8 @@ if (isset($_FILES["img_std"])) {
     mysqli_query($con, $qry);
     $newPassId = mysqli_insert_id($con);
 
-    $stdupdate = "UPDATE student SET pass_id = $newPassId WHERE id = $NewstudentInsertedId";
-    mysqli_query($con, $stdupdate);
+    // $stdupdate = "UPDATE student SET pass_id = $newPassId WHERE id = $NewstudentInsertedId";
+    // mysqli_query($con, $stdupdate);
 
     $fid = $_SESSION['user_id'];
     $updateUserImgQuery = "UPDATE users SET user_img_path='$user_img_path' WHERE id=$fid";

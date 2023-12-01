@@ -132,6 +132,7 @@ if (!isset($_SESSION['username'])) {
                     }
                 } else {
                     alert("Please select a category and enter a Pass ID.");
+                    exit;
                 }
             });
         });

@@ -9,8 +9,8 @@ include_once '../connection.php';
 $qry = "SELECT pi.*, p.*, s.Institute_address
         FROM passenger_info AS pi
         INNER JOIN pass AS p ON pi.id = p.passenger_id
-        INNER JOIN student AS s ON s.pass_id = p.id
-        Where p.id = $pass_sid";
+        INNER JOIN student AS s ON s.id = pi.r_id 
+        Where p.id = $pass_sid AND pi.role ='Student'";
 
 $result = $con->query($qry);
 if ($result->num_rows > 0) {

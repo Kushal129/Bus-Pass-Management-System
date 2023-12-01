@@ -64,6 +64,7 @@ if ($result->num_rows > 0) {
     $institute_address = $row['Institute_address'];
 } else {
     echo '<script>alert("Pass ID not found");</script>';
+    exit;
 }
 
 ?>
@@ -104,7 +105,7 @@ if ($result->num_rows > 0) {
 </style>
 
 <body>
-    <form action="../main/passformate.php" method="POST" enctype="multipart/form-data">
+    <form action="../main/rpassformatestd.php" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <h1>Student Pass Details</h1>
             <hr>
@@ -198,7 +199,7 @@ if ($result->num_rows > 0) {
                 <img src="../uploads/user_photo/<?php echo $user_img_path; ?>" alt="User Photo" style="width: 300px;height: 250px !important;" class="img-fluid  ">
             </div>
             <label for="img_std">Photo Upload:</label>
-            <input type="file" name="img_std" id="img_std" accept=".png, .jpg, .jpeg" required>
+            <input type="file" name="img_std" id="img_std" accept=".png, .jpg, .jpeg" >
             <label for="img_std" class="custom-file-upload">
                 Choose File
             </label>
@@ -304,7 +305,7 @@ if ($result->num_rows > 0) {
         <div class="form-group bono">
             <label for="verification_s">Upload Document For Verification:</label>
             <br>
-            <input type="file" name="verification_s" id="verification_s" accept=".png, .jpg, .jpeg" required>
+            <input type="file" name="verification_s" id="verification_s" accept=".png, .jpg, .jpeg" >
             <label for="verification_s" class="custom-file-upload">
                 Choose File
             </label>
@@ -324,25 +325,6 @@ if ($result->num_rows > 0) {
         </div>
     </form>
 </body>
-<!-- <script>
-    $(document).ready(function() {
-        var validateThrough = <php echo (new DateTime($validate_through))->format('Y-m-d'); ?>;
-        var currentDate = new Date().toISOString().split('T')[0];
-        console.log(validateThrough);
-        console.log(currentDate);
-        if (validateThrough < currentDate) {
-            $(document).find('.bono').show();
-            $(document).find('#Entry_date').val(currentDate);
-            var currentDate = new Date();
-            currentDate.setMonth(currentDate.getMonth() + 6);
-            var formattedDate = currentDate.toISOString().split('T')[0];
-            $(document).find('#Entry_date').val(formattedDate);
-        } else {
-            console.log("hide");
-            $(document).find('.bono').hide();
-        }
-    });
-</script> -->
 
 <script>
     $(document).ready(function() {
@@ -357,6 +339,7 @@ if ($result->num_rows > 0) {
 
         if (validateThrough < currentDate) {
             $(document).find('.bono').show();
+            $(document).find("#verification_s").attr("disabled" , false)
             $(document).find('#Entry_date').val(currentDate);
 
             var currentDatePlus6Months = new Date(currentDate);
@@ -366,6 +349,7 @@ if ($result->num_rows > 0) {
             $(document).find('#Entry_date').val(formattedDatePlus6Months);
         } else {
             console.log("hide");
+            $(document).find("#verification_s").attr("disabled" , true);
             $(document).find('.bono').hide();
         }
     });
@@ -580,19 +564,6 @@ if ($result->num_rows > 0) {
                 errorSpan.hide();
             }
 
-            // const fullnameValue = $('#fullname').val();
-            // if (fullnameValue === '' || /[0-9~!@#$%^&*()_+={}\[\]:;"'<>,.?/\\|`\-]/.test(fullnameValue)) {
-            //     showError('#fullname', 'Please enter a valid Full Name with only letters and spaces.');
-            // } else {
-            //     clearError('#fullname');
-            // }
-
-            // const mobileNoValue = $('#mobileNo').val();
-            // if (mobileNoValue === '' || !/^\d{10}$/.test(mobileNoValue)) {
-            //     showError('#mobileNo', 'Please enter a valid 10-digit Phone Number.');
-            // } else {
-            //     clearError('#mobileNo');
-            // }
 
             const addressValue = $('#address').val();
             if (addressValue === '') {
@@ -629,19 +600,6 @@ if ($result->num_rows > 0) {
                 clearError('#institute_name');
             }
 
-            const instituteAddressValue = $('#institute_address').val();
-            if (instituteAddressValue === '') {
-                showError('#institute_address', 'Institute Address is required.');
-            } else {
-                clearError('#institute_address');
-            }
-
-            const studentimgValue = $('#img_std').val();
-            if (studentimgValue === '') {
-                showError('#photo_error', 'Please upload a proof for address.');
-            } else {
-                clearError('#photo_error');
-            }
 
             const addressProofValue = $('#address_proof').val();
             if (addressProofValue === '--') {
@@ -720,10 +678,10 @@ if ($result->num_rows > 0) {
                 const maxFileSize = 300 * 1024;
                 const minFileSize = 50 * 1024;
 
-                if (!allowedFormats.includes(file.type)) {
-                    displayError(photoErrorElement, 'Please upload an image in PNG, JPG, or JPEG format.');
-                    imgStdInput.val('');
-                } else if (file.size < minFileSize) {
+                // if (!allowedFormats.includes(file.type)) {
+                //     displayError(photoErrorElement, 'Please upload an image in PNG, JPG, or JPEG format.');
+                //     imgStdInput.val('');
+                if (file.size < minFileSize) {
                     displayError(photoErrorElement, 'Please upload an image that is at least 50KB in size.');
                     imgStdInput.val('');
                 } else if (file.size > maxFileSize) {
@@ -750,11 +708,11 @@ if ($result->num_rows > 0) {
                 const allowedFormats = ['application/pdf', 'image/jpg', 'image/jpeg', 'image/png'];
                 const maxFileSize = 200 * 1024;
                 const minFileSize = 20 * 1024;
-
-                if (!allowedFormats.includes(file.type)) {
-                    displayError(addressProofErrorElement, 'Please upload a PDF, JPG, JPEG, or PNG file.');
-                    addressProofInput.val('');
-                } else if (file.size < minFileSize) {
+                // if (!allowedFormats.includes(file.type)) {
+                //     displayError(addressProofErrorElement, 'Please upload a PDF, JPG, JPEG, or PNG file.');
+                //     addressProofInput.val('');
+                // } else
+                if (file.size < minFileSize) {
                     displayError(photoErrorElement, 'Please upload an image that is at least 50KB in size.');
                     imgStdInput.val('');
                 } else if (file.size > maxFileSize) {
@@ -781,10 +739,11 @@ if ($result->num_rows > 0) {
                 const maxFileSize = 200 * 1024;
                 const minFileSize = 20 * 1024;
 
-                if (!allowedFormats.includes(file.type)) {
-                    displayError(addressProofErrorElement, 'Please upload a PDF, JPG, JPEG, or PNG file.');
-                    addressProofInput.val('');
-                } else if (file.size < minFileSize) {
+                // if (!allowedFormats.includes(file.type)) {
+                //     displayError(addressProofErrorElement, 'Please upload a PDF, JPG, JPEG, or PNG file.');
+                //     addressProofInput.val('');
+                // } else
+                if (file.size < minFileSize) {
                     displayError(photoErrorElement, 'Please upload an image that is at least 50KB in size.');
                     imgStdInput.val('');
                 } else if (file.size > maxFileSize) {

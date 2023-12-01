@@ -5,17 +5,18 @@ $user_id = $_SESSION['user_id'];
 
 include_once '../connection.php';
 
+$pass_id = $_GET['pass_id'];
 $qry = "SELECT pi.*, p.*, s.* , d.*
         FROM passenger_info AS pi
         INNER JOIN pass AS p ON pi.id = p.passenger_id
-        INNER JOIN student AS s ON s.pass_id = p.id
+        INNER JOIN student AS s ON s.id = pi.r_id
         JOIN document AS d ON pi.document_id = d.id
-        Where p.id = s.pass_id";
+        Where p.id = $pass_id";
 
 $result = $con->query($qry);
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $pass_sid = $row['pass_id'];
+        $pass_sid = $pass_id;
         $studentadd = $row['document_id'];
         $studentdoc = $row['bono_pass'];
         $user_img_path = $row['user_img_path'];
