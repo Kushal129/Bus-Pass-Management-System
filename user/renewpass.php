@@ -117,7 +117,6 @@ if (!isset($_SESSION['username'])) {
 
                 if (selectedCategory !== "" && passId !== "") {
                     if (selectedCategory === 'Student') {
-                        console.log(11111);
                         $(".down-findpass").load("../main/renewstd.php" , {
                             passId : passId
                         } , function(res){
@@ -125,7 +124,7 @@ if (!isset($_SESSION['username'])) {
                         });
                     } else if (selectedCategory === 'Passenger') {
                         $(".down-findpass").load("../main/renewpsg.php", {
-                            passid: passId
+                            passId : passId
                         }, function(res){
                             $(document).find('.down-findpass').show();
                         });

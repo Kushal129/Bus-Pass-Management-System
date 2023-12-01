@@ -3,52 +3,46 @@ session_start();
 // print_r($_SESSION);
 
 include_once '../connection.php';
+include_once "../toaster.php";
 
 $qry = 'SELECT * FROM price';
 $res = mysqli_query($con, $qry);
 $row = mysqli_fetch_array($res);
 $price = $row['price'];
 $pass_id = $_POST['passId'];
+
 $sql = "SELECT 
-            pass.passenger_id,
-            pass.user_id,
             pass.passType,
             pass.bus_type,
             pass.start_term_id,
             pass.ends_term_id,
-            pass.payment_id,
             pass.image_id,
             pass.from_date,
             pass.to_date,
             passenger_info.full_name,
             passenger_info.address,
             passenger_info.gender,
-            passenger_info.user_id AS passenger_info_user_id,
             passenger_info.validate_through,
             passenger_info.dob,
             passenger_info.user_img_path,
             users.phone_number,
             student.education,
             student.Institute_name,
-            student.Institute_address,
-            student.pass_id
+            student.Institute_address
         FROM pass
-        JOIN passenger_info ON pass.passenger_id = passenger_info.id
-        JOIN users ON passenger_info.user_id = users.id
-        LEFT JOIN student ON pass.id = student.pass_id
+        INNER JOIN passenger_info ON pass.passenger_id = passenger_info.id
+        INNER JOIN users ON passenger_info.user_id = users.id
+        LEFT JOIN student ON passenger_info.r_id = student.id
         WHERE pass.id = $pass_id";
 
 $result = $con->query($sql);
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    $passenger_id = $row['passenger_id'];
-    $user_id = $row['user_id'];
     $passType = $row['passType'];
     $bus_type = $row['bus_type'];
     $start_term_id = $row['start_term_id'];
     $ends_term_id = $row['ends_term_id'];
-    $payment_id = $row['payment_id'];
     $image_id = $row['image_id'];
     $from_date = $row['from_date'];
     $to_date = $row['to_date'];
@@ -739,10 +733,10 @@ if ($result->num_rows > 0) {
                 const maxFileSize = 200 * 1024;
                 const minFileSize = 20 * 1024;
 
-                // if (!allowedFormats.includes(file.type)) {
-                //     displayError(addressProofErrorElement, 'Please upload a PDF, JPG, JPEG, or PNG file.');
-                //     addressProofInput.val('');
-                // } else
+                if (!allowedFormats.includes(file.type)) {
+                    displayError(addressProofErrorElement, 'Please upload a PDF, JPG, JPEG, or PNG file.');
+                    addressProofInput.val('');
+                } else
                 if (file.size < minFileSize) {
                     displayError(photoErrorElement, 'Please upload an image that is at least 50KB in size.');
                     imgStdInput.val('');

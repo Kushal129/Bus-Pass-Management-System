@@ -5,12 +5,13 @@ $user_id = $_SESSION['user_id'];
 
 include_once '../connection.php';
 
+$pass_id = $_GET['pass_id'];
 $qry = "SELECT pi.*, p.*, ,d.*, ps.*
         FROM passenger_info AS pi
         INNER JOIN pass AS p ON pi.id = p.passenger_id
-        INNER JOIN passenger AS ps ON ps.pass_id = p.id 
+        INNER JOIN passenger AS ps ON ps.id = pi.r_id 
         JOIN document AS d ON pi.document_id = d.id
-        WHERE p.id = ps.pass_id";
+        WHERE p.id = $pass_id";
 
 $result = $con->query($qry);
 if ($result->num_rows > 0) {
