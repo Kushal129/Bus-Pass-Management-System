@@ -42,7 +42,7 @@ if ($result) {
     $table = '<table id="passenger-table" class="display">';
     $table .= '<thead>';
     $table .= '<tr>';
-    $table .= '<th>User Id</th>';
+    $table .= '<th>Pass Id</th>';
     $table .= '<th>Full Name</th>';
     $table .= '<th>Validation Through</th>';
     $table .= '<th>Date of Birth</th>';
@@ -60,7 +60,7 @@ if ($result) {
     while ($row = $result->fetch_assoc()) {
         $pass_id  = $row['pass_id'];
         $table .= '<tr>';
-        $table .= '<td>' . $row['user_id'] . '</td>';
+        $table .= '<td>' . $row['pass_id'] . '</td>';
         $table .= '<td>' . $row['full_name'] . '</td>';
         $table .= '<td>' . date('d/m/Y', strtotime($row['validate_through'])) . '</td>';
         $table .= '<td>' . date('d/m/Y', strtotime($row['dob'])) . '</td>';
@@ -69,18 +69,18 @@ if ($result) {
         $table .= '<td>' . $row['e_ter'] . '</td>';
         $table .= '<td>' . date('d/m/Y', strtotime($row['from_date'])) . '</td>';
         $table .= '<td>' . date('d/m/Y', strtotime($row['to_date'])) . '</td>';
-        if ($row['is_verify'] == 0){
+        if ($row['is_verify'] == 0) {
             $table .= '<td><span class="badge badge-warning">Panding</span> </td>';
-        }else if ($row['is_verify'] == 1){
+        } else if ($row['is_verify'] == 1) {
             $table .= '<td><span class="badge badge-success">Success</span> </td>';
-        }else{
+        } else {
             $table .= '<td><span class="badge badge-danger">Reject</span> </td>';
         }
         $table .= '<td>';
         if ($row['role'] == "Student")
-            $table .= '<a class="button view-button" href="../main/view_pass.php?pass_id=' . $pass_id . '">View <i class="fas fa-eye" style= "margin-left: 5px;"></i></a>';
+            $table .= '<a class="button view-button" href="../main/view_pass.php?pass_id=' . $pass_id . '">View<i class="fas fa-eye" style= "margin:5px; text-decoration: none;"></i></a>';
         else {
-            $table .= '<a class="button view-button" href="../main/view_passp.php?pass_id=' . $pass_id . '">View <i class="fas fa-eye" style= "margin-left: 5px;"></i></a>';
+            $table .= '<a class="button view-button" href="../main/view_passp.php?pass_id=' . $pass_id . '">View <i class="fas fa-eye" style= "margin:5px; text-decoration: none;"></i></a>';
         }
         $table .= '</td>';
         $table .= '</tr>';
@@ -124,18 +124,20 @@ if ($result) {
         size: 50%;
         display: flex;
         justify-content: center;
-        padding: 10px 20px;
+        align-items: center;
+        padding: 5px 10px;
         background-color: black;
         color: whitesmoke;
-        text-decoration: none;
         border: none;
         border-radius: 5px;
         cursor: pointer;
+        text-decoration: none;
     }
 
     .button:hover {
         background-color: #feff3c;
         color: black;
+        text-decoration: none;
     }
 
     .dataTables_filter {
@@ -281,7 +283,7 @@ if ($result) {
                 var table = $('#passenger-table').DataTable({
                     data: data,
                     columns: [{
-                            data: 'user_id'
+                            data: 'pass_id'
                         },
                         {
                             data: 'full_name'

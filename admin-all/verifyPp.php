@@ -6,7 +6,7 @@ $user_id = $_SESSION['user_id'];
 include_once '../connection.php';
 
 $pass_id = $_GET['pass_id'];
-$qry = "SELECT pi.*, p.*, ,d.*, ps.*
+$qry = "SELECT pi.*, p.*, d.*, ps.*
         FROM passenger_info AS pi
         INNER JOIN pass AS p ON pi.id = p.passenger_id
         INNER JOIN passenger AS ps ON ps.id = pi.r_id 
@@ -16,7 +16,7 @@ $qry = "SELECT pi.*, p.*, ,d.*, ps.*
 $result = $con->query($qry);
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $pass_sid = $row['pass_id'];
+        $pass_pid = $pass_id;
         $studentadd = $row['document_id'];
         $passangerdoc = $row['letter_pass'];
         $user_img_path = $row['user_img_path'];
@@ -216,9 +216,9 @@ if ($result) {
     </div>
     <div class="form-group">
         <div class="button-container">
-            <a class="custom-button btn-panding" href="change_status.php?pass_id=<?php echo $pass_sid ?>&status=0">Panding</a>
-            <a class="custom-button btn-approve" href="change_status.php?pass_id=<?php echo $pass_sid ?>&status=1">Approve</a>
-            <a class="custom-button btn-reject" href="change_status.php?pass_id=<?php echo $pass_sid ?>&status=2">Reject</a>
+            <a class="custom-button btn-panding" href="change_status.php?pass_id=<?php echo $pass_pid ?>&status=0">Panding</a>
+            <a class="custom-button btn-approve" href="change_status.php?pass_id=<?php echo $pass_pid ?>&status=1">Approve</a>
+            <a class="custom-button btn-reject" href="change_status.php?pass_id=<?php echo $pass_pid ?>&status=2">Reject</a>
             <button class="custom-button btn-home" id="home-button" onclick="redirectToHome()">Home</button>
         </div>
     </div>

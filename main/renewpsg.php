@@ -9,7 +9,7 @@ $qry = 'SELECT * FROM price';
 $res = mysqli_query($con, $qry);
 $row = mysqli_fetch_array($res);
 $price = $row['price'];
-$pass_id = $_POST['passId'];
+$passp_id = $_POST['passId'];
 
 $sql = "SELECT 
             pass.passType,
@@ -33,7 +33,7 @@ $sql = "SELECT
         INNER JOIN passenger_info ON pass.passenger_id = passenger_info.id
         INNER JOIN users ON passenger_info.user_id = users.id
         LEFT JOIN passenger ON passenger_info.r_id = passenger.id
-        WHERE pass.id = $pass_id";
+        WHERE pass.id = $passp_id";
 
 $result = $con->query($sql);
 
@@ -47,14 +47,14 @@ if ($result->num_rows > 0) {
     $image_id = $row['image_id'];
     $from_date = $row['from_date'];
     $to_date = $row['to_date'];
-    $full_name = $row['full_name'];
-    $address = $row['address'];
-    $gender = $row['gender'];
-    $validate_through = $row['validate_through'];
-    $dob = $row['dob'];
-    $user_img_path = $row['user_img_path'];
-    $phone_number = $row['phone_number'];
-    $education = $row['educationp'];
+    $full_name_p = $row['full_name'];
+    $address_p = $row['address'];
+    $gender_p = $row['gender'];
+    $validate_through_p = $row['validate_through'];
+    $dob_p = $row['dob'];
+    $user_img_path_p = $row['user_img_path'];
+    $phone_number_p = $row['phone_number'];
+    $education_p = $row['educationp'];
     $com_name = $row['com_name'];
     $com_address = $row['com_address'];
 } else {
@@ -82,6 +82,16 @@ if ($result->num_rows > 0) {
 
 </head>
 <style>
+
+    /* .read[type="text"],
+    .read[type="number"],
+    .read[type="date"],
+    .read textarea {
+        cursor: not-allowed !important;
+        background-color: #efefef !important;
+        color: #000000 !important;
+    } */
+
     .custom-file-upload {
         display: flex !important;
         padding: 10px !important;
@@ -99,55 +109,61 @@ if ($result->num_rows > 0) {
         display: none;
     }
 </style>
+
 <body>
     <form action="../main/passformatep.php" method="POST" enctype="multipart/form-data">
-        <div class="form-group">
+        <div class="form-group ">
             <h1>Passanger Pass Details</h1>
             <hr>
             <label for="id">Application No:</label>
-            <input type="text" disabled id="id" name="id" " value="<?php echo $pass_id ?>" style="cursor: not-allowed;background-color:#efefef;color: #000000;" placeholder="NEW PASS">
+            <input type="text" disabled id="id" name="id" class="read" value=" <?php echo $passp_id ?>" placeholder="NEW PASS">
             <br><br>
         </div>
 
-        <div class="form-group">
-            <label for="Entry_date">Entry Date:</label>
-            <input type="date" name="Entry_date"  id="Entry_date" value="<?php echo date('Y-m-d', strtotime($validate_through . '-6 months')) ?>" readonly style="cursor: not-allowed;background-color:#efefef;color: #000000;">
+        <div class="form-group read">
+            <label for="Entry_date_p">Entry Date:</label>
+            <input type="date" name="Entry_date_p" id="Entry_date_p" value="<?php echo date('Y-m-d', strtotime($validate_through_p . '-6 months')) ?>" readonly style="cursor: not-allowed;background-color:#efefef;color: #000000;">
             <br><br>
             <label for="validate_through">Validate Through:</label>
-            <input type="date" id="validate_through" value="<?php echo (new DateTime($validate_through))->format('Y-m-d'); ?>" name="validate_through" readonly style="cursor: not-allowed;background-color:#efefef;color: #000000;">
+            <input type="date" id="validate_through" value="<?php echo (new DateTime($validate_through_p))->format('Y-m-d'); ?>" name="validate_through" readonly style="cursor: not-allowed;background-color:#efefef;color: #000000;">
             <br><br>
         </div>
 
-        <div class="form-group">
+        <div class="form-group read">
             <h1>Personal Details</h1>
             <hr>
 
             <label for="fullnamep">Full Name:</label>
-            <input type="text" id="fullnamep" name="fullnamep" value="<?php echo $full_name ?>" required>
-            <span id="fullnamep-error" class="error-error-message"  style="color:red"></span>
+            <input type="text" id="fullnamep" name="fullnamep" readonly style="cursor:not-allowed; background-color:#efefef; color:#000000;" value="<?php echo $full_name_p ?>" required>
+            <span id="fullnamep-error" class="error-error-message" style="color:red"></span>
             <br><br>
 
             <label for="mobileNop">Phone Number:</label>
-            <input type="text" name="mobileNop" id="mobileNop" maxlength="10" value="<?php echo $phone_number ?>" required>
+            <input type="text" name="mobileNop" id="mobileNop" maxlength="10" readonly style="cursor:not-allowed; background-color:#efefef; color:#000000;" value="<?php echo $phone_number_p ?>" required>
             <span id="mobileNop-error" class="error-message" style="color:red"></span>
             <br><br>
 
             <label for="addressp">Address:</label>
-            <textarea name="addressp" id="addressp" cols="20" rows="3" required><?php echo $address ?></textarea>
+            <textarea name="addressp" id="addressp" cols="20" rows="3" style="cursor:not-allowed; background-color:#efefef; color:#000000;" readonly required><?php echo $address_p; ?></textarea>
             <span id="addressp-error" class="error-message" style="color:red"></span>
             <br><br>
 
+            <label for="editAddress_p">Do you want to change your address?</label>
+            <input type="radio" id="yesEditAddress_p" name="editAddress_p" value="yes" onclick="toggleAddressSections_p('yes')"> Yes
+            <input type="radio" id="noEditAddress_p" name="editAddress_p" value="no" onclick="toggleAddressSections_p('no')" checked> No
+            <br><br>
+
             <label for="dateofBirthp">Date of Birth:</label>
-            <input type="date" name="dateofBirthp" id="dateofBirthp"  value="<?php echo (new DateTime($dob))->format('Y-m-d'); ?>" required>
+            <input type="date" name="dateofBirthp" id="dateofBirthp" value="<?php echo (new DateTime($dob_p))->format('Y-m-d'); ?>" required>
             <span id="dateofBirthp-error" class="error-message" style="color:red"></span>
             <br><br>
 
             <label>Gender:</label>
-            <input type="radio" name="gender" value="Male" <?php echo ($gender === "Male") ? 'checked="checked"' : ''; ?> required>
+            <input type="radio" name="gender" value="Male" <?php echo ($gender_p === "Male") ? 'checked="checked"' : ''; ?> required>
             <span class="bodytext">Male</span>
-            <input type="radio" name="gender" value="Female" <?php echo ($gender === "Female") ? 'checked="checked"' : ''; ?>>
+            <input type="radio" name="gender" value="Female" <?php echo ($gender_p === "Female") ? 'checked="checked"' : ''; ?>>
             <span class="bodytext">Female</span>
-            <input type="radio" name="gender" value="Other" <?php echo ($gender === "Other") ? 'checked="checked"' : ''; ?>>
+            <input type="radio" name="gender" value="Other" <?php echo ($gender_p === "Other") ? 'checked="checked"' : ''; ?>>
             <span class="bodytext">Other</span>
             <span id="gender-error" class="error-message" style="color:red"></span>
             <br><br>
@@ -156,7 +172,7 @@ if ($result->num_rows > 0) {
             <select name="educationp" id="educationp" required>
                 <option value="--">Please Select Highest Qualification</option>
                 <?php
-                $educationOptions = array(
+                $educationOptions_p = array(
                     "Primary",
                     "Middle/Higher Primary",
                     "Senior Secondary",
@@ -168,9 +184,9 @@ if ($result->num_rows > 0) {
                     "Doctorate",
                     "Illiterate"
                 );
-                foreach ($educationOptions as $option) {
-                    $selected = ($education === $option) ? 'selected="selected"' : '';
-                    echo "<option value=\"$option\" $selected>$option</option>";
+                foreach ($educationOptions_p as $option_p) {
+                    $selected_p = ($education_p === $option_p) ? 'selected="selected"' : '';
+                    echo "<option value=\"$option_p\" $selected_p>$option_p</option>";
                 }
                 ?>
             </select>
@@ -192,40 +208,41 @@ if ($result->num_rows > 0) {
             <h1>Proof Details</h1>
             <hr>
             <div class="col-lg-6 col-md-6 col-12" style="display: flex; justify-content: center;">
-                <img src="../uploads/user_photo/<?php echo $user_img_path; ?>" alt="User Photo" style="width: 300px;height: 250px !important;" class="img-fluid  ">
+                <img src="../uploads/user_photo/<?php echo $user_img_path_p; ?>" alt="User Photo" style="width: 300px;height: 250px !important;" class="img-fluid  ">
             </div>
             <label for="img_p">Photo Upload:</label>
-            <input type="file" name="img_p" id="img_p" accept=".png, .jpg, .jpeg" >
+            <input type="file" name="img_p" id="img_p" accept=".png, .jpg, .jpeg">
             <label for="img_p" class="custom-file-upload">
-            Choose File
+                Choose File
             </label>
             <p>[Self-attached Passport size Photo Copy. Max size: 300KB]</p>
             <span id="photo_error_p" class="error-message" style="color: red;"></span>
             <br>
+            <div id="addressProofSection_p" style="display: none;">
+                <label for="address_proofp">Select Document for Address Proof:</label>
+                <select id="address_proofp" name="address_proofp" class="error-message">
+                    <option value="--">Please Select Document</option>
+                    <?php
+                    $address_proof_qry_p = "SELECT * FROM document_type";
+                    $add_p = mysqli_query($con, $address_proof_qry_p);
+                    foreach ($add_p as $key => $add_proof_p) {
+                    ?>
+                        <option value="<?php echo $add_proof_p['id'] ?>"><?php echo $add_proof_p['name'] ?></option>
+                    <?php
+                    }
+                    ?>
+                </select>
+                <span id="address_errorp" class="error-message" style="color: red;"></span>
+                <br><br>
 
-            <label for="address_proofp">Select Document for Address Proof:</label>
-            <select id="address_proofp" name="address_proofp" class="error-message" >
-                <option value="--">Please Select Document</option>
-                <?php
-                $address_proof_qry_s = "SELECT * FROM document_type";
-                $add_s = mysqli_query($con, $address_proof_qry_s);
-                foreach ($add_s as $key => $add_proof_s) {
-                ?>
-                    <option value="<?php echo $add_proof_s['id'] ?>"><?php echo $add_proof_s['name'] ?></option>
-                <?php
-                }
-                ?>
-            </select>
-            <span id="address_errorp" class="error-message" style="color: red;"></span>
-            <br><br>
-
-            <label for="passanger_address_proof_upload">Upload Proof For Address:</label>
-            <input type="file" id="passanger_address_proof_upload" name="passanger_address_proof_upload" accept=".pdf, .jpg, .jpeg, .png" required>
-            <label for="passanger_address_proof_upload" class="custom-file-upload">
-                Choose File
-            </label>
-            <p>[Self-attached size Max size: 200KB]</p>
-            <span id="address_proof_errorp" class="error-message" style="color: red;"></span>
+                <label for="passanger_address_proof_upload">Upload Proof For Address:</label>
+                <input type="file" id="passanger_address_proof_upload" name="passanger_address_proof_upload" accept=".pdf, .jpg, .jpeg, .png" required>
+                <label for="passanger_address_proof_upload" class="custom-file-upload">
+                    Choose File
+                </label>
+                <p>[Self-attached size Max size: 200KB]</p>
+                <span id="address_proof_errorp" class="error-message" style="color: red;"></span>
+            </div>
             <br>
         </div>
 
@@ -252,11 +269,11 @@ if ($result->num_rows > 0) {
             <select name="fromPlace_p" id="fromPlace_p" class="fromPlace_p" required>
                 <option value=" ">Select From Location</option>
                 <?php
-                $from_qry_s  =  "SELECT * FROM bus_terminals";
-                $from_types_s = mysqli_query($con, $from_qry_s);
-                foreach ($from_types_s as $key => $from_t_s) {
+                $from_qry_p  =  "SELECT * FROM bus_terminals";
+                $from_types_p = mysqli_query($con, $from_qry_p);
+                foreach ($from_types_p as $key => $from_t_p) {
                 ?>
-                    <option value="<?php echo $from_t_s['ter_id'] ?>"><?php echo $from_t_s['ter_name'] ?></option>
+                    <option value="<?php echo $from_t_p['ter_id'] ?>"><?php echo $from_t_p['ter_name'] ?></option>
                 <?php
                 }
                 ?>
@@ -268,11 +285,11 @@ if ($result->num_rows > 0) {
             <select name="toPlace_p" id="toPlace_p" class="toPlace_p" required>
                 <option value=" ">Select To Location</option>
                 <?php
-                $from_qry_s  =  "SELECT * FROM bus_terminals";
-                $from_types_s = mysqli_query($con, $from_qry_s);
-                foreach ($from_types_s as $key => $from_t_s) {
+                $from_qry_p  =  "SELECT * FROM bus_terminals";
+                $from_types_p = mysqli_query($con, $from_qry_p);
+                foreach ($from_types_p as $key => $from_t_p) {
                 ?>
-                    <option value="<?php echo $from_t_s['ter_id'] ?>"><?php echo $from_t_s['ter_name'] ?></option>
+                    <option value="<?php echo $from_t_p['ter_id'] ?>"><?php echo $from_t_p['ter_name'] ?></option>
                 <?php
                 }
                 ?>
@@ -283,11 +300,11 @@ if ($result->num_rows > 0) {
             <label for="classOfService_p">Class Of Service:</label>
             <select name="classOfService_p" id="classOfService_p" required>
                 <?php
-                $bus_type_qry_s  =  "SELECT * FROM bus_type ";
-                $bus_types_s = mysqli_query($con, $bus_type_qry_s);
-                foreach ($bus_types_s as $key => $bus_t_s) {
+                $bus_type_qry_p  =  "SELECT * FROM bus_type ";
+                $bus_types_p = mysqli_query($con, $bus_type_qry_p);
+                foreach ($bus_types_p as $key => $bus_t_p) {
                 ?>
-                    <option value="<?php echo $bus_t_s['price_multiply'] ?>"><?php echo $bus_t_s['bus_name'] ?></option>
+                    <option value="<?php echo $bus_t_p['price_multiply'] ?>"><?php echo $bus_t_p['bus_name'] ?></option>
                 <?php
                 }
                 ?>
@@ -320,30 +337,51 @@ if ($result->num_rows > 0) {
         </div>
     </form>
 </body>
+
+<script>
+    function toggleAddressSections_p(choice) {
+        var addressProofSection_p = document.getElementById('addressProofSection_p');
+        var addressTextarea_p = document.getElementById('addressp');
+
+        if (choice === 'yes') {
+            addressTextarea_p.removeAttribute('readonly');
+            addressTextarea_p.style.cursor = 'auto';
+            addressTextarea_p.style.backgroundColor = '#ffffff';
+            addressTextarea_p.style.color = '#000000';
+            addressProofSection_p.style.display = 'block';
+        } else {
+            addressTextarea_p.setAttribute('readonly', 'readonly');
+            addressTextarea_p.style.cursor = 'not-allowed';
+            addressTextarea_p.style.backgroundColor = '#efefef';
+            addressTextarea_p.style.color = '#000000';
+            addressProofSection_p.style.display = 'none';
+        }
+    }
+</script>
 <script>
     $(document).ready(function() {
         <?php
-            $formattedDate = (new DateTime($validate_through))->format('Y-m-d');
+        $formattedDate_p = (new DateTime($validate_through_p))->format('Y-m-d');
         ?>
-        var validateThrough = "<?php echo $formattedDate; ?>";
-        var currentDate = new Date().toISOString().split('T')[0];
+        var validateThrough_p = "<?php echo $formattedDate_p; ?>";
+        var currentDatep = new Date().toISOString().split('T')[0];
 
-        console.log(validateThrough);
-        console.log(currentDate);
+        console.log(validateThrough_p);
+        console.log(currentDatep);
 
-        if (validateThrough < currentDate) {
+        if (validateThrough_p < currentDatep) {
             $(document).find('.bono').show();
-            $(document).find("#verification_s").attr("disabled" , false)
-            $(document).find('#Entry_date').val(currentDate);
+            $(document).find("#verification_p").attr("disabled", false)
+            $(document).find('#Entry_date_p').val(currentDatep);
 
-            var currentDatePlus6Months = new Date(currentDate);
-            currentDatePlus6Months.setMonth(currentDatePlus6Months.getMonth() + 6);
+            var currentDatepPlus6Months = new Date(currentDatep);
+            currentDatepPlus6Months.setMonth(currentDatepPlus6Months.getMonth() + 6);
 
-            var formattedDatePlus6Months = currentDatePlus6Months.toISOString().split('T')[0];
-            $(document).find('#Entry_date').val(formattedDatePlus6Months);
+            var formattedDatePlus6Months = currentDatepPlus6Months.toISOString().split('T')[0];
+            $(document).find('#Entry_date_p').val(formattedDatePlus6Months);
         } else {
             console.log("hide");
-            $(document).find("#verification_s").attr("disabled" , true);
+            $(document).find("#verification_p").attr("disabled", true);
             $(document).find('.bono').hide();
         }
     });

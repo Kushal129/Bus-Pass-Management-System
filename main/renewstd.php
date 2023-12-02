@@ -80,6 +80,8 @@ if ($result->num_rows > 0) {
 
 </head>
 <style>
+    
+
     .custom-file-upload {
         display: flex !important;
         padding: 10px !important;
@@ -132,8 +134,13 @@ if ($result->num_rows > 0) {
             <br><br>
 
             <label for="address">Address:</label>
-            <textarea name="address" id="address" readonly cols="20" rows="3" required><?php echo $address ?></textarea>
+            <textarea name="address" id="address" cols="20" rows="3" readonly style="cursor:not-allowed; background-color:#efefef; color:#000000;" required><?php echo $address; ?></textarea>
             <span id="address-error" class="error-message" style="color:red"></span>
+            <br><br>
+
+            <label for="editAddress">Do you want to change your address?</label>
+            <input type="radio" id="yesEditAddress" name="editAddress" value="yes" onclick="toggleAddressSections('yes')"> Yes
+            <input type="radio" id="noEditAddress" name="editAddress" value="no" onclick="toggleAddressSections('no')" checked> No
             <br><br>
 
             <label for="dateofBirth">Date of Birth:</label>
@@ -193,7 +200,7 @@ if ($result->num_rows > 0) {
                 <img src="../uploads/user_photo/<?php echo $user_img_path; ?>" alt="User Photo" style="width: 300px;height: 250px !important;" class="img-fluid  ">
             </div>
             <label for="img_std">Photo Upload:</label>
-            <input type="file" name="img_std" id="img_std" accept=".png, .jpg, .jpeg" >
+            <input type="file" name="img_std" id="img_std" accept=".png, .jpg, .jpeg">
             <label for="img_std" class="custom-file-upload">
                 Choose File
             </label>
@@ -201,29 +208,31 @@ if ($result->num_rows > 0) {
             <span id="photo_error" class="error-message" style="color: red;"></span>
             <br>
 
-            <label for="address_proof">Select Document for Address Proof:</label>
-            <select id="address_proof" name="address_proof" class="error-message" required>
-                <option value="--">Please Select Document</option>
-                <?php
-                $address_proof_qry_s = "SELECT * FROM document_type";
-                $add_s = mysqli_query($con, $address_proof_qry_s);
-                foreach ($add_s as $key => $add_proof_s) {
-                ?>
-                    <option value="<?php echo $add_proof_s['id'] ?>"><?php echo $add_proof_s['name'] ?></option>
-                <?php
-                }
-                ?>
-            </select>
-            <span id="address_error" class="error-message" style="color: red;"></span>
-            <br><br>
+            <div id="addressProofSection" style="display: none;">
+                <label for="address_proof">Select Document for Address Proof:</label>
+                <select id="address_proof" name="address_proof" class="error-message" required>
+                    <option value="--">Please Select Document</option>
+                    <?php
+                    $address_proof_qry_s = "SELECT * FROM document_type";
+                    $add_s = mysqli_query($con, $address_proof_qry_s);
+                    foreach ($add_s as $key => $add_proof_s) {
+                    ?>
+                        <option value="<?php echo $add_proof_s['id'] ?>"><?php echo $add_proof_s['name'] ?></option>
+                    <?php
+                    }
+                    ?>
+                </select>
+                <span id="address_error" class="error-message" style="color: red;"></span>
+                <br><br>
 
-            <label for="student_address_proof_upload">Upload Proof For Address:</label>
-            <input type="file" id="student_address_proof_upload" name="student_address_proof_upload" accept=".pdf, .jpg, .jpeg, .png" required>
-            <label for="student_address_proof_upload" class="custom-file-upload">
-                Choose File
-            </label>
-            <p>[Self-attached size Max size: 200KB]</p>
-            <span id="std_address_proof_error" class="error-message" style="color: red;"></span>
+                <label for="student_address_proof_upload">Upload Proof For Address:</label>
+                <input type="file" id="student_address_proof_upload" name="student_address_proof_upload" accept=".pdf, .jpg, .jpeg, .png" required>
+                <label for="student_address_proof_upload" class="custom-file-upload">
+                    Choose File
+                </label>
+                <p>[Self-attached size Max size: 200KB]</p>
+                <span id="std_address_proof_error" class="error-message" style="color: red;"></span>
+            </div>
             <br>
         </div>
 
@@ -299,7 +308,7 @@ if ($result->num_rows > 0) {
         <div class="form-group bono">
             <label for="verification_s">Upload Document For Verification:</label>
             <br>
-            <input type="file" name="verification_s" id="verification_s" accept=".png, .jpg, .jpeg" >
+            <input type="file" name="verification_s" id="verification_s" accept=".png, .jpg, .jpeg">
             <label for="verification_s" class="custom-file-upload">
                 Choose File
             </label>
@@ -321,9 +330,29 @@ if ($result->num_rows > 0) {
 </body>
 
 <script>
+    function toggleAddressSections(choice) {
+        var addressProofSection = document.getElementById('addressProofSection');
+        var addressTextarea = document.getElementById('address');
+
+        if (choice === 'yes') {
+            addressTextarea.removeAttribute('readonly');
+            addressTextarea.style.cursor = 'auto';
+            addressTextarea.style.backgroundColor = '#ffffff';
+            addressTextarea.style.color = '#000000';
+            addressProofSection.style.display = 'block';
+        } else {
+            addressTextarea.setAttribute('readonly', 'readonly');
+            addressTextarea.style.cursor = 'not-allowed';
+            addressTextarea.style.backgroundColor = '#efefef';
+            addressTextarea.style.color = '#000000';
+            addressProofSection.style.display = 'none';
+        }
+    }
+</script>
+<script>
     $(document).ready(function() {
         <?php
-            $formattedDate = (new DateTime($validate_through))->format('Y-m-d');
+        $formattedDate = (new DateTime($validate_through))->format('Y-m-d');
         ?>
         var validateThrough = "<?php echo $formattedDate; ?>";
         var currentDate = new Date().toISOString().split('T')[0];
@@ -333,7 +362,7 @@ if ($result->num_rows > 0) {
 
         if (validateThrough < currentDate) {
             $(document).find('.bono').show();
-            $(document).find("#verification_s").attr("disabled" , false)
+            $(document).find("#verification_s").attr("disabled", false)
             $(document).find('#Entry_date').val(currentDate);
 
             var currentDatePlus6Months = new Date(currentDate);
@@ -343,7 +372,7 @@ if ($result->num_rows > 0) {
             $(document).find('#Entry_date').val(formattedDatePlus6Months);
         } else {
             console.log("hide");
-            $(document).find("#verification_s").attr("disabled" , true);
+            $(document).find("#verification_s").attr("disabled", true);
             $(document).find('.bono').hide();
         }
     });
