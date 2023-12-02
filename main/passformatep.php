@@ -259,7 +259,7 @@ if ($result) {
             justify-content: center;
             padding: 10px 20px;
             background-color: rgb(0, 0, 0);
-            color: #fff;
+            color: #fff !important;
             text-decoration: none;
             border-radius: 5px;
             transition: background-color 0.3s ease;
@@ -291,6 +291,7 @@ if ($result) {
         <a onclick="redirectToHome()" class="redirect-button">Go Home</a>
     </div>
 </body>
+
 </html>
 
 <script>

@@ -16,6 +16,7 @@ if (!file_exists($uploadsDirectory_very)) {
     mkdir($uploadsDirectory_very, 0777, true);
 }
 
+$stdbonofide = null;
 if (isset($_FILES["verification_s"])) {
     $filenamev = date('Ymd') . rand(0, 10000) . basename($_FILES["verification_s"]["name"]);
     $targetFilev = $uploadsDirectory_very . $filenamev;
@@ -27,7 +28,10 @@ if (isset($_FILES["verification_s"])) {
 }
 
 $pass_id = $_POST['id'];
-$student_id =  
+
+$qry_stu_fetch = "select pi.r_id from pass p join passenger_info pi on p.passenger_id = pi.id limit 1";
+$run = mysqli_fetch_array(mysqli_query($con, $qry_stu_fetch));
+$student_id =  $run[0];
 $education = $_POST['education'];
 $institute_name = $_POST['institute_name'];
 $institute_address = $_POST['institute_address'];
@@ -41,22 +45,25 @@ $qry = "UPDATE student SET
             education = '$education',
             Institute_name = '$institute_name',
             Institute_address = '$institute_address'";
-if ($stdbonofide) {
+if ($stdbonofide != null) {
     $qry .= ",bono_pass = '$stdbonofide'";
 }
-$qry .= "WHERE student_id = $student_id";
+
+$qry .= "WHERE id = $student_id";
 
 mysqli_query($con, $qry);
-$studentInsertedId = mysqli_insert_id($con);
-$NewstudentInsertedId = $studentInsertedId;
+$studentUpdatedId = $student_id;
+
+$NewstudentUpdatedId = $studentUpdatedId;
 
 $uploadsDirectory = "../uploads/documents/";
+
 
 if (!file_exists($uploadsDirectory)) {
     mkdir($uploadsDirectory, 0777, true);
 }
-
-if (isset($_FILES["student_address_proof_upload"])) {
+$lastInsertedId = null;
+if (isset($_FILES["student_address_proof_upload"]) && $_POST['editAddress'] != 'no') {
     $filename = date('Ymd') . rand(0, 10000) . basename($_FILES["student_address_proof_upload"]["name"]);
     $targetFile = $uploadsDirectory . $filename;
     if (move_uploaded_file($_FILES["student_address_proof_upload"]["tmp_name"], $targetFile)) {
@@ -73,7 +80,7 @@ if (isset($_FILES["student_address_proof_upload"])) {
     $qry = "INSERT INTO document (document_type_id, document_file_name) VALUES ('$document_type_id', '$document_file_name')";
     mysqli_query($con, $qry);
     $lastInsertedId = mysqli_insert_id($con);
-} 
+}
 
 $full_name = $_POST['fullname'];
 $address = $_POST['address'];
@@ -86,8 +93,8 @@ $uploadsDirectory = "../uploads/user_photo/";
 if (!file_exists($uploadsDirectory)) {
     mkdir($uploadsDirectory, 0777, true);
 }
-
-if (isset($_FILES["img_std"]) && $_FILEs["img_std"] != null) {
+$user_img_path = null;
+if (isset($_FILES["img_std"]) && $_FILES["img_std"]["name"] != null) {
     $filename = date('Ymd') . rand(0, 10000) . basename($_FILES["img_std"]["name"]);
     $targetFile = $uploadsDirectory . $filename;
     if (move_uploaded_file($_FILES["img_std"]["tmp_name"], $targetFile)) {
@@ -96,50 +103,56 @@ if (isset($_FILES["img_std"]) && $_FILEs["img_std"] != null) {
     }
 
     $user_img_path = $filename;
+}
 
-    // $qry = "INSERT INTO passenger_info (full_name, address, document_id, gender, role, r_id, user_id, validate_through, dob, user_img_path) 
-    //         VALUES ('$full_name', '$address', $lastInsertedId, '$gender', '$role', $studentInsertedId, {$_SESSION['user_id']}, '$validate_through', '$dob', '$user_img_path')";
-    // mysqli_query($con, $qry);
-    $qry = "UPDATE passenger_info SET
+// $qry = "INSERT INTO passenger_info (full_name, address, document_id, gender, role, r_id, user_id, validate_through, dob, user_img_path) 
+//         VALUES ('$full_name', '$address', $lastInsertedId, '$gender', '$role', $studentUpdatedId, {$_SESSION['user_id']}, '$validate_through', '$dob', '$user_img_path')";
+// mysqli_query($con, $qry);
+$qry = "UPDATE passenger_info SET
             full_name = '$full_name',
-            address = '$address',
-            document_id = $lastInsertedId,
-            gender = '$gender',
+            address = '$address', ";
+if ($lastInsertedId != null) {
+    $qry .= "document_id = $lastInsertedId,";
+}
+$qry .= "gender = '$gender',
             role = '$role',
-            r_id = $studentInsertedId,
+            r_id = $studentUpdatedId,
             user_id = {$_SESSION['user_id']},
             validate_through = '$validate_through',
-            dob = '$dob',
-            user_img_path = '$user_img_path'
-        WHERE passenger_id = $passenger_id";
+            dob = '$dob'";
+if ($user_img_path != null) {
+    $qry  .= ",user_img_path = '$user_img_path'";
+}
+$qry .= "WHERE r_id = $student_id and role = 'Student'";
+mysqli_query($con, $qry);
 
-    mysqli_query($con, $qry);
-    $pasangerInsertedId = mysqli_insert_id($con);
+$qry = "select id from passenger_info where r_id = $student_id and role = 'Student'";
+$passenger_info_data = mysqli_fetch_array(mysqli_query($con, $qry));
 
-    $passenger_id = $pasangerInsertedId;
-    $bus_type = $_POST['classOfService'];
-    $start_term_id = $_POST['fromPlaceStudent'];
-    $ends_term_id = $_POST['toPlaceStudent'];
-    $payment_id = $_POST['payment_id'];
-    $image_id = 1;
-    $from_date = $_POST['fromDate'];
-    $to_date = $_POST['toDate'];
-    $passType = $_POST['passType'];
+$passenger_id = $passenger_info_data['id'];
+$bus_type = $_POST['classOfService'];
+$start_term_id = $_POST['fromPlaceStudent'];
+$ends_term_id = $_POST['toPlaceStudent'];
+$payment_id = $_POST['payment_id'];
+$image_id = 1;
+$from_date = $_POST['fromDate'];
+$to_date = $_POST['toDate'];
+$passType = $_POST['passType'];
 
-    $qry = "INSERT INTO pass (passenger_id, user_id,passType ,bus_type, start_term_id, ends_term_id, payment_id, image_id, from_date, to_date) VALUES 
+$qry = "INSERT INTO pass (passenger_id, user_id,passType ,bus_type, start_term_id, ends_term_id, payment_id, image_id, from_date, to_date) VALUES 
             ($passenger_id, {$_SESSION['user_id']}, $passType ,$bus_type, $start_term_id, $ends_term_id, '$payment_id', $image_id, '$from_date', '$to_date')";
 
-    mysqli_query($con, $qry);
-    $newPassId = mysqli_insert_id($con);
+mysqli_query($con, $qry);
+$newPassId = mysqli_insert_id($con);
 
-    $stdupdate = "UPDATE student SET pass_id = $newPassId WHERE id = $NewstudentInsertedId";
-    mysqli_query($con, $stdupdate);
 
+if ($user_img_path != null) {
     $fid = $_SESSION['user_id'];
     $updateUserImgQuery = "UPDATE users SET user_img_path='$user_img_path' WHERE id=$fid";
     mysqli_query($con, $updateUserImgQuery);
+}
 
-    $query = "SELECT
+$query = "SELECT
         pi.validate_through,
         pi.gender,
         pi.dob,
@@ -153,48 +166,46 @@ if (isset($_FILES["img_std"]) && $_FILEs["img_std"] != null) {
     WHERE
         pi.user_id = {$_SESSION['user_id']}";
 
-    $result = mysqli_query($con, $query);
-
-    if ($result) {
-        while ($row = mysqli_fetch_assoc($result)) {
-            $user_id = $row['user_id'];
-            $full_name = $row['full_name'];
-            $dob = $row['dob'];
-            $gender = $row['gender'];
-            $validate_through = $row['validate_through'];
-            $user_img_path = $row['user_img_path'];
-            $role = $row['role'];
-            $address = $row['address'];
-        }
-    }
-} else {
-    die("User image upload is missing.");
-}
-
-$query = "SELECT bus_name from bus_type where price_multiply =$bus_type";
 $result = mysqli_query($con, $query);
-if ($result) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $bus_type = $row['bus_name'];
-    }
-}
 
-$query = "SELECT ter_name from bus_terminals where ter_id=$start_term_id";
-$result = mysqli_query($con, $query);
-if ($result) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $start_term_id = $row['ter_name'];
-    }
-}
+// if ($result) {
+//     while ($row = mysqli_fetch_assoc($result)) {
+//         $user_id = $row['user_id'];
+//         $full_name = $row['full_name'];
+//         $dob = $row['dob'];
+//         $gender = $row['gender'];
+//         $validate_through = $row['validate_through'];
+//         $user_img_path = $row['user_img_path'];
+//         $role = $row['role'];
+//         $address = $row['address'];
+//     }
+// }
 
 
-$query = "SELECT ter_name from bus_terminals where ter_id=$ends_term_id";
-$result = mysqli_query($con, $query);
-if ($result) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $ends_term_id = $row['ter_name'];
-    }
-}
+// $query = "SELECT bus_name from bus_type where price_multiply =$bus_type";
+// $result = mysqli_query($con, $query);
+// if ($result) {
+//     while ($row = mysqli_fetch_assoc($result)) {
+//         $bus_type = $row['bus_name'];
+//     }
+// }
+
+// $query = "SELECT ter_name from bus_terminals where ter_id=$start_term_id";
+// $result = mysqli_query($con, $query);
+// if ($result) {
+//     while ($row = mysqli_fetch_assoc($result)) {
+//         $start_term_id = $row['ter_name'];
+//     }
+// }
+
+
+// $query = "SELECT ter_name from bus_terminals where ter_id=$ends_term_id";
+// $result = mysqli_query($con, $query);
+// if ($result) {
+//     while ($row = mysqli_fetch_assoc($result)) {
+//         $ends_term_id = $row['ter_name'];
+//     }
+// }
 
 ?>
 
@@ -280,8 +291,8 @@ if ($result) {
             display: flex;
             justify-content: center;
             padding: 10px 20px;
-            background-color: rgb(0, 0, 0);
-            color: #fff;
+            background-color: black;
+            color: white !important;
             text-decoration: none;
             border-radius: 5px;
             transition: background-color 0.3s ease;
@@ -289,8 +300,8 @@ if ($result) {
         }
 
         .redirect-button:hover {
-            background-color: rgb(36, 36, 36);
-            color: rgb(255, 255, 255);
+            background-color: #161617;
+            color: white;
             text-decoration: none;
         }
     </style>

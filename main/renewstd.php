@@ -210,7 +210,7 @@ if ($result->num_rows > 0) {
 
             <div id="addressProofSection" style="display: none;">
                 <label for="address_proof">Select Document for Address Proof:</label>
-                <select id="address_proof" name="address_proof" class="error-message" required>
+                <select id="address_proof" name="address_proof" class="error-message" >
                     <option value="--">Please Select Document</option>
                     <?php
                     $address_proof_qry_s = "SELECT * FROM document_type";
@@ -226,7 +226,7 @@ if ($result->num_rows > 0) {
                 <br><br>
 
                 <label for="student_address_proof_upload">Upload Proof For Address:</label>
-                <input type="file" id="student_address_proof_upload" name="student_address_proof_upload" accept=".pdf, .jpg, .jpeg, .png" required>
+                <input type="file" id="student_address_proof_upload" name="student_address_proof_upload" accept=".pdf, .jpg, .jpeg, .png" >
                 <label for="student_address_proof_upload" class="custom-file-upload">
                     Choose File
                 </label>
@@ -625,14 +625,16 @@ if ($result->num_rows > 0) {
 
 
             const addressProofValue = $('#address_proof').val();
-            if (addressProofValue === '--') {
+            const EditAddress = $('input[name="editAddress"]:checked').val();
+            // alert(EditAddress)
+            if (addressProofValue === '--' && EditAddress == 'yes' ) {
                 showError('#address_error', 'Please select a Document for Address Proof.');
             } else {
                 clearError('#address_error');
             }
 
             const studentuploadvalue = $('#student_address_proof_upload').val();
-            if (studentuploadvalue === '') {
+            if (studentuploadvalue === ''  && EditAddress == 'yes') {
                 showError('#std_address_proof_error', 'Please upload a Document for Address Proof.');
             } else {
                 clearError('#std_address_proof_error');

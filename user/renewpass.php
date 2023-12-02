@@ -2,6 +2,7 @@
 session_start();
 
 include_once '../connection.php';
+include_once '../toaster.php';
 
 if (!isset($_SESSION['username'])) {
     header('location:../index.php');
@@ -102,6 +103,7 @@ if (!isset($_SESSION['username'])) {
             <br><br>
             <label for="passid">Pass ID:</label>
             <input type="text" id="passid" name="passid" placeholder="Enter Pass Id" required>
+            <div id="error-message" style="color: red;"></div>
             <button class="btn-pmt" type="button" id="findpassid" style="margin-top: 1rem;">Submit</button>
         </div>
 
@@ -110,28 +112,55 @@ if (!isset($_SESSION['username'])) {
     </section>
     <script>
         $(document).ready(function() {
+            $('#passid').on('keyup', function() {
+                var inputValue = $(this).val();
+                if (/[^0-9]/.test(inputValue)) {
+                    $('#error-message').text('Only Pass Id are allowed.');
+                } else {
+                    $('#error-message').text('');
+                }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
 
             $("#findpassid").on("click", function() {
                 var selectedCategory = $("#category_renew").val();
                 var passId = $("#passid").val();
 
                 if (selectedCategory !== "" && passId !== "") {
-                    if (selectedCategory === 'Student') {
-                        $(".down-findpass").load("../main/renewstd.php" , {
-                            passId : passId
-                        } , function(res){
-                            $(document).find('.down-findpass').show();
-                        });
-                    } else if (selectedCategory === 'Passenger') {
-                        $(".down-findpass").load("../main/renewpsg.php", {
-                            passId : passId
-                        }, function(res){
-                            $(document).find('.down-findpass').show();
-                        });
-                    }
+                    $.ajax({
+                        type: 'post',
+                        url: 'user_check.php',
+
+                        data: {
+                            category: selectedCategory,
+                            passId: passId,
+                        },
+                        success: function(res) {
+                            if (res != 0) {
+                                if (selectedCategory === 'Student') {
+                                    $(".down-findpass").load("../main/renewstd.php", {
+                                        passId: passId
+                                    }, function(res) {
+                                        $(document).find('.down-findpass').show();
+                                    });
+                                } else if (selectedCategory === 'Passenger') {
+                                    $(".down-findpass").load("../main/renewpsg.php", {
+                                        passId: passId
+                                    }, function(res) {
+                                        $(document).find('.down-findpass').show();
+                                    });
+                                }
+                            } else {
+                                showToaster("Something Wents Wrong ! Check Category and Pass ID", "red");
+                            }
+                        }
+                    })
                 } else {
-                    alert("Please select a category and enter a Pass ID.");
-                    exit;
+                    showToaster("Please select a Category and enter a Pass ID.", "red");
+                    return;
                 }
             });
         });
