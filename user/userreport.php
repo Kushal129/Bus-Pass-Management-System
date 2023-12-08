@@ -4,7 +4,6 @@ session_start();
 include_once '../connection.php';
 
 if (!isset($_SESSION['username'])) {
-    // echo "usename not found";
     header('location:../index.php');
 } else {
     $checkEmailQuery = "SELECT * FROM users WHERE email=?";
@@ -32,8 +31,13 @@ if (!isset($_SESSION['username'])) {
     <title>Bus Pass | Reports </title>
     <link rel="stylesheet" href="../css/user.css">
     <link rel="icon" type="image/ico" href="../img/buslogo.png">
-    <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -53,7 +57,7 @@ if (!isset($_SESSION['username'])) {
             </li>
             <li>
                 <a href="../user/Managepass.php">
-                <i class='bx bx-credit-card-front'></i>
+                    <i class='bx bx-credit-card-front'></i>
                     <span class="links_name">Manage Pass</span>
                 </a>
                 <span class="tooltip">Manage Pass</span>
@@ -92,51 +96,54 @@ if (!isset($_SESSION['username'])) {
             <button class="logout-btn" id="logout-btn" onclick="logout()">Logout</button>
         </div>
 
-        <div class="container">
-            <div class="row d-flex justify-content-center">
-                <div class="col-lg-4 col-md-4 col-12">
-                    <div class="card">
-                        <div class="card-body text-center" style="padding: 15px;">
-                            <h5 class="card-title" style="text-align: center;">Reports & Feedback</h5>
-                            <p>User can see passes reports & also he/she can give feedcack</p>
-                            <a href="../main/contact.php" style="color: black!important;display: flex;justify-content: center;">Contact us</a>
+        <section class="my-5">
+            <div class="container-fluid">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-4 col-md-4 col-12">
+                        <div class="card" id="new_pass">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Reports & Feedback</h5>
+                                <hr>
+                                <p>Give your report or feedback to assist us in refining our services.</p>
+                                <a href="../main/contact.php" style="color: black!important;display: flex;justify-content: center;">Contact us</a>
+                                <i class='bx bxs-report'></i>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <script>
-        let sidebar = document.querySelector(".sidebar");
-        let closeBtn = document.querySelector("#btn");
-        let searchBtn = document.querySelector(".bx-search");
+        </section>
+        <script>
+            let sidebar = document.querySelector(".sidebar");
+            let closeBtn = document.querySelector("#btn");
+            let searchBtn = document.querySelector(".bx-search");
 
-        closeBtn.addEventListener("click", () => {
-            sidebar.classList.toggle("open");
-            menuBtnChange();
-        });
+            closeBtn.addEventListener("click", () => {
+                sidebar.classList.toggle("open");
+                menuBtnChange();
+            });
 
-        searchBtn.addEventListener("click", () => {
-            sidebar.classList.toggle("open");
-            menuBtnChange();
-        });
+            searchBtn.addEventListener("click", () => {
+                sidebar.classList.toggle("open");
+                menuBtnChange();
+            });
 
-        function menuBtnChange() {
-            if (sidebar.classList.contains("open")) {
-                closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
-            } else {
-                closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+            function menuBtnChange() {
+                if (sidebar.classList.contains("open")) {
+                    closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+                } else {
+                    closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+                }
             }
-        }
-    </script>
-    <script>
-        function logout() {
+        </script>
+        <script>
+            function logout() {
 
-            window.location.href = '../logout.php';
-        }
+                window.location.href = '../logout.php';
+            }
 
-        document.getElementById('logout-btn').addEventListener('click', logout);
-    </script>
+            document.getElementById('logout-btn').addEventListener('click', logout);
+        </script>
 </body>
 
 </html>

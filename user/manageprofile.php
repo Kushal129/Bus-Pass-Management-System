@@ -45,7 +45,7 @@ if (isset($_POST['update_profile'])) {
         echo '<script>showToaster("No changes made to the profile data.", "orange")</script>';
     } else {
         if (!empty($_FILES['img_update']['name'])) {
-            $targetDirectory = __DIR__ . '/../uploads/user_photo/'; 
+            $targetDirectory = __DIR__ . '/../uploads/user_photo/';
             $original_filename = $_FILES['img_update']['name'];
             $filename = preg_replace("/[^A-Za-z0-9.]/", '', $original_filename);
             $targetFile = $targetDirectory . $filename;
@@ -89,8 +89,6 @@ if (isset($_POST['update_profile'])) {
                 } else {
                     echo '<script>showToaster("Failed to update profile in the users table.", "red")</script>';
                 }
-            } else {
-                echo '<script>showToaster("Profile update failed. Please try again.", "red")</script>';
             }
         }
     }
@@ -184,7 +182,7 @@ if (isset($_POST['update_profile'])) {
                     <h1>Manage Profile</h1>
                     <hr>
                     <label for="full_name">Full Name:</label>
-                    <input type="text" id="full_name" name="full_name" disabled value="<?php echo $full_name; ?>">
+                    <input type="text" id="full_name" name="full_name" readonly value="<?php echo $full_name; ?>">
                     <br>
                     <label for="mobileNo">Phone Number:</label>
                     <input type="text" id="mobileNo" name="mobileNo" value="<?php echo $phone_number; ?>">
