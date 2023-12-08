@@ -210,7 +210,7 @@ if ($result) {
         <img src="../uploads/documents/<?php echo $document_file_name; ?>" alt=" Address Verification image" style="width: 100%;height: 100% !important;" class="img-fluid  ">
     </div>
     <div class="form-group">
-        <h1 class="text-center">Student Bonofide</h1>
+        <h1 class="text-center">Company Letter</h1>
         <hr>
         <img src="../uploads/company/<?php echo $passangerdoc; ?>" alt="Company Letter image" style="width: 100%;height: 100% !important;" class="img-fluid  ">
     </div>

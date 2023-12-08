@@ -80,8 +80,6 @@ if ($result->num_rows > 0) {
 
 </head>
 <style>
-    
-
     .custom-file-upload {
         display: flex !important;
         padding: 10px !important;
@@ -199,6 +197,7 @@ if ($result->num_rows > 0) {
             <div class="col-lg-6 col-md-6 col-12" style="display: flex; justify-content: center;">
                 <img src="../uploads/user_photo/<?php echo $user_img_path; ?>" alt="User Photo" style="width: 300px;height: 250px !important;" class="img-fluid  ">
             </div>
+            <br>
             <label for="img_std">Photo Upload:</label>
             <input type="file" name="img_std" id="img_std" accept=".png, .jpg, .jpeg">
             <label for="img_std" class="custom-file-upload">
@@ -210,7 +209,7 @@ if ($result->num_rows > 0) {
 
             <div id="addressProofSection" style="display: none;">
                 <label for="address_proof">Select Document for Address Proof:</label>
-                <select id="address_proof" name="address_proof" class="error-message" >
+                <select id="address_proof" name="address_proof" class="error-message">
                     <option value="--">Please Select Document</option>
                     <?php
                     $address_proof_qry_s = "SELECT * FROM document_type";
@@ -226,7 +225,7 @@ if ($result->num_rows > 0) {
                 <br><br>
 
                 <label for="student_address_proof_upload">Upload Proof For Address:</label>
-                <input type="file" id="student_address_proof_upload" name="student_address_proof_upload" accept=".pdf, .jpg, .jpeg, .png" >
+                <input type="file" id="student_address_proof_upload" name="student_address_proof_upload" accept=".pdf, .jpg, .jpeg, .png">
                 <label for="student_address_proof_upload" class="custom-file-upload">
                     Choose File
                 </label>
@@ -377,8 +376,6 @@ if ($result->num_rows > 0) {
         }
     });
 </script>
-
-
 <script>
     function logout() {
         window.location.href = '../logout.php';
@@ -461,8 +458,6 @@ if ($result->num_rows > 0) {
     function calculatePassAmount() {
         var from = $('.fromPlace').val();
         var to = $('.toPlace').val();
-
-
         if (from != '' && to != '' && from != to) {
             $.ajax({
                 type: 'post',
@@ -587,7 +582,6 @@ if ($result->num_rows > 0) {
                 errorSpan.hide();
             }
 
-
             const addressValue = $('#address').val();
             if (addressValue === '') {
                 showError('#address', 'Address is required.');
@@ -627,14 +621,14 @@ if ($result->num_rows > 0) {
             const addressProofValue = $('#address_proof').val();
             const EditAddress = $('input[name="editAddress"]:checked').val();
             // alert(EditAddress)
-            if (addressProofValue === '--' && EditAddress == 'yes' ) {
+            if (addressProofValue === '--' && EditAddress == 'yes') {
                 showError('#address_error', 'Please select a Document for Address Proof.');
             } else {
                 clearError('#address_error');
             }
 
             const studentuploadvalue = $('#student_address_proof_upload').val();
-            if (studentuploadvalue === ''  && EditAddress == 'yes') {
+            if (studentuploadvalue === '' && EditAddress == 'yes') {
                 showError('#std_address_proof_error', 'Please upload a Document for Address Proof.');
             } else {
                 clearError('#std_address_proof_error');
@@ -703,10 +697,10 @@ if ($result->num_rows > 0) {
                 const maxFileSize = 300 * 1024;
                 const minFileSize = 50 * 1024;
 
-                // if (!allowedFormats.includes(file.type)) {
-                //     displayError(photoErrorElement, 'Please upload an image in PNG, JPG, or JPEG format.');
-                //     imgStdInput.val('');
-                if (file.size < minFileSize) {
+                if (!allowedFormats.includes(file.type)) {
+                    displayError(photoErrorElement, 'Please upload an image in PNG, JPG, or JPEG format.');
+                    imgStdInput.val('');
+                } else if (file.size < minFileSize) {
                     displayError(photoErrorElement, 'Please upload an image that is at least 50KB in size.');
                     imgStdInput.val('');
                 } else if (file.size > maxFileSize) {
@@ -733,11 +727,11 @@ if ($result->num_rows > 0) {
                 const allowedFormats = ['application/pdf', 'image/jpg', 'image/jpeg', 'image/png'];
                 const maxFileSize = 200 * 1024;
                 const minFileSize = 20 * 1024;
-                // if (!allowedFormats.includes(file.type)) {
-                //     displayError(addressProofErrorElement, 'Please upload a PDF, JPG, JPEG, or PNG file.');
-                //     addressProofInput.val('');
-                // } else
-                if (file.size < minFileSize) {
+                
+                if (!allowedFormats.includes(file.type)) {
+                    displayError(addressProofErrorElement, 'Please upload a PDF, JPG, JPEG, or PNG file.');
+                    addressProofInput.val('');
+                } else if (file.size < minFileSize) {
                     displayError(photoErrorElement, 'Please upload an image that is at least 50KB in size.');
                     imgStdInput.val('');
                 } else if (file.size > maxFileSize) {

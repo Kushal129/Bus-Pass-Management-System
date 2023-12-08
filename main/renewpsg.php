@@ -82,16 +82,6 @@ if ($result->num_rows > 0) {
 
 </head>
 <style>
-
-    /* .read[type="text"],
-    .read[type="number"],
-    .read[type="date"],
-    .read textarea {
-        cursor: not-allowed !important;
-        background-color: #efefef !important;
-        color: #000000 !important;
-    } */
-
     .custom-file-upload {
         display: flex !important;
         padding: 10px !important;
@@ -111,7 +101,7 @@ if ($result->num_rows > 0) {
 </style>
 
 <body>
-    <form action="../main/passformatep.php" method="POST" enctype="multipart/form-data">
+    <form action="../main/rpassformatepsg.php" method="POST" enctype="multipart/form-data">
         <div class="form-group ">
             <h1>Passanger Pass Details</h1>
             <hr>
@@ -210,6 +200,7 @@ if ($result->num_rows > 0) {
             <div class="col-lg-6 col-md-6 col-12" style="display: flex; justify-content: center;">
                 <img src="../uploads/user_photo/<?php echo $user_img_path_p; ?>" alt="User Photo" style="width: 300px;height: 250px !important;" class="img-fluid  ">
             </div>
+            <br>
             <label for="img_p">Photo Upload:</label>
             <input type="file" name="img_p" id="img_p" accept=".png, .jpg, .jpeg">
             <label for="img_p" class="custom-file-upload">
@@ -218,6 +209,7 @@ if ($result->num_rows > 0) {
             <p>[Self-attached Passport size Photo Copy. Max size: 300KB]</p>
             <span id="photo_error_p" class="error-message" style="color: red;"></span>
             <br>
+
             <div id="addressProofSection_p" style="display: none;">
                 <label for="address_proofp">Select Document for Address Proof:</label>
                 <select id="address_proofp" name="address_proofp" class="error-message">
@@ -236,7 +228,7 @@ if ($result->num_rows > 0) {
                 <br><br>
 
                 <label for="passanger_address_proof_upload">Upload Proof For Address:</label>
-                <input type="file" id="passanger_address_proof_upload" name="passanger_address_proof_upload" accept=".pdf, .jpg, .jpeg, .png" required>
+                <input type="file" id="passanger_address_proof_upload" name="passanger_address_proof_upload" accept=".pdf, .jpg, .jpeg, .png" >
                 <label for="passanger_address_proof_upload" class="custom-file-upload">
                     Choose File
                 </label>
@@ -316,7 +308,7 @@ if ($result->num_rows > 0) {
         <div class="form-group bono">
             <label for="verification_p">Upload Document For Verification:</label>
             <br>
-            <input type="file" name="verification_p" id="verification_p" accept=".png, .jpg, .jpeg" required>
+            <input type="file" name="verification_p" id="verification_p" accept=".png, .jpg, .jpeg" >
             <label for="verification_p" class="custom-file-upload">
                 Choose File
             </label>
@@ -469,9 +461,6 @@ if ($result->num_rows > 0) {
     function calculatePassAmount_p() {
         var from = $(document).find('#fromPlace_p').val();
         var to = $(document).find('#toPlace_p').val();
-
-        console.log(from, to);
-
         if (from != '' && to != '' && from != to) {
             $.ajax({
                 type: 'post',
@@ -628,7 +617,8 @@ if ($result->num_rows > 0) {
             }
 
             const companyressValue = $('#Company_address').val();
-            if (companyressValue === '') {
+            const EditAddress_p = $('input[name="editAddress_p"]:checked').val();
+            if (companyressValue === '' && EditAddress_p == 'yes') {
                 showError('#Company_address-error', 'Company Address is required.');
             } else {
                 clearError('#Company_address-error');
@@ -636,14 +626,14 @@ if ($result->num_rows > 0) {
 
 
             const passangerproofimg = $('#passanger_address_proof_upload').val();
-            if (passangerproofimg === '') {
+            if (passangerproofimg === '' && EditAddress_p == 'yes') {
                 showError('#address_proof_errorp', 'Please upload a Document for Address Proof.');
             } else {
                 clearError('#address_proof_errorp');
             }
 
             const addressProofValue = $('#address_proofp').val();
-            if (addressProofValue === '--') {
+            if (addressProofValue === '--' && EditAddress_p == 'yes') {
                 showError('#address_errorp', 'Please select a Document for Address Proof.');
             } else {
                 clearError('#address_errorp');
@@ -700,7 +690,6 @@ if ($result->num_rows > 0) {
         };
     });
 </script>
-
 <script>
     $(document).ready(function() {
         const imgStdInput = $('#img_p');
@@ -714,11 +703,10 @@ if ($result->num_rows > 0) {
                 const maxFileSize = 300 * 1024;
                 const minFileSize = 50 * 1024;
 
-                // if (!allowedFormats.includes(file.type)) {
-                //     displayError(photoErrorElement, 'Please upload an image in PNG, JPG, or JPEG format.');
-                //     imgStdInput.val('');
-                // } else
-                if (file.size < minFileSize) {
+                if (!allowedFormats.includes(file.type)) {
+                    displayError(photoErrorElement, 'Please upload an image in PNG, JPG, or JPEG format.');
+                    imgStdInput.val('');
+                } else if (file.size < minFileSize) {
                     displayError(photoErrorElement, 'Please upload an image that is at least 50KB in size.');
                     imgStdInput.val('');
                 } else if (file.size > maxFileSize) {
@@ -748,7 +736,8 @@ if ($result->num_rows > 0) {
                 if (!allowedFormats.includes(file.type)) {
                     displayError(addressProofErrorElement, 'Please upload a PDF, JPG, JPEG, or PNG file.');
                     addressProofInput.val('');
-                } else if (file.size < minFileSize) {
+                } else
+                if (file.size < minFileSize) {
                     displayError(addressProofErrorElement, 'Please upload a file that is at least 20KB in size.'); // Corrected error message
                     addressProofInput.val('');
                 } else if (file.size > maxFileSize) {
@@ -775,10 +764,10 @@ if ($result->num_rows > 0) {
                 const maxFileSize = 200 * 1024;
                 const minFileSize = 20 * 1024;
 
-                // if (!allowedFormats.includes(file.type)) {
-                //     displayError(addressProofErrorElement, 'Please upload a PDF, JPG, JPEG, or PNG file.');
-                //     addressProofInput.val('');
-                // } else
+                if (!allowedFormats.includes(file.type)) {
+                    displayError(addressProofErrorElement, 'Please upload a PDF, JPG, JPEG, or PNG file.');
+                    addressProofInput.val('');
+                } else
                 if (file.size < minFileSize) {
                     displayError(photoErrorElement, 'Please upload an image that is at least 50KB in size.');
                     imgStdInput.val('');

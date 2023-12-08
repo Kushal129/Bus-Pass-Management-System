@@ -24,7 +24,7 @@ if (isset($_FILES["verification_p"])) {
         die("Sorry, there was an error uploading your file.");
     }
 } else {
-    die("Student address proof upload is missing.");
+    die("Pasanger address proof upload is missing.");
 }
 
 $pass_id = $_SESSION['user_id'];
@@ -65,7 +65,7 @@ if (isset($_FILES["passanger_address_proof_upload"])) {
     mysqli_query($con, $qry);
     $lastInsertedIdp = mysqli_insert_id($con);
 } else {
-    die("Student address proof upload is missing.");
+    die("Passanger address proof upload is missing.");
 }
 
 $full_namep = $_POST['fullnamep'];
@@ -100,7 +100,7 @@ if (isset($_FILES["img_p"])) {
     $start_term_id = $_POST['fromPlace_p'];
     $ends_term_id = $_POST['toPlace_p'];
     $payment_id = $_POST['payment_id'];
-    $image_id = 1;
+    $image_id = 2;
     $from_datep = $_POST['fromDate_p'];
     $to_datep = $_POST['toDate_p'];
     $passType = $_POST['passType_p'];

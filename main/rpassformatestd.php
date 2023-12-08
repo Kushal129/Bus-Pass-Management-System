@@ -8,8 +8,6 @@ if (!isset($_POST['education'], $_POST['institute_name'], $_POST['institute_addr
     die("Required fields are missing. std pass formate mathi");
 }
 
-
-
 $uploadsDirectory_very = "../uploads/bonofide/";
 
 if (!file_exists($uploadsDirectory_very)) {
@@ -27,7 +25,7 @@ if (isset($_FILES["verification_s"])) {
     }
 }
 
-$pass_id = $_POST['id'];
+// $pass_id = $_POST['id'];
 
 $qry_stu_fetch = "select pi.r_id from pass p join passenger_info pi on p.passenger_id = pi.id limit 1";
 $run = mysqli_fetch_array(mysqli_query($con, $qry_stu_fetch));
@@ -168,44 +166,6 @@ $query = "SELECT
 
 $result = mysqli_query($con, $query);
 
-// if ($result) {
-//     while ($row = mysqli_fetch_assoc($result)) {
-//         $user_id = $row['user_id'];
-//         $full_name = $row['full_name'];
-//         $dob = $row['dob'];
-//         $gender = $row['gender'];
-//         $validate_through = $row['validate_through'];
-//         $user_img_path = $row['user_img_path'];
-//         $role = $row['role'];
-//         $address = $row['address'];
-//     }
-// }
-
-
-// $query = "SELECT bus_name from bus_type where price_multiply =$bus_type";
-// $result = mysqli_query($con, $query);
-// if ($result) {
-//     while ($row = mysqli_fetch_assoc($result)) {
-//         $bus_type = $row['bus_name'];
-//     }
-// }
-
-// $query = "SELECT ter_name from bus_terminals where ter_id=$start_term_id";
-// $result = mysqli_query($con, $query);
-// if ($result) {
-//     while ($row = mysqli_fetch_assoc($result)) {
-//         $start_term_id = $row['ter_name'];
-//     }
-// }
-
-
-// $query = "SELECT ter_name from bus_terminals where ter_id=$ends_term_id";
-// $result = mysqli_query($con, $query);
-// if ($result) {
-//     while ($row = mysqli_fetch_assoc($result)) {
-//         $ends_term_id = $row['ter_name'];
-//     }
-// }
 
 ?>
 
@@ -331,4 +291,10 @@ $result = mysqli_query($con, $query);
     function redirectToHome() {
         window.location.href = "../user/user.php";
     }
+</script>
+<script>
+    function logout() {
+        window.location.href = '../logout.php';
+    }
+    document.getElementById('logout-btn').addEventListener('click', logout);
 </script>
