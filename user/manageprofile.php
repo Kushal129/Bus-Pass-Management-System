@@ -65,10 +65,10 @@ if (isset($_POST['update_profile'])) {
                     if ($stmt->execute()) {
                         echo '<script>showToaster("Profile updated successfully.", "green")</script>';
                     } else {
-                        echo '<script>showToaster("Failed to update user image in the users table.", "red")</script>';
+                        echo '<script>showToaster("Failed to update user image ", "red")</script>';
                     }
                 } else {
-                    echo '<script>showToaster("Failed to update user image in the passenger_info table.", "red")</script>';
+                    echo '<script>showToaster("Failed to update user image in the ", "red")</script>';
                 }
             } else {
                 echo '<script>showToaster("Image upload failed. Please try again.", "red")</script>';

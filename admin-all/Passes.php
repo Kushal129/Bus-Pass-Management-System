@@ -17,9 +17,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['add_bus'])) {
     if (isset($_POST['price_multiply'])) {
         $price_multiply = $_POST['price_multiply'];
     }
-    $sql = "INSERT INTO `bus_type` (`bus_name`, `price_multiply`) VALUES ('$bus_name', '$price_multiply')";
+    $sql = "INSERT INTO bus_type (`bus_name`, `price_multiply`) VALUES ('$bus_name', '$price_multiply')";
+
     $result = mysqli_query($con, $sql);
+    $_POST = array();
 }
+
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['edit_bus'])) {
     $bus_id = $_POST['bus_id'];
@@ -29,17 +32,17 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['edit_bus'])) {
     if (isset($_POST['price_multiply'])) {
         $price_multiply = $_POST['price_multiply'];
     }
-    $sql = "UPDATE `bus_type` SET `bus_name`='$bus_name', `price_multiply`='$price_multiply' WHERE `bus_id`='$bus_id'";
+    $sql = "UPDATE bus_type SET bus_name='$bus_name', price_multiply='$price_multiply' WHERE bus_id = $bus_id";
     $result = mysqli_query($con, $sql);
-
 }
+
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['delete_bus'])) {
     $bus_id = $_POST['bus_id'];
-    $sql = "DELETE FROM `bus_type` WHERE `bus_id`='$bus_id'";
+    $sql = "DELETE FROM bus_type WHERE bus_id = $bus_id";
     $result = mysqli_query($con, $sql);
- 
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -108,7 +111,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['delete_bus'])) {
         }
 
         if ($edit) {
-
             echo '<script>showToaster("Your Data Has been Updated Successfully.", "green")</script>';
         }
 
@@ -128,12 +130,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['delete_bus'])) {
                         <label for="price_multiply">Price Multiply</label>
                         <input type="text" class="form-control" name="price_multiply" id="price_multiply">
                     </div>
-                    <button type="submit" name="add_bus" class="btn btn-primary">Add Bus</button>
+                    <button type="submit" name="add_bus" class="btn btn-primary add_bus">Add Bus</button>
                 </form>
                 <table class="table" id="myTable">
                     <thead>
                         <tr>
-                            <th scope="col">BUS ID</th>
+                            <th scope="col">No.</th>
                             <th scope="col">Bus Name</th>
                             <th scope="col">Price Multiply</th>
                             <th scope="col">Actions</th>
@@ -143,24 +145,21 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['delete_bus'])) {
                         <?php
                         $sql = "SELECT * FROM bus_type";
                         $result = mysqli_query($con, $sql);
-                        // $b_id = 0;
                         $counter = 0;
                         while ($row = mysqli_fetch_assoc($result)) {
-                            // $b_id = $b_id + 1;
-                        
+                            $bus_id = $row['bus_id'];
                             echo "<tr>";
                             echo "<th scope='row'>" . ++$counter . "</th>";
                             echo "<td class='bus-name' contenteditable='false'>" . $row['bus_name'] . "</td>";
                             echo "<td class='price-multiply' contenteditable='false'>" . $row['price_multiply'] . "</td>";
                             echo "<td>
                                     <button type='button' class='btn btn-warning edit-button'>Edit</button>
-                                    <button type='button' class='btn btn-danger delete-button'>Delete</button>
+                                    <button type='button' class='btn btn-danger delete-button' data-bus_id=$bus_id >Delete</button>
                                     <button type='button' class='btn btn-info cancel-edit hidden' disabled>Cancel</button>
                                     <button type='button' class='btn btn-success save-edit hidden' disabled>Save</button>
                                   </td>";
                             echo "</tr>";
                         }
-
                         $counter = 0;
                         ?>
                     </tbody>
@@ -179,8 +178,40 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['delete_bus'])) {
         $(document).ready(function() {
             $('#myTable').DataTable();
 
-
             $(document).ready(function() {
+
+                $('.add_bus').click(function() {
+                    var url = window.location.href
+
+                    // const bus_name = row.find('.bus-name').text()
+                    // const price_multiply = row.find('.price-multiply').text()
+
+                    var formData = {
+                        'bus_name': $('#bus_name').val(),
+                        'price_multiply': $('#price_multiply').val(),
+                        'add_bus': true
+                    };
+                    $.ajax({
+                        type: 'POST',
+                        url: 'Passes.php', // Replace with the correct URL
+                        data: formData,
+                        success: function(response) {
+                            console.log(response);
+
+                            // You can also reset the form if necessary
+                            $('form')[0].reset();
+
+                            // Reload the DataTable (assuming you're using DataTables)
+                            $('#myTable').DataTable().ajax.reload();
+                            window.location.href = url
+
+                        },
+                        error: function(error) {
+                            // Handle the error response, if needed
+                            console.error(error);
+                        }
+                    });;
+                });
 
                 $('.edit-button').click(function() {
                     const row = $(this).closest('tr');
@@ -190,8 +221,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['delete_bus'])) {
                 });
 
                 $('.save-edit').click(function() {
+                    var url = window.location.href
+
                     const row = $(this).closest('tr');
                     const bus_id = row.find('.bus-id').text();
+
                     const bus_name = row.find('.bus-name').text();
                     const price_multiply = row.find('.price-multiply').text();
 
@@ -212,6 +246,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['delete_bus'])) {
 
                             row.find('.bus-name').text(bus_name);
                             row.find('.price-multiply').text(price_multiply);
+                            window.location.href = url
+
                         },
                         error: function(error) {
                             console.error(error);
@@ -227,9 +263,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['delete_bus'])) {
                 });
 
                 $(document).on('click', '.delete-button', function() {
+                    var url = window.location.href
+                    // console.log(url);
                     if (confirm("Are you sure you want to delete this record?")) {
                         const row = $(this).closest('tr');
-                        const bus_id = row.find('th').text(); 
+                        const bus_id = $(this).data('bus_id');
                         $.ajax({
                             type: "POST",
                             url: "Passes.php",
@@ -239,10 +277,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['delete_bus'])) {
                             },
                             success: function(response) {
                                 $('#myTable').DataTable().destroy();
-                                    row.remove(); 
-
+                                row.remove();
                                 $('#myTable').DataTable();
-
+                                // window.location.href = url                                
                             },
                             error: function(error) {
                                 console.error(error);
