@@ -1,0 +1,29 @@
+=========================
+   KUSHAL H PIPALIYA
+-------------------------
+  21bmiit129@gmail.com
+=========================
+
+Hello ,
+ 
+- first you can Download Xampp and SetUp database form databse_backup Folder.
+
+- Then install Install composer. Now you can download phpmailer and it will use to send OTP for forget password verification.
+(if Any issue or error occur just mail me)
+
+- Then you can setup this code and run in localhost :)
+
+
+Admin Page:
+
+email:- 21bmiit129@gmail.com
+password :- Kushal@123
++++++++++++++++++++++++++++++
+User Page:
+
+Registation just
+
+
+
+
+Thank You. 

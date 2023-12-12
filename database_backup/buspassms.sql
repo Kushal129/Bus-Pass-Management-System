@@ -3,7 +3,7 @@
 -- Host: localhost	Database: buspassms
 -- ------------------------------------------------------
 -- Server version 	10.4.28-MariaDB
--- Date: Sat, 02 Dec 2023 16:03:48 +0100
+-- Date: Tue, 12 Dec 2023 13:40:51 +0100
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -58,7 +58,7 @@ CREATE TABLE `bus_type` (
   `bus_name` varchar(120) NOT NULL,
   `price_multiply` float NOT NULL,
   PRIMARY KEY (`bus_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,12 +68,12 @@ CREATE TABLE `bus_type` (
 LOCK TABLES `bus_type` WRITE;
 /*!40000 ALTER TABLE `bus_type` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `bus_type` VALUES (1,'LOCAL',1),(2,'EXPRESS',1.3),(3,'GURJARNAGRI',1.5);
+INSERT INTO `bus_type` VALUES (1,'LOCAL',1),(2,'EXPRESS',1.3),(3,'GURJARNAGARI',1.5),(37,'ggg',1.6),(38,'ggg',1.6);
 /*!40000 ALTER TABLE `bus_type` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `bus_type` with 3 row(s)
+-- Dumped table `bus_type` with 5 row(s)
 --
 
 --
@@ -115,7 +115,7 @@ CREATE TABLE `document` (
   `document_type_id` int(11) NOT NULL,
   `document_file_name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=354 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -125,11 +125,12 @@ CREATE TABLE `document` (
 LOCK TABLES `document` WRITE;
 /*!40000 ALTER TABLE `document` DISABLE KEYS */;
 SET autocommit=0;
+INSERT INTO `document` VALUES (1,1,'202312088767Screenshot 2023-10-06 191819.png'),(2,1,'20231208481Screenshot 2023-10-06 191819.png'),(3,1,'202312082365Screenshot 2023-10-06 191819.png');
 /*!40000 ALTER TABLE `document` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `document` with 0 row(s)
+-- Dumped table `document` with 3 row(s)
 --
 
 --
@@ -209,7 +210,7 @@ CREATE TABLE `pass` (
   `to_date` date DEFAULT NULL,
   `is_verify` tinyint(4) NOT NULL COMMENT '0 - panding \r\n1 - apruv\r\n2 - rejection',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -219,11 +220,12 @@ CREATE TABLE `pass` (
 LOCK TABLES `pass` WRITE;
 /*!40000 ALTER TABLE `pass` DISABLE KEYS */;
 SET autocommit=0;
+INSERT INTO `pass` VALUES (1,1,3,90,1,1,2,'pay_N9pH3hlgKppDSE',1,'2023-12-08','2024-03-07',1),(2,2,4,30,1,2,1,'pay_N9pMP6lXpRPv12',2,'2023-12-08','2024-01-07',1),(3,2,4,30,1,2,1,'pay_N9pPL2Q2agQezJ',2,'2023-12-08','2024-01-07',2);
 /*!40000 ALTER TABLE `pass` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `pass` with 0 row(s)
+-- Dumped table `pass` with 3 row(s)
 --
 
 --
@@ -239,7 +241,7 @@ CREATE TABLE `passenger` (
   `com_address` varchar(200) NOT NULL,
   `letter_pass` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -249,11 +251,12 @@ CREATE TABLE `passenger` (
 LOCK TABLES `passenger` WRITE;
 /*!40000 ALTER TABLE `passenger` DISABLE KEYS */;
 SET autocommit=0;
+INSERT INTO `passenger` VALUES (1,'Middle/Higher Primary','HK Industry','Pandol , surat ','202312087705com.jpeg');
 /*!40000 ALTER TABLE `passenger` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `passenger` with 0 row(s)
+-- Dumped table `passenger` with 1 row(s)
 --
 
 --
@@ -267,7 +270,7 @@ CREATE TABLE `passenger_info` (
   `full_name` char(200) NOT NULL,
   `address` varchar(255) NOT NULL,
   `document_id` int(11) NOT NULL,
-  `gender` char(20) NOT NULL,
+  `gender` char(6) NOT NULL,
   `role` varchar(15) NOT NULL COMMENT 'Role which define the actual role (passenger , student )',
   `r_id` int(11) NOT NULL COMMENT 'Role_id which defines the users id ex (student id , pasanger_id)',
   `user_id` int(11) NOT NULL,
@@ -276,10 +279,8 @@ CREATE TABLE `passenger_info` (
   `user_img_path` varchar(255) NOT NULL DEFAULT 'admin.ico',
   PRIMARY KEY (`id`),
   KEY `user_id_foreign` (`user_id`),
-  KEY `document_id_foregin` (`document_id`),
-  CONSTRAINT `document_id_foregin` FOREIGN KEY (`document_id`) REFERENCES `document` (`id`),
-  CONSTRAINT `user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  KEY `document_id_foregin` (`document_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -289,11 +290,12 @@ CREATE TABLE `passenger_info` (
 LOCK TABLES `passenger_info` WRITE;
 /*!40000 ALTER TABLE `passenger_info` DISABLE KEYS */;
 SET autocommit=0;
+INSERT INTO `passenger_info` VALUES (1,'Kushal Pipaliya','Hari Hari 2 , Katargam Road , Surat',1,'Male','Student',1,3,'2024-06-08','2004-08-12','202312081086kp (1).jpeg'),(2,'Henvi Kaklotar','Jalaram 3 , katargam road , surat - 395004',2,'Female','Passenger',1,4,'2024-06-08','2004-08-12','g.jpg');
 /*!40000 ALTER TABLE `passenger_info` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `passenger_info` with 0 row(s)
+-- Dumped table `passenger_info` with 2 row(s)
 --
 
 --
@@ -336,7 +338,7 @@ CREATE TABLE `report` (
   `email` varchar(80) NOT NULL,
   `note` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -346,7 +348,7 @@ CREATE TABLE `report` (
 LOCK TABLES `report` WRITE;
 /*!40000 ALTER TABLE `report` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `report` VALUES (62,'Kushal H Pipalioya','Kushalhpipaliya01@gmail.com','Hello');
+INSERT INTO `report` VALUES (1,'Henvi Kaklotar','henvi08@gmail.com','Nice ');
 /*!40000 ALTER TABLE `report` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
@@ -367,7 +369,7 @@ CREATE TABLE `student` (
   `Institute_address` varchar(150) NOT NULL,
   `bono_pass` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -377,11 +379,12 @@ CREATE TABLE `student` (
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
 SET autocommit=0;
+INSERT INTO `student` VALUES (1,'Middle/Higher Primary','Uka Tarsadiya','Mahuva Road , Bardoli , Surat','202312082792bono.jpg');
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `student` with 0 row(s)
+-- Dumped table `student` with 1 row(s)
 --
 
 --
@@ -401,7 +404,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -411,12 +414,12 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `users` VALUES (1,'Admin',1234567891,'21bmiit129@gmail.com','$2y$10$omAf0m3yrxH/cFklDaeIj.fnVTQxAxV6cNjv3a0DM5MTRzawacrou',0,'../img/admin.ico'),(18,'Kushal Pipaliya',9574476496,'kushalhpipaliya01@gmail.com','$2y$10$pv557YKfAOdPebNSwfWFCu5UcSW9gJfDESXPrz1fcxm5bWh/eWZi.',1,'202312023202g.jpg'),(20,'Henvi kaklotar',9913402465,'henvi08@gmail.com','$2y$10$w9SrwUkHdwp9cH.Ej.wxKewj8zPzEAC1eesgXlBq.VxzdVBaGQjEe',1,'202312023293kp (1).jpeg'),(21,'Aruna Pipaliya',9099260609,'annu01@gmail.com','$2y$10$o5GcQMI/IGH92lF1Vhfu3Ok5OwpUyjDBj8VUHqF2f8UCl.susD.FK',1,'admin.ico'),(25,'Jaimin Ghoghari',9537006635,'jaiminghoghari12345@gmail.com','$2y$10$ODj7QzpCTzzmVBnnrZpm3O8CK3TuHfDc9WCN0gYgHsQtsEKrx4bbK',1,'202311063317kp (1).jpeg'),(28,'Vency Italiya',8866005608,'21bmiit136@gmail.com','$2y$10$bgAdmC1FGe1erGsmFLgbk.zvjAoBx2nXV8YVGKBnxKPuaPDXzFlHG',1,'20231107103kp (1).jpeg');
+INSERT INTO `users` VALUES (1,'Admin',9874569857,'21bmiit129@gmail.com','$2y$10$FNpjFXWTc2bYRwHfB9TClOl62/H1g4PANYVrIEXf3/LYhoLnVB5hG',0,'admin.ico'),(3,'Kushal Pipaliya',9574476496,'Kushalhpipaliya01@gmail.com','$2y$10$CALvOnoof7JCuPuOgzT2Z.dz/wGJe4i4AbNSQlRZygr8b7s5WmoPK',1,'202312081086kp (1).jpeg'),(4,'Henvi Kaklotar',9913402465,'henvi08@gmail.com','$2y$10$ukyZm1u7zao0bdCllHChWeuR9CBxOmtTVJXL1l8UcxvBLwc.vPLiK',1,'g.jpg');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `users` with 6 row(s)
+-- Dumped table `users` with 3 row(s)
 --
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -429,4 +432,4 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on: Sat, 02 Dec 2023 16:03:48 +0100
+-- Dump completed on: Tue, 12 Dec 2023 13:40:51 +0100
