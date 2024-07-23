@@ -601,7 +601,7 @@ $mnumber = $row['phone_number'];
                 console.log(amt);
 
                 var options = {
-                    "key": "rzp_test_qScTznNfxHjAQP",
+                    "key": "",
                     "amount": amt * 100,
                     "currency": "INR",
                     "name": "BUS PASS ",
